@@ -23,7 +23,7 @@ const Header = () => {
     };
 
     return (
-        <nav className="navbar navbar-expand-lg sticky-top bg-white shadow-lg">
+        <nav className=" sticky top-0 bg-white shadow-lg">
             <div className="container mx-auto px-6 py-5 flex justify-between items-center">
                 <Image src={logo} alt="logo" height={0} width={0} className=" w-32" />
 
