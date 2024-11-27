@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 const Footer = () => {
     return (
       <footer className="footer-section bg-[#2d2d2d] text-white">
@@ -161,5 +162,8 @@ const Footer = () => {
     );
   };
   
-  export default Footer;
+
+  export default dynamic(() => Promise.resolve(Footer), {
+     ssr: false,
+   });
   
