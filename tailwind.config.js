@@ -13,6 +13,15 @@ module.exports = {
         greenColor: '#0ba593',
         bluish: '#323e4c',
       },
+      animation: {
+        scroll: 'scroll 18s linear infinite',
+      },
+      keyframes: {
+        scroll: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+      },
     },
   },
   plugins: [],
