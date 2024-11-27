@@ -16,7 +16,7 @@ const HeroSection = () => {
     };
     return (
         <section style={imageStyle} className="hero-section w-full ">
-            <div className="container mx-auto flex flex-col lg:flex-row items-center py-20 md:py-32 px-6">
+            <div className="container mx-auto flex flex-col lg:flex-row items-center py-20 md:py-16 px-6">
                 {/* Left Section */}
                 <div className="left lg:w-1/2">
                     <div className="content">
