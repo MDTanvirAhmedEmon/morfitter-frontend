@@ -9,7 +9,7 @@ import Image from 'next/image';
 
 const PersonalTrainers = () => {
     return (
-        <section className="bg-white py-16 px-4 md:px-0">
+        <section className="bg-white py-16 px-5 md:px-0">
             <div className="container mx-auto flex flex-col xl:flex-row justify-between items-center min-h-[520px] gap-12">
                 {/* Left Section */}
                 <div className="xl:w-1/2">
@@ -24,7 +24,6 @@ const PersonalTrainers = () => {
                                 height={0}
                             />
                         </div>
-
 
                         {/* Sub-card */}
                         <div className="sub-card absolute right-2 md:right-[-150px] bottom-3 md:bottom-[20%] w-[180px] px-3 py-2 bg-white rounded-[15px] shadow-2xl text-left">
