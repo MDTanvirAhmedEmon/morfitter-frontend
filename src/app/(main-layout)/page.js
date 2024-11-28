@@ -1,5 +1,6 @@
 import HeroSection from '@/components/MainLayout/Home/HeroSection';
 import LogoSlider from '@/components/MainLayout/Home/LogoSlider';
+import PersonalTrainers from '@/components/MainLayout/Home/PersonalTrainers';
 import React from 'react';
 
 const Home = () => {
@@ -7,6 +8,7 @@ const Home = () => {
         <div>
             <HeroSection></HeroSection>
             <LogoSlider></LogoSlider>
+            <PersonalTrainers></PersonalTrainers>
         </div>
     );
 };
