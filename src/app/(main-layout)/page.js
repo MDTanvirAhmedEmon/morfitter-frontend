@@ -1,3 +1,5 @@
+import FitnessEnthusiasts from '@/components/MainLayout/Home/FitnessEnthusiasts';
+import FitnessMeets from '@/components/MainLayout/Home/FitnessMeets';
 import HeroSection from '@/components/MainLayout/Home/HeroSection';
 import LogoSlider from '@/components/MainLayout/Home/LogoSlider';
 import PersonalTrainers from '@/components/MainLayout/Home/PersonalTrainers';
@@ -9,6 +11,8 @@ const Home = () => {
             <HeroSection></HeroSection>
             <LogoSlider></LogoSlider>
             <PersonalTrainers></PersonalTrainers>
+            <FitnessEnthusiasts></FitnessEnthusiasts>
+            <FitnessMeets></FitnessMeets>
         </div>
     );
 };
