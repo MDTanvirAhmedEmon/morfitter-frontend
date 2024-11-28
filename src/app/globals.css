@@ -15,3 +15,17 @@
 .join-card:hover .join-card-text{
     color:  white; 
 }
+
+.circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 90deg,
+      #ff0000 0% 25%,
+      #ffff00 25% 50%,
+      #00ff00 50% 75%,
+      #0000ff 75% 100%
+    );
+  }
+  

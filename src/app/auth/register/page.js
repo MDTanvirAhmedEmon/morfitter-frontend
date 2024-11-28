@@ -4,6 +4,7 @@ import { PhoneOutlined } from "@ant-design/icons";
 import { IoMdArrowDropdown } from "react-icons/io";
 import dynamic from "next/dynamic";
 import regiserImg from '../../../assets/register.png'
+import circle from '../../../assets/circle.svg'
 import Image from "next/image";
 import { PiCamera } from "react-icons/pi";
 import { useState } from "react";
@@ -24,7 +25,7 @@ const Register = () => {
     <section className="py-20">
       <div className="xl:container mx-auto flex flex-col lg:flex-row gap-4 shadow-2xl p-4 md:p-8 rounded-2xl">
         {/* Image Section */}
-        <div className="lg:w-1/2 rounded-lg overflow-hidden ">
+        <div className="lg:w-1/2 rounded-lg  overflow-hidden ">
           <Image
             height={0}
             width={0}
@@ -61,18 +62,20 @@ const Register = () => {
               </Form.Item>
 
               <div className="relative mb-8 md:-mt-6">
+                <Image src={circle} className=" absolute  w-[300px]" alt="circle" height={0} width={0} /> 
                 <Avatar
                   size={140}
                   src={profilePicUrl || "/default-avatar.png"}
-                  className="border-4 border-[50%] border-white outline outline-4 outline-primary shadow-xl"
+                  className="border-4 m-[7px]"
                 />
                 <Upload
                   showUploadList={false}
                   onChange={handleProfilePicUpload}
-                  className="absolute bottom-2 right-2 flex justify-center items-center h-[28px] bg-teal-500 px-1 py-1 rounded-full cursor-pointer "
+                  className="absolute bottom-4 right-3 flex justify-center items-center h-[28px] bg-teal-500 px-1 py-1 rounded-full cursor-pointer "
                 >
                   <PiCamera className=" w-5 h-5 text-white" />
                 </Upload>
+
               </div>
             </div>
 
@@ -168,7 +171,7 @@ const Register = () => {
               </button>
             </Form.Item>
           </Form>
-          <p className=" mt-6">Already have an account <Link className=" text-primary font-semibold" href={`/auth/login`}>Log In</Link></p>
+          <p className=" mt-6">Already have an account? <Link className=" text-primary font-semibold" href={`/auth/login`}>Log In</Link></p>
         </div>
       </div>
     </section>
