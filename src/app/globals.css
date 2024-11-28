@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/* Home page why join morfitter section */
 .join-card:hover .join-card-circle{
     background-color: #0ba593;
 }
