@@ -7,6 +7,7 @@ import regiserImg from '../../../assets/register.png'
 import Image from "next/image";
 import { PiCamera } from "react-icons/pi";
 import { useState } from "react";
+import Link from "next/link";
 
 const Register = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -167,6 +168,7 @@ const Register = () => {
               </button>
             </Form.Item>
           </Form>
+          <p className=" mt-6">Already have an account <Link className=" text-primary font-semibold" href={`/auth/login`}>Log In</Link></p>
         </div>
       </div>
     </section>
