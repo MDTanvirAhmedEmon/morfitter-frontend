@@ -2,6 +2,7 @@ import Image from "next/image";
 import decorationImage1 from '../../../assets/decoration-1.png';
 import decorationImage2 from '../../../assets/decoration-2.png';
 import fitness from '../../../assets/fitness.png';
+import Link from "next/link";
 
 const FitnessJourney = () => {
     const imageStyle = {
@@ -30,9 +31,11 @@ const FitnessJourney = () => {
                                 Don’t let a busy life keep you from your fitness goals. Join
                                 Morfitter today, and make fitness work for you.
                             </div>
-                            <button className="mt-6 px-6 md:px-8 py-2 md:py-3 text-lg font-medium bg-white text-greenColor border-2 border-none rounded-full transition-colors duration-300 hover:bg-[#0ba593] hover:text-white">
-                                Sign up now
-                            </button>
+                            <Link href={`/auth/register`}>
+                                <button className="mt-6 px-6 md:px-8 py-2 md:py-3 text-lg font-medium bg-white text-greenColor border-2 border-none rounded-full transition-colors duration-300 hover:bg-[#0ba593] hover:text-white">
+                                    Sign up now
+                                </button>
+                            </Link>
                             <div className="desc-sub mt-4 text-sm text-white/80">
                                 & take the first step toward a fitter, healthier you!
                             </div>
