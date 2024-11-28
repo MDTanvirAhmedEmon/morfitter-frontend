@@ -2,3 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.join-card:hover .join-card-circle{
+    background-color: #0ba593;
+}
+
+.join-card:hover .join-card-circle-border{
+    border: 1px solid white; 
+}
+
+.join-card:hover .join-card-text{
+    color:  white; 
+}
