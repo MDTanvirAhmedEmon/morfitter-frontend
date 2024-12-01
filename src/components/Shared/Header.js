@@ -40,6 +40,16 @@ const Header = () => {
                                 Home
                             </span>
                         </Link>
+                        <Link href="/content">
+                            <span
+                                className={`${isActive("/content")
+                                    ? " rounded-full  bg-primary  text-white"
+                                    : ""
+                                    }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
+                            >
+                                Content
+                            </span>
+                        </Link>
                         <Link href="/about">
                             <span
                                 className={`${isActive("/about")
