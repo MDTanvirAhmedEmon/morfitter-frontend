@@ -35,6 +35,9 @@ const BlogComments = () => {
                     {
                         replyComments &&
                         <div className=" mt-3 ml-14">
+                            <div className=" my-5">
+                                <Input placeholder="Add a comment..." suffix={<BsSend className=" cursor-pointer w-8 h-8 " />} />
+                            </div>
                             <div className=" flex items-center gap-2">
                                 <Image className=" rounded-full w-10" src={profileImage} height={0} width={0} alt="profile" />
                                 <div>
