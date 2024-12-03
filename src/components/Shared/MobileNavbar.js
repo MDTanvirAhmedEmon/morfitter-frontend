@@ -32,6 +32,18 @@ const MobileNavbar = ({ onClose, open }) => {
                             Home
                         </span>
                     </Link>
+                    
+                    <Link onClick={onClose} href="/content">
+                        <span
+                            className={`${isActive("/content")
+                                ? " rounded-full  bg-primary  text-white"
+                                : ""
+                                }  text-lg rounded-full py-2 px-4 hover:bg-primary  hover:text-white text-white font-semibold`}
+                        >
+                            Content
+                        </span>
+                    </Link>
+                    
                     <Link onClick={onClose} href="/about">
                         <span
                             className={`${isActive("/about")
