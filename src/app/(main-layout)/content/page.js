@@ -18,7 +18,7 @@ const Content = () => {
                     alt="person"
                 />
             </div>
-            <div>
+            <div className=' py-12 md:py-20'>
                 <SingleBlog></SingleBlog>
             </div>
             <div className=' mx-3 md:mx-0'>

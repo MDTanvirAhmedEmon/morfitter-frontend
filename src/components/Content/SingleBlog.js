@@ -27,7 +27,7 @@ const SingleBlog = () => {
     return (
         <div className="timeline-post px-3 mx-0 py-5">
 
-            <div className=" p-2 md:p-5 border border-gray-300 shadow-[0px_0px_19px_0px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col md:flex-row gap-5 w-full">
+            <div className=" px-2 md:px-5 py-10 border border-gray-300 shadow-[0px_0px_19px_0px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col md:flex-row gap-5 w-full">
                 {/* Image Section */}
                 <div className=" w-28 h-24 overflow-hidden rounded-lg">
                     <Image src={follower} width={0} height={0} alt="Follower" className="w-full h-full" />
