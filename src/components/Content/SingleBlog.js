@@ -1,8 +1,29 @@
+'use client'
 import Image from 'next/image';
 import follower from '../../assets/content/follwing2.png'
 import Calisthenics from '../../assets/content/colle.svg'
 import Post1 from '../../assets/content/post1.png'
+import { useState } from 'react';
+import ShareModal from './ShareModal';
+import BlogComments from './BlogComments';
+
 const SingleBlog = () => {
+
+    const shareUrl = `${typeof window !== 'undefined' && window.location}`;
+    console.log(shareUrl);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [openComment, setOpenComment] = useState(false)
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <div className="timeline-post px-3 mx-0 py-5">
 
@@ -48,7 +69,7 @@ const SingleBlog = () => {
                     </div>
 
                     {/* Button Section */}
-                    <div className="btn-part flex gap-6 md:gap-12 items-center mt-6">
+                    <div className="btn-part flex gap-3 md:gap-12 items-center mt-6">
                         <button className="btn-item like px-2 flex gap-2 justify-center items-center shadow-md w-40 h-11 rounded-lg bg-[#0ba59313] border border-greenColor text-greenColor">
                             <svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -58,9 +79,10 @@ const SingleBlog = () => {
                                     fill="#0BA593"
                                 />
                             </svg>
-                            <span>Like</span>
+                            <span className=' hidden md:block'>Like 10</span>
+                            <span className=' block md:hidden'>10</span>
                         </button>
-                        <button className="btn-item comment px-2 flex gap-2 justify-center items-center shadow-md w-40 h-11 rounded-lg bg-red-50 border border-red-600 text-red-600">
+                        <button onClick={() => setOpenComment(!openComment)} className="btn-item comment px-2 flex gap-2 justify-center items-center shadow-md w-40 h-11 rounded-lg bg-red-50 border border-red-600 text-red-600">
                             <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     fillRule="evenodd"
@@ -69,9 +91,10 @@ const SingleBlog = () => {
                                     fill="#E26972"
                                 />
                             </svg>
-                            <span>Comment</span>
+                            <span className=' hidden md:block'>Comment 3</span>
+                            <span className=' block md:hidden'>3</span>
                         </button>
-                        <button className="btn-item share flex px-2 gap-2 justify-center items-center shadow-md w-40 h-11 rounded-lg bg-[#572c5725] border border-secondary text-secondary">
+                        <button onClick={showModal} className="btn-item share flex px-2 gap-2 justify-center items-center shadow-md w-40 h-11 rounded-lg bg-[#572c5725] border border-secondary text-secondary">
                             <svg width="23" height="26" viewBox="0 0 23 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     fillRule="evenodd"
@@ -80,11 +103,18 @@ const SingleBlog = () => {
                                     fill="#572c57"
                                 />
                             </svg>
-                            <span>Share</span>
+                            <span className=' hidden md:block'>Share</span>
                         </button>
                     </div>
+                    {openComment &&
+                        <BlogComments></BlogComments>
+                    }
+
+
+
                 </div>
             </div>
+            <ShareModal isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel} shareUrl={shareUrl}></ShareModal>
         </div>
     );
 };
