@@ -54,9 +54,9 @@ const MobileNavbar = ({ onClose, open }) => {
                             About Us
                         </span>
                     </Link>
-                    <Link onClick={onClose} href="/personal-trainers">
+                    <Link onClick={onClose} href="/trainer-profile">
                         <span
-                            className={`${isActive("/personal-trainers")
+                            className={`${isActive("/trainer-profile")
                                 ? " rounded-full  bg-primary text-white"
                                 : ""
                                 }  text-lg rounded-full py-2 px-4 hover:bg-primary  hover:text-white text-white font-semibold`}
@@ -64,9 +64,9 @@ const MobileNavbar = ({ onClose, open }) => {
                             For Personal Trainers
                         </span>
                     </Link>
-                    <Link onClick={onClose} href="/fitness-enthusiasts">
+                    <Link onClick={onClose} href="/profile">
                         <span
-                            className={`${isActive("/fitness-enthusiasts")
+                            className={`${isActive("/profile")
                                 ? " rounded-full  bg-primary text-white"
                                 : ""
                                 }  text-lg rounded-full py-2 px-4 hover:bg-primary  hover:text-white text-white font-semibold`}
