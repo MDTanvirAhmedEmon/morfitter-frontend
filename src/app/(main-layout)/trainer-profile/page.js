@@ -7,6 +7,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { PiCamera } from "react-icons/pi";
 import circle from '../../../assets/circle.svg'
 import { FaPlus } from "react-icons/fa";
+import Link from "next/link";
 
 const TrainerProfile = () => {
     const [profilePic, setProfilePic] = useState(null);
@@ -161,7 +162,7 @@ const TrainerProfile = () => {
                         </div>
 
                         <div className=" flex flex-col justify-center items-center mt-6">
-                            <button className=" text-white bg-secondary px-4 py-2 w-[300px] text-center text-lg rounded-full ">Create a training Session</button>
+                            <Link href={`/trainer-profile/creating-session`}><button className=" text-white bg-secondary px-4 py-2 w-[300px] text-center text-lg rounded-full ">Create a training Session</button></Link>
                             <p className="text-center text-secondary font-semibold underline text-lg mt-3">Reporting Dashboard</p>
                         </div>
                     </div>

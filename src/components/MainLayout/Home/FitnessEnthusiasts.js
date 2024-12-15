@@ -3,6 +3,7 @@ import gymPerson from '../../../assets/gym-person.png';
 import line from '../../../assets/line.png';
 import fitness2 from '../../../assets/fitness2.png';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const FitnessEnthusiasts = () => {
     return (
@@ -22,9 +23,11 @@ const FitnessEnthusiasts = () => {
                         Find your perfect personal trainer, follow for free, and unlock the potential of premium membership. Access exclusive workouts, live sessions, and a community of like-minded fitness seekers. Set your fitness goals, track progress, and enjoy content tailored to your lifestyle. Whether you&apos;re after muscle mass, weight loss, or overall fitness, Morfitter connects you with the right trainer to help you achieve success. Join the movement and take control of your fitness!
                     </div>
                     <div className="btn-sec">
-                        <button className="bookBtn text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-3 px-5 md:px-8 rounded-full capitalize transition-all hover:">
-                            Get Started
-                        </button>
+                        <Link href={`/find-trainers`}>
+                            <button className="bookBtn text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-3 px-5 md:px-8 rounded-full capitalize transition-all hover:">
+                                Get Started
+                            </button>
+                        </Link>
                     </div>
                 </div>
                 {/* Right Section */}
