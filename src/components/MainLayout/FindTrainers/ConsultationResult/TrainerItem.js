@@ -25,7 +25,7 @@ const TrainerItem = () => {
         });
     };
     return (
-        <div className=" border border-secondary p-2 md:p-4 rounded-lg md:flex items-center justify-between">
+        <div className=" border-2 border-secondary p-2 md:p-3 rounded-lg md:flex items-center justify-between mb-5">
             <div className=' md:flex items-center gap-4'>
                 <div className=' flex items-center gap-3 shadow-[2px_8px_8px_2px_rgba(0,0,0,0.1)] py-4 px-4 lg:px-10 rounded-xl mb-5 md:mb-0'>
                     <Image src={profile} alt='profile' width={0} height={0} className=' w-16 border-4 border-secondary rounded-lg' />
@@ -52,7 +52,7 @@ const TrainerItem = () => {
                                         : 'linear-gradient(180deg, rgba(11, 165, 147, 0.05) 0%, #08776a 51%, rgba(11, 165, 147, 0.05) 100%) 1',
                                 }}
                             >
-                                <Image src={logo} alt={`Logo ${index + 1}`} height={170} width={170} className="w-full h-full object-contain" />
+                                <Image src={logo} alt={`Logo ${index + 1}`} height={190} width={190} className="w-full h-full object-contain" />
                             </div>
                         ))}
                     </div>
