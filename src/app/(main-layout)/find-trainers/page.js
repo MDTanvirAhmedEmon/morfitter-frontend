@@ -10,6 +10,7 @@ import logo7 from '../../../assets/logo7.svg';
 import logo8 from '../../../assets/logo8.svg';
 import logo9 from '../../../assets/logo9.svg';
 import Image from 'next/image';
+import Link from 'next/link';
 
 
 const FindTrainers = () => {
@@ -107,7 +108,7 @@ const FindTrainers = () => {
                         </div>
                     </div>
                     <div className=' flex justify-center mt-5'>
-                        <button className={` text-white rounded-full px-10 py-[8px] bg-secondary hover:bg-greenColor`}>Enter</button>
+                        <Link href={`/find-trainers/consultation-result`}><button className={` text-white rounded-full px-10 py-[8px] bg-secondary hover:bg-greenColor`}>Enter</button></Link>
                     </div>
 
                 </div>

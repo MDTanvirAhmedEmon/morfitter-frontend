@@ -25,7 +25,7 @@ const Header = () => {
     return (
         <nav className=" sticky top-0 bg-white z-50 shadow-lg">
             <div className="container mx-auto px-6 py-5 flex justify-between items-center">
-                <Image src={logo} alt="logo" height={0} width={0} className=" w-32" />
+                <Link href={`/`}><Image src={logo} alt="logo" height={0} width={0} className=" w-32" /></Link>
 
                 {/* Desktop Menu */}
                 <div className="hidden xl:flex space-x-5 items-center">
