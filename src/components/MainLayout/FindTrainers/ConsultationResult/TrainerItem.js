@@ -25,16 +25,16 @@ const TrainerItem = () => {
         });
     };
     return (
-        <div className=" border border-secondary p-4 rounded-lg flex items-center justify-between">
-            <div className=' flex items-center gap-4'>
-                <div className=' flex items-center gap-3 shadow-[2px_8px_8px_2px_rgba(0,0,0,0.1)] py-4 px-10 rounded-xl'>
+        <div className=" border border-secondary p-2 md:p-4 rounded-lg md:flex items-center justify-between">
+            <div className=' md:flex items-center gap-4'>
+                <div className=' flex items-center gap-3 shadow-[2px_8px_8px_2px_rgba(0,0,0,0.1)] py-4 px-4 lg:px-10 rounded-xl mb-5 md:mb-0'>
                     <Image src={profile} alt='profile' width={0} height={0} className=' w-16 border-4 border-secondary rounded-lg' />
                     <div>
                         <h2 className=' text-lg mb-1'>MIra bator</h2>
                         <p className=' text-gray-500'>Trainer</p>
                     </div>
                 </div>
-                <div className="flex gap-1 overflow-x-auto ">
+                <div className=" flex gap-1 overflow-x-auto  mb-5 md:mb-0">
                     <div className="flex gap-1 flex-nowrap xl:flex-wrap">
                         {logos.map((logo, index) => (
                             <div
@@ -60,25 +60,30 @@ const TrainerItem = () => {
             </div>
 
 
-            <div>
-                <div>
-                    <div>
+            <div className=' flex items-center justify-between xl:gap-16'>
+                <div className=' flex flex-col gap-2'>
+                    <div className=' flex items-center gap-2'>
                         <div className='right-part'>
                             <p className=' text-white'>5</p>
-                            <MdOutlineStarPurple500 className=' w-7 h-7 text-greenColor' />
+                            <MdOutlineStarPurple500 className=' w-5 h-5 text-white' />
                         </div>
+                        <h3>120 reviews</h3>
+                    </div>
+                    <div className=' text-lg'>
+                        <span className=' font-semibold mt-2 ml-3'>0.5 </span>miles away
                     </div>
                 </div>
+
                 <div className=' flex flex-col justify-center items-center'>
                     <button className={` mb-3 text-white rounded-full px-4 py-[5px] bg-secondary hover:bg-greenColor`}>Contact</button>
                     <div className=' flex gap-4 items-center'>
                         <div className=' flex flex-col items-center'>
                             <FaUser className=' text-greenColor w-5 h-5' />
-                            <p>Bespoke</p>
+                            <p className=' text-primary font-semibold'>Bespoke</p>
                         </div>
                         <div className=' flex flex-col items-center'>
                             <FaUsers className=' text-greenColor w-5 h-5' />
-                            <p>Group</p>
+                            <p className=' text-primary font-semibold'>Group</p>
                         </div>
                     </div>
                 </div>

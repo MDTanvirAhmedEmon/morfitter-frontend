@@ -2,7 +2,7 @@ import TrainerItem from "../../../../components/MainLayout/FindTrainers/Consulta
 
 const ConsultationResult = () => {
     return (
-        <div className=" py-16 container mx-auto">
+        <div className=" py-16 md:container mx-3 md:mx-auto">
             <TrainerItem></TrainerItem>
         </div>
     );
