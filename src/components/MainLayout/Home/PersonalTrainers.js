@@ -6,6 +6,7 @@ import p3 from '../../../assets/p3.png';
 import p4 from '../../../assets/p4.png';
 import p5 from '../../../assets/p5.png';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const PersonalTrainers = () => {
     return (
@@ -99,9 +100,11 @@ const PersonalTrainers = () => {
                         their homes.
                     </div>
                     <div className="btn-sec">
-                        <button className="bookBtn text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-3 px-5 md:px-8 rounded-full capitalize transition-all hover:">
-                            Get Started
-                        </button>
+                        <Link href={`/auth/register`}>
+                            <button className="bookBtn text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-3 px-5 md:px-8 rounded-full capitalize transition-all hover:">
+                                Get Started
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>
