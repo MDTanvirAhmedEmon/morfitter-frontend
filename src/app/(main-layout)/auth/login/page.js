@@ -3,10 +3,9 @@ import { Form, Input, Checkbox, Avatar, Upload } from "antd";
 import { PhoneOutlined } from "@ant-design/icons";
 import { IoMdArrowDropdown } from "react-icons/io";
 import dynamic from "next/dynamic";
-import regiserImg from '../../../assets/register.png'
+import regiserImg from '../../../../assets/register.png'
 import Image from "next/image";
-import { PiCamera } from "react-icons/pi";
-import { useState } from "react";
+
 import Link from "next/link";
 
 const LogIn = () => {
