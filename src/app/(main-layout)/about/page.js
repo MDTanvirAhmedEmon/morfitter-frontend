@@ -2,7 +2,7 @@ import React from 'react';
 
 const About = () => {
     return (
-        <div>
+        <div className=' container mx-auto py-10'>
             About
         </div>
     );
