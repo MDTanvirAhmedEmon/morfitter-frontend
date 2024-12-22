@@ -38,9 +38,18 @@ const HeroSection = () => {
                             Achieve your goals with expert trainers and personalized plans,
                             anytime, anywhere.
                         </div>
-                        <button className="bookBtn text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-3 px-5 md:px-8 rounded-full capitalize transition-all hover:">
-                            Book A Schedule
-                        </button>
+                        <div className=" flex items-center gap-6 md:gap-12">
+
+                            <button className="bookBtn text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-3 px-5 md:px-8 rounded-full capitalize transition-all hover:">
+                                Members Join Free
+                            </button>
+                            <Link href={`/auth/pt-register`}>
+                                <button className="bookBtn text-lg font-medium leading-8 text-white bg-primary hover:bg-greenColor py-2 md:py-3 px-5 md:px-8 rounded-full capitalize transition-all hover:">
+                                    PTs Join Free
+                                </button>
+                            </Link>
+                        </div>
+
                         <div className="icon flex gap-4 mt-8">
                             <Link href="#" className="item w-10 h-10 flex items-center justify-center bg-white rounded-full shadow-md">
                                 <Image src={fb} alt="Facebook" width={0} height={0} className="w-5 h-5" />
