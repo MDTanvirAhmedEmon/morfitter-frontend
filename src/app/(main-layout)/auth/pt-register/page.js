@@ -10,7 +10,7 @@ import { PiCamera } from "react-icons/pi";
 import { useState } from "react";
 import Link from "next/link";
 
-const Register = () => {
+const PTRegister = () => {
   const [profilePic, setProfilePic] = useState(null);
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -62,7 +62,7 @@ const Register = () => {
               </Form.Item>
 
               <div className="relative mb-8 md:-mt-6">
-                <Image src={circle} className=" absolute  w-[300px]" alt="circle" height={0} width={0} /> 
+                <Image src={circle} className=" absolute  w-[300px]" alt="circle" height={0} width={0} />
                 <Avatar
                   size={140}
                   src={profilePicUrl || "/default-avatar.png"}
@@ -166,9 +166,11 @@ const Register = () => {
 
             {/* Submit Button */}
             <Form.Item>
-              <button type="submit" className="bookBtn text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:">
-                Submit
-              </button>
+              <Link href={`/auth/pt-register/pt-register-2`}>
+                <button type="submit" className="bookBtn text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:">
+                  Next
+                </button>
+              </Link>
             </Form.Item>
           </Form>
           <p className=" mt-6">Already have an account? <Link className=" text-primary font-semibold" href={`/auth/login`}>Log In</Link></p>
@@ -179,6 +181,6 @@ const Register = () => {
 };
 
 // export default Register;
-export default dynamic(() => Promise.resolve(Register), {
+export default dynamic(() => Promise.resolve(PTRegister), {
   ssr: false,
 });

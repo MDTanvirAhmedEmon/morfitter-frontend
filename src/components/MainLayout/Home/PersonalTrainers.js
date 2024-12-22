@@ -100,7 +100,7 @@ const PersonalTrainers = () => {
                         their homes.
                     </div>
                     <div className="btn-sec">
-                        <Link href={`/auth/register`}>
+                        <Link href={`/auth/pt-register`}>
                             <button className="bookBtn text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-3 px-5 md:px-8 rounded-full capitalize transition-all hover:">
                                 Get Started
                             </button>
