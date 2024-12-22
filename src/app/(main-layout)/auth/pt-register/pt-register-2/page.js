@@ -14,6 +14,7 @@ import logo6 from '../../../../../assets/logo6.svg';
 import logo7 from '../../../../../assets/logo7.svg';
 import logo8 from '../../../../../assets/logo8.svg';
 import logo9 from '../../../../../assets/logo9.svg';
+import Link from "next/link";
 
 
 const PTRegister2 = () => {
@@ -179,9 +180,11 @@ const PTRegister2 = () => {
                         </div>
 
                         <div className=" flex justify-end">
-                            <button type="submit" className=" text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:">
-                                Enter
-                            </button>
+                            <Link href={`/trainer-profile`}>
+                                <button type="submit" className=" text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:">
+                                    Enter
+                                </button>
+                            </Link>
                         </div>
                     </Form>
                 </div>
