@@ -22,7 +22,7 @@ const PTRegister = () => {
 
 
   return (
-    <section className="py-20">
+    <section className="py-8 md:py-20">
       <div className="xl:container mx-auto flex flex-col lg:flex-row gap-4 shadow-2xl p-4 md:p-8 rounded-2xl">
         {/* Image Section */}
         <div className="lg:w-1/2 rounded-lg  overflow-hidden ">

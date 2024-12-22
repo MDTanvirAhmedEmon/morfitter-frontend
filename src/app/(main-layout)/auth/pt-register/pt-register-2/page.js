@@ -1,5 +1,5 @@
 'use client'
-import { Form, Input, Select } from "antd";
+import { ConfigProvider, Form, Input, Select } from "antd";
 import dynamic from "next/dynamic";
 import regiserImg from '../../../../../assets/fitness2.png'
 import Image from "next/image";
@@ -41,7 +41,7 @@ const PTRegister2 = () => {
 
 
     return (
-        <section className="py-20">
+        <section className="py-8 md:py-20">
             <div className="xl:container mx-auto flex flex-col lg:flex-row gap-4 shadow-2xl p-4 md:p-8 rounded-2xl">
                 {/* Image Section */}
                 <div className="lg:w-1/2 rounded-lg  overflow-hidden ">
@@ -50,16 +50,12 @@ const PTRegister2 = () => {
                         width={0}
                         src={regiserImg}
                         alt="Register"
-                        className="w-full h-full object-cover"
+                        className="w-full h-[80%] object-cover"
                     />
                 </div>
 
                 {/* Form Section */}
                 <div className="lg:w-1/2 flex flex-col justify-center md:p-8 rounded-lg ">
-                    <h1 className="text-2xl md:text-5xl font-bold  mb-8">
-                        Register for Free
-                    </h1>
-
                     <Form
                         name="register"
                         onFinish={onFinish}
@@ -67,59 +63,75 @@ const PTRegister2 = () => {
                         className=" space-x-0 md:space-y-4"
                     >
                         {/* Second Item (Name + Surname) */}
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid md:grid-cols-2 md:gap-4">
                             <Form.Item
-                                name="name"
-                                rules={[{ required: true, message: "Please input your name!" }]}
+                                name="country"
+                                rules={[{ required: true, message: "Please input your country!" }]}
                             >
-                                <Input placeholder="Name" className="w-full" />
+                                <Input placeholder="Country" className="w-full" />
                             </Form.Item>
 
                             <Form.Item
-                                name="surname"
-                                rules={[{ required: true, message: "Please input your surname!" }]}
+                                name="zip"
+                                rules={[{ required: true, message: "Please input your zip code!" }]}
                             >
-                                <Input placeholder="Surname" className="w-full" />
+                                <Input placeholder="Postcode or Zip code" className="w-full" />
                             </Form.Item>
                         </div>
 
                         <div className='  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-8'>
-                            <p className=' text-lg w-1/2'>I condact online sessions:</p>
-                            <div className=" w-1/2 flex lg:gap-8 items-center">
-                                <button onClick={() => setOnlineSession('Yes')} className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${onlineSession === 'Yes' ? 'bg-greenColor' : 'bg-secondary'}`}>Yes</button>
-                                <button onClick={() => setOnlineSession('No')} className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${onlineSession === 'No' ? 'bg-greenColor' : 'bg-secondary'}`}>No</button>
+                            <p className=' text-lg md:w-1/2'>I condact online sessions:</p>
+                            <div className=" w-1/2 flex gap-5 lg:gap-8 items-center">
+                                <button type="button" onClick={() => setOnlineSession('Yes')} className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${onlineSession === 'Yes' ? 'bg-greenColor' : 'bg-secondary'}`}>Yes</button>
+                                <button type="button" onClick={() => setOnlineSession('No')} className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${onlineSession === 'No' ? 'bg-greenColor' : 'bg-secondary'}`}>No</button>
                             </div>
                         </div>
 
                         <div className='  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-8'>
-                            <p className=' text-lg w-1/2'>I condact face to face sessions:</p>
-                            <div className=" w-1/2 flex lg:gap-8 items-center">
-                                <button onClick={() => setFaceToFace('Yes')} className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${faceToFace === 'Yes' ? 'bg-greenColor' : 'bg-secondary'}`}>Yes</button>
-                                <button onClick={() => setFaceToFace('No')} className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${faceToFace === 'No' ? 'bg-greenColor' : 'bg-secondary'}`}>No</button>
+                            <p className=' text-lg md:w-1/2'>I condact face to face sessions:</p>
+                            <div className=" w-1/2 flex gap-5 lg:gap-8 items-center">
+                                <button type="button" onClick={() => setFaceToFace('Yes')} className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${faceToFace === 'Yes' ? 'bg-greenColor' : 'bg-secondary'}`}>Yes</button>
+                                <button type="button" onClick={() => setFaceToFace('No')} className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${faceToFace === 'No' ? 'bg-greenColor' : 'bg-secondary'}`}>No</button>
                             </div>
                         </div>
                         <div>
-                            <Form.Item
-                                name="surname"
-                                className=" w-1/2"
-                                rules={[{ required: true, message: "Please select your surname!" }]}
+                            <ConfigProvider
+                                theme={{
+                                    token: {
+                                        "Select": {
+                                            "activeBorderColor": "rgb(11,165,147)",
+                                            "hoverBorderColor": "rgb(11,165,147)",
+                                            "colorPrimary": "rgb(11,165,147)",
+                                            "controlHeight": 40,
+                                            "fontSize": 16,
+                                            "colorBorder": "rgb(11,165,147)"
+                                        }
+                                    },
+                                }}
                             >
-                                <Select placeholder={<p className=" text-lg">Radius<span className=" text-sm">(If yes face to face sessions)</span></p>}>
-                                    <Select.Option value="1m">1m</Select.Option>
-                                    <Select.Option value="2m">2m</Select.Option>
-                                    <Select.Option value="3m">3m</Select.Option>
-                                    <Select.Option value="4m">4m</Select.Option>
-                                    <Select.Option value="5m">5m</Select.Option>
-                                    <Select.Option value="6m">6m</Select.Option>
-                                    <Select.Option value="7m">7m</Select.Option>
-                                    <Select.Option value="10m">10m</Select.Option>
-                                    <Select.Option value="11m">11m</Select.Option>
-                                    <Select.Option value="12m">12m</Select.Option>
-                                    <Select.Option value="13m">13m</Select.Option>
-                                    <Select.Option value="14m">14m</Select.Option>
-                                    <Select.Option value="15m">15m</Select.Option>
-                                </Select>
-                            </Form.Item>
+
+                                <Form.Item
+                                    name="surname"
+                                    className=" md:w-1/2"
+                                    rules={[{ required: true, message: "Please select your surname!" }]}
+                                >
+                                    <Select placeholder={<p className=" text-lg">Radius<span className=" text-sm">(If yes face to face sessions)</span></p>}>
+                                        <Select.Option value="1m">1m</Select.Option>
+                                        <Select.Option value="2m">2m</Select.Option>
+                                        <Select.Option value="3m">3m</Select.Option>
+                                        <Select.Option value="4m">4m</Select.Option>
+                                        <Select.Option value="5m">5m</Select.Option>
+                                        <Select.Option value="6m">6m</Select.Option>
+                                        <Select.Option value="7m">7m</Select.Option>
+                                        <Select.Option value="10m">10m</Select.Option>
+                                        <Select.Option value="11m">11m</Select.Option>
+                                        <Select.Option value="12m">12m</Select.Option>
+                                        <Select.Option value="13m">13m</Select.Option>
+                                        <Select.Option value="14m">14m</Select.Option>
+                                        <Select.Option value="15m">15m</Select.Option>
+                                    </Select>
+                                </Form.Item>
+                            </ConfigProvider>
                         </div>
                         <div>
                             <Form.Item
@@ -132,14 +144,14 @@ const PTRegister2 = () => {
                         </div>
 
                         <div className='  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-8'>
-                            <p className=' text-lg w-1/2'>Consultations I offer are:</p>
-                            <div className=" w-1/2 flex lg:gap-8 items-center">
-                                <button onClick={() => setConsultation('Free')} className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${consultation === 'Free' ? 'bg-greenColor' : 'bg-secondary'}`}>Free</button>
-                                <button onClick={() => setConsultation('Paid')} className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${consultation === 'Paid' ? 'bg-greenColor' : 'bg-secondary'}`}>Paid</button>
+                            <p className=' text-lg md:w-1/2'>Consultations I offer are:</p>
+                            <div className=" w-1/2 flex gap-5 lg:gap-8 items-center">
+                                <button type="button" onClick={() => setConsultation('Free')} className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${consultation === 'Free' ? 'bg-greenColor' : 'bg-secondary'}`}>Free</button>
+                                <button type="button" onClick={() => setConsultation('Paid')} className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${consultation === 'Paid' ? 'bg-greenColor' : 'bg-secondary'}`}>Paid</button>
                             </div>
                         </div>
 
-                        <div>
+                        <div className=" mb-10">
                             <p className=" text-lg">specialism</p>
                             <div className="flex gap-1 overflow-x-auto mt-4">
                                 <div className="flex justify-center flex-nowrap xl:flex-wrap">
@@ -166,11 +178,11 @@ const PTRegister2 = () => {
                             </div>
                         </div>
 
-                        <Form.Item>
-                            <button type="submit" className="bookBtn text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:">
-                                Next
+                        <div className=" flex justify-end">
+                            <button type="submit" className=" text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:">
+                                Enter
                             </button>
-                        </Form.Item>
+                        </div>
                     </Form>
                 </div>
             </div>
