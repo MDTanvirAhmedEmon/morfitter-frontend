@@ -194,11 +194,11 @@ const UserRegister = () => {
 
                         {/* Submit Button */}
                         <Form.Item>
-                            {/* <Link href={`/auth/pt-register/pt-register-2`}> */}
+                            <Link href={`/auth/user-register/user-register-2`}>
                                 <button type="submit" className="bookBtn text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:">
                                     Next
                                 </button>
-                            {/* </Link> */}
+                            </Link>
                         </Form.Item>
                     </Form>
                     <p className=" mt-6">Already have an account? <Link className=" text-primary font-semibold" href={`/auth/login`}>Log In</Link></p>
