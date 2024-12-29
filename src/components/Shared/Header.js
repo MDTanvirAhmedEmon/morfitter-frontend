@@ -50,7 +50,7 @@ const Header = () => {
                                 Content
                             </span>
                         </Link>
-                        <Link href="/about">
+                        {/* <Link href="/about">
                             <span
                                 className={`${isActive("/about")
                                     ? " rounded-full  bg-primary  text-white"
@@ -58,6 +58,36 @@ const Header = () => {
                                     }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
                             >
                                 About Us
+                            </span>
+                        </Link>  */}
+                        <Link href="/get-morfitter">
+                            <span
+                                className={`${isActive("/get-morfitter")
+                                    ? " rounded-full  bg-primary  text-white"
+                                    : ""
+                                    }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
+                            >
+                                Get MORfitter
+                            </span>
+                        </Link>
+                        <Link href="/morfitter-pts">
+                            <span
+                                className={`${isActive("/morfitter-pts")
+                                    ? " rounded-full  bg-primary  text-white"
+                                    : ""
+                                    }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
+                            >
+                                MORfitter PTs
+                            </span>
+                        </Link>
+                        <Link href="/morfitter-sessions">
+                            <span
+                                className={`${isActive("/morfitter-sessions")
+                                    ? " rounded-full  bg-primary  text-white"
+                                    : ""
+                                    }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
+                            >
+                                MORfitter Sessions
                             </span>
                         </Link>
                         <Link href="/trainer-profile">
@@ -67,7 +97,7 @@ const Header = () => {
                                     : ""
                                     }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
                             >
-                                For Personal Trainers
+                                PT Profile
                             </span>
                         </Link>
                         <Link href="/profile">
@@ -77,10 +107,10 @@ const Header = () => {
                                     : ""
                                     }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
                             >
-                                For Fitness Enthusiasts
+                                Profile
                             </span>
                         </Link>
-                        <Link href="/blog">
+                        {/* <Link href="/blog">
                             <span
                                 className={`${isActive("/blog")
                                     ? " rounded-full  bg-primary  text-white"
@@ -89,7 +119,7 @@ const Header = () => {
                             >
                                 Blogs
                             </span>
-                        </Link>
+                        </Link> */}
                     </ul>
 
                 </div>
