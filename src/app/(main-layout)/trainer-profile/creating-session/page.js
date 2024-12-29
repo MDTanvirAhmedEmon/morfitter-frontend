@@ -1,155 +1,231 @@
-"use client"
-import Image from 'next/image';
-import logo1 from '../../../../assets/logo1.svg';
-import logo2 from '../../../../assets/logo2.svg';
-import logo3 from '../../../../assets/logo3.svg';
-import logo4 from '../../../../assets/logo4.svg';
-import logo5 from '../../../../assets/logo5.svg';
-import logo6 from '../../../../assets/logo6.svg';
-import logo7 from '../../../../assets/logo7.svg';
-import logo8 from '../../../../assets/logo8.svg';
-import logo9 from '../../../../assets/logo9.svg';
-import { useState } from 'react';
-import { ConfigProvider, Form, Input, Upload } from 'antd';
+'use client'
+import { ConfigProvider, DatePicker, Form, Input, Select, Upload } from "antd";
+import regiserImg from '../../../../assets/fitness2.png'
+import Image from "next/image";
+import { useState } from "react";
+import TextArea from "antd/es/input/TextArea";
+import Link from "next/link";
 import { LuUpload } from "react-icons/lu";
 
+
 const CreatingSession = () => {
-    const [fileType, setFileType] = useState('audio');
-    const [selectedLogos, setSelectedLogos] = useState([]);
     const [profilePic, setProfilePic] = useState(null);
-    const handleProfilePicUpload = (e) => {
-        setProfilePic(e.file.originFileObj);
-    };
-
-    const logos = [logo1, logo2, logo3, logo4, logo5, logo6, logo7, logo8, logo9, logo2];
-
-    const handleLogoClick = (index) => {
-        setSelectedLogos((prevSelected) => {
-            if (prevSelected.includes(index)) {
-                return prevSelected.filter((item) => item !== index);
-            } else {
-                return [...prevSelected, index];
-            }
-        });
-    };
+    const [Video1, setVideo1] = useState(null);
+    const [Video2, setVideo2] = useState(null);
+    const [Video3, setVideo3] = useState(null);
 
     const onFinish = (values) => {
-        console.log('Success:', values);
+        console.log("Success:", values);
     };
 
+    const [frequency, setFrequency] = useState(null);
+    const [faceToFace, setFaceToFace] = useState(null);
+    const [consultation, setConsultation] = useState(null);
+
+    const onChange = (date, dateString) => {
+        console.log(date, dateString);
+    };
     return (
-        <section className=" py-14 px-3 md:px-0">
-            <div className=" container mx-auto">
-
-                <div className=" flex gap-2 md:gap-4 items-center">
-                    <button onClick={() => setFileType('audio')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${fileType === 'audio' ? 'bg-greenColor' : 'bg-secondary'}`}>Audio</button>
-                    <button onClick={() => setFileType('video')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${fileType === 'video' ? 'bg-greenColor' : 'bg-secondary'}`}>Video</button>
-                    <button onClick={() => setFileType('content')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${fileType === 'content' ? 'bg-greenColor' : 'bg-secondary'}`}>Content</button>
-                </div>
-                <div className="flex gap-1 mt-8 overflow-x-auto ">
-                    <div className="flex gap-1 flex-nowrap xl:flex-wrap">
-                        {logos.map((logo, index) => (
-                            <div
-                                key={index}
-                                onClick={() => handleLogoClick(index)}
-                                className={`flex items-center justify-center w-[120px] lg:w-[150px] h-[120px] lg:h-[150px] px-7 text-center cursor-pointer ${selectedLogos.includes(index)
-                                    ? 'border-4 border-greenColor shadow shadow-greenColor'
-                                    : 'border-2 border-solid border-transparent'
-                                    } rounded transition-all duration-300`}
-                                style={{
-                                    borderWidth: '2px',
-                                    borderStyle: 'solid',
-                                    borderImage: selectedLogos.includes(index)
-                                        ? 'none'
-                                        : 'linear-gradient(180deg, rgba(11, 165, 147, 0.05) 0%, #08776a 51%, rgba(11, 165, 147, 0.05) 100%) 1', // Gradient for unselected logos
-                                }}
-                            >
-                                <Image src={logo} alt={`Logo ${index + 1}`} height={170} width={170} className="w-full h-full object-contain" />
-                            </div>
-                        ))}
-                    </div>
+        <section className="py-8 md:py-20">
+            <div className="xl:container mx-auto flex flex-col lg:flex-row gap-4 shadow-2xl p-4 md:p-8 rounded-2xl">
+                {/* Image Section */}
+                <div className="lg:w-1/2 rounded-lg  overflow-hidden ">
+                    <Image
+                        height={0}
+                        width={0}
+                        src={regiserImg}
+                        alt="Register"
+                        className="w-full h-[80%] object-cover"
+                    />
                 </div>
 
-                <div className=' w-full mt-10'>
-                    <div className="border-2 border-[#d9d9d9] text-[#c0c0c0] rounded-md mb-6 px-2 py-1 flex justify-between items-center w-full">
-
-                        {!profilePic && <p>Upload video or audio or image</p>}
-                        <p className="text-sm text-gray-700">
-                            {profilePic && profilePic}
-                        </p>
-
-                        <Upload
-
-                            showUploadList={false}
-                            maxCount={1}
-                            beforeUpload={(file) => {
-                                setProfilePic(file.name);
-                                return false;
-                            }}
-                            className="cursor-pointer"
-                        >
-                            <LuUpload className="text-[#a3a3a3] h-8 w-8 p-1" />
-
-                        </Upload>
-
-                    </div>
-                    <ConfigProvider
-                        theme={{
-                            components: {
-                                Input: {
-                                    "colorBorder": "#d9d9d9",
-                                    "hoverBorderColor": "rgb(11,165,147)",
-                                    "activeBorderColor": "rgb(11,165,147)",
-                                    "lineWidth": 2
-                                },
-                            },
-                        }}
+                {/* Form Section */}
+                <div className="lg:w-1/2 flex flex-col justify-center md:p-8 rounded-lg ">
+                    <Form
+                        name="register"
+                        onFinish={onFinish}
+                        initialValues={{ remember: true }}
+                        className=" space-x-0 md:space-y-4"
                     >
-                        <Form
-                            name="basic"
+                        <div>
 
-                            initialValues={{
-                                remember: true,
-                            }}
-                            onFinish={onFinish}
-                            autoComplete="off"
+                            <Form.Item
+                                name="trainingType"
+                                className=""
+                                rules={[{ required: true, message: "Please select your surname!" }]}
+                            >
+                                <Select placeholder={<p className=" text-lg">Training type</p>}>
+                                    <Select.Option value="Recorded">Recorded</Select.Option>
+                                    <Select.Option value="Live Group">Live Group</Select.Option>
+                                    <Select.Option value="1on1 session">1 On 1 Session</Select.Option>
+                                </Select>
+                            </Form.Item>
+
+                        </div>
+                        <div>
+                            <Form.Item
+                                name="focus"
+                                className=""
+                                rules={[{ required: true, message: "Please select your surname!" }]}
+                            >
+                                <Select placeholder={<p className=" text-lg">Fitness focus</p>}>
+                                    <Select.Option value="Recorded">Recorded</Select.Option>
+                                    <Select.Option value="Live Group">Live Group</Select.Option>
+                                    <Select.Option value="1on1 session">1on1 session</Select.Option>
+                                </Select>
+                            </Form.Item>
+                        </div>
+                        {/* Second Item (Name + Surname) */}
+                        <div className="">
+                            <Form.Item
+                                name="title"
+                                rules={[{ required: true, message: "Please input content title!" }]}
+                            >
+                                <Input placeholder="Content title" className="w-full" />
+                            </Form.Item>
+                        </div>
+                        <div className=" flex items-center gap-4">
+                            <div className="border border-greenColor text-[#c0c0c0] rounded-md  px-2 py-2 flex justify-between items-center w-full">
+
+                                {!profilePic && <p>Upload video</p>}
+                                <p className="text-sm text-gray-700">
+                                    {profilePic && profilePic}
+                                </p>
+
+                            </div>
+                            <Upload
+
+                                showUploadList={false}
+                                maxCount={1}
+                                beforeUpload={(file) => {
+                                    setProfilePic(file.name);
+                                    return false;
+                                }}
+                                className=" bg-primary py-2 px-4 rounded-full font-semibold text-white cursor-pointer"
+                            >
+                                Upload
+
+                            </Upload>
+                        </div>
+
+
+
+                        <div className='  flex flex-col md:flex-row md:items-center gap-4 lg:gap-6 my-20'>
+                            <p className=' text-lg '>Frequency</p>
+                            <div className=" flex gap-5 lg:gap-8 items-center">
+                                <button type="button" onClick={() => setFrequency('Weekly')} className={` text-white rounded-full px-3 md:px-6 md:py-[6px] hover:bg-greenColor font-semibold md:text-lg ${frequency === 'Weekly' ? 'bg-greenColor' : 'bg-secondary'}`}>Weekly</button>
+                                <button type="button" onClick={() => setFrequency('Fortnightly')} className={` text-white rounded-full px-3 md:px-6 md:py-[6px] hover:bg-greenColor font-semibold md:text-lg ${frequency === 'Fortnightly' ? 'bg-greenColor' : 'bg-secondary'}`}>Fortnightly</button>
+                                <button type="button" onClick={() => setFrequency('Monthly')} className={` text-white rounded-full px-3 md:px-6 md:py-[6px] hover:bg-greenColor font-semibold md:text-lg ${frequency === 'Monthly' ? 'bg-greenColor' : 'bg-secondary'}`}>Monthly</button>
+                            </div>
+                        </div>
+
+                        <Form.Item
+                            name="startDate"
+                            className=""
+                            rules={[{ required: true, message: "Please select start date!" }]}
                         >
-                            <Form.Item
-                                name="subject"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please input subject!',
-                                    },
-                                ]}
+                            <div className=" flex items-center gap-3">
+                                <p className=" text-lg w-[16%]">Start Date</p>
+                                <DatePicker className=" w-full" onChange={onChange} />
+                            </div>
+
+                        </Form.Item>
+
+                        <Form.Item
+                            name="startDate"
+                            className=""
+                            rules={[{ required: true, message: "Please select start date!" }]}
+                        >
+                            <div className=" flex items-center gap-3">
+                                <p className=" text-lg w-[16%]">Access</p>
+                                <Select placeholder={<p className=" text-lg">Access</p>}>
+                                    <Select.Option value="Free">Free</Select.Option>
+                                    <Select.Option value="Followers only">Followers only</Select.Option>
+                                    <Select.Option value="Membership">Membership</Select.Option>
+                                </Select>
+                            </div>
+
+                        </Form.Item>
+                        <div className=" flex items-center gap-4">
+                            <div className="border border-greenColor text-[#c0c0c0] rounded-md  px-2 py-2 flex justify-between items-center w-full">
+
+                                {!Video1 && <p>Upload video</p>}
+                                <p className="text-sm text-gray-700">
+                                    {Video1 && Video1}
+                                </p>
+
+                            </div>
+                            <Upload
+
+                                showUploadList={false}
+                                maxCount={1}
+                                beforeUpload={(file) => {
+                                    setVideo1(file.name);
+                                    return false;
+                                }}
+                                className=" bg-primary py-2 px-4 rounded-full font-semibold text-white cursor-pointer"
                             >
-                                <Input placeholder='Enter subject line' />
-                            </Form.Item>
+                                Upload
 
-                            <Form.Item
-                                name="password"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please input your content/text!',
-                                    },
-                                ]}
+                            </Upload>
+                        </div>
+                        <div className=" flex items-center gap-4 mt-5">
+                            <div className="border border-greenColor text-[#c0c0c0] rounded-md  px-2 py-2 flex justify-between items-center w-full">
+
+                                {!Video2 && <p>Upload video</p>}
+                                <p className="text-sm text-gray-700">
+                                    {Video2 && Video2}
+                                </p>
+
+                            </div>
+                            <Upload
+
+                                showUploadList={false}
+                                maxCount={1}
+                                beforeUpload={(file) => {
+                                    setVideo2(file.name);
+                                    return false;
+                                }}
+                                className=" bg-primary py-2 px-4 rounded-full font-semibold text-white cursor-pointer"
                             >
-                                <Input.TextArea placeholder='Add additional content/text' />
-                            </Form.Item>
+                                Upload
 
+                            </Upload>
+                        </div>
+                        <div className=" flex items-center gap-4 my-5">
+                            <div className="border border-greenColor text-[#c0c0c0] rounded-md  px-2 py-2 flex justify-between items-center w-full">
 
-                            <Form.Item className=' flex justify-center'>
-                                <button type="primary" htmlType="submit" className=' bg-primary text-white px-12 py-1 rounded-full text-lg'>
-                                    Submit
+                                {!Video3 && <p>Upload video</p>}
+                                <p className="text-sm text-gray-700">
+                                    {Video3 && Video3}
+                                </p>
+
+                            </div>
+                            <Upload
+
+                                showUploadList={false}
+                                maxCount={1}
+                                beforeUpload={(file) => {
+                                    setVideo3(file.name);
+                                    return false;
+                                }}
+                                className=" bg-primary py-2 px-4 rounded-full font-semibold text-white cursor-pointer"
+                            >
+                                Upload
+
+                            </Upload>
+                        </div>
+
+                        <div className=" flex justify-end">
+                            <Link href={`/trainer-profile`}>
+                                <button type="submit" className=" md:text-lg leading-8 text-white bg-secondary hover:bg-greenColor md:py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:">
+                                    Enter
                                 </button>
-                            </Form.Item>
-                        </Form>
-                    </ConfigProvider>
+                            </Link>
+                        </div>
+                    </Form>
                 </div>
-
             </div>
-
         </section>
     );
 };

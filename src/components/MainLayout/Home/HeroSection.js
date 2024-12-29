@@ -39,10 +39,11 @@ const HeroSection = () => {
                             anytime, anywhere.
                         </div>
                         <div className=" flex items-center gap-6 md:gap-12">
-
-                            <button className="bookBtn text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-3 px-5 md:px-8 rounded-full capitalize transition-all hover:">
-                                Members Join Free
-                            </button>
+                            <Link href={`auth/user-register`}>
+                                <button className="bookBtn text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-3 px-5 md:px-8 rounded-full capitalize transition-all hover:">
+                                    Members Join Free
+                                </button>
+                            </Link>
                             <Link href={`/auth/pt-register`}>
                                 <button className="bookBtn text-lg font-medium leading-8 text-white bg-primary hover:bg-greenColor py-2 md:py-3 px-5 md:px-8 rounded-full capitalize transition-all hover:">
                                     PTs Join Free

@@ -147,22 +147,30 @@ const TrainerProfile = () => {
                         <div className=" flex flex-col md:flex-row gap-5 w-full mt-4">
                             <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
                                 <div className=" text-gray-500 text-lg md:text-xl font-bold">Blog</div>
-                                <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg "><FaPlus className=" text-greenColor" /></button>
+                                <Link href={`/trainer-profile/creating-content`}>
+                                    <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg "><FaPlus className=" text-greenColor" /></button>
+                                </Link>
                             </div>
 
                             <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
                                 <div className=" text-gray-500 text-lg md:text-xl font-bold">Video</div>
-                                <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg "><FaPlus className=" text-greenColor" /></button>
+                                <Link href={`/trainer-profile/creating-content`}>
+                                    <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg "><FaPlus className=" text-greenColor" /></button>
+                                </Link>
                             </div>
 
                             <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
                                 <div className=" text-gray-500 text-lg md:text-xl font-bold">Images</div>
-                                <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg "><FaPlus className=" text-greenColor" /></button>
+                                <Link href={`/trainer-profile/creating-content`}>
+                                    <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg "><FaPlus className=" text-greenColor" /></button>
+                                </Link>
                             </div>
                         </div>
 
                         <div className=" flex flex-col justify-center items-center mt-6">
-                            <Link href={`/trainer-profile/creating-session`}><button className=" text-white bg-secondary px-4 py-2 w-[300px] text-center text-lg rounded-full ">Create a training Session</button></Link>
+                            <Link href={`/trainer-profile/creating-session`}>
+                                <button className=" text-white bg-secondary px-4 py-2 w-[300px] text-center text-lg rounded-full ">Create a training Session</button>
+                            </Link>
                             <p className="text-center text-secondary font-semibold underline text-lg mt-3">Reporting Dashboard</p>
                         </div>
                     </div>
