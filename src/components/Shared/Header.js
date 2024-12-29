@@ -60,9 +60,9 @@ const Header = () => {
                                 About Us
                             </span>
                         </Link>  */}
-                        <Link href="/get-morfitter">
+                        <Link href="/find-trainers">
                             <span
-                                className={`${isActive("/get-morfitter")
+                                className={`${isActive("/find-trainers")
                                     ? " rounded-full  bg-primary  text-white"
                                     : ""
                                     }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}

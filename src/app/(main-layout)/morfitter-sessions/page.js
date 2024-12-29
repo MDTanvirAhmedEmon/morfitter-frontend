@@ -39,16 +39,16 @@ const MorfitterSessions = () => {
                 </div>
 
                 <div className=' mt-10 grid grid-cols-2 lg:grid-cols-4 gap-10'>
-                    <div>
+                    <div className=' cursor-pointer'>
                         <Image className=' w-full' src={session1} alt='session' width={0} height={0} />
                     </div>
-                    <div>
+                    <div className=' cursor-pointer'>
                         <Image className=' w-full' src={session2} alt='session' width={0} height={0} />
                     </div>
-                    <div>
+                    <div className=' cursor-pointer'>
                         <Image className=' w-full' src={session1} alt='session' width={0} height={0} />
                     </div>
-                    <div>
+                    <div className=' cursor-pointer'>
                         <Image className=' w-full' src={session2} alt='session' width={0} height={0} />
                     </div>
                 </div>
