@@ -46,7 +46,7 @@ const WhyJoinMorfitter = () => {
                             </div>
                         </div>
                         <div className=" text-lg join-card-text font-semibold text-left leading-[22px]">Find Your Perfect Trainer</div>
-                        <div className=" text-left join-card-text text-sm text-gray-700 mt-2">
+                        <div className=" text-left join-card-text text-md text-gray-700 mt-2">
                             Search and connect with personal trainers who specialize in the fitness goals you care about – from fat burning to strength training, and everything in between.
                         </div>
                     </div>
@@ -60,7 +60,7 @@ const WhyJoinMorfitter = () => {
                             </div>
                         </div>
                         <div className=" text-lg join-card-text font-semibold text-left leading-[22px]">Work Out Anytime, Anywhere</div>
-                        <div className=" text-left join-card-text text-sm text-gray-700 mt-2">
+                        <div className=" text-left join-card-text text-md text-gray-700 mt-2">
                             Access personalized workout plans, recorded sessions, and live content that fit your busy schedule.
                         </div>
                     </div>
@@ -74,7 +74,7 @@ const WhyJoinMorfitter = () => {
                             </div>
                         </div>
                         <div className=" text-lg join-card-text font-semibold text-left leading-[22px]">Motivation & Community</div>
-                        <div className=" text-left join-card-text text-sm text-gray-700 mt-2">
+                        <div className=" text-left join-card-text text-md text-gray-700 mt-2">
                             Follow your favorite trainers, join groups, and interact with others who share your goals. Stay motivated with a fitness community tailored to you.
                         </div>
                     </div>
@@ -88,7 +88,7 @@ const WhyJoinMorfitter = () => {
                             </div>
                         </div>
                         <div className=" text-lg join-card-text font-semibold text-left leading-[22px]">Exclusive Premium Content</div>
-                        <div className=" text-left join-card-text text-sm text-gray-700 mt-2">
+                        <div className=" text-left join-card-text text-md text-gray-700 mt-2">
                             Get more with a premium membership– unlock advanced training programs, live sessions, and one-on-one engagement with your trainer.
                         </div>
                     </div>

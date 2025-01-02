@@ -25,41 +25,44 @@ const SingleBlog = () => {
     };
 
     return (
-        <div className="timeline-post px-3 mx-0 py-5">
+        <div className="px-3 mx-0 py-5">
 
             <div className=" px-2 md:px-5 py-10 border border-gray-300 shadow-[0px_0px_19px_0px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col md:flex-row gap-5 w-full">
                 {/* Image Section */}
-                <div className=" w-28 h-24 overflow-hidden rounded-lg">
-                    <Image src={follower} width={0} height={0} alt="Follower" className="w-full h-full" />
-                </div>
+
 
                 {/* Post Details Section */}
-                <div className="md:w-[calc(100%-150px)]">
-                    {/* Header Section */}
-                    <div className="flex justify-between pt-2.5">
-                        <div className="left">
-                            <div className="title text-xl font-semibold">Stellantis Middle East & Gym Institute</div>
-                            <div className="gym-name flex items-center mt-1 gap-1">
-                                <Image src={Calisthenics} width={0} height={0} alt="Calisthenics" />
-                                <span className="text-2xl text-secondary">Calisthenics</span>
+                <div className="">
+                    <div className=' flex flex-col md:flex-row justify-between gap-4 md:gap-8'>
+                        <div className=" flex items-center gap-8">
+                            <Image src={follower} width={0} height={0} alt="Follower" className="w-28 h-24 rounded-lg " />
+                            <div className="">
+                                <div className="text-lg md:text-xl font-semibold">Stellantis Middle East & Gym Institute</div>
+                                <div className="flex items-center mt-1 gap-1">
+                                    <Image src={Calisthenics} width={0} height={0} alt="Calisthenics" />
+                                    <span className=" text-xl md:text-2xl text-secondary">Calisthenics</span>
+                                </div>
                             </div>
                         </div>
-                        <div className="date text-lg">
-                            <p>15/10/2024</p>
+                        {/* Header Section */}
+                        <div className=" md:pt-3 flex justify-end">
+                            <div className="date text-lg">
+                                <p>15/10/2024</p>
+                            </div>
                         </div>
                     </div>
 
                     {/* Post Content */}
-                    <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-5">
+                    <div className=" mt-3 md:mt-6 grid grid-cols-1 lg:grid-cols-2 gap-5">
                         {/* Image Part */}
                         <div className="rounded-2xl w-full overflow-hidden">
                             <Image src={Post1} alt="Post Content" width={0} height={0} className="md:h-full md:w-full object-cover" />
                         </div>
 
                         {/* Description Part */}
-                        <div className="desc border border-gray-300 p-5 rounded-lg">
-                            <div className="title text-2xl font-semibold">Get Stronger, Faster, and Fitter</div>
-                            <div className="text-xl font-normal mt-5 text-gray-600 leading-7 tracking-wide">
+                        <div className="border border-gray-300 p-5 rounded-lg">
+                            <div className=" hidden md:block text-xl md:text-2xl font-semibold">Get Stronger, Faster, and Fitter</div>
+                            <div className="md:text-xl font-normal md:mt-5 text-gray-600 leading-7 tracking-wide">
                                 Achieve your fitness goals with our personalized gym training programs tailored to your needs. Whether you&apos;re a
                                 beginner or a seasoned athlete, our expert trainers will guide you every step of the way. Build strength, improve
                                 endurance, and boost your overall health with workouts designed just for you. Join our community and transform your
