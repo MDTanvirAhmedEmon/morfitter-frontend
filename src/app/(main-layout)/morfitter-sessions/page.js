@@ -3,6 +3,7 @@ import { Select } from 'antd';
 import session1 from '../../../assets/session/download.jpg'
 import session2 from '../../../assets/session/rated.jpg'
 import Image from 'next/image';
+import Link from 'next/link';
 
 const MorfitterSessions = () => {
     return (
@@ -39,12 +40,16 @@ const MorfitterSessions = () => {
                 </div>
 
                 <div className=' mt-10 grid grid-cols-2 lg:grid-cols-4 gap-10'>
-                    <div className=' cursor-pointer'>
-                        <Image className=' w-full' src={session1} alt='session' width={0} height={0} />
-                    </div>
-                    <div className=' cursor-pointer'>
-                        <Image className=' w-full' src={session2} alt='session' width={0} height={0} />
-                    </div>
+                    <Link href={`/morfitter-sessions/single-session-of-pt/777`}>
+                        <div className=' cursor-pointer'>
+                            <Image className=' w-full' src={session1} alt='session' width={0} height={0} />
+                        </div>
+                    </Link>
+                    <Link href={`/morfitter-sessions/single-session-of-pt/777`}>
+                        <div className=' cursor-pointer'>
+                            <Image className=' w-full' src={session2} alt='session' width={0} height={0} />
+                        </div>
+                    </Link>
                     <div className=' cursor-pointer'>
                         <Image className=' w-full' src={session1} alt='session' width={0} height={0} />
                     </div>

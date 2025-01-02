@@ -25,7 +25,7 @@ const MorfitterPts = () => {
                 {/* creating fake array */}
                 {[...Array(5)].map((_, index) => (
                     // eslint-disable-next-line react/jsx-key
-                        <div className=" rounded-xl shadow-lg mx-3 px-3 md:px-12 md:mx-0 py-6 flex flex-col md:flex-row items-center gap-6 md:gap-10 mb-6">
+                        <div key={index} className=" rounded-xl shadow-lg mx-3 px-3 md:px-12 md:mx-0 py-6 flex flex-col md:flex-row items-center gap-6 md:gap-10 mb-6">
                             <div className=" w-full md:w-[50%] xl:w-[40%] 2xl:w-[20%]">
                                 <Image className=" w-32 rounded-full" src={profileImage} width={0} height={0} alt="profile-trainer-image" />
                                 <div className="mt-3">
