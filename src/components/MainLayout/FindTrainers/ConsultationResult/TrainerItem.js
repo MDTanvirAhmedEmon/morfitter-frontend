@@ -13,7 +13,7 @@ import FindTrainersChats from './FindTrainersChats';
 
 const TrainerItem = () => {
     const [selectedLogos, setSelectedLogos] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const logos = [logo1, logo2, logo3, logo4];
 
@@ -27,16 +27,12 @@ const TrainerItem = () => {
         });
     };
 
-    const showModal = () => {
-      setIsModalOpen(true);
+    const showDrawer = () => {
+      setOpen(true);
     };
-    const handleOk = () => {
-      setIsModalOpen(false);
+    const onClose = () => {
+      setOpen(false);
     };
-    const handleCancel = () => {
-      setIsModalOpen(false);
-    };
-
     return (
         <div className=" border-2 border-secondary p-2 md:p-3 rounded-lg md:flex items-center justify-between mb-5">
             <div className=' md:flex items-center gap-4'>
@@ -88,7 +84,7 @@ const TrainerItem = () => {
                 </div>
 
                 <div className=' flex flex-col justify-center items-center'>
-                    <button onClick={showModal} className={` mb-3 text-white rounded-full px-4 py-[5px] bg-secondary hover:bg-greenColor`}>Contact</button>
+                    <button onClick={showDrawer} className={` mb-3 text-white rounded-full px-4 py-[5px] bg-secondary hover:bg-greenColor`}>Contact</button>
                     <div className=' flex gap-4 items-center'>
                         <div className=' flex flex-col items-center'>
                             <FaUser className=' text-greenColor w-5 h-5' />
@@ -101,7 +97,7 @@ const TrainerItem = () => {
                     </div>
                 </div>
             </div>
-            <FindTrainersChats isModalOpen={isModalOpen} handleCancel={handleCancel} handleOk={handleOk}></FindTrainersChats>
+            <FindTrainersChats onClose={onClose} open={open}></FindTrainersChats>
         </div>
     );
 };
