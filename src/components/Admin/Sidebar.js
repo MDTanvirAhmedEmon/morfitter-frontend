@@ -9,7 +9,6 @@ import { CiLogout } from 'react-icons/ci';
 
 const { Sider } = Layout;
 
-// eslint-disable-next-line react/prop-types
 const Sidebar = ({ collapsed }) => {
 
     return (
