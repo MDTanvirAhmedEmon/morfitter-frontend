@@ -21,7 +21,7 @@ const MainHeader = ({ setCollapsed, collapsed }) => {
                         type="text"
                         icon={collapsed ? <RxHamburgerMenu className=' text-white -ml-8 w-8 h-8 ' /> : <RxHamburgerMenu className=' text-white -ml-8 w-8 h-8 ' />}
                         onClick={() => setCollapsed(!collapsed)}
-                        className=' text-white '
+                        className=' text-white hover:bg-transparent'
                         style={{
                             fontSize: '16px',
                             width: 64,
