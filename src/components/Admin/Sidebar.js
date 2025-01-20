@@ -11,8 +11,8 @@ const { Sider } = Layout;
 const Sidebar = ({ collapsed }) => {
 
     return (
-        <div className='fixed top-0 left-0 bottom-0 bg-[#1d1d1b]'>
-            <Sider className='h-[100vh] w-[300px] bg-[#1d1d1b]' width={250} collapsedWidth={80} trigger={null} collapsible collapsed={collapsed}>
+        <div className='fixed top-0 left-0 bottom-0 bg-greenColor'>
+            <Sider className='h-[100vh] w-[300px] bg-greenColor' width={250} collapsedWidth={80} trigger={null} collapsible collapsed={collapsed}>
                 <p className={` ${collapsed ? 'text-lg' : 'text-3xl'} font-bold my-10 text-white text-center`}>Logo</p>
                 <Menu
                     mode="inline"

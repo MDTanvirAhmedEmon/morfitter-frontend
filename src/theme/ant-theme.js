@@ -26,6 +26,20 @@ export const mainTheme = {
             "controlHeight": 40,
             "fontSize": 16,
             "colorBorder": "rgb(11,165,147)"
-        }
+        },
+        Menu: {
+            itemBg: "#0ba593",
+            itemSelectedColor: "rgb(255,255,255)",
+            horizontalItemSelectedColor: "rgb(255,255,255)",
+            itemColor: "rgba(255,255,255,0.88)",
+            itemSelectedBg: "rgb(132,201,187)",
+            itemActiveBg: "rgba(214,214,214,0.08)",
+            itemHoverColor: "rgba(255,255,255,0.88)",
+            itemHoverBg: "rgba(214,214,214,0.06)",
+            itemBorderRadius: 0,
+            itemMarginInline: 0,
+            itemMarginBlock: 0,
+            itemHeight: 50,
+        },
     },
 };
