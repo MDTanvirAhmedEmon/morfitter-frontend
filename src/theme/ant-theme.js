@@ -41,5 +41,9 @@ export const mainTheme = {
             itemMarginBlock: 0,
             itemHeight: 50,
         },
+        "Layout": {
+            "siderBg": "rgb(11,165,147)",
+            "headerColor": "rgb(11,165,147)"
+        }
     },
 };
