@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import React from "react";
 import { useRef, useState } from "react";
 
@@ -61,39 +62,39 @@ const VerificationCode = () => {
     <section className="mx-auto flex justify-center items-center bg-white py-20">
       <div className="px-5 w-1/3">
         <div className="relative rounded-lg bg-white p-8 shadow-lg">
-            <h1 className="text-[#6F6F6F] text-3xl font-bold text-center mb-2">
-              Verification Code
-            </h1>
-            <p className="text-[#6F6F6F] text-lg mb-10 text-center">
-              Welcome to verification code page !
-            </p>
-            <form className="space-y-5 mt-5">
-              <div className="flex justify-center gap-2">
-                {otp.map((digit, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    maxLength={1}
-                    value={digit}
-                    onChange={handleInput}
-                    onKeyDown={handleKeyDown}
-                    onFocus={handleFocus}
-                    onPaste={handlePaste}
-                    ref={(el) => (inputRefs.current[index] = el)}
-                    className="shadow-xs w-20 h-20 text-2xl text-center border-[1px] border-[#0ba593]  text-[#0ba593] rounded-md focus:outline-none"
-                  />
-                ))}
-              </div>
+          <h1 className="text-[#6F6F6F] text-3xl font-bold text-center mb-2">
+            Verification Code
+          </h1>
+          <p className="text-[#6F6F6F] text-lg mb-10 text-center">
+            Welcome to verification code page !
+          </p>
+          <form className="space-y-5 mt-5">
+            <div className="flex justify-center gap-2">
+              {otp.map((digit, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  maxLength={1}
+                  value={digit}
+                  onChange={handleInput}
+                  onKeyDown={handleKeyDown}
+                  onFocus={handleFocus}
+                  onPaste={handlePaste}
+                  ref={(el) => (inputRefs.current[index] = el)}
+                  className="shadow-xs w-20 h-20 text-2xl text-center border-[1px] border-[#0ba593]  text-[#0ba593] rounded-md focus:outline-none"
+                />
+              ))}
+            </div>
 
-              {/* <Link to="/new-password"> */}
+            <Link href={`/auth/reset-password`}>
               <button
                 type="submit"
                 className="w-full bg-[#0ba593] text-white font-semibold py-2 rounded-lg shadow-lg hover:bg-primary-dark transition mt-10"
               >
                 Verify Code
               </button>
-              {/* </Link> */}
-            </form>
+            </Link>
+          </form>
         </div>
       </div>
     </section>
