@@ -123,10 +123,12 @@ const Header = () => {
                     </ul>
 
                 </div>
-
+                <Link href="/contact-us">
+                
                 <button className=" hidden xl:block py-3 px-8 text-lg font-medium bg-secondary text-white rounded-full hover:bg-teal-500 transition-all">
                     Contact Us
                 </button>
+                </Link>
                 <GiHamburgerMenu onClick={showDrawer} className=" w-7 h-7 xl:hidden" />
                 <MobileNavbar onClose={onClose} open={open}></MobileNavbar>
             </div>
