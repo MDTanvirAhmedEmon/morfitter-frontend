@@ -59,9 +59,9 @@ const VerificationCode = () => {
     }
   };
   return (
-    <section className="mx-auto flex justify-center items-center bg-white py-20">
+    <section className="mx-auto flex justify-center items-center bg-white py-20 md:py-20 lg:py-40">
       <div className="px-5 w-1/3">
-        <div className="relative rounded-lg bg-white p-8 shadow-lg">
+        <div className="relative rounded-lg bg-white px-8 py-20 shadow-lg">
           <h1 className="text-[#6F6F6F] text-3xl font-bold text-center mb-2">
             Verification Code
           </h1>

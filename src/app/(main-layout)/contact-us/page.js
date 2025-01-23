@@ -2,9 +2,9 @@
 import React from "react";
 const ContactUs = () => {
   return (
-    <section className="mx-auto flex justify-center items-center bg-white py-20">
+    <section className="mx-auto flex justify-center items-center bg-white py-20 md:py-20 lg:py-40">
       <div className="px-5 w-1/2">
-        <div className="relative rounded-lg bg-white p-8 shadow-lg">
+        <div className="relative rounded-lg bg-white px-8 py-20 shadow-lg">
           <form>
             <ContactInputBox type="text" name="name" placeholder="Your Name" />
             <ContactInputBox
