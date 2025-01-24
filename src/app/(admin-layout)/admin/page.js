@@ -9,11 +9,11 @@ const Analytics = () => {
     <div className="p-5 flex flex-col">
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5">
         <div>
-          <h1 className="text-3xl font-bold mb-5">Bar Chart</h1>
+          <h1 className="text-3xl font-bold mb-5">Trainer</h1>
           <BarCharts />
         </div>
         <div>
-          <h1 className="text-3xl font-bold mb-5">Area Chart</h1>
+          <h1 className="text-3xl font-bold mb-5">Users</h1>
           <AreaCharts />
         </div>
       </div>
