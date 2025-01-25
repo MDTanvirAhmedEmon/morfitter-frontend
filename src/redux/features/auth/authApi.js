@@ -8,7 +8,6 @@ const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["users"],
     }),
     createTrainer: builder.mutation({
       query: (data) => ({
@@ -16,7 +15,6 @@ const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["users"],
     }),
     logIn: builder.mutation({
       query: (data) => ({
@@ -25,7 +23,7 @@ const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
-    logInAdmin: builder.mutation({
+    logInAdmin: builder.mutation({ 
       query: (data) => ({
         url: "/auth/login-admin",
         method: "POST",
@@ -35,7 +33,7 @@ const authApi = baseApi.injectEndpoints({
     changePassword: builder.mutation({
       query: (data) => ({
         url: "/admin/auth/change-password",
-        method: "PUT",
+        method: "POST",
         body: data,
       }),
       invalidatesTags: ["users"],
@@ -60,7 +58,7 @@ const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["users"],
+     
     }),
   }),
 });

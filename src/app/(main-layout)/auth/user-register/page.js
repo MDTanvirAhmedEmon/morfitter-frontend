@@ -1,13 +1,5 @@
 "use client";
-import {
-  Form,
-  Input,
-  Checkbox,
-  Avatar,
-  Upload,
-  InputNumber,
-  Button,
-} from "antd";
+import { Form, Input, Checkbox, Avatar, Upload, InputNumber, message } from "antd";
 import { PhoneOutlined } from "@ant-design/icons";
 import { IoMdArrowDropdown } from "react-icons/io";
 import dynamic from "next/dynamic";
@@ -17,26 +9,68 @@ import Image from "next/image";
 import { PiCamera } from "react-icons/pi";
 import { useState } from "react";
 import Link from "next/link";
+import { useCreateTraineeMutation } from "@/redux/features/auth/authApi";
 
 const UserRegister = () => {
-  const [profilePic, setProfilePic] = useState(null);
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
+  const [profilePic, setProfilePic] = useState();
+  const [createTrainee, { isLoading }] = useCreateTraineeMutation();
+  const [form] = Form.useForm();
   const handleProfilePicUpload = (e) => {
     setProfilePic(e.file.originFileObj);
   };
   const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : null;
 
-  const [form] = Form.useForm();
-
-  const handleFinish = (values) => {
-    const { day, month, year } = values;
-    const formattedDate = `${year}-${String(month).padStart(2, "0")}-${String(
-      day
-    ).padStart(2, "0")}`;
-    console.log("Date of Birth:", formattedDate);
+  const onFinish = async (values) => {
+    const { day, month, year } = values; // Destructure day, month, and year from form values
+  
+    // Validate day, month, and year
+    if (!day || !month || !year) {
+      message.error("Please provide a valid date of birth.");
+      return;
+    }
+  
+    // Construct ISO Date
+    const dob = new Date(year, month - 1, day).toISOString();
+    console.log("ISO DOB:", dob);
+  
+    // Prepare registration data
+    const registrationData = {
+      email: values.email,
+      title: values.title,
+      name: values.firstName,
+      surname: values.lastName,
+      dob, // Use the ISO date format
+      mobile: values.contactNo,
+      username: values.userName,
+      password: values.password,
+      country: values.country,
+      city: values.city,
+    };
+  
+    console.log("Registration Data:", registrationData);
+  
+    // Validate profilePic
+    if (!profilePic) {
+      message.error("Please upload a profile picture.");
+      return;
+    }
+  
+    // Create FormData
+  //   const formData = new FormData();
+  //   formData.append("data", JSON.stringify(registrationData));
+  //   formData.append("file", profilePic);
+  
+  //   try {
+  //     // Call createTrainee mutation
+  //     const response = await createTrainee(formData).unwrap();
+  //     console.log("Response Data:", response);
+  //     message.success("Registration Successful");
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //     message.error(error?.data?.message || "Something went wrong.");
+  //   }
   };
+  
 
   return (
     <section className="py-8 md:py-20">
@@ -98,6 +132,8 @@ const UserRegister = () => {
                   />
                 </Form.Item>
               </div>
+
+              {/* profile images */}
               <div className="relative mb-8 md:-mt-6">
                 <Image
                   src={circle}
@@ -107,8 +143,8 @@ const UserRegister = () => {
                   width={0}
                 />
                 <Avatar
-                  size={140}
                   src={profilePicUrl || "/default-avatar.png"}
+                  size={140}
                   className="border-4 m-[7px]"
                 />
                 <Upload
@@ -142,14 +178,9 @@ const UserRegister = () => {
 
             {/* Date of Birth */}
             <div className=" flex flex-col md:flex-row gap-4">
-              {/* <div className=" md:w-1/2 grid grid-cols-3 gap-4"> */}
-              <Form
-                form={form}
-                layout="vertical"
-                onFinish={handleFinish}
-                className="grid grid-cols-3 gap-4"
-              >
-                <Form.Item
+             
+               <div className="grid grid-cols-3 gap-4">
+               <Form.Item
                   name="day"
                   rules={[
                     { required: true, message: "Please enter the day!" },
@@ -187,7 +218,7 @@ const UserRegister = () => {
                     min={1}
                     max={12}
                     style={{ width: "100%" }}
-                       className="border-greenColor py-1.5 px-4 rounded-lg"
+                    className="border-greenColor py-1.5 px-4 rounded-lg"
                   />
                 </Form.Item>
 
@@ -208,11 +239,11 @@ const UserRegister = () => {
                     min={1900}
                     max={new Date().getFullYear()}
                     style={{ width: "100%" }}
-                       className="border-greenColor py-1.5 px-4 rounded-lg"
+                    className="border-greenColor py-1.5 px-4 rounded-lg"
                   />
                 </Form.Item>
-              </Form>
-              {/* </div> */}
+               </div>
+            
 
               {/* Mobile Number */}
               <Form.Item
@@ -253,6 +284,7 @@ const UserRegister = () => {
                 <Input.Password placeholder="Password" className="w-full" />
               </Form.Item>
             </div>
+            {/* country,city */}
             <div className="grid grid-cols-2 gap-4 ">
               <Form.Item
                 name="country"
@@ -289,21 +321,21 @@ const UserRegister = () => {
 
             {/* Submit Button */}
             <Form.Item>
-              <Link href={`/auth/user-register/user-register-2`}>
+              {/* <Link href={`/auth/user-register/user-register-2`}> */}
                 <button
                   type="submit"
                   className="bookBtn text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
                 >
                   Next
                 </button>
-              </Link>
+              {/* </Link> */}
             </Form.Item>
           </Form>
           <p className=" mt-6">
             Already have an account?{" "}
-            <Link className=" text-primary font-semibold" href={`/auth/login`}>
+            {/* <Link className=" text-primary font-semibold" href={`/auth/login`}> */}
               Log In
-            </Link>
+            {/* </Link> */}
           </p>
         </div>
       </div>
