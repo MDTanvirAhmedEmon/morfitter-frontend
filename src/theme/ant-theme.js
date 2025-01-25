@@ -44,6 +44,11 @@ export const mainTheme = {
         "Layout": {
             "siderBg": "rgb(11,165,147)",
             "headerColor": "rgb(11,165,147)"
-        }
+        },
+        "InputNumber": {
+            "activeBorderColor": "rgb(20,184,165)",
+            "handleHoverColor": "rgb(20,184,165)",
+            "hoverBorderColor": "rgb(20,184,165)"
+          }
     },
 };
