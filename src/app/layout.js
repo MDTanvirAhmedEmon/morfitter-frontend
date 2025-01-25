@@ -13,11 +13,11 @@ export default function RootLayout({ children }) {
   return (
     <html>
       <ConfigProvider theme={mainTheme}>
-        <ReduxProviders>
           <body>
+        <ReduxProviders>
             {children}
-          </body>
         </ReduxProviders>
+          </body>
       </ConfigProvider>
     </html>
   );
