@@ -81,17 +81,17 @@ const UserRegister2 = () => {
             }
         };
 
-        if(!fitterGoal){
+        if (!fitterGoal) {
             notification.error({
-                message:'Please select your fitter goal',
+                message: 'Please select your fitter goal',
                 placement: 'bottomRight',
             });
             return
         }
 
-        if(!selectedLogos.length){
+        if (!selectedLogos.length) {
             notification.error({
-                message:'Please select your interested area',
+                message: 'Please select your interested area',
                 placement: 'bottomRight',
             });
             return
@@ -102,7 +102,7 @@ const UserRegister2 = () => {
         formData.append("file", profile);
         createTrainee(formData).unwrap()
             .then((data) => {
-                const verifiedtToken =  decodedToken(data?.data?.accessToken)
+                const verifiedtToken = decodedToken(data?.data?.accessToken)
                 dispatch(setToken(data?.data?.accessToken));
                 dispatch(setRole(verifiedtToken));
                 dispatch(setUser(data?.data?.userInfo));
