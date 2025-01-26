@@ -11,6 +11,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import { authSlice } from "./features/auth/authSlice";
+import { registerSlice } from "./features/auth/registerSlice";
 
 // Handle storage creation for SSR
 const createNoopStorage = () => {
@@ -42,7 +43,8 @@ const persistConfig = {
 
 const rootReducer = {
   [baseApi.reducerPath]: baseApi.reducer,
-  auth: authSlice.reducer, // Regular auth reducer (will be persisted separately)
+  auth: authSlice.reducer,
+  register: registerSlice.reducer,
 };
 
 // Create persisted reducer for the auth slice

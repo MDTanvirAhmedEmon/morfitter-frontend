@@ -1,5 +1,5 @@
 'use client'
-import { ConfigProvider, Form, Input, Select } from "antd";
+import { ConfigProvider, Form, Input, message, notification, Select, Spin } from "antd";
 import dynamic from "next/dynamic";
 import regiserImg from '../../../../../assets/fitness2.png'
 import Image from "next/image";
@@ -16,31 +16,89 @@ import logo8 from '../../../../../assets/logo8.svg';
 import logo9 from '../../../../../assets/logo9.svg';
 import Link from "next/link";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { useCreateTraineeMutation } from "@/redux/features/auth/authApi";
+import { useSelector } from "react-redux";
 
 
 const UserRegister2 = () => {
     const [selectedLogos, setSelectedLogos] = useState([]);
-    const onFinish = (values) => {
-        console.log("Success:", values);
-    };
+    console.log('seletedLogos', selectedLogos);
+    const { info, profile } = useSelector((state) => state.register);
+    console.log(info, profile);
+
     const handleProfilePicUpload = (e) => {
         setProfilePic(e.file.originFileObj);
     };
+    const [createTrainee, { isLoading }] = useCreateTraineeMutation();
     const [height, setHeight] = useState(null);
     const [weight, setWeight] = useState(null);
     const [fitterGoal, setFitterGoal] = useState(null);
     const [faceToFace, setFaceToFace] = useState(null);
     const [consultation, setConsultation] = useState(null);
 
-    const logos = [logo1, logo2, logo3, logo4, logo5, logo6, logo7, logo8, logo9];
+    const interests = [
+        { name: "Boxercise", icon: logo1 },
+        { name: "Calisthenics", icon: logo2 },
+        { name: "Circuit Training", icon: logo3 },
+        { name: "Core Strength", icon: logo4 },
+        { name: "Fat Burners", icon: logo4 },
+        { name: "Flexibility & Mobility", icon: logo6 },
+        { name: "Zumba", icon: logo7 },
+        { name: "HIIT", icon: logo8 },
+        { name: "Pilates", icon: logo8 }
+    ];
+
     const handleLogoClick = (index) => {
-        setSelectedLogos((prevSelected) => {
-            if (prevSelected.includes(index)) {
-                return prevSelected.filter((item) => item !== index);
-            } else {
-                return [...prevSelected, index];
+        setSelectedLogos((prevSelected) =>
+            prevSelected.includes(index)
+                ? prevSelected.filter((item) => item !== index)
+                : [...prevSelected, index]
+        );
+    };
+
+    const onFinish = (values) => {
+        const data = {
+            userInfo: {
+                email: info.email,
+                password: info.password,
+            },
+            traineeData: {
+                firstName: info.firstName,
+                lastName: info.lastName,
+                address: `${info.city}, ${info.country}`,
+                gender: "male", // nai 
+                contactNo: info.mobile,
+                title: info.title,
+                userName: info.userName,
+                dob: info.dob,
+                country: info.country,
+                city: info.city,
+                height: Number(values.height),
+                weight: Number(values.weight),
+                fitterGoal: fitterGoal,
+                interest: selectedLogos,
+                towardsGoal: values.towardsGoal,
+                achieveGoal: values.achieveGoal
             }
-        });
+        };
+        console.log(data);
+
+        const formData = new FormData();
+        formData.append("data", JSON.stringify(data));
+        formData.append("file", profile);
+        createTrainee(formData).unwrap()
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((error) => {
+            console.log(error);
+            notification.error({
+                message: error?.data?.message,
+                description: 'Please try again later',
+                placement: 'topRight',
+            });
+        })
+
     };
 
 
@@ -119,23 +177,23 @@ const UserRegister2 = () => {
                             <p className=" text-lg">I’m interested in</p>
                             <div className="flex gap-1 overflow-x-auto mt-4">
                                 <div className="flex justify-center flex-nowrap xl:flex-wrap">
-                                    {logos.map((logo, index) => (
+                                    {interests.map((logo, index) => (
                                         <div
                                             key={index}
-                                            onClick={() => handleLogoClick(index)}
-                                            className={`flex items-center justify-center w-[100px] lg:w-[110px] h-[100px] lg:h-[110px] px-7 text-center cursor-pointer ${selectedLogos.includes(index)
+                                            onClick={() => handleLogoClick(logo.name)}
+                                            className={`flex items-center justify-center w-[100px] lg:w-[110px] h-[100px] lg:h-[110px] px-7 text-center cursor-pointer ${selectedLogos.includes(logo.name)
                                                 ? 'border-4 border-greenColor shadow shadow-greenColor'
                                                 : 'border-2 border-solid border-transparent'
                                                 } rounded transition-all duration-300`}
                                             style={{
                                                 borderWidth: '2px',
                                                 borderStyle: 'solid',
-                                                borderImage: selectedLogos.includes(index)
+                                                borderImage: selectedLogos.includes(logo.name)
                                                     ? 'none'
                                                     : 'linear-gradient(180deg, rgba(11, 165, 147, 0.05) 0%, #08776a 51%, rgba(11, 165, 147, 0.05) 100%) 1', // Gradient for unselected logos
                                             }}
                                         >
-                                            <Image src={logo} alt={`Logo ${index + 1}`} height={170} width={170} className="w-full h-full object-contain" />
+                                            <Image src={logo.icon} alt={`Logo ${logo.name}`} height={170} width={170} className="w-full h-full object-contain" />
                                         </div>
                                     ))}
                                 </div>
@@ -170,12 +228,13 @@ const UserRegister2 = () => {
                                 </Form.Item>
                             </div>
                         </div>
-                        <div className=" flex justify-end">
-                            <Link href={`/profile`}>
-                                <button type="submit" className=" text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:">
-                                    Enter
-                                </button>
-                            </Link>
+                        <div className=" flex justify-end items-center gap-2">
+                            {/* <Link href={`/profile`}> */}
+                            {isLoading && <Spin ></Spin>}
+                            <button type="submit" className=" text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:">
+                                Enter 
+                            </button>
+                            {/* </Link> */}
                         </div>
                     </Form>
                 </div>

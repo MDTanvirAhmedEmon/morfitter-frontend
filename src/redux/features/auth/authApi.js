@@ -9,6 +9,7 @@ const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
     createTrainer: builder.mutation({
       query: (data) => ({
         url: "/users/create-trainer",
@@ -16,6 +17,7 @@ const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
     logIn: builder.mutation({
       query: (data) => ({
         url: "/auth/login",
@@ -23,6 +25,7 @@ const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
     logInAdmin: builder.mutation({ 
       query: (data) => ({
         url: "/auth/login-admin",
@@ -30,6 +33,7 @@ const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
     changePassword: builder.mutation({
       query: (data) => ({
         url: "/admin/auth/change-password",
@@ -38,6 +42,7 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["users"],
     }),
+
     forgotPassword: builder.mutation({
       query: (data) => ({
         url: "/auth/forget-password",
@@ -45,6 +50,7 @@ const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
     verifyEmail: builder.mutation({
       query: (data) => ({
         url: "/auth/verify-code",
@@ -52,14 +58,15 @@ const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
     resetPassword: builder.mutation({
       query: (data) => ({
         url: "/auth/reset-password",
         method: "POST",
         body: data,
       }),
-     
     }),
+    
   }),
 });
 
