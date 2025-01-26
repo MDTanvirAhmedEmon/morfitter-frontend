@@ -17,7 +17,11 @@ import logo9 from '../../../../../assets/logo9.svg';
 import Link from "next/link";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useCreateTraineeMutation } from "@/redux/features/auth/authApi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setRole, setToken, setUser } from "@/redux/features/auth/authSlice";
+import { clearRegisterInfo } from "@/redux/features/auth/registerSlice";
+import { useRouter } from "next/navigation";
+import { decodedToken } from "@/utils/VerifyJwtToken";
 
 
 const UserRegister2 = () => {
@@ -35,6 +39,8 @@ const UserRegister2 = () => {
     const [fitterGoal, setFitterGoal] = useState(null);
     const [faceToFace, setFaceToFace] = useState(null);
     const [consultation, setConsultation] = useState(null);
+    const dispatch = useDispatch();
+    const router = useRouter();
 
     const interests = [
         { name: "Boxercise", icon: logo1 },
@@ -81,23 +87,48 @@ const UserRegister2 = () => {
                 achieveGoal: values.achieveGoal
             }
         };
-        console.log(data);
+
+        if(!fitterGoal){
+            notification.error({
+                message:'Please select your fitter goal',
+                placement: 'bottomRight',
+            });
+            return
+        }
+
+        if(!selectedLogos.length){
+            notification.error({
+                message:'Please select your interested area',
+                placement: 'bottomRight',
+            });
+            return
+        }
 
         const formData = new FormData();
         formData.append("data", JSON.stringify(data));
         formData.append("file", profile);
         createTrainee(formData).unwrap()
-        .then((data) => {
-            console.log(data);
-        })
-        .catch((error) => {
-            console.log(error);
-            notification.error({
-                message: error?.data?.message,
-                description: 'Please try again later',
-                placement: 'topRight',
-            });
-        })
+            .then((data) => {
+                const verifiedtToken =  decodedToken(data?.data?.accessToken)
+                dispatch(setToken(data?.data?.accessToken));
+                dispatch(setRole(verifiedtToken));
+                dispatch(setUser(data?.data?.userInfo));
+                dispatch(clearRegisterInfo())
+                notification.success({
+                    message: "Registration Successful",
+                    description: data?.data?.message,
+                    placement: 'topRight',
+                });
+                router.push('/profile')
+            })
+            .catch((error) => {
+                console.log(error);
+                notification.error({
+                    message: error?.data?.message,
+                    description: 'Please try again later',
+                    placement: 'topRight',
+                });
+            })
 
     };
 
@@ -232,7 +263,7 @@ const UserRegister2 = () => {
                             {/* <Link href={`/profile`}> */}
                             {isLoading && <Spin ></Spin>}
                             <button type="submit" className=" text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:">
-                                Enter 
+                                Enter
                             </button>
                             {/* </Link> */}
                         </div>

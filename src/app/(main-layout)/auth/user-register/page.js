@@ -95,19 +95,12 @@ const UserRegister = () => {
             <div className="flex flex-col-reverse md:flex-row justify-between items-center space-x-4 md:mb-10">
               <div className=" w-full">
                 <Form.Item
-                  name="email"
+                  name="userName"
                   rules={[
-                    { required: true, message: "Please input your email!" },
+                    { required: true, message: "Please input your username!" },
                   ]}
-                  className=" w-full"
                 >
-                  <Input
-                    placeholder="Email"
-                    suffix={
-                      <IoMdArrowDropdown className=" w-6 h-6 text-greenColor" />
-                    }
-                    className="md:w-[70%]"
-                  />
+                  <Input  placeholder="Username" className="md:w-[70%]" />
                 </Form.Item>
                 <Form.Item
                   name="title"
@@ -259,13 +252,21 @@ const UserRegister = () => {
             {/* Username & Password */}
             <div className="grid grid-cols-2 gap-4 ">
               <Form.Item
-                name="userName"
+                name="email"
                 rules={[
-                  { required: true, message: "Please input your username!" },
+                  { required: true, message: "Please input your email!" },
                 ]}
+                className=" w-full"
               >
-                <Input placeholder="Username" className="w-full" />
+                <Input
+                  placeholder="Email"
+                  suffix={
+                    <IoMdArrowDropdown className=" w-6 h-6 text-greenColor" />
+                  }
+                  
+                />
               </Form.Item>
+
 
               <Form.Item
                 name="password"
