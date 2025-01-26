@@ -24,7 +24,7 @@ const UserRegister = () => {
   const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : null;
 
   const onFinish = async (values) => {
-    const { day, month, year } = values; // Destructure day, month, and year from form values
+    const { day, month, year } = values; 
 
     // Validate day, month, and year
     if (!day || !month || !year) {

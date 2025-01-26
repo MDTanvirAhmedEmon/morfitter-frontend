@@ -1,20 +1,16 @@
 'use client'
-import { ConfigProvider, Form, Input, message, notification, Select, Spin } from "antd";
+import { Form, Input, notification, Spin } from "antd";
 import dynamic from "next/dynamic";
 import regiserImg from '../../../../../assets/fitness2.png'
 import Image from "next/image";
 import { useState } from "react";
-import TextArea from "antd/es/input/TextArea";
 import logo1 from '../../../../../assets/logo1.svg';
 import logo2 from '../../../../../assets/logo2.svg';
 import logo3 from '../../../../../assets/logo3.svg';
 import logo4 from '../../../../../assets/logo4.svg';
-import logo5 from '../../../../../assets/logo5.svg';
 import logo6 from '../../../../../assets/logo6.svg';
 import logo7 from '../../../../../assets/logo7.svg';
 import logo8 from '../../../../../assets/logo8.svg';
-import logo9 from '../../../../../assets/logo9.svg';
-import Link from "next/link";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useCreateTraineeMutation } from "@/redux/features/auth/authApi";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,15 +26,12 @@ const UserRegister2 = () => {
     const { info, profile } = useSelector((state) => state.register);
     console.log(info, profile);
 
-    const handleProfilePicUpload = (e) => {
-        setProfilePic(e.file.originFileObj);
-    };
+
     const [createTrainee, { isLoading }] = useCreateTraineeMutation();
     const [height, setHeight] = useState(null);
     const [weight, setWeight] = useState(null);
     const [fitterGoal, setFitterGoal] = useState(null);
-    const [faceToFace, setFaceToFace] = useState(null);
-    const [consultation, setConsultation] = useState(null);
+
     const dispatch = useDispatch();
     const router = useRouter();
 
