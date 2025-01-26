@@ -18,12 +18,10 @@ const PTRegister = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const router = useRouter();
-
   const handleProfilePicUpload = (e) => {
     setProfilePic(e.file.originFileObj);
   };
   const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : null;
-  console.log("Profile Pic of user:", profilePic);
 
   const onFinish = (values) => {
     const { day, month, year } = values;
@@ -34,30 +32,30 @@ const PTRegister = () => {
     }
     // Construct ISO Date
     const dob = new Date(year, month - 1, day).toISOString();
-    console.log("ISO DOB:", dob);
-      // Prepare registration data
-      const TrainerRegistrationData = {
-        email: values.email,
-        firstName: values.name,
-        lastName: values.surname,
-        dob: dob,
-        mobile: values.mobile,
-        userName: values?.userName,
-        password: values.password,
-      };
-      console.log("Registration Data of user ", TrainerRegistrationData);
-      dispatch(setInfo(TrainerRegistrationData))
-     
-      // Validate profilePic
-      if (!profilePic) {
-        message.error("Please upload a profile picture.");
-        return;
-      }
-      dispatch(setProfile(profilePic))
-      if (profilePic && TrainerRegistrationData) {
-        router.push('/auth/pt-register/pt-register-2')
-      }
-  
+
+    // Prepare registration data
+    const TrainerRegistrationData = {
+      email: values.email,
+      firstName: values.name,
+      lastName: values.surname,
+      dob: dob,
+      mobile: values.mobile,
+      userName: values?.userName,
+      password: values.password,
+    };
+    console.log("Registration Data of user ", TrainerRegistrationData);
+    dispatch(setInfo(TrainerRegistrationData))
+
+    // Validate profilePic
+    if (!profilePic) {
+      message.error("Please upload a profile picture.");
+      return;
+    }
+    dispatch(setProfile(profilePic))
+    if (profilePic && TrainerRegistrationData) {
+      router.push('/auth/pt-register/pt-register-2')
+    }
+
   };
 
   return (
@@ -246,6 +244,7 @@ const PTRegister = () => {
                 name="password"
                 rules={[
                   { required: true, message: "Please input your password!" },
+                  { min: 8, message: "Password must be at least 8 characters!" },
                 ]}
                 hasFeedback
               >
@@ -271,19 +270,19 @@ const PTRegister = () => {
             {/* Submit Button */}
             <Form.Item>
               {/* <Link href={`/auth/pt-register/pt-register-2`}> */}
-                <button
-                  type="submit"
-                  className="bookBtn text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
-                >
-                  Next
-                </button>
+              <button
+                type="submit"
+                className="bookBtn text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
+              >
+                Next
+              </button>
               {/* </Link> */}
             </Form.Item>
           </Form>
           <p className=" mt-6">
             Already have an account?{" "}
             {/* <Link className=" text-primary font-semibold" href={`/auth/login`}> */}
-              Log In
+            Log In
             {/* </Link> */}
           </p>
         </div>

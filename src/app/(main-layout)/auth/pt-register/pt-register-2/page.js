@@ -1,14 +1,10 @@
 "use client";
-import { ConfigProvider, Form, Input, notification, Select } from "antd";
+import { ConfigProvider, Form, Input, notification, Select, Spin } from "antd";
 import dynamic from "next/dynamic";
-
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
-
 import regiserImg from "../../../../../assets/fitness2.png";
 import Image from "next/image";
-
 import TextArea from "antd/es/input/TextArea";
 import logo1 from "../../../../../assets/logo1.svg";
 import logo2 from "../../../../../assets/logo2.svg";
@@ -19,10 +15,11 @@ import logo6 from "../../../../../assets/logo6.svg";
 import logo7 from "../../../../../assets/logo7.svg";
 import logo8 from "../../../../../assets/logo8.svg";
 import logo9 from "../../../../../assets/logo9.svg";
-import Link from "next/link";
 import { useCreateTrainerMutation } from "@/redux/features/auth/authApi";
 import { setRole, setToken, setUser } from "@/redux/features/auth/authSlice";
 import { clearRegisterInfo } from "@/redux/features/auth/registerSlice";
+import { useRouter } from "next/navigation";
+import { decodedToken } from "@/utils/VerifyJwtToken";
 
 const PTRegister2 = () => {
   const dispatch = useDispatch();
@@ -31,22 +28,31 @@ const PTRegister2 = () => {
 
   const [selectedLogos, setSelectedLogos] = useState([]);
   const { info, profile } = useSelector((state) => state.register);
-  console.log("hi from trainer ", info, profile);
 
   const [onlineSession, setOnlineSession] = useState(null);
   const [faceToFace, setFaceToFace] = useState(null);
   //   const [radius, setRadius] = useState(null);
   const [consultation, setConsultation] = useState(null);
 
-  const logos = [logo1, logo2, logo3, logo4, logo5, logo6, logo7, logo8, logo9];
+
+  const interests = [
+    { name: "Boxercise", icon: logo1 },
+    { name: "Calisthenics", icon: logo2 },
+    { name: "Circuit Training", icon: logo3 },
+    { name: "Core Strength", icon: logo4 },
+    { name: "Fat Burners", icon: logo4 },
+    { name: "Flexibility & Mobility", icon: logo6 },
+    { name: "Zumba", icon: logo7 },
+    { name: "HIIT", icon: logo8 },
+    { name: "Pilates", icon: logo8 }
+  ];
+
   const handleLogoClick = (index) => {
-    setSelectedLogos((prevSelected) => {
-      if (prevSelected.includes(index)) {
-        return prevSelected.filter((item) => item !== index);
-      } else {
-        return [...prevSelected, index];
-      }
-    });
+    setSelectedLogos((prevSelected) =>
+      prevSelected.includes(index)
+        ? prevSelected.filter((item) => item !== index)
+        : [...prevSelected, index]
+    );
   };
 
   const onFinish = (values) => {
@@ -62,13 +68,13 @@ const PTRegister2 = () => {
         contactNo: info.mobile,
         userName: info?.userName,
         country: values?.country,
-        postcode: values?.postcode,
+        zipCode: Number(values?.postcode),
         onlineSession: onlineSession,
         faceToFace: faceToFace,
         radius: values?.radius,
-        aboutMe: values?.aboutMe,
-        consultation: consultation,
-        interest: selectedLogos,
+        about: values?.aboutMe,
+        consultationType: consultation,
+        specialism: selectedLogos,
       },
     };
     console.log("trainer page er data", data);
@@ -106,30 +112,53 @@ const PTRegister2 = () => {
     formData.append("data", JSON.stringify(data));
     formData.append("file", profile);
 
-    console.log("trainer data", data);
-    createTrainer(formData)
-      .unwrap()
+    createTrainer(formData).unwrap()
       .then((data) => {
-        const verifiedtToken = decodedToken(data?.data?.accessToken);
-        dispatch(setToken(data?.data?.accessToken));
-        dispatch(setRole(verifiedtToken));
-        dispatch(setUser(data?.data?.userInfo));
-        dispatch(clearRegisterInfo());
-        notification.success({
-          message: "Registration Successful",
-          description: data?.data?.message,
-          placement: "topRight",
-        });
-        router.push('/trainer-profile')
+        console.log(data);
+          const verifiedToken = decodedToken(data?.data?.accessToken);
+          dispatch(setToken(data?.data?.accessToken));
+          dispatch(setRole(verifiedToken));
+          dispatch(setUser(data?.data?.userInfo));
+          dispatch(clearRegisterInfo());
+          notification.success({
+            message: "Registration Successful",
+            description: data?.data?.message,
+            placement: 'topRight',
+          });
+          router.push('/trainer-profile');
       })
       .catch((error) => {
-        console.log(error);
-        notification.error({
-          message: error?.data?.message,
-          description: "Please try again later",
-          placement: "topRight",
-        });
+      notification.error({
+        message: error?.data?.message || 'Unexpected error',
+        description: 'Please try again later',
+        placement: 'topRight',
       });
+      })
+
+    // createTrainer(formData).unwrap()
+    // .then((data) => {
+    //   console.log('Success data:', data);
+    //   const verifiedToken = decodedToken(data?.data?.accessToken);
+    //   dispatch(setToken(data?.data?.accessToken));
+    //   dispatch(setRole(verifiedToken));
+    //   dispatch(setUser(data?.data?.userInfo));
+    //   dispatch(clearRegisterInfo());
+    //   notification.success({
+    //     message: "Registration Successful",
+    //     description: data?.data?.message,
+    //     placement: 'topRight',
+    //   });
+    //   router.push('/trainer-profile');
+    // })
+    // .catch((error) => {
+    //   console.error('Error:', error);
+    //   notification.error({
+    //     message: error?.data?.message || 'Unexpected error',
+    //     description: 'Please try again later',
+    //     placement: 'topRight',
+    //   });
+    // });
+
   };
 
   return (
@@ -180,45 +209,41 @@ const PTRegister2 = () => {
               <div className=" w-1/2 flex gap-5 lg:gap-8 items-center">
                 <button
                   type="button"
-                  onClick={() => setOnlineSession("Yes")}
-                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${
-                    onlineSession === "Yes" ? "bg-greenColor" : "bg-secondary"
-                  }`}
+                  onClick={() => setOnlineSession("yes")}
+                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${onlineSession === "yes" ? "bg-greenColor" : "bg-secondary"
+                    }`}
                 >
                   Yes
                 </button>
                 <button
                   type="button"
-                  onClick={() => setOnlineSession("No")}
-                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${
-                    onlineSession === "No" ? "bg-greenColor" : "bg-secondary"
-                  }`}
+                  onClick={() => setOnlineSession("no")}
+                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${onlineSession === "no" ? "bg-greenColor" : "bg-secondary"
+                    }`}
                 >
                   No
                 </button>
               </div>
             </div>
 
-            <div className="  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-8">
+            <div className="  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12">
               <p className=" text-lg md:w-1/2">
                 I condact face to face sessions:
               </p>
               <div className=" w-1/2 flex gap-5 lg:gap-8 items-center">
                 <button
                   type="button"
-                  onClick={() => setFaceToFace("Yes")}
-                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${
-                    faceToFace === "Yes" ? "bg-greenColor" : "bg-secondary"
-                  }`}
+                  onClick={() => setFaceToFace("yes")}
+                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${faceToFace === "yes" ? "bg-greenColor" : "bg-secondary"
+                    }`}
                 >
                   Yes
                 </button>
                 <button
                   type="button"
-                  onClick={() => setFaceToFace("No")}
-                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${
-                    faceToFace === "No" ? "bg-greenColor" : "bg-secondary"
-                  }`}
+                  onClick={() => setFaceToFace("no")}
+                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${faceToFace === "no" ? "bg-greenColor" : "bg-secondary"
+                    }`}
                 >
                   No
                 </button>
@@ -246,30 +271,35 @@ const PTRegister2 = () => {
                     { required: true, message: "Please select your surname!" },
                   ]}
                 >
-                  <Select
-                    placeholder={
-                      <p className=" text-lg">
-                        Radius
-                        <span className=" text-sm">
-                          (If yes face to face sessions)
-                        </span>
-                      </p>
-                    }
-                  >
-                    <Select.Option value="1m">1m</Select.Option>
-                    <Select.Option value="2m">2m</Select.Option>
-                    <Select.Option value="3m">3m</Select.Option>
-                    <Select.Option value="4m">4m</Select.Option>
-                    <Select.Option value="5m">5m</Select.Option>
-                    <Select.Option value="6m">6m</Select.Option>
-                    <Select.Option value="7m">7m</Select.Option>
-                    <Select.Option value="10m">10m</Select.Option>
-                    <Select.Option value="11m">11m</Select.Option>
-                    <Select.Option value="12m">12m</Select.Option>
-                    <Select.Option value="13m">13m</Select.Option>
-                    <Select.Option value="14m">14m</Select.Option>
-                    <Select.Option value="15m">15m</Select.Option>
-                  </Select>
+                  {
+                    faceToFace === "yes" && (
+                      <Select
+                        placeholder={
+                          <p className=" text-lg">
+                            Radius
+                            <span className=" text-sm">
+                              (If yes face to face sessions)
+                            </span>
+                          </p>
+                        }
+                      >
+                        <Select.Option value="1m">1m</Select.Option>
+                        <Select.Option value="2m">2m</Select.Option>
+                        <Select.Option value="3m">3m</Select.Option>
+                        <Select.Option value="4m">4m</Select.Option>
+                        <Select.Option value="5m">5m</Select.Option>
+                        <Select.Option value="6m">6m</Select.Option>
+                        <Select.Option value="7m">7m</Select.Option>
+                        <Select.Option value="10m">10m</Select.Option>
+                        <Select.Option value="11m">11m</Select.Option>
+                        <Select.Option value="12m">12m</Select.Option>
+                        <Select.Option value="13m">13m</Select.Option>
+                        <Select.Option value="14m">14m</Select.Option>
+                        <Select.Option value="15m">15m</Select.Option>
+                      </Select>
+                    )
+                  }
+
                 </Form.Item>
               </ConfigProvider>
             </div>
@@ -289,19 +319,17 @@ const PTRegister2 = () => {
               <div className=" w-1/2 flex gap-5 lg:gap-8 items-center">
                 <button
                   type="button"
-                  onClick={() => setConsultation("Free")}
-                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${
-                    consultation === "Free" ? "bg-greenColor" : "bg-secondary"
-                  }`}
+                  onClick={() => setConsultation("free")}
+                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${consultation === "free" ? "bg-greenColor" : "bg-secondary"
+                    }`}
                 >
                   Free
                 </button>
                 <button
                   type="button"
-                  onClick={() => setConsultation("Paid")}
-                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${
-                    consultation === "Paid" ? "bg-greenColor" : "bg-secondary"
-                  }`}
+                  onClick={() => setConsultation("paid")}
+                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${consultation === "paid" ? "bg-greenColor" : "bg-secondary"
+                    }`}
                 >
                   Paid
                 </button>
@@ -312,26 +340,25 @@ const PTRegister2 = () => {
               <p className=" text-lg">specialism</p>
               <div className="flex gap-1 overflow-x-auto mt-4">
                 <div className="flex justify-center flex-nowrap xl:flex-wrap">
-                  {logos.map((logo, index) => (
+                  {interests.map((logo, index) => (
                     <div
                       key={index}
-                      onClick={() => handleLogoClick(index)}
-                      className={`flex items-center justify-center w-[100px] lg:w-[110px] h-[100px] lg:h-[110px] px-7 text-center cursor-pointer ${
-                        selectedLogos.includes(index)
-                          ? "border-4 border-greenColor shadow shadow-greenColor"
-                          : "border-2 border-solid border-transparent"
-                      } rounded transition-all duration-300`}
+                      onClick={() => handleLogoClick(logo.name)}
+                      className={`flex items-center justify-center w-[100px] lg:w-[110px] h-[100px] lg:h-[110px] px-7 text-center cursor-pointer ${selectedLogos.includes(logo.name)
+                        ? "border-4 border-greenColor shadow shadow-greenColor"
+                        : "border-2 border-solid border-transparent"
+                        } rounded transition-all duration-300`}
                       style={{
                         borderWidth: "2px",
                         borderStyle: "solid",
-                        borderImage: selectedLogos.includes(index)
+                        borderImage: selectedLogos.includes(logo.name)
                           ? "none"
                           : "linear-gradient(180deg, rgba(11, 165, 147, 0.05) 0%, #08776a 51%, rgba(11, 165, 147, 0.05) 100%) 1", // Gradient for unselected logos
                       }}
                     >
                       <Image
-                        src={logo}
-                        alt={`Logo ${index + 1}`}
+                        src={logo.icon}
+                        alt={`Logo ${logo.name}`}
                         height={170}
                         width={170}
                         className="w-full h-full object-contain"
@@ -342,8 +369,9 @@ const PTRegister2 = () => {
               </div>
             </div>
 
-            <div className=" flex justify-end">
+            <div className=" flex justify-end items-center gap-2">
               {/* <Link href={`/trainer-profile`}> */}
+              {isLoading && <Spin></Spin>}
               <button
                 type="submit"
                 className=" text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
