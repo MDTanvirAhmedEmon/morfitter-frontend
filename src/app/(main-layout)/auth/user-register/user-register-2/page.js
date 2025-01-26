@@ -72,7 +72,7 @@ const UserRegister2 = () => {
                 firstName: info.firstName,
                 lastName: info.lastName,
                 address: `${info.city}, ${info.country}`,
-                gender: "male", // nai 
+                // gender: "male", // nai 
                 contactNo: info.mobile,
                 title: info.title,
                 userName: info.userName,
