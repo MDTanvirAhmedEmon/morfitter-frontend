@@ -4,18 +4,16 @@ import {
     fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
 import { message } from 'antd';
+import { logout, setToken } from '../features/auth/authSlice';
 
 
 const baseQuery = fetchBaseQuery({
     baseUrl: `http://10.0.60.166:5000/api/v1`,
 
-    credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
-        const token = (getState()).logInUser.token;
-        // console.log(token);
-        // const token = localStorage.getItem('room_token');
+        const token = (getState())?.logInUser?.token;
+
         if (token) {
-            // headers.set('authorization', `${token}`);
             headers.set('authorization', token);
         }
 

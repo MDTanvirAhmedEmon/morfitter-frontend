@@ -49,6 +49,9 @@ export const mainTheme = {
             "activeBorderColor": "rgb(20,184,165)",
             "handleHoverColor": "rgb(20,184,165)",
             "hoverBorderColor": "rgb(20,184,165)"
-          }
+        },
+        "Spin": {
+            "colorPrimary": "rgb(87,44,88)"
+        }
     },
 };

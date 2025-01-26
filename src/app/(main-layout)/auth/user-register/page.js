@@ -8,13 +8,16 @@ import circle from "../../../../assets/circle.svg";
 import Image from "next/image";
 import { PiCamera } from "react-icons/pi";
 import { useState } from "react";
-import Link from "next/link";
-import { useCreateTraineeMutation } from "@/redux/features/auth/authApi";
+import { useDispatch } from "react-redux";
+import { setInfo, setProfile } from "@/redux/features/auth/registerSlice";
+import { useRouter } from "next/navigation";
 
 const UserRegister = () => {
   const [profilePic, setProfilePic] = useState();
-  const [createTrainee, { isLoading }] = useCreateTraineeMutation();
+
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  const router = useRouter();
   const handleProfilePicUpload = (e) => {
     setProfilePic(e.file.originFileObj);
   };
@@ -22,55 +25,45 @@ const UserRegister = () => {
 
   const onFinish = async (values) => {
     const { day, month, year } = values; // Destructure day, month, and year from form values
-  
+
     // Validate day, month, and year
     if (!day || !month || !year) {
       message.error("Please provide a valid date of birth.");
       return;
     }
-  
+
     // Construct ISO Date
     const dob = new Date(year, month - 1, day).toISOString();
     console.log("ISO DOB:", dob);
-  
+
     // Prepare registration data
     const registrationData = {
       email: values.email,
       title: values.title,
-      name: values.firstName,
-      surname: values.lastName,
-      dob, // Use the ISO date format
-      mobile: values.contactNo,
-      username: values.userName,
+      firstName: values.name,
+      lastName: values.surname,
+      dob: dob,
+      mobile: values.mobile,
+      userName: values.userName,
       password: values.password,
       country: values.country,
       city: values.city,
     };
-  
+    dispatch(setInfo(registrationData))
     console.log("Registration Data:", registrationData);
-  
+
     // Validate profilePic
     if (!profilePic) {
       message.error("Please upload a profile picture.");
       return;
     }
-  
-    // Create FormData
-  //   const formData = new FormData();
-  //   formData.append("data", JSON.stringify(registrationData));
-  //   formData.append("file", profilePic);
-  
-  //   try {
-  //     // Call createTrainee mutation
-  //     const response = await createTrainee(formData).unwrap();
-  //     console.log("Response Data:", response);
-  //     message.success("Registration Successful");
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //     message.error(error?.data?.message || "Something went wrong.");
-  //   }
+    dispatch(setProfile(profilePic))
+    if (profilePic && registrationData) {
+      router.push('/auth/user-register/user-register-2')
+    }
+
   };
-  
+
 
   return (
     <section className="py-8 md:py-20">
@@ -102,19 +95,12 @@ const UserRegister = () => {
             <div className="flex flex-col-reverse md:flex-row justify-between items-center space-x-4 md:mb-10">
               <div className=" w-full">
                 <Form.Item
-                  name="email"
+                  name="userName"
                   rules={[
-                    { required: true, message: "Please input your email!" },
+                    { required: true, message: "Please input your username!" },
                   ]}
-                  className=" w-full"
                 >
-                  <Input
-                    placeholder="Email"
-                    suffix={
-                      <IoMdArrowDropdown className=" w-6 h-6 text-greenColor" />
-                    }
-                    className="md:w-[70%]"
-                  />
+                  <Input  placeholder="Username" className="md:w-[70%]" />
                 </Form.Item>
                 <Form.Item
                   name="title"
@@ -178,9 +164,9 @@ const UserRegister = () => {
 
             {/* Date of Birth */}
             <div className=" flex flex-col md:flex-row gap-4">
-             
-               <div className="grid grid-cols-3 gap-4">
-               <Form.Item
+
+              <div className="grid grid-cols-3 gap-4">
+                <Form.Item
                   name="day"
                   rules={[
                     { required: true, message: "Please enter the day!" },
@@ -242,8 +228,8 @@ const UserRegister = () => {
                     className="border-greenColor py-1.5 px-4 rounded-lg"
                   />
                 </Form.Item>
-               </div>
-            
+              </div>
+
 
               {/* Mobile Number */}
               <Form.Item
@@ -266,18 +252,27 @@ const UserRegister = () => {
             {/* Username & Password */}
             <div className="grid grid-cols-2 gap-4 ">
               <Form.Item
-                name="username"
+                name="email"
                 rules={[
-                  { required: true, message: "Please input your username!" },
+                  { required: true, message: "Please input your email!" },
                 ]}
+                className=" w-full"
               >
-                <Input placeholder="Username" className="w-full" />
+                <Input
+                  placeholder="Email"
+                  suffix={
+                    <IoMdArrowDropdown className=" w-6 h-6 text-greenColor" />
+                  }
+                  
+                />
               </Form.Item>
+
 
               <Form.Item
                 name="password"
                 rules={[
                   { required: true, message: "Please input your password!" },
+                  { min: 8, message: "Password must be at least 8 characters!" },
                 ]}
                 hasFeedback
               >
@@ -322,19 +317,19 @@ const UserRegister = () => {
             {/* Submit Button */}
             <Form.Item>
               {/* <Link href={`/auth/user-register/user-register-2`}> */}
-                <button
-                  type="submit"
-                  className="bookBtn text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
-                >
-                  Next
-                </button>
+              <button
+                type="submit"
+                className="bookBtn text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
+              >
+                Next
+              </button>
               {/* </Link> */}
             </Form.Item>
           </Form>
           <p className=" mt-6">
             Already have an account?{" "}
             {/* <Link className=" text-primary font-semibold" href={`/auth/login`}> */}
-              Log In
+            Log In
             {/* </Link> */}
           </p>
         </div>
