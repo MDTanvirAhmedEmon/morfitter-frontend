@@ -57,25 +57,29 @@ const PTRegister2 = () => {
 
   const onFinish = (values) => {
     const data = {
-      userInfo: {
-        email: info.email,
-        password: info.password,
+      register:
+      {
+        userInfo: {
+          email: info.email,
+          password: info.password,
+        },
+        trainerData: {
+          firstName: info.firstName,
+          lastName: info.lastName,
+          dob: info.dob,
+          contactNo: info.mobile,
+          userName: info?.userName,
+          country: values?.country,
+          zipCode: Number(values?.postcode),
+          onlineSession: onlineSession,
+          faceToFace: faceToFace,
+          radius: values?.radius,
+          about: values?.aboutMe,
+          consultationType: consultation,
+
+        },
       },
-      trainerData: {
-        firstName: info.firstName,
-        lastName: info.lastName,
-        dob: info.dob,
-        contactNo: info.mobile,
-        userName: info?.userName,
-        country: values?.country,
-        zipCode: Number(values?.postcode),
-        onlineSession: onlineSession,
-        faceToFace: faceToFace,
-        radius: values?.radius,
-        about: values?.aboutMe,
-        consultationType: consultation,
-        specialism: selectedLogos,
-      },
+      specialism: selectedLogos,
     };
     console.log("trainer page er data", data);
 
@@ -115,24 +119,24 @@ const PTRegister2 = () => {
     createTrainer(formData).unwrap()
       .then((data) => {
         console.log(data);
-          const verifiedToken = decodedToken(data?.data?.accessToken);
-          dispatch(setToken(data?.data?.accessToken));
-          dispatch(setRole(verifiedToken));
-          dispatch(setUser(data?.data?.userInfo));
-          dispatch(clearRegisterInfo());
-          notification.success({
-            message: "Registration Successful",
-            description: data?.data?.message,
-            placement: 'topRight',
-          });
-          router.push('/trainer-profile');
+        const verifiedToken = decodedToken(data?.data?.accessToken);
+        dispatch(setToken(data?.data?.accessToken));
+        dispatch(setRole(verifiedToken));
+        dispatch(setUser(data?.data?.userInfo));
+        dispatch(clearRegisterInfo());
+        notification.success({
+          message: "Registration Successful",
+          description: data?.data?.message,
+          placement: 'topRight',
+        });
+        router.push('/trainer-profile');
       })
       .catch((error) => {
-      notification.error({
-        message: error?.data?.message || 'Unexpected error',
-        description: 'Please try again later',
-        placement: 'topRight',
-      });
+        notification.error({
+          message: error?.data?.message || 'Unexpected error',
+          description: 'Please try again later',
+          placement: 'topRight',
+        });
       })
 
   };
