@@ -82,7 +82,7 @@ const UserRegister = () => {
         {/* Form Section */}
         <div className="lg:w-1/2 flex flex-col justify-center md:p-8 rounded-lg ">
           <h1 className="text-2xl md:text-5xl font-bold  mb-8">
-            Register for Free
+            Register as a member
           </h1>
 
           <Form

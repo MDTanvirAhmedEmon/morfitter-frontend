@@ -135,30 +135,6 @@ const PTRegister2 = () => {
       });
       })
 
-    // createTrainer(formData).unwrap()
-    // .then((data) => {
-    //   console.log('Success data:', data);
-    //   const verifiedToken = decodedToken(data?.data?.accessToken);
-    //   dispatch(setToken(data?.data?.accessToken));
-    //   dispatch(setRole(verifiedToken));
-    //   dispatch(setUser(data?.data?.userInfo));
-    //   dispatch(clearRegisterInfo());
-    //   notification.success({
-    //     message: "Registration Successful",
-    //     description: data?.data?.message,
-    //     placement: 'topRight',
-    //   });
-    //   router.push('/trainer-profile');
-    // })
-    // .catch((error) => {
-    //   console.error('Error:', error);
-    //   notification.error({
-    //     message: error?.data?.message || 'Unexpected error',
-    //     description: 'Please try again later',
-    //     placement: 'topRight',
-    //   });
-    // });
-
   };
 
   return (
