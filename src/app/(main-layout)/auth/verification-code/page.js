@@ -1,103 +1,89 @@
 "use client";
-import Link from "next/link";
-import React from "react";
-import { useRef, useState } from "react";
+import { useVerifyEmailMutation } from "@/redux/features/auth/authApi";
+import { useSearchParams, useRouter } from "next/navigation";
+import React, { useRef, useState } from "react";
 
 const VerificationCode = () => {
-  const [otp, setOtp] = useState(Array(4).fill(""));
+  const [code, setCode] = useState(""); // Store the entire code as a single string
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+
   const inputRefs = useRef([]);
+  const router = useRouter();
 
-  const handleKeyDown = (e) => {
-    const index = inputRefs.current.indexOf(e.target);
+  const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
 
-    if (e.key === "Backspace" || e.key === "Delete") {
-      e.preventDefault();
-      if (otp[index]) {
-        // Clear current input
-        setOtp((prevOtp) => [
-          ...prevOtp.slice(0, index),
-          "",
-          ...prevOtp.slice(index + 1),
-        ]);
-      } else if (index > 0) {
-        // Move to the previous input
-        inputRefs.current[index - 1].focus();
+  const handleChange = (value, index) => {
+    if (/^[0-9]*$/.test(value)) { // Allow only numeric input
+      const newCode = code.split(""); // Convert the code to an array of characters
+      newCode[index] = value; // Update the specific digit at the index
+      setCode(newCode.join("")); // Join it back into a string
+
+      // Automatically focus the next input field if it exists
+      const nextInput = inputRefs.current[index + 1];
+      if (value && nextInput) {
+        nextInput.focus();
       }
     }
   };
 
-  const handleInput = (e) => {
-    const { target } = e;
-    const index = inputRefs.current.indexOf(target);
-    const value = e.target.value.trim();
-
-    if (/^[0-9]$/.test(value)) {
-      setOtp((prevOtp) => [
-        ...prevOtp.slice(0, index),
-        value,
-        ...prevOtp.slice(index + 1),
-      ]);
-
-      if (index < otp.length - 1) {
-        inputRefs.current[index + 1]?.focus();
-      }
+  const handleVerifyCode = () => {
+    if (code.length !== 5) {
+      alert("Invalid code. Please enter a valid 5-digit code.");
+      return;
     }
+
+    verifyEmail({ email, tokenCode: Number(code) }) 
+      .unwrap()
+      .then((response) => {
+        console.log("Verification successful:", response);
+        router.push(`/auth/reset-password?email=${email}`);
+      })
+      .catch((err) => {
+        console.error("Verification failed:", err);
+        alert(err?.data?.message || "Invalid verification code. Please try again.");
+      });
   };
 
-  const handleFocus = (e) => {
-    e.target.select();
-  };
-
-  const handlePaste = (e) => {
-    e.preventDefault();
-    const pastedData = e.clipboardData.getData("text").slice(0, otp.length);
-    if (/^\d+$/.test(pastedData)) {
-      const digits = pastedData.split("");
-      setOtp((prevOtp) => prevOtp.map((_, index) => digits[index] || ""));
-      const lastFilledIndex = Math.min(digits.length, otp.length) - 1;
-      inputRefs.current[lastFilledIndex]?.focus();
-    }
-  };
   return (
-    <section className="mx-auto flex justify-center items-center bg-white py-20 md:py-20 lg:py-40">
-      <div className="px-5 w-1/3">
-        <div className="relative rounded-lg bg-white px-8 py-20 shadow-lg">
-          <h1 className="text-[#6F6F6F] text-3xl font-bold text-center mb-2">
-            Verification Code
-          </h1>
-          <p className="text-[#6F6F6F] text-lg mb-10 text-center">
-            Welcome to verification code page !
-          </p>
-          <form className="space-y-5 mt-5">
-            <div className="flex justify-center gap-2">
-              {otp.map((digit, index) => (
-                <input
-                  key={index}
-                  type="text"
-                  maxLength={1}
-                  value={digit}
-                  onChange={handleInput}
-                  onKeyDown={handleKeyDown}
-                  onFocus={handleFocus}
-                  onPaste={handlePaste}
-                  ref={(el) => (inputRefs.current[index] = el)}
-                  className="shadow-xs w-20 h-20 text-2xl text-center border-[1px] border-[#0ba593]  text-[#0ba593] rounded-md focus:outline-none"
-                />
-              ))}
-            </div>
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-lg">
+        <h2 className="text-xl font-bold text-center mb-4">
+          Verification Code
+        </h2>
+        <p className="text-gray-600 text-center mb-6">
+          We sent a reset link to {email}. Enter the 5-digit code mentioned in
+          the email.
+        </p>
 
-            <Link href={`/auth/reset-password`}>
-              <button
-                type="submit"
-                className="w-full bg-[#0ba593] text-white font-semibold py-2 rounded-lg shadow-lg hover:bg-primary-dark transition mt-10"
-              >
-                Verify Code
-              </button>
-            </Link>
-          </form>
+        {/* Input fields for the 5-digit code */}
+        <div className="flex justify-center gap-3 mb-6">
+          {[...Array(5)].map((_, index) => (
+            <input
+              ref={(el) => (inputRefs.current[index] = el)}
+              key={index}
+              id={`code-${index}`}
+              type="text"
+              maxLength="1"
+              value={code[index] || ""} // Ensure no error if the code isn't fully filled
+              onChange={(e) => handleChange(e.target.value, index)}
+              className="w-12 h-12 text-center border border-greenColor rounded-md shadow-sm focus:outline-none text-lg"
+            />
+          ))}
+        </div>
+
+        {/* Verify button */}
+        <div className="mb-4">
+          <button
+            onClick={handleVerifyCode}
+            disabled={isLoading}
+            className="w-full bg-greenColor text-white py-2 px-4 rounded-md shadow-md focus:outline-none"
+          >
+            {isLoading ? "Verifying..." : "Verify Code"}
+          </button>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

@@ -1,16 +1,47 @@
 "use client";
-import { Form, Input, Checkbox, Avatar, Upload } from "antd";
-import { PhoneOutlined } from "@ant-design/icons";
+import { Form, Input, notification } from "antd";
 import { IoMdArrowDropdown } from "react-icons/io";
 import dynamic from "next/dynamic";
 import regiserImg from "../../../../assets/register.png";
 import Image from "next/image";
 
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { useLogInMutation } from "@/redux/features/auth/authApi";
+import { setRole, setToken } from "@/redux/features/auth/authSlice";
+import { useRouter } from "next/navigation";
+import { decodedToken } from "@/utils/VerifyJwtToken";
 
 const LogIn = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const [logIn, { loading }] = useLogInMutation();
   const onFinish = (values) => {
-    console.log("Success:", values);
+    const LogInData = {
+      email: values?.email,
+      password: values?.password,
+    };
+    console.log("log in data", LogInData);
+
+    logIn(LogInData)
+      .unwrap()
+      .then((data) => {
+        console.log("log in data", data);
+
+        const verifiedToken = decodedToken(data?.data?.accessToken);
+        dispatch(setToken(data?.data?.accessToken));
+        dispatch(setRole(verifiedToken));
+        notification.success({
+          message: "log in Successful",
+          description: data?.data?.message,
+          placement: "topRight",
+        });
+        router.push("/");
+      })
+      .catch((error) => {
+        message.error(error?.data?.error);
+      });
   };
 
   return (
@@ -85,23 +116,21 @@ const LogIn = () => {
 
             {/* Submit Button */}
             <Form.Item>
-              <Link href={`/`}>
-                <button
-                  type="submit"
-                  className="bookBtn text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
-                >
-                  Log In
-                </button>
-              </Link>
+              <button
+                type="submit"
+                className="bookBtn text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
+              >
+                Log In
+              </button>
             </Form.Item>
           </Form>
           <p className=" mt-6">
             Don&apos;t have an account?{" "}
-            <Link
-              className=" text-primary font-semibold"
-              href={`/auth/register`}
-            >
-              Register
+            <Link className="font-semibold ml-2" href={`/auth/user-register`}>
+              as a <span className="text-primary">member</span>
+            </Link>
+            <Link className="font-semibold ml-2" href={`/auth/pt-register`}>
+              as a <span className="text-primary">trainer</span>
             </Link>
           </p>
         </div>
