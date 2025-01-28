@@ -40,7 +40,12 @@ const LogIn = () => {
         router.push("/");
       })
       .catch((error) => {
-        message.error(error?.data?.error);
+        notification.error({
+          message: "Error",
+          description:
+            error?.data?.message || "Something went wrong. Please try again.",
+          placement: "topRight",
+        });
       });
   };
 

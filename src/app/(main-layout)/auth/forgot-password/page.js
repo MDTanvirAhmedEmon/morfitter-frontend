@@ -33,52 +33,50 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="mx-auto flex justify-center items-center bg-white py-20 md:py-20 lg:py-40">
-      <div className="px-5 w-1/3">
-        <div className="relative rounded-lg bg-white px-8 py-20 shadow-lg">
-          <h1 className="text-[#6F6F6F] text-3xl font-bold text-center mb-2">
-            Forgot Password
-          </h1>
-          <p className="text-[#6F6F6F] text-lg mb-10 text-center">
-            Welcome to forgot password page !
-          </p>
-          <Form
-            name="login"
-            initialValues={{ remember: true }}
-            style={{ maxWidth: 550 }}
-            onFinish={onFinish}
-            layout="vertical"
+    <div className="flex justify-center items-center bg-white py-16 sm:py-20 lg:py-40">
+    <div className="w-[calc(100%-20px)] sm:w-[calc(100%-40px)] md:w-[calc(100%-100px)] lg:w-2/3 xl:w-1/2 px-4 sm:px-6">
+      <div className="relative rounded-lg bg-white px-6 sm:px-8 md:px-10 py-10 sm:py-14 md:py-20 shadow-lg">
+        <h1 className="text-gray-600 text-xl sm:text-2xl md:text-3xl font-bold text-center mb-2">
+          Forgot Password
+        </h1>
+        <p className="text-gray-600 text-base sm:text-lg text-center mb-8 sm:mb-10">
+          Welcome to forgot password page!
+        </p>
+        <Form
+          name="login"
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          layout="vertical"
+          className="max-w-full"
+        >
+          <Form.Item
+            name="email"
+            label={
+              <p className="block text-sm sm:text-md font-medium text-gray-700 mb-2">
+                Email Address:
+              </p>
+            }
           >
-            <Form.Item
-              name="email"
-              label={
-                <p className="block text-md font-medium text-[#575757] mb-2">
-                  Email Address :
-                </p>
-              }
-              style={{}}
+            <Input
+              required
+              className="text-sm sm:text-md py-2 px-3 border border-gray-300 rounded-md w-full"
+              placeholder="esteban_schiller@gmail.com"
+            />
+          </Form.Item>
+          <Form.Item className="text-center">
+            <button
+              disabled={isLoading}
+              className="bg-greenColor hover:bg-greenColor text-center w-full py-2 sm:py-3 font-semibold text-white rounded-md shadow-lg transition"
+              type="submit"
             >
-              <Input
-                required
-                style={{ padding: "6px" }}
-                className="text-md"
-                placeholder="esteban_schiller@gmail.com"
-              />
-            </Form.Item>
-
-            <Form.Item className="text-center">
-              <button
-                disabled={isLoading}
-                className="bg-greenColor text-center w-full p-2 font-semibold text-white px-10 py-2 rounded-md shadow-lg"
-                type="submit"
-              >
-                Send a code {isLoading && <Spin></Spin>}
-              </button>
-            </Form.Item>
-          </Form>
-        </div>
+              Send a code {isLoading && <Spin />}
+            </button>
+          </Form.Item>
+        </Form>
       </div>
     </div>
+  </div>
+  
   );
 };
 
