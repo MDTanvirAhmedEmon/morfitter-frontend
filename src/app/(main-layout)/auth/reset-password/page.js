@@ -1,22 +1,77 @@
-"use client"
+"use client";
+import { useResetPasswordMutation } from "@/redux/features/auth/authApi";
+import { notification } from "antd";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 const ResetPassword = () => {
-    const [isEyeOpen, setIsEyeOpen] = useState(false);
-    const [isConfirmEyeOpen, setIsConfirmEyeOpen] = useState(false);
+  const [isEyeOpen, setIsEyeOpen] = useState(false);
+  const [isConfirmEyeOpen, setIsConfirmEyeOpen] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-    const handleSubmit = () => {};
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+  const tokenCode = searchParams.get("tokenCode");
+
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!newPassword || !confirmPassword) {
+      notification.error({
+        message: "Error",
+        description: "Both password fields are required.",
+        placement: "topRight",
+      });
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      notification.error({
+        message: "Error",
+        description: "Passwords do not match. Please try again.",
+        placement: "topRight",
+      });
+      return;
+    }
+
+    try {
+      const response = await resetPassword({
+        email,
+        password: newPassword,
+        tokenCode: tokenCode,
+      }).unwrap();
+      notification.success({
+        message: "Success",
+        description:
+          response.message || "Password has been reset successfully!",
+        placement: "topRight",
+      });
+      router.push("/auth/login");
+    } catch (error) {
+      notification.error({
+        message: "Error",
+        description:
+          error?.data?.message || "Failed to reset password. Please try again.",
+        placement: "topRight",
+      });
+    }
+  };
+
   return (
-    <section className="mx-auto flex justify-center items-center bg-white py-20 md:py-20 lg:py-40">
-      <div className="px-5 w-1/3">
-        <div className="relative rounded-lg bg-white px-8 py-20 shadow-lg">
+    <section className="flex justify-center items-center bg-white py-16 sm:py-20 lg:py-40">
+      <div className="w-[calc(100%-20px)] sm:w-[calc(100%-40px)] md:w-[calc(100%-100px)] lg:w-2/3 xl:w-1/2 px-4 sm:px-6">
+        <div className="relative rounded-lg bg-white px-6 sm:px-8 md:px-10 py-10 sm:py-14 md:py-20 shadow-lg">
           <h1 className="text-[#6F6F6F] text-3xl font-bold text-center mb-2">
             Reset Password
           </h1>
           <p className="text-[#6F6F6F] text-lg mb-10 text-center">
-            Welcome to reset password page !
+            Welcome to reset password page!
           </p>
 
           {/* Form Section */}
@@ -26,15 +81,14 @@ const ResetPassword = () => {
                 htmlFor="password"
                 className="text-[15px] font-[400] text-[#575757]"
               >
-                Password
+                New Password
               </label>
               <div className="w-full relative">
                 <input
                   type={isEyeOpen ? "text" : "password"}
                   name="password"
-                //   value={formData.password}
-                //   onChange={handleChange}
                   id="password"
+                  onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="Enter new password"
                   className="peer border-[1px] border-[#0ba593] rounded-md outline-none pl-4 pr-12 py-3 w-full mt-1"
                   required
@@ -64,9 +118,8 @@ const ResetPassword = () => {
                 <input
                   type={isConfirmEyeOpen ? "text" : "password"}
                   name="confirmPassword"
-                //   value={formData.confirmPassword}
-                //   onChange={handleChange}
                   id="confirmPassword"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Re-enter new password"
                   className="peer border-[1px] border-[#0ba593] rounded-md outline-none pl-4 pr-12 py-3 w-full mt-1"
                   required
@@ -86,14 +139,13 @@ const ResetPassword = () => {
             </div>
 
             {/* Submit Button */}
-            <Link href={`/`}>
-              <button
-                type="submit"
-                className="w-full bg-[#0ba593] text-white font-semibold py-2 rounded-lg shadow-lg transition mt-5"
-              >
-                Confirm
-              </button>
-            </Link>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-[#0ba593] text-white font-semibold py-2 rounded-lg shadow-lg transition mt-5"
+            >
+              {isLoading ? "Updating..." : "Update Password"}
+            </button>
           </form>
         </div>
       </div>

@@ -1,10 +1,11 @@
 "use client";
 import { useVerifyEmailMutation } from "@/redux/features/auth/authApi";
+import { notification } from "antd";
 import { useSearchParams, useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 
 const VerificationCode = () => {
-  const [code, setCode] = useState(""); // Store the entire code as a single string
+  const [code, setCode] = useState("");
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
 
@@ -14,7 +15,8 @@ const VerificationCode = () => {
   const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
 
   const handleChange = (value, index) => {
-    if (/^[0-9]*$/.test(value)) { // Allow only numeric input
+    if (/^[0-9]*$/.test(value)) {
+      // Allow only numeric input
       const newCode = code.split(""); // Convert the code to an array of characters
       newCode[index] = value; // Update the specific digit at the index
       setCode(newCode.join("")); // Join it back into a string
@@ -29,58 +31,74 @@ const VerificationCode = () => {
 
   const handleVerifyCode = () => {
     if (code.length !== 5) {
-      alert("Invalid code. Please enter a valid 5-digit code.");
+      notification.success({
+        message: "OTP Sent",
+        description: "Invalid code. Please enter a valid 5-digit code.!",
+        placement: "topRight",
+      });
       return;
     }
 
-    verifyEmail({ email, tokenCode: Number(code) }) 
+    verifyEmail({ email, tokenCode: Number(code) })
       .unwrap()
       .then((response) => {
-        console.log("Verification successful:", response);
-        router.push(`/auth/reset-password?email=${email}`);
+        notification.success({
+          message: "OTP Sent",
+          description: " verifications were successfully completed!",
+          placement: "topRight",
+        });
+        router.push(
+          `/auth/reset-password?email=${email}&tokenCode=${tokenCode}`
+        );
       })
-      .catch((err) => {
-        console.error("Verification failed:", err);
-        alert(err?.data?.message || "Invalid verification code. Please try again.");
+      .catch((error) => {
+        notification.error({
+          message: "Error",
+          description:
+            error?.data?.message || "Something went wrong. Please try again.",
+          placement: "topRight",
+        });
       });
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-lg">
-        <h2 className="text-xl font-bold text-center mb-4">
-          Verification Code
-        </h2>
-        <p className="text-gray-600 text-center mb-6">
-          We sent a reset link to {email}. Enter the 5-digit code mentioned in
-          the email.
-        </p>
+    <div className="flex justify-center items-center bg-white py-16 sm:py-20 lg:py-40">
+      <div className="w-[calc(100%-20px)] sm:w-[calc(100%-40px)] md:w-[calc(100%-100px)] lg:w-2/3 xl:w-1/2 px-4 sm:px-6">
+        <div className="relative rounded-lg bg-white px-6 sm:px-8 md:px-10 py-10 sm:py-14 md:py-20 shadow-lg">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-center mb-4">
+            Verification Code
+          </h2>
+          <p className="text-gray-600 text-sm sm:text-base md:text-lg text-center mb-6">
+            We sent a reset link to <span className="font-medium">{email}</span>
+            . Enter the 5-digit code mentioned in the email.
+          </p>
 
-        {/* Input fields for the 5-digit code */}
-        <div className="flex justify-center gap-3 mb-6">
-          {[...Array(5)].map((_, index) => (
-            <input
-              ref={(el) => (inputRefs.current[index] = el)}
-              key={index}
-              id={`code-${index}`}
-              type="text"
-              maxLength="1"
-              value={code[index] || ""} // Ensure no error if the code isn't fully filled
-              onChange={(e) => handleChange(e.target.value, index)}
-              className="w-12 h-12 text-center border border-greenColor rounded-md shadow-sm focus:outline-none text-lg"
-            />
-          ))}
-        </div>
+          {/* Input fields for the 5-digit code */}
+          <div className="flex justify-center gap-2 sm:gap-3 mb-6">
+            {[...Array(5)].map((_, index) => (
+              <input
+                ref={(el) => (inputRefs.current[index] = el)}
+                key={index}
+                id={`code-${index}`}
+                type="text"
+                maxLength="1"
+                value={code[index] || ""}
+                onChange={(e) => handleChange(e.target.value, index)}
+                className="w-10 sm:w-12 h-10 sm:h-12 text-center border border-gray-300 rounded-md shadow-sm focus:outline-none text-lg sm:text-xl"
+              />
+            ))}
+          </div>
 
-        {/* Verify button */}
-        <div className="mb-4">
-          <button
-            onClick={handleVerifyCode}
-            disabled={isLoading}
-            className="w-full bg-greenColor text-white py-2 px-4 rounded-md shadow-md focus:outline-none"
-          >
-            {isLoading ? "Verifying..." : "Verify Code"}
-          </button>
+          {/* Verify button */}
+          <div>
+            <button
+              onClick={handleVerifyCode}
+              disabled={isLoading}
+              className="w-full bg-greenColor hover:bg-greenColor text-white py-2 sm:py-3 rounded-md shadow-md focus:outline-none transition"
+            >
+              {isLoading ? "Verifying..." : "Verify Code"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
