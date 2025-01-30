@@ -16,10 +16,9 @@ const VerificationCode = () => {
 
   const handleChange = (value, index) => {
     if (/^[0-9]*$/.test(value)) {
-      // Allow only numeric input
-      const newCode = code.split(""); // Convert the code to an array of characters
-      newCode[index] = value; // Update the specific digit at the index
-      setCode(newCode.join("")); // Join it back into a string
+      const newCode = code.split(""); 
+      newCode[index] = value; 
+      setCode(newCode.join(""));
 
       // Automatically focus the next input field if it exists
       const nextInput = inputRefs.current[index + 1];
@@ -33,7 +32,7 @@ const VerificationCode = () => {
     if (code.length !== 5) {
       notification.success({
         message: "OTP Sent",
-        description: "Invalid code. Please enter a valid 5-digit code.!",
+        description: "Invalid code. Please enter a valid 5-digit code!",
         placement: "topRight",
       });
       return;
@@ -42,20 +41,18 @@ const VerificationCode = () => {
     verifyEmail({ email, tokenCode: Number(code) })
       .unwrap()
       .then((response) => {
+        console.log("verification page er  response", response);
         notification.success({
           message: "OTP Sent",
           description: " verifications were successfully completed!",
           placement: "topRight",
         });
-        router.push(
-          `/auth/reset-password?email=${email}&tokenCode=${tokenCode}`
-        );
+        router.push(`/auth/reset-password?email=${email}&tokenCode=${code}`);
       })
       .catch((error) => {
         notification.error({
           message: "Error",
-          description:
-            error?.data?.message || "Something went wrong. Please try again.",
+          description: error?.data?.message,
           placement: "topRight",
         });
       });

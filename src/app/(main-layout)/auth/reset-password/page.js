@@ -19,9 +19,9 @@ const ResetPassword = () => {
 
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log(newPassword, tokenCode, confirmPassword);
     if (!newPassword || !confirmPassword) {
       notification.error({
         message: "Error",
@@ -30,7 +30,6 @@ const ResetPassword = () => {
       });
       return;
     }
-
     if (newPassword !== confirmPassword) {
       notification.error({
         message: "Error",
@@ -39,28 +38,24 @@ const ResetPassword = () => {
       });
       return;
     }
-
-    try {
-      const response = await resetPassword({
-        email,
-        password: newPassword,
-        tokenCode: tokenCode,
-      }).unwrap();
-      notification.success({
-        message: "Success",
-        description:
-          response.message || "Password has been reset successfully!",
-        placement: "topRight",
+    resetPassword({ email, tokenCode, newPassword: newPassword })
+      .unwrap()
+      .then((response) => {
+        console.log("response of reset", response);
+        notification.success({
+          message: "Success",
+          description: response.message,
+          placement: "topRight",
+        });
+        router.push("/auth/login");
+      })
+      .catch((error) => {
+        notification.error({
+          message: "Error",
+          description: error?.data?.message,
+          placement: "topRight",
+        });
       });
-      router.push("/auth/login");
-    } catch (error) {
-      notification.error({
-        message: "Error",
-        description:
-          error?.data?.message || "Failed to reset password. Please try again.",
-        placement: "topRight",
-      });
-    }
   };
 
   return (
