@@ -31,7 +31,6 @@ const LogIn = () => {
 
         const verifiedToken = decodedToken(data?.data?.accessToken);
         dispatch(setToken(data?.data?.accessToken));
-        dispatch(setRole(verifiedToken));
         notification.success({
           message: "log in Successful",
           description: data?.data?.message,
@@ -40,10 +39,11 @@ const LogIn = () => {
         router.push("/");
       })
       .catch((error) => {
+        console.log('error', error);
         notification.error({
           message: "Error",
           description:
-            error?.data?.message || "Something went wrong. Please try again.",
+            error?.data?.message,
           placement: "topRight",
         });
       });

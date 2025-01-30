@@ -8,11 +8,11 @@ import { logout, setToken } from '../features/auth/authSlice';
 
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: `http://localhost:5000/api/v1`,
+    baseUrl: `http://10.0.60.166:5000/api/v1`,
 
     prepareHeaders: (headers, { getState }) => {
-        const token = (getState())?.logInUser?.token;
-
+        const token = (getState())?.auth?.token;
+        console.log(token);
         if (token) {
             headers.set('authorization', token);
         }
@@ -33,7 +33,7 @@ const baseQueryWithRefreshToken = async (args, api, extraOptions) => {
 
     if (result?.error?.status === 401) {
 
-        const res = await fetch(`http://localhost:5000/api/v1/auth/refresh-token`, {
+        const res = await fetch(`/auth/refresh-token`, {
             method: 'POST',
             credentials: 'include',
         });
