@@ -3,15 +3,23 @@ import Image from "next/image";
 import gymbg from "../../../assets/content/gym1.png";
 import gymbg2 from "../../../assets/content/gym2.png";
 import fitnessTeam from "../../../assets/content/fitnessTeam.png";
-import { Select } from "antd";
+import { ConfigProvider, Pagination, Select } from "antd";
 import { useGetAllContentsQuery } from "@/redux/features/content/contentApi";
 import SingleBlog from "@/components/Content/SingleBlog";
+import { useState } from "react";
+import ContentSkeleton from "@/components/Skeleton/ContentSkeleton";
 
 const Content = () => {
-  const { data, isLoading, isError } = useGetAllContentsQuery();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedUserValue, setSelectedUserValue] = useState('');
+  const { data, isLoading } = useGetAllContentsQuery({page: currentPage, role: selectedUserValue, sortOrder: 'desc'});
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching data</div>;
+  const handleSelectedUserValue = (value) => {
+    setSelectedUserValue(value);
+  };
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div className="container mx-auto py-10 md:py-20">
@@ -31,10 +39,11 @@ const Content = () => {
       <div className=" grid md:grid-cols-3 gap-10 mx-5 py-8 md:py-16">
         <Select
           className=" "
+          onChange={handleSelectedUserValue}
           placeholder={<p className=" text-lg">Trainer Or Member</p>}
         >
-          <Select.Option value="Live">Trainer</Select.Option>
-          <Select.Option value="Recorded">Member</Select.Option>
+          <Select.Option value="trainer">Trainer</Select.Option>
+          <Select.Option value="trainee">Member</Select.Option>
         </Select>
         <Select
           className=" -mt-3 md:-mt-0"
@@ -71,18 +80,29 @@ const Content = () => {
         </Select>
       </div>
       {/* single content card */}
-      <div className="pb-12 md:pb-20">
+      <div className="pb-12 md:pb-10">
+        {
+          isLoading && <ContentSkeleton></ContentSkeleton>
+        }
         {data?.data?.data?.map((content) => (
           <SingleBlog key={content._id} content={content} />
-            // <div key={content._id}>
-            //     <h1>{content?.title}</h1>
-            //     <p>{content?.content}</p>
-            // </div>
+          // <div key={content._id}>
+          //     <h1>{content?.title}</h1>
+          //     <p>{content?.content}</p>
+          // </div>
         ))}
       </div>
+      <div className="">
 
+          <Pagination
+            current={data?.data?.meta?.page}
+            pageSize={data?.data?.meta?.limit}
+            total={data?.data?.meta?.total}
+            onChange={handlePageChange}
+          />
+      </div>
       {/* footer image */}
-      <div className=" mx-3 md:mx-0">
+      <div className=" mt-10 mx-3 md:mx-0">
         <Image src={gymbg2} className="w-full" width={0} height={0} alt="gym" />
       </div>
     </div>

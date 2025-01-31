@@ -14,8 +14,7 @@ import logo8 from '../../../../../assets/logo8.svg';
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useCreateTraineeMutation } from "@/redux/features/auth/authApi";
 import { useDispatch, useSelector } from "react-redux";
-// import { setRole, setToken, setUser } from "@/redux/features/auth/authSlice";
-import { clearRegisterInfo } from "@/redux/features/auth/registerSlice";
+import { setRole, setToken, setUser } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 import { decodedToken } from "@/utils/VerifyJwtToken";
 import Cookies from "js-cookie";
@@ -108,16 +107,14 @@ const UserRegister2 = () => {
                 Cookies.set('morfitter-token', data?.data?.accessToken)
                 dispatch(setRole(verifiedtToken));
                 dispatch(setUser(data?.data?.userInfo));
-                // dispatch(clearRegisterInfo())
+                router.push('/profile')
                 notification.success({
                     message: "Registration Successful",
                     description: data?.data?.message,
                     placement: 'topRight',
                 });
-                router.push('/profile')
             })
             .catch((error) => {
-                console.log(error);
                 notification.error({
                     message: error?.data?.message,
                     description: 'Please try again later',
@@ -129,8 +126,8 @@ const UserRegister2 = () => {
 
 
     return (
-        <section className="py-8 md:py-20">
-            <div className="xl:container mx-auto flex flex-col lg:flex-row gap-4 shadow-2xl p-4 md:p-8 rounded-2xl">
+        <section className="py-8 md:py-16">
+            <div className="xl:container mx-auto flex flex-col lg:flex-row gap-4 shadow-[0px_10px_30px_rgba(0,0,0,0.2)] p-4 md:p-8 rounded-2xl">
                 {/* Image Section */}
                 <div className="lg:w-1/2 rounded-lg  overflow-hidden ">
                     <Image

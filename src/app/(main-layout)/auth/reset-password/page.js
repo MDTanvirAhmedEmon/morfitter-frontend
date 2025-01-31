@@ -61,7 +61,7 @@ const ResetPassword = () => {
   return (
     <section className="flex justify-center items-center bg-white py-16 sm:py-20 lg:py-40">
       <div className="w-[calc(100%-20px)] sm:w-[calc(100%-40px)] md:w-[calc(100%-100px)] lg:w-2/3 xl:w-1/2 px-4 sm:px-6">
-        <div className="relative rounded-lg bg-white px-6 sm:px-8 md:px-10 py-10 sm:py-14 md:py-20 shadow-lg">
+        <div className="relative rounded-lg bg-white px-6 sm:px-8 md:px-10 py-10 sm:py-14 md:py-20 shadow-[0px_10px_30px_rgba(0,0,0,0.2)]">
           <h1 className="text-[#6F6F6F] text-3xl font-bold text-center mb-2">
             Reset Password
           </h1>

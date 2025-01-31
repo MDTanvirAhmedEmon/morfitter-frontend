@@ -154,7 +154,7 @@ const Header = () => {
                         }
 
                         {
-                             role?.role === 'trainer' &&
+                            role?.role === 'trainer' &&
 
                             <span
                                 onClick={handleLogOut}
@@ -162,6 +162,20 @@ const Header = () => {
                             >
                                 Log Out
                             </span>
+                        }
+
+                        {
+                            !role &&
+                            <Link href="/auth/login">
+                                <span
+                                    className={`${isActive("/auth/login")
+                                        ? " rounded-full  bg-primary text-white"
+                                        : ""
+                                        }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
+                                >
+                                    log In
+                                </span>
+                            </Link>
                         }
 
                         {/* <Link href="/blog">
