@@ -281,9 +281,9 @@ const PTRegister = () => {
           </Form>
           <p className=" mt-6">
             Already have an account?{" "}
-            {/* <Link className=" text-primary font-semibold" href={`/auth/login`}> */}
+            <Link className=" text-primary font-semibold" href={`/auth/login`}>
             Log In
-            {/* </Link> */}
+            </Link>
           </p>
         </div>
       </div>

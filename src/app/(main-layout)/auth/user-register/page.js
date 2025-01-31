@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setInfo, setProfile } from "@/redux/features/auth/registerSlice";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const UserRegister = () => {
   const [profilePic, setProfilePic] = useState();
@@ -328,9 +329,9 @@ const UserRegister = () => {
           </Form>
           <p className=" mt-6">
             Already have an account?{" "}
-            {/* <Link className=" text-primary font-semibold" href={`/auth/login`}> */}
+            <Link className=" text-primary font-semibold" href={`/auth/login`}>
             Log In
-            {/* </Link> */}
+            </Link>
           </p>
         </div>
       </div>

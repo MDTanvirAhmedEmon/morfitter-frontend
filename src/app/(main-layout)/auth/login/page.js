@@ -1,5 +1,5 @@
 "use client";
-import { Form, Input, notification } from "antd";
+import { Form, Input, notification, Spin } from "antd";
 import { IoMdArrowDropdown } from "react-icons/io";
 import dynamic from "next/dynamic";
 import regiserImg from "../../../../assets/register.png";
@@ -11,6 +11,7 @@ import { useLogInMutation } from "@/redux/features/auth/authApi";
 import { setRole, setToken } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 import { decodedToken } from "@/utils/VerifyJwtToken";
+import Cookies from "js-cookie";
 
 const LogIn = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,8 @@ const LogIn = () => {
         console.log("log in data", data);
 
         const verifiedToken = decodedToken(data?.data?.accessToken);
+        Cookies.set('morfitter-token', data?.data?.accessToken)
+        dispatch(setRole(verifiedToken));
         dispatch(setToken(data?.data?.accessToken));
         notification.success({
           message: "log in Successful",
@@ -125,7 +128,7 @@ const LogIn = () => {
                 type="submit"
                 className="bookBtn text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
               >
-                Log In
+                Log In {loading && <Spin></Spin>}
               </button>
             </Form.Item>
           </Form>

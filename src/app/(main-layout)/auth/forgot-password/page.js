@@ -37,10 +37,10 @@ const ForgotPassword = () => {
     <div className="w-[calc(100%-20px)] sm:w-[calc(100%-40px)] md:w-[calc(100%-100px)] lg:w-2/3 xl:w-1/2 px-4 sm:px-6">
       <div className="relative rounded-lg bg-white px-6 sm:px-8 md:px-10 py-10 sm:py-14 md:py-20 shadow-lg">
         <h1 className="text-gray-600 text-xl sm:text-2xl md:text-3xl font-bold text-center mb-2">
-          Forgot Password
+          Forgot Password!😶‍🌫️
         </h1>
         <p className="text-gray-600 text-base sm:text-lg text-center mb-8 sm:mb-10">
-          Welcome to forgot password page!
+        Please enter your email here, and we&apos;ll send you a code to reset your password
         </p>
         <Form
           name="login"

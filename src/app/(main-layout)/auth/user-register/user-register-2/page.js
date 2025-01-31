@@ -18,6 +18,7 @@ import { setRole, setToken, setUser } from "@/redux/features/auth/authSlice";
 import { clearRegisterInfo } from "@/redux/features/auth/registerSlice";
 import { useRouter } from "next/navigation";
 import { decodedToken } from "@/utils/VerifyJwtToken";
+import Cookies from "js-cookie";
 
 
 const UserRegister2 = () => {
@@ -104,6 +105,7 @@ const UserRegister2 = () => {
             .then((data) => {
                 const verifiedtToken = decodedToken(data?.data?.accessToken)
                 dispatch(setToken(data?.data?.accessToken));
+                Cookies.set('morfitter-token', data?.data?.accessToken)
                 dispatch(setRole(verifiedtToken));
                 dispatch(setUser(data?.data?.userInfo));
                 dispatch(clearRegisterInfo())
