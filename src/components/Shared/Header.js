@@ -6,10 +6,12 @@ import Link from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
 import MobileNavbar from "./MobileNavbar";
-
+import { useSelector } from "react-redux";
 
 
 const Header = () => {
+    const { role } = useSelector((state) => state.auth)
+
     const pathname = usePathname();
     const isActive = (path) => pathname === path;
     const [open, setOpen] = useState(false);
@@ -90,26 +92,45 @@ const Header = () => {
                                 MORfitter Sessions
                             </span>
                         </Link>
-                        <Link href="/trainer-profile">
-                            <span
-                                className={`${isActive("/trainer-profile")
-                                    ? " rounded-full  bg-primary text-white"
-                                    : ""
-                                    }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
-                            >
-                                PT Profile
-                            </span>
-                        </Link>
-                        <Link href="/profile">
-                            <span
-                                className={`${isActive("/profile")
-                                    ? " rounded-full  bg-primary text-white"
-                                    : ""
-                                    }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
-                            >
-                                Profile
-                            </span>
-                        </Link>
+                        {
+                            role?.role === 'trainer' &&
+                            <Link href="/trainer-profile">
+                                <span
+                                    className={`${isActive("/trainer-profile")
+                                        ? " rounded-full  bg-primary text-white"
+                                        : ""
+                                        }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
+                                >
+                                    PT Profile
+                                </span>
+                            </Link>
+                        }
+
+                        {
+                            role?.role === 'trainee' &&
+                            <Link href="/profile">
+                                <span
+                                    className={`${isActive("/profile")
+                                        ? " rounded-full  bg-primary text-white"
+                                        : ""
+                                        }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
+                                >
+                                    Profile
+                                </span>
+                            </Link>
+                        }
+
+                        {
+                            role?.role === 'admin' || role?.role === 'super_admin' &&
+                            <Link href="/admin">
+                                <span
+                                    className={`  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
+                                >
+                                    Dashboard
+                                </span>
+                            </Link>
+                        }
+
                         {/* <Link href="/blog">
                             <span
                                 className={`${isActive("/blog")
@@ -124,10 +145,10 @@ const Header = () => {
 
                 </div>
                 <Link href="/contact-us">
-                
-                <button className=" hidden xl:block py-3 px-8 text-lg font-medium bg-secondary text-white rounded-full hover:bg-teal-500 transition-all">
-                    Contact Us
-                </button>
+
+                    <button className=" hidden xl:block py-3 px-8 text-lg font-medium bg-secondary text-white rounded-full hover:bg-teal-500 transition-all">
+                        Contact Us
+                    </button>
                 </Link>
                 <GiHamburgerMenu onClick={showDrawer} className=" w-7 h-7 xl:hidden" />
                 <MobileNavbar onClose={onClose} open={open}></MobileNavbar>
