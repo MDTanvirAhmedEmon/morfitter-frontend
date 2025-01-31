@@ -112,7 +112,7 @@ const LogIn = () => {
               </Form.Item>
             </div>
             <div className="flex justify-end">
-              <p className="">
+              <p className=" -mt-6 mb-3">
                 <Link
                   className=" text-primary font-semibold"
                   href={`/auth/forgot-password`}

@@ -1,18 +1,21 @@
 'use client'
 import Image from "next/image";
 import logo from '../../assets/Morfitter.png'
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
 import MobileNavbar from "./MobileNavbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/redux/features/auth/authSlice";
+import Cookies from "js-cookie";
 
 
 const Header = () => {
     const { role } = useSelector((state) => state.auth)
-
+    const dispatch = useDispatch();
     const pathname = usePathname();
+    const router = useRouter();
     const isActive = (path) => pathname === path;
     const [open, setOpen] = useState(false);
 
@@ -24,6 +27,13 @@ const Header = () => {
         setOpen(false);
     };
 
+    const handleLogOut = () => {
+        dispatch(logout());
+        Cookies.remove('morfitter-token')
+        window.location.reload();
+        router.push(`/auth/login`)
+    }
+
     return (
         <nav className=" sticky top-0 bg-white z-50 shadow-lg">
             <div className="container mx-auto px-6 py-5 flex justify-between items-center">
@@ -31,7 +41,7 @@ const Header = () => {
 
                 {/* Desktop Menu */}
                 <div className="hidden xl:flex space-x-5 items-center">
-                    <ul className="flex space-x-5">
+                    <ul className="flex items-center space-x-5">
                         <Link href="/">
                             <span
                                 className={`${isActive("/")
@@ -129,6 +139,29 @@ const Header = () => {
                                     Dashboard
                                 </span>
                             </Link>
+                        }
+
+                        {
+                            role?.role === 'trainee' &&
+
+                            <span
+                                onClick={handleLogOut}
+                                className={`  text-lg rounded-full font-light py-2 px-4 hover:bg-red-600 cursor-pointer hover:text-white`}
+                            >
+                                Log Out
+                            </span>
+
+                        }
+
+                        {
+                             role?.role === 'trainer' &&
+
+                            <span
+                                onClick={handleLogOut}
+                                className={`  text-lg rounded-full font-light py-2 px-4 hover:bg-red-600 cursor-pointer hover:text-white`}
+                            >
+                                Log Out
+                            </span>
                         }
 
                         {/* <Link href="/blog">

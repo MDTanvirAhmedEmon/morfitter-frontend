@@ -14,7 +14,7 @@ import logo8 from '../../../../../assets/logo8.svg';
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useCreateTraineeMutation } from "@/redux/features/auth/authApi";
 import { useDispatch, useSelector } from "react-redux";
-import { setRole, setToken, setUser } from "@/redux/features/auth/authSlice";
+// import { setRole, setToken, setUser } from "@/redux/features/auth/authSlice";
 import { clearRegisterInfo } from "@/redux/features/auth/registerSlice";
 import { useRouter } from "next/navigation";
 import { decodedToken } from "@/utils/VerifyJwtToken";
@@ -108,7 +108,7 @@ const UserRegister2 = () => {
                 Cookies.set('morfitter-token', data?.data?.accessToken)
                 dispatch(setRole(verifiedtToken));
                 dispatch(setUser(data?.data?.userInfo));
-                dispatch(clearRegisterInfo())
+                // dispatch(clearRegisterInfo())
                 notification.success({
                     message: "Registration Successful",
                     description: data?.data?.message,
