@@ -52,7 +52,7 @@ const AdminLogIn = () => {
   };
 
   return (
-    <section className="py-20 bg-greenColor h-screen w-full flex justify-center items-center">
+    <section className="py-20 px-3 md:px-0 bg-greenColor h-screen w-full flex justify-center items-center">
       <div className="container mx-auto flex flex-col lg:flex-row gap-4 shadow-[0px_10px_30px_rgba(0,0,0,0.2)] bg-white px-4 md:px-8 py-16 rounded-2xl w-[700px]">
         {/* Form Section */}
         <div className="flex flex-col justify-center md:p-5 rounded-lg w-full">
@@ -95,7 +95,7 @@ const AdminLogIn = () => {
             </div>
 
             {/* Forgot Password */}
-            <div className="flex justify-end">
+            <div className="flex justify-end -mt-6 mb-3">
               <p>
                 <Link className="text-primary font-semibold" href={`/auth/forgot-password`}>
                   Forget Password?

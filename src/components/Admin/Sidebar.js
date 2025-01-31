@@ -1,3 +1,4 @@
+"use client"
 import { Layout, Menu } from "antd";
 import { TbPresentationAnalytics } from "react-icons/tb";
 import { HiOutlineVideoCamera } from "react-icons/hi2";
@@ -8,10 +9,26 @@ import { BsPerson } from "react-icons/bs";
 import { CiLogout } from "react-icons/ci";
 
 import { SettingOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { logout } from "@/redux/features/auth/authSlice";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+// import { clearRegisterInfo } from "@/redux/features/auth/registerSlice";
 
 const { Sider } = Layout;
 
 const Sidebar = ({ collapsed }) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const handleLogOut = () => {
+    dispatch(logout());
+    Cookies.remove('morfitter-token')
+    // dispatch(clearRegisterInfo());
+    window.location.reload();
+    router.push(`/admin-login`)
+  }
+
   return (
     <div className="fixed top-0 left-0 bottom-0 bg-greenColor">
       <div className=" h-full w-full relative ">
@@ -25,9 +42,8 @@ const Sidebar = ({ collapsed }) => {
         >
           <div className=" w-full flex justify-center items-center py-10">
             <Link
-              className={` ${
-                collapsed ? "text-auto" : "text-[32px]"
-              }  font-extrabold text-white hover:text-white `}
+              className={` ${collapsed ? "text-auto" : "text-[32px]"
+                }  font-extrabold text-white hover:text-white `}
               href={`/`}
             >
               Morfitter
@@ -114,12 +130,12 @@ const Sidebar = ({ collapsed }) => {
             </div>
           </Link>
         ) : (
-          <Link href={`/auth/login`}>
-            <div className=" absolute bottom-12 w-full flex justify-center cursor-pointer gap-3 items-center">
-              <CiLogout className=" w-8 h-8 text-white" />
-              <p className=" text-white text-lg">Log Out</p>
-            </div>
-          </Link>
+          // <Link href={`/auth/login`}>
+          <div onClick={handleLogOut} className=" absolute bottom-12 w-full flex justify-center cursor-pointer gap-3 items-center">
+            <CiLogout className=" w-8 h-8 text-white" />
+            <p className=" text-white text-lg">Log Out</p>
+          </div>
+          // </Link>
         )}
       </div>
     </div>

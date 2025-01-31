@@ -4,12 +4,25 @@ export function middleware(request) {
     // const path = request.nextUrl.pathname
     // console.log(path);
 
-    const user = request.cookies.get('morfitter-token');
+    const token = request.cookies.get('morfitter-token');
+    const adminRoutes = [
+        "/admin",
+        "/content-management",
+        "/sessions",
+        "/all-personal-trainer",
+        "/user-management",
+        "/settings/profile",
+        "/settings/privacy-policy",
+        "/settings/terms-condition",
+    ];
 
-    if (!user) {
+    const isAdminRoute = adminRoutes.some(route => request.nextUrl.pathname.startsWith(route));
 
-        return NextResponse.redirect(new URL("/auth/login", request.url));
+    if (!token) {
+        const redirectUrl = isAdminRoute ? "/admin-login" : "/auth/login";
+        return NextResponse.redirect(new URL(redirectUrl, request.url));
     }
+
     return NextResponse.next();
 }
 
@@ -28,5 +41,7 @@ export const config = {
         '/find-trainers/consultation-result',
         '/morfitter-pts/:path*',
         '/morfitter-sessions/single-session-of-pt/:path*',
+        '/trainer-profile',
+        '/profile',
     ],
 };
