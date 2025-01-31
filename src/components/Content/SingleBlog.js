@@ -1,102 +1,81 @@
-"use client";
-import Image from "next/image";
-import follower from "../../assets/content/follwing2.png";
-import Calisthenics from "../../assets/content/colle.svg";
-import Post1 from "../../assets/content/post1.png";
-import { useState } from "react";
-import ShareModal from "./ShareModal";
-import BlogComments from "./BlogComments";
-import { getBaseUrl } from "@/config/envConfig";
+'use client'
+import Image from 'next/image';
+import follower from '../../assets/content/follwing2.png'
+import Calisthenics from '../../assets/content/colle.svg'
+import Post1 from '../../assets/content/post1.png'
+import { useState } from 'react';
+import ShareModal from './ShareModal';
+import BlogComments from './BlogComments';
 
 const SingleBlog = ({ content }) => {
-  const shareUrl = `${typeof window !== "undefined" && window.location}`;
+
+  console.log(content);
+
+  const shareUrl = `${typeof window !== 'undefined' && window.location}`;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [openComment, setOpenComment] = useState(false);
+  const [openComment, setOpenComment] = useState(false)
 
   const showModal = () => {
     setIsModalOpen(true);
   };
-
   const handleOk = () => {
     setIsModalOpen(false);
   };
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const date = new Date(content?.createdAt);
+
+  const formattedDate = date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+  });
+
 
   return (
     <div className="px-3 mx-0 py-5">
-      <div className="px-2 md:px-5 py-10 border border-gray-300 shadow-[0px_0px_19px_0px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col md:flex-row gap-5 w-full">
+
+      <div className=" px-2 md:px-5 py-10 border border-gray-300 shadow-[0px_0px_19px_0px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col md:flex-row gap-5 ">
+
+
         {/* Post Details Section */}
-        <div className="w-full">
-          <div className="flex flex-col md:flex-row justify-between gap-4 md:gap-8">
-            <div className="flex items-center gap-8">
-              <Image
-                src={
-                  content?.userInfo?.profileImageUrl
-                    ? `${getBaseUrl()}/${content?.userInfo?.profileImageUrl}`
-                    : "https://avatar.iran.liara.run/public/44"
-                }
-                width={0}
-                height={0}
-                alt="Follower"
-                className="w-28 h-24 rounded-lg"
-              />
+        <div className=" w-full">
+          <div className=' flex flex-col md:flex-row justify-between gap-4 md:gap-8'>
+            <div className=" flex items-center gap-8">
+              <Image src={`http://10.0.60.166:5000${content?.userInfo?.profileImageUrl}`} width={200} height={200} alt="Follower" className="w-28 h-24 rounded-lg " />
               <div className="">
-                <div className="text-lg md:text-xl font-semibold">
-                  {content?.title || "Stellantis Middle East & Gym Institute"}
-                </div>
+                <div className="text-lg md:text-xl font-semibold">{content?.userInfo?.firstName} {content?.userInfo?.lastName}</div>
                 <div className="flex items-center mt-1 gap-1">
-                  <Image
-                    src={Calisthenics}
-                    width={0}
-                    height={0}
-                    alt="Calisthenics"
-                  />
-                  <span className="text-xl md:text-2xl text-secondary">
-                    {content?.specialism || "Calisthenics"}
-                  </span>
+                  <Image src={Calisthenics} width={0} height={0} alt="Calisthenics" />
+                  <span className=" text-xl md:text-2xl text-secondary">{content?.specialism}</span>
                 </div>
               </div>
             </div>
             {/* Header Section */}
-            <div className="md:pt-3 flex justify-end">
+            <div className=" md:pt-3 flex justify-end">
               <div className="date text-lg">
-                <p>
-                  {content?.createdAt
-                    ? new Date(content.createdAt).toLocaleDateString("en-GB")
-                    : "No Date"}
-                </p>
+                <p>{formattedDate}</p>
               </div>
             </div>
           </div>
 
           {/* Post Content */}
-          <div className="mt-3 md:mt-6 grid grid-cols-1 lg:grid-cols-2 gap-5">
-            {/* Image Part */}
+          <div className=" mt-3 md:mt-6 grid grid-cols-1 lg:grid-cols-2 gap-5">
             <div className="rounded-2xl w-full overflow-hidden">
-            <Image
-                src={
-                  content?.userInfo?.profileImageUrl
-                    ? `${getBaseUrl()}/${content?.userInfo?.profileImageUrl}`
-                    : "https://avatar.iran.liara.run/public/44"
-                }
-                width={0}
-                height={0}
-                alt="Follower"
-                className="w-28 h-24 rounded-lg"
-              />
+              <Image
+                src={`http://10.0.60.166:5000${content?.imageUrl}`}
+                alt="Post Content"
+                width={500}
+                height={500}
+                className="w-full h-[450px] object-cover" />
             </div>
 
             {/* Description Part */}
             <div className="border border-gray-300 p-5 rounded-lg">
-              <div className="hidden md:block text-xl md:text-2xl font-semibold">
-                {content?.title || "Get Stronger, Faster, and Fitter"}
-              </div>
+              <div className=" hidden md:block text-xl md:text-2xl font-semibold">{content?.title}</div>
               <div className="md:text-xl font-normal md:mt-5 text-gray-600 leading-7 tracking-wide">
-                {content?.content ||
-                  `Achieve your fitness goals with our personalized gym training programs tailored to your needs. Whether you're a beginner or a seasoned athlete, our expert trainers will guide you every step of the way. Build strength, improve endurance, and boost your overall health with workouts designed just for you. Join our community and transform your body today!`}
+                {content?.content}
               </div>
             </div>
           </div>
@@ -104,13 +83,7 @@ const SingleBlog = ({ content }) => {
           {/* Button Section */}
           <div className="btn-part flex gap-3 md:gap-12 items-center mt-6">
             <button className="btn-item like px-2 flex gap-2 justify-center items-center shadow-md w-40 h-11 rounded-lg bg-[#0ba59313] border border-greenColor text-greenColor">
-              <svg
-                width="26"
-                height="25"
-                viewBox="0 0 26 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -118,20 +91,11 @@ const SingleBlog = ({ content }) => {
                   fill="#0BA593"
                 />
               </svg>
-              <span className="hidden md:block">Like 10</span>
-              <span className="block md:hidden">10</span>
+              <span className=' hidden md:block'>Like 10</span>
+              <span className=' block md:hidden'>10</span>
             </button>
-            <button
-              onClick={() => setOpenComment(!openComment)}
-              className="btn-item comment px-2 flex gap-2 justify-center items-center shadow-md w-40 h-11 rounded-lg bg-red-50 border border-red-600 text-red-600"
-            >
-              <svg
-                width="26"
-                height="26"
-                viewBox="0 0 26 26"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+            <button onClick={() => setOpenComment(!openComment)} className="btn-item comment px-2 flex gap-2 justify-center items-center shadow-md w-40 h-11 rounded-lg bg-red-50 border border-red-600 text-red-600">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -139,20 +103,11 @@ const SingleBlog = ({ content }) => {
                   fill="#E26972"
                 />
               </svg>
-              <span className="hidden md:block">Comment 3</span>
-              <span className="block md:hidden">3</span>
+              <span className=' hidden md:block'>Comment 3</span>
+              <span className=' block md:hidden'>3</span>
             </button>
-            <button
-              onClick={showModal}
-              className="btn-item share flex px-2 gap-2 justify-center items-center shadow-md w-40 h-11 rounded-lg bg-[#572c5725] border border-secondary text-secondary"
-            >
-              <svg
-                width="23"
-                height="26"
-                viewBox="0 0 23 26"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+            <button onClick={showModal} className="btn-item share flex px-2 gap-2 justify-center items-center shadow-md w-40 h-11 rounded-lg bg-[#572c5725] border border-secondary text-secondary">
+              <svg width="23" height="26" viewBox="0 0 23 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -160,18 +115,18 @@ const SingleBlog = ({ content }) => {
                   fill="#572c57"
                 />
               </svg>
-              <span className="hidden md:block">Share</span>
+              <span className=' hidden md:block'>Share</span>
             </button>
           </div>
-          {openComment && <BlogComments />}
+          {openComment &&
+            <BlogComments></BlogComments>
+          }
+
+
+
         </div>
       </div>
-      <ShareModal
-        isModalOpen={isModalOpen}
-        handleOk={handleOk}
-        handleCancel={handleCancel}
-        shareUrl={shareUrl}
-      />
+      <ShareModal isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel} shareUrl={shareUrl}></ShareModal>
     </div>
   );
 };
