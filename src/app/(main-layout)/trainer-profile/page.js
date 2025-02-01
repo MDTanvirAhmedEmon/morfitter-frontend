@@ -98,7 +98,7 @@ const TrainerProfile = () => {
               <div className=" flex justify-center mb-2">
                 <button
                   onClick={uploadImage}
-                  className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full"
+                  className="add-btn text-white bg-secondary px-4 md:px-6 py-1 md:py-2 rounded-full"
                 >
                   Upload Image
                 </button>
@@ -171,7 +171,7 @@ const TrainerProfile = () => {
               <div className=" flex justify-center mt-4 mb-6">
                 <button
                   onClick={showModal}
-                  className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full"
+                  className="add-btn text-white bg-secondary px-4 md:px-6 py-1 md:py-2 rounded-full"
                 >
                   Add Socail Link
                 </button>

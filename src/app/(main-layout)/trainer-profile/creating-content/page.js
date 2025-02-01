@@ -10,28 +10,75 @@ import logo7 from '../../../../assets/logo7.svg';
 import logo8 from '../../../../assets/logo8.svg';
 import logo9 from '../../../../assets/logo9.svg';
 import { useState } from 'react';
-import { ConfigProvider, Form, Input, Upload } from 'antd';
+import { ConfigProvider, Form, Input, message, Spin, Upload } from 'antd';
 import { LuUpload } from "react-icons/lu";
+import { useCreateContentMutation } from '@/redux/features/content/contentApi';
+import { useForm } from 'antd/es/form/Form';
 
 const CreatingSession = () => {
     const [fileType, setFileType] = useState('audio');
-    const [selectedLogos, setSelectedLogos] = useState([]);
+    const [form] = useForm();
+    const [selectedLogos, setSelectedLogos] = useState(null);
+    console.log(selectedLogos);
     const [profilePic, setProfilePic] = useState(null);
+    console.log(profilePic);
+    const handleProfilePicUpload = (e) => {
+        setProfilePic(e.file.originFileObj);
+    };
+    const interests = [
+        { name: "Boxercise", icon: logo1 },
+        { name: "Calisthenics", icon: logo2 },
+        { name: "Circuit Training", icon: logo3 },
+        { name: "Core Strength", icon: logo4 },
+        { name: "Fat Burners", icon: logo5 },
+        { name: "Flexibility & Mobility", icon: logo6 },
+        { name: "Zumba", icon: logo7 },
+        { name: "HIIT", icon: logo8 },
+        { name: "Pilates", icon: logo9 },
+        { name: "Calisthenics", icon: logo2 },
+    ];
 
-    const logos = [logo1, logo2, logo3, logo4, logo5, logo6, logo7, logo8, logo9, logo2];
-
+    // const handleLogoClick = (index) => {
+    //     setSelectedLogos((prevSelected) =>
+    //         prevSelected.includes(index)
+    //             ? prevSelected.filter((item) => item !== index)
+    //             : [...prevSelected, index]
+    //     );
+    // };
     const handleLogoClick = (index) => {
-        setSelectedLogos((prevSelected) => {
-            if (prevSelected.includes(index)) {
-                return prevSelected.filter((item) => item !== index);
-            } else {
-                return [...prevSelected, index];
-            }
-        });
+        setSelectedLogos(index);
     };
 
+    const [createContent, { isLoading }] = useCreateContentMutation();
+
+
     const onFinish = (values) => {
-        console.log('Success:', values);
+
+        if (!selectedLogos) {
+            message.warning('Please Select Specialism')
+            return
+        }
+        const finalData = {
+            title: values.title,
+            content: values.content,
+            specialism: selectedLogos,
+            status: "in-progress"
+        }
+        const formData = new FormData();
+        if (profilePic) {
+            formData.append('file', profilePic)
+        }
+        formData.append('data', JSON.stringify(finalData))
+        createContent(formData).unwrap()
+            .then(() => {
+                message.success('Content Uploaded Successfully')
+                setProfilePic(null)
+                form.resetFields()
+                setSelectedLogos(null)
+            })
+            .catch((error) => {
+                message.error(error?.data?.message)
+            })
     };
 
     return (
@@ -45,51 +92,57 @@ const CreatingSession = () => {
                 </div>
                 <div className="flex gap-1 mt-8 overflow-x-auto ">
                     <div className="flex gap-1 flex-nowrap xl:flex-wrap">
-                        {logos.map((logo, index) => (
+                        {interests.map((logo, index) => (
                             <div
                                 key={index}
-                                onClick={() => handleLogoClick(index)}
-                                className={`flex items-center justify-center w-[120px] lg:w-[150px] h-[120px] lg:h-[150px] px-7 text-center cursor-pointer ${selectedLogos.includes(index)
-                                    ? 'border-4 border-greenColor shadow shadow-greenColor'
-                                    : 'border-2 border-solid border-transparent'
+                                onClick={() => handleLogoClick(logo.name)}
+                                className={`flex items-center justify-center w-[120px] lg:w-[150px] h-[120px] lg:h-[150px] px-7 text-center cursor-pointer ${selectedLogos === logo.name
+                                    ? "border-4 border-greenColor shadow shadow-greenColor"
+                                    : "border-2 border-transparent"
                                     } rounded transition-all duration-300`}
                                 style={{
-                                    borderWidth: '2px',
-                                    borderStyle: 'solid',
-                                    borderImage: selectedLogos.includes(index)
-                                        ? 'none'
-                                        : 'linear-gradient(180deg, rgba(11, 165, 147, 0.05) 0%, #08776a 51%, rgba(11, 165, 147, 0.05) 100%) 1', // Gradient for unselected logos
+                                    borderWidth: "2px",
+                                    borderStyle: "solid",
+                                    borderImage: selectedLogos === logo.name
+                                        ? "none"
+                                        : "linear-gradient(180deg, rgba(11, 165, 147, 0.05) 0%, #08776a 51%, rgba(11, 165, 147, 0.05) 100%) 1", // Gradient for unselected logos
                                 }}
                             >
-                                <Image src={logo} alt={`Logo ${index + 1}`} height={170} width={170} className="w-full h-full object-contain" />
+                                <Image
+                                    src={logo.icon}
+                                    alt={`Logo ${logo.name}`}
+                                    height={170}
+                                    width={170}
+                                    className="w-full h-full object-contain"
+                                />
                             </div>
                         ))}
                     </div>
                 </div>
 
                 <div className=' w-full mt-10'>
-                    <div className="border-2 border-[#d9d9d9] text-[#c0c0c0] rounded-md mb-6 px-2 py-1 flex justify-between items-center w-full">
+                    {
+                        fileType !== 'content' &&
+                        <div className="border-2 border-[#d9d9d9] text-[#c0c0c0] rounded-md mb-6 px-2 py-1 flex justify-between items-center w-full">
+                            {!profilePic && <p>Upload video or audio or image</p>}
+                            <p className="text-sm text-gray-700">
+                                {profilePic && profilePic.name}
+                            </p>
 
-                        {!profilePic && <p>Upload video or audio or image</p>}
-                        <p className="text-sm text-gray-700">
-                            {profilePic && profilePic}
-                        </p>
+                            <Upload
 
-                        <Upload
+                                showUploadList={false}
+                                maxCount={1}
+                                onChange={handleProfilePicUpload}
+                                className="cursor-pointer"
+                            >
+                                <LuUpload className="text-[#a3a3a3] h-8 w-8 p-1" />
 
-                            showUploadList={false}
-                            maxCount={1}
-                            beforeUpload={(file) => {
-                                setProfilePic(file.name);
-                                return false;
-                            }}
-                            className="cursor-pointer"
-                        >
-                            <LuUpload className="text-[#a3a3a3] h-8 w-8 p-1" />
+                            </Upload>
 
-                        </Upload>
+                        </div>
+                    }
 
-                    </div>
                     <ConfigProvider
                         theme={{
                             components: {
@@ -104,7 +157,7 @@ const CreatingSession = () => {
                     >
                         <Form
                             name="basic"
-
+                            form={form}
                             initialValues={{
                                 remember: true,
                             }}
@@ -112,7 +165,7 @@ const CreatingSession = () => {
                             autoComplete="off"
                         >
                             <Form.Item
-                                name="subject"
+                                name="title"
                                 rules={[
                                     {
                                         required: true,
@@ -124,7 +177,7 @@ const CreatingSession = () => {
                             </Form.Item>
 
                             <Form.Item
-                                name="password"
+                                name="content"
                                 rules={[
                                     {
                                         required: true,
@@ -137,8 +190,8 @@ const CreatingSession = () => {
 
 
                             <Form.Item className=' flex justify-center'>
-                                <button type="primary" htmlType="submit" className=' bg-primary text-white px-12 py-1 rounded-full text-lg'>
-                                    Submit
+                                <button disabled={isLoading} type="primary" htmlType="submit" className=' bg-primary text-white px-12 py-1 rounded-full text-lg'>
+                                    Submit {isLoading && <Spin />}
                                 </button>
                             </Form.Item>
                         </Form>
