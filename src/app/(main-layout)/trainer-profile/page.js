@@ -77,7 +77,7 @@ const TrainerProfile = () => {
             </p>
 
             <div className="social-media w-full p-2 rounded-lg shadow-xl">
-              
+
               {
                 user?.TikTok && (
                   <Link href={user?.TikTok} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
@@ -112,8 +112,8 @@ const TrainerProfile = () => {
               }
 
               {
-                user?.YouTube && (
-                  <Link href={user?.YouTube} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
+                user?.Youtube && (
+                  <Link href={user?.Youtube} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
                     <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
                       <FaYoutube size={20} />
                     </div>

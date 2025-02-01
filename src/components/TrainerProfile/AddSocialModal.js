@@ -1,17 +1,40 @@
-import { Button, Form, Input, Modal } from "antd";
-
+import { useUpdateTrainerProfileMutation } from "@/redux/features/profile/profileApi";
+import { Form, Input, message, Modal, Spin } from "antd";
+import { useSelector } from "react-redux";
 
 const AddSocialModal = ({ isModalOpen, handleCancel, handleOk }) => {
+    const { user } = useSelector((state) => state.auth);
+    console.log(user);
 
-    const onFinish = (values) => {
-        console.log("Submitted Values:", values);
+    const initialValues = {
+        TikTok: user?.TikTok || '',
+        Instagram: user?.Instagram || '',
+        Facebook: user?.Facebook || '',
+        YouTube: user?.YouTube || '',
+        Twitter: user?.Twitter || '',
     };
+    const [updateTrainerProfile, { isLoading }] = useUpdateTrainerProfileMutation();
+    const onFinish = (values) => {
+        const formData = new FormData();
+        console.log("Submitted Values:", values);
+        formData.append('data', JSON.stringify(values));
+        updateTrainerProfile({ data: formData, id: user?._id }).unwrap()
+            .then(() => {
+                message.success(`Updated Successfully`)
+                handleCancel();
+            })
+            .catch((error) => {
+                message.error(error?.data?.message)
+            })
+
+    };
+
     return (
         <Modal className=" " footer={false} centered open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
             <Form
                 layout="vertical"
                 className=" pt-10 px-2"
-                // initialValues={initialValues}
+                initialValues={initialValues}
                 onFinish={onFinish}
             >
                 <Form.Item label="TikTok" name="TikTok">
@@ -35,7 +58,7 @@ const AddSocialModal = ({ isModalOpen, handleCancel, handleOk }) => {
                 </Form.Item>
 
                 <Form.Item>
-                    <button className="text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full" type="primary" htmlType="submit">Add Link</button>
+                    <button className="text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full" type="primary" htmlType="submit">Add Link {isLoading && <Spin />}</button>
                 </Form.Item>
             </Form>
         </Modal>
