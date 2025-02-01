@@ -254,7 +254,7 @@ const UserRegister2 = () => {
                         <div className=" flex justify-end items-center gap-2">
                             {/* <Link href={`/profile`}> */}
                             {isLoading && <Spin ></Spin>}
-                            <button type="submit" className=" text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:">
+                            <button  disabled={isLoading} type="submit" className=" text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:">
                                 Enter
                             </button>
                             {/* </Link> */}

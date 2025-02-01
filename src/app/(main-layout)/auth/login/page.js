@@ -17,7 +17,7 @@ const LogIn = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const [logIn, { loading }] = useLogInMutation();
+  const [logIn, { isLoading }] = useLogInMutation();
   const onFinish = (values) => {
     const LogInData = {
       email: values?.email,
@@ -126,9 +126,10 @@ const LogIn = () => {
             <Form.Item>
               <button
                 type="submit"
+                disabled={isLoading}
                 className="bookBtn text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
               >
-                Log In {loading && <Spin></Spin>}
+                Log In {isLoading && <Spin></Spin>}
               </button>
             </Form.Item>
           </Form>

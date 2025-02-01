@@ -9,9 +9,19 @@ const contentApi = baseApi.injectEndpoints({
         params,
       }),
     }),
+
+    
+    createContent: builder.mutation({
+      query: (formData) => ({
+        url: "/content/create",
+        method: "POST",
+        body: formData,
+      }),
+    }),
+
   }),
 });
 
-export const { useGetAllContentsQuery } = contentApi;
+export const { useGetAllContentsQuery, useCreateContentMutation } = contentApi;
 
 export default contentApi;

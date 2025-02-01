@@ -356,6 +356,7 @@ const PTRegister2 = () => {
               {isLoading && <Spin></Spin>}
               <button
                 type="submit"
+                disabled={isLoading}
                 className=" text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
               >
                 Enter
