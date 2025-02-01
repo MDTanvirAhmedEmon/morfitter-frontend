@@ -12,7 +12,7 @@ import ContentSkeleton from "@/components/Skeleton/ContentSkeleton";
 const Content = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUserValue, setSelectedUserValue] = useState('');
-  const { data, isLoading } = useGetAllContentsQuery({page: currentPage, role: selectedUserValue, sortOrder: 'desc'});
+  const { data, isLoading } = useGetAllContentsQuery({ page: currentPage, role: selectedUserValue, sortOrder: 'desc' });
 
   const handleSelectedUserValue = (value) => {
     setSelectedUserValue(value);
@@ -84,22 +84,29 @@ const Content = () => {
         {
           isLoading && <ContentSkeleton></ContentSkeleton>
         }
-        {data?.data?.data?.map((content) => (
-          <SingleBlog key={content._id} content={content} />
-          // <div key={content._id}>
-          //     <h1>{content?.title}</h1>
-          //     <p>{content?.content}</p>
-          // </div>
-        ))}
+        {
+          data?.data?.data?.length === 0 ?
+            <div className=' py-28 flex justify-center items-center'>
+              <h3 className="text-xl md:text-3xl text-gray-600">No content here yet. Be the first to add something great!</h3>
+            </div> :
+            data?.data?.data?.map((content) => (
+              <SingleBlog key={content._id} content={content} />
+              // <div key={content._id}>
+              //     <h1>{content?.title}</h1>
+              //     <p>{content?.content}</p>
+              // </div>
+            ))}
       </div>
       <div className="">
-
+        {
+          data?.data?.data?.length !== 0 &&
           <Pagination
             current={data?.data?.meta?.page}
             pageSize={data?.data?.meta?.limit}
             total={data?.data?.meta?.total}
             onChange={handlePageChange}
           />
+        }
       </div>
       {/* footer image */}
       <div className=" mt-10 mx-3 md:mx-0">
