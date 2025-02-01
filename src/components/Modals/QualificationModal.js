@@ -1,7 +1,8 @@
-import { Input, Modal } from "antd";
-import React from "react";
+import { Spin } from "antd";
 
 function QualificationModal({ setQualificationVisible }) {
+
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="relative bg-white rounded shadow-lg w-[500px]">
@@ -26,7 +27,7 @@ function QualificationModal({ setQualificationVisible }) {
             </button>
 
             <button className="px-5 py-2 bg-[#0ba593] text-white rounded hover:bg-[#088577] transition">
-              Save
+              Save {isLoading && <Spin />}
             </button>
           </div>
         </div>

@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/features/auth/authSlice";
 import AddSocialModal from "@/components/TrainerProfile/AddSocialModal";
 import { useUpdateTrainerProfileMutation } from "@/redux/features/profile/profileApi";
+import { useGetMySpecialismQuery } from "@/redux/features/specialism/specialismApi";
 
 const TrainerProfile = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -29,7 +30,8 @@ const TrainerProfile = () => {
   dispatch(setUser(data?.data?.[0]?.trainerDetails?.[0]));
 
   const [updateTrainerProfile, { isLoading }] = useUpdateTrainerProfileMutation();
-
+  const { data: specialism } = useGetMySpecialismQuery(user?._id);
+  console.log(specialism);
   const uploadImage = () => {
     const formData = new FormData();
 
@@ -240,19 +242,27 @@ const TrainerProfile = () => {
                   Add
                 </button>
               </div>
-
-              <div className="qualification flex  justify-between items-center border py-4 px-6 rounded-md mb-4">
-                <div className="flex  gap-3 md:pr-8">
-                  <h2 className="title text-lg md:text-2xl font-medium text-[#535353]">
-                    Specialisms
-                  </h2>
+              <div className="border mb-4">
+                <div className="qualification flex  justify-between items-center  pt-4 px-6 rounded-md ">
+                  <div className="flex  gap-3 md:pr-8">
+                    <h2 className="title text-lg md:text-2xl mb-2 font-medium text-[#535353]">
+                      Specialisms
+                    </h2>
+                  </div>
+                  <button
+                    onClick={() => setSpecialismsVisible(true)}
+                    className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full "
+                  >
+                    Add
+                  </button>
                 </div>
-                <button
-                  onClick={() => setSpecialismsVisible(true)}
-                  className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full "
-                >
-                  Add
-                </button>
+                <div className=" px-6 pb-4">
+                  {
+                    specialism?.data?.map((item) =>
+                      <p className=" mb-2" key={item?._id}>{item?.specialism}</p>
+                    )
+                  }
+                </div>
               </div>
 
               <div className="qualification flex  justify-between items-center  border py-4 px-6 rounded-md mb-4">
