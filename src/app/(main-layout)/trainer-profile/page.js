@@ -11,18 +11,38 @@ import Link from "next/link";
 import QualificationModal from "@/components/Modals/QualificationModal";
 import SpecialismsModal from "@/components/Modals/SpecialismsModal";
 import TestimonialsModal from "@/components/Modals/TestimonialsModal";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "@/redux/features/auth/authSlice";
+import AddSocialModal from "@/components/TrainerProfile/AddSocialModal";
 
 const TrainerProfile = () => {
   const [profilePic, setProfilePic] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user } = useSelector((state) => state.auth)
   const [qualificationVisible, setQualificationVisible] = useState(false);
   const [specialismsVisible, setSpecialismsVisible] = useState(false);
   const [testimonialsVisible, setTestimonialsVisible] = useState(false);
+  const dispatch = useDispatch();
+  const { data } = useGetMeQuery();
+  dispatch(setUser(data?.data?.[0]?.trainerDetails?.[0]));
 
   const handleProfilePicUpload = (e) => {
     setProfilePic(e.file.originFileObj);
   };
 
-  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : null;
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${user?.profileImageUrl}`;
+
+
 
   return (
     <section className=" py-10 md:py-20">
@@ -57,41 +77,74 @@ const TrainerProfile = () => {
             </p>
 
             <div className="social-media w-full p-2 rounded-lg shadow-xl">
-              <div className="item flex items-center gap-2 p-2 border-b border-gray-300">
-                <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
-                  <FaTiktok size={20} />
-                </div>
-                <div className="name text-xl">Tik Tok</div>
+
+              {
+                user?.TikTok && (
+                  <Link href={user?.TikTok} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
+                    <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
+                      <FaTiktok size={20} />
+                    </div>
+                    <div className="name text-xl">TikTok</div>
+                  </Link>
+                )
+              }
+
+              {
+                user?.Instagram && (
+                  <Link href={user?.Instagram} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
+                    <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
+                      <FaInstagram size={20} />
+                    </div>
+                    <div className="name text-xl">Instagram</div>
+                  </Link>
+                )
+              }
+
+              {
+                user?.Facebook && (
+                  <Link href={user?.Facebook} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
+                    <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
+                      <FaFacebookF size={20} />
+                    </div>
+                    <div className="name text-xl">Facebook</div>
+                  </Link>
+                )
+              }
+
+              {
+                user?.Youtube && (
+                  <Link href={user?.Youtube} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
+                    <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
+                      <FaYoutube size={20} />
+                    </div>
+                    <div className="name text-xl">YouTube</div>
+                  </Link>
+                )
+              }
+
+              {
+                user?.Twitter && (
+                  <Link href={user?.Twitter} target="_blank" className="item flex items-center gap-2 p-2">
+                    <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
+                      <FaXTwitter size={20} />
+                    </div>
+                    <div className="name text-xl">Twitter</div>
+                  </Link>
+                )
+              }
+
+
+              <div className=" flex justify-center mt-4 mb-6">
+                <button
+                  onClick={showModal}
+                  className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full"
+                >
+                  Add Socail Link
+                </button>
               </div>
 
-              <div className="item flex items-center gap-2 p-2 border-b border-gray-300">
-                <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
-                  <FaInstagram size={20} />
-                </div>
-                <div className="name text-xl">Instagram</div>
-              </div>
-
-              <div className="item flex items-center gap-2 p-2 border-b border-gray-300">
-                <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
-                  <FaFacebookF size={20} />
-                </div>
-                <div className="name text-xl">Facebook</div>
-              </div>
-
-              <div className="item flex items-center gap-2 p-2 border-b border-gray-300">
-                <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
-                  <FaYoutube size={20} />
-                </div>
-                <div className="name text-xl">Youtube</div>
-              </div>
-
-              <div className="item flex items-center gap-2 p-2  ">
-                <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
-                  <FaXTwitter size={20} />
-                </div>
-                <div className="name text-xl">Twitter</div>
-              </div>
             </div>
+            <AddSocialModal isModalOpen={isModalOpen} handleCancel={handleCancel} handleOk={handleOk} ></AddSocialModal>
           </div>
 
           {/* Right Information Section */}

@@ -26,7 +26,7 @@ const authApi = baseApi.injectEndpoints({
       }),
     }),
 
-    logInAdmin: builder.mutation({ 
+    logInAdmin: builder.mutation({
       query: (data) => ({
         url: "/auth/login-admin",
         method: "POST",
@@ -66,7 +66,15 @@ const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
-    
+
+    getMe: builder.query({
+      query: () => ({
+        url: "/users/get-me",
+        method: "GET",
+      }),
+      providesTags: ['user']
+    }),
+
   }),
 });
 
@@ -79,6 +87,7 @@ export const {
   useVerifyEmailMutation,
   useResetPasswordMutation,
   useChangePasswordMutation,
+  useGetMeQuery,
 } = authApi;
 
 export default authApi;
