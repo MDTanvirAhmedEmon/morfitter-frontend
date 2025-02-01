@@ -1,5 +1,5 @@
 "use client";
-import { Avatar, Upload } from "antd";
+import { Avatar, message, Upload } from "antd";
 import Image from "next/image";
 import { useState } from "react";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
@@ -15,6 +15,7 @@ import { useGetMeQuery } from "@/redux/features/auth/authApi";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/features/auth/authSlice";
 import AddSocialModal from "@/components/TrainerProfile/AddSocialModal";
+import { useUpdateTrainerProfileMutation } from "@/redux/features/profile/profileApi";
 
 const TrainerProfile = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -26,6 +27,27 @@ const TrainerProfile = () => {
   const dispatch = useDispatch();
   const { data } = useGetMeQuery();
   dispatch(setUser(data?.data?.[0]?.trainerDetails?.[0]));
+
+  const [updateTrainerProfile, { isLoading }] = useUpdateTrainerProfileMutation();
+
+  const uploadImage = () => {
+    const formData = new FormData();
+
+    formData.append('data', JSON.stringify({}));
+    if (profilePic) {
+      formData.append('file', profilePic);
+    }
+
+    updateTrainerProfile({ data: formData, id: user?._id }).unwrap()
+      .then(() => {
+        message.success(`Updated Successfully`)
+        setProfilePic(null)
+      })
+      .catch((error) => {
+        message.error(error?.data?.message)
+      })
+  }
+
 
   const handleProfilePicUpload = (e) => {
     setProfilePic(e.file.originFileObj);
@@ -71,6 +93,18 @@ const TrainerProfile = () => {
                 <PiCamera className=" w-5 h-5 text-white" />
               </Upload>
             </div>
+            {
+              profilePic &&
+              <div className=" flex justify-center mb-2">
+                <button
+                  onClick={uploadImage}
+                  className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full"
+                >
+                  Upload Image
+                </button>
+              </div>
+            }
+
 
             <p className="desc text-center text-greenColor underline text-xl my-2 px-10 capitalize">
               Invite friends, family or acquaintances
