@@ -14,10 +14,12 @@ import { ConfigProvider, Form, Input, message, Spin, Upload } from 'antd';
 import { LuUpload } from "react-icons/lu";
 import { useCreateContentMutation } from '@/redux/features/content/contentApi';
 import { useForm } from 'antd/es/form/Form';
+import { useRouter } from 'next/navigation';
 
 const CreatingSession = () => {
     const [fileType, setFileType] = useState('audio');
     const [form] = useForm();
+    const router = useRouter();
     const [selectedLogos, setSelectedLogos] = useState(null);
     console.log(selectedLogos);
     const [profilePic, setProfilePic] = useState(null);
@@ -75,6 +77,7 @@ const CreatingSession = () => {
                 setProfilePic(null)
                 form.resetFields()
                 setSelectedLogos(null)
+                router.push(`/trainer-profile/my-content`)
             })
             .catch((error) => {
                 message.error(error?.data?.message)

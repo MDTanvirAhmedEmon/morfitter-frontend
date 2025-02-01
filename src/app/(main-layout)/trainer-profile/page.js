@@ -268,6 +268,21 @@ const TrainerProfile = () => {
                   Add
                 </button>
               </div>
+
+              <div className="qualification flex  justify-between items-center  border py-4 px-6 rounded-md mb-4">
+                <div className="flex  gap-3 md:pr-8">
+                  <h2 className="title text-lg md:text-2xl font-medium text-[#535353]">
+                    My Total Content
+                  </h2>
+                </div>
+                <Link href={`/trainer-profile/my-content`}>
+                  <button
+                    className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full "
+                  >
+                    View
+                  </button>
+                </Link>
+              </div>
             </div>
 
             {/* Blogging Section */}
