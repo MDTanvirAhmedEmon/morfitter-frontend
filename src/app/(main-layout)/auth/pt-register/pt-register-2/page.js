@@ -17,7 +17,7 @@ import logo8 from "../../../../../assets/logo8.svg";
 // import logo9 from "../../../../../assets/logo9.svg";
 import { useCreateTrainerMutation } from "@/redux/features/auth/authApi";
 import { setRole, setToken, setUser } from "@/redux/features/auth/authSlice";
-// import { clearRegisterInfo } from "@/redux/features/auth/registerSlice";
+import { clearRegisterInfo } from "@/redux/features/auth/registerSlice";
 import { useRouter } from "next/navigation";
 import { decodedToken } from "@/utils/VerifyJwtToken";
 import Cookies from "js-cookie";
@@ -125,7 +125,7 @@ const PTRegister2 = () => {
         Cookies.set('morfitter-token', data?.data?.accessToken)
         dispatch(setRole(verifiedToken));
         dispatch(setUser(data?.data?.userInfo));
-        // dispatch(clearRegisterInfo());
+        dispatch(clearRegisterInfo());
         notification.success({
           message: "Registration Successful",
           description: data?.data?.message,

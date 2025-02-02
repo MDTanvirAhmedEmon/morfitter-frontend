@@ -8,7 +8,8 @@ import { logout, setToken } from '../features/auth/authSlice';
 
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: `http://10.0.60.166:5000/api/v1`,
+    // baseUrl: `http://10.0.60.166:5000/api/v1`,
+    baseUrl: `http://localhost:5000/api/v1`,
 
     prepareHeaders: (headers, { getState }) => {
         const token = (getState())?.auth?.token;
@@ -55,6 +56,6 @@ const baseQueryWithRefreshToken = async (args, api, extraOptions) => {
 export const baseApi = createApi({
     reducerPath: 'baseApi',
     baseQuery: baseQueryWithRefreshToken,
-    tagTypes: ['user', 'content', 'specialism'],
+    tagTypes: ['user', 'content', 'specialism', 'qualification', 'invitation'],
     endpoints: () => ({}),
 });

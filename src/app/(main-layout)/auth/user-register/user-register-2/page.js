@@ -18,6 +18,7 @@ import { setRole, setToken, setUser } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 import { decodedToken } from "@/utils/VerifyJwtToken";
 import Cookies from "js-cookie";
+import { clearRegisterInfo } from "@/redux/features/auth/registerSlice";
 
 
 const UserRegister2 = () => {
@@ -107,6 +108,7 @@ const UserRegister2 = () => {
                 Cookies.set('morfitter-token', data?.data?.accessToken)
                 dispatch(setRole(verifiedtToken));
                 dispatch(setUser(data?.data?.userInfo));
+                dispatch(clearRegisterInfo());
                 router.push('/profile')
                 notification.success({
                     message: "Registration Successful",
@@ -254,7 +256,7 @@ const UserRegister2 = () => {
                         <div className=" flex justify-end items-center gap-2">
                             {/* <Link href={`/profile`}> */}
                             {isLoading && <Spin ></Spin>}
-                            <button  disabled={isLoading} type="submit" className=" text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:">
+                            <button disabled={isLoading} type="submit" className=" text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:">
                                 Enter
                             </button>
                             {/* </Link> */}
