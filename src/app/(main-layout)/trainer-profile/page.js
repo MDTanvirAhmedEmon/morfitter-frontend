@@ -17,6 +17,7 @@ import { setUser } from "@/redux/features/auth/authSlice";
 import AddSocialModal from "@/components/TrainerProfile/AddSocialModal";
 import { useUpdateTrainerProfileMutation } from "@/redux/features/profile/profileApi";
 import { useGetMySpecialismQuery } from "@/redux/features/specialism/specialismApi";
+import { useGetMyQualificationQuery } from "@/redux/features/qualification/qualificationApi";
 
 const TrainerProfile = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -31,6 +32,7 @@ const TrainerProfile = () => {
 
   const [updateTrainerProfile, { isLoading }] = useUpdateTrainerProfileMutation();
   const { data: specialism } = useGetMySpecialismQuery(user?._id);
+  const { data: qualification } = useGetMyQualificationQuery(user?._id);
   console.log(specialism);
   const uploadImage = () => {
     const formData = new FormData();
@@ -64,7 +66,7 @@ const TrainerProfile = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${user?.profileImageUrl}`;
+  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://192.168.0.118:5000${user?.profileImageUrl}`;
 
 
 
@@ -224,23 +226,32 @@ const TrainerProfile = () => {
             </div>
 
             <div className=" mt-6">
-              <div className="w-full flex justify-between items-center border py-4 px-6 rounded-md mb-4">
-                <p className="text-lg  md:text-2xl block md:hidden font-medium mr-3">
-                  Qualification
-                </p>
-                <div className="flex flex-wrap gap-3 md:pr-0 xl:pr-[200px]">
-                  <p className=" hidden md:block text-[#858585] w-full md:w-auto text-sm md:text-base">
-                    <span className="text-lg md:text-2xl font-medium mr-3 text-[#535353]">
-                      Qualification
-                    </span>
+              <div className="border mb-4">
+                <div className="w-full flex justify-between items-center  pt-4 px-6 rounded-md ">
+                  <p className="text-lg  md:text-2xl block md:hidden font-medium mr-3">
+                    Qualification
                   </p>
+                  <div className="flex flex-wrap gap-3 md:pr-0 xl:pr-[200px]">
+                    <p className=" hidden md:block text-[#858585] w-full md:w-auto text-sm md:text-base">
+                      <span className="text-lg md:text-2xl font-medium mr-3 text-[#535353]">
+                        Qualification
+                      </span>
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setQualificationVisible(true)}
+                    className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full"
+                  >
+                    Add
+                  </button>
                 </div>
-                <button
-                  onClick={() => setQualificationVisible(true)}
-                  className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full"
-                >
-                  Add
-                </button>
+                <div className=" px-6 pb-4">
+                  {
+                    qualification?.data?.map((item) =>
+                      <p className=" mb-2" key={item?._id}>{item?.qualification}</p>
+                    )
+                  }
+                </div>
               </div>
               <div className="border mb-4">
                 <div className="qualification flex  justify-between items-center  pt-4 px-6 rounded-md ">
@@ -282,7 +293,7 @@ const TrainerProfile = () => {
               <div className="qualification flex  justify-between items-center  border py-4 px-6 rounded-md mb-4">
                 <div className="flex  gap-3 md:pr-8">
                   <h2 className="title text-lg md:text-2xl font-medium text-[#535353]">
-                    My Total Content
+                    My Content
                   </h2>
                 </div>
                 <Link href={`/trainer-profile/my-content`}>
