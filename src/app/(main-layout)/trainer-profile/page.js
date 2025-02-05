@@ -66,7 +66,7 @@ const TrainerProfile = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://192.168.0.118:5000${user?.profileImageUrl}`;
+  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${user?.profileImageUrl}`;
 
 
 
