@@ -43,7 +43,7 @@ const SingleBlog = ({ content }) => {
         <div className=" w-full">
           <div className=' flex flex-col md:flex-row justify-between gap-4 md:gap-8'>
             <div className=" flex items-center gap-8">
-              <Image src={`http://10.0.60.166:5000${content?.userInfo?.profileImageUrl}`} width={200} height={200} alt="Follower" className="w-28 h-24 rounded-lg " />
+              <Image src={`http://192.168.0.118:5000${content?.userInfo?.profileImageUrl}`} width={200} height={200} alt="Follower" className="w-28 h-24 rounded-lg " />
               <div className="">
                 <div className="text-lg md:text-xl font-semibold">{content?.userInfo?.firstName} {content?.userInfo?.lastName}</div>
                 <div className="flex items-center mt-1 gap-1">
@@ -64,7 +64,7 @@ const SingleBlog = ({ content }) => {
           <div className=" mt-3 md:mt-6 grid grid-cols-1 lg:grid-cols-2 gap-5">
             <div className="rounded-2xl w-full overflow-hidden">
               <Image
-                src={`http://10.0.60.166:5000${content?.imageUrl}`}
+                src={`http://192.168.0.118:5000${content?.imageUrl}`}
                 alt="Post Content"
                 width={500}
                 height={500}
