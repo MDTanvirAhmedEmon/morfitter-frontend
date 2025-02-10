@@ -13,6 +13,7 @@ import follower3 from '../../../assets/profile/following3.png'
 import follower4 from '../../../assets/profile/following4.png'
 import follower5 from '../../../assets/profile/following5.png'
 import follower6 from '../../../assets/profile/following6.png'
+import Link from "next/link";
 
 const Profile = () => {
     const [profilePic, setProfilePic] = useState(null);
@@ -114,20 +115,38 @@ const Profile = () => {
                         </p>
 
                         {/* Blogging Section */}
-                        <div className=" flex flex-col md:flex-row gap-5 w-full mt-4">
+                        <div className=" flex flex-col md:flex-row gap-5 w-full mt-5">
                             <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
-                                <div className=" text-gray-500 text-lg md:text-xl font-bold">Blog</div>
-                                <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg "><FaPlus className=" text-greenColor" /></button>
+                                <div className=" text-gray-500 text-lg md:text-xl font-bold">
+                                    Blog
+                                </div>
+                                <Link href={`/profile/creating-content`}>
+                                    <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg ">
+                                        <FaPlus className=" text-greenColor" />
+                                    </button>
+                                </Link>
                             </div>
 
                             <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
-                                <div className=" text-gray-500 text-lg md:text-xl font-bold">Video</div>
-                                <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg "><FaPlus className=" text-greenColor" /></button>
+                                <div className=" text-gray-500 text-lg md:text-xl font-bold">
+                                    Video
+                                </div>
+                                <Link href={`/profile/creating-content`}>
+                                    <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg ">
+                                        <FaPlus className=" text-greenColor" />
+                                    </button>
+                                </Link>
                             </div>
 
                             <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
-                                <div className=" text-gray-500 text-lg md:text-xl font-bold">Images</div>
-                                <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg "><FaPlus className=" text-greenColor" /></button>
+                                <div className=" text-gray-500 text-lg md:text-xl font-bold">
+                                    Images
+                                </div>
+                                <Link href={`/profile/creating-content`}>
+                                    <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg ">
+                                        <FaPlus className=" text-greenColor" />
+                                    </button>
+                                </Link>
                             </div>
                         </div>
 
@@ -135,7 +154,7 @@ const Profile = () => {
                             <h2 className=" text-4xl font-bold text-center">Following</h2>
                             <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-4">
                                 {/* when you have data do map here */}
-                                
+
                                 <div className=" flex items-center gap-3 shadow-lg px-3 py-2 rounded-lg">
                                     <Image className=" w-14 rounded-2xl" src={follower1} height={0} width={0} alt="profile" />
                                     <div>
