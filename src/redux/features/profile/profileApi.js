@@ -12,6 +12,15 @@ const profileApi = baseApi.injectEndpoints({
             invalidatesTags: ['user']
         }),
 
+        updateTraineeProfile: builder.mutation({
+            query: ({ data, id }) => ({
+                url: `/trainee/${id}`,
+                method: "PATCH",
+                body: data,
+            }),
+            invalidatesTags: ['user']
+        }),
+
         // getMe: builder.query({
         //   query: () => ({
         //     url: "/users/get-me",
@@ -24,6 +33,7 @@ const profileApi = baseApi.injectEndpoints({
 
 export const {
     useUpdateTrainerProfileMutation,
+    useUpdateTraineeProfileMutation,
 } = profileApi;
 
 export default profileApi;

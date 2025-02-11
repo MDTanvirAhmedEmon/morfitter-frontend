@@ -1,10 +1,12 @@
+import { persistor } from '@/redux/store';
 import { createSlice } from '@reduxjs/toolkit';
+import persistStore from 'redux-persist/es/persistStore';
 
 
 const initialState = {
-  user: null,
   token: null,
   role: null,
+  user: null,
 };
 
 export const authSlice = createSlice({
@@ -24,9 +26,10 @@ export const authSlice = createSlice({
       state.role = role;
     },
     logout: (state) => {
-      state.user = null;
       state.token = null;
       state.role = null;
+      state.user = null;
+      persistStore(persistor).purge(); // Clears persisted state
     },
   },
 });

@@ -30,10 +30,26 @@ const invitationApi = baseApi.injectEndpoints({
         }),
         
         rejectInvitation: builder.mutation({
+            query: (id) => ({
+                url: `/invitation/reject-invitation/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ['invitation']
+        }),
+
+        giveReview: builder.mutation({
             query: (data) => ({
-                url: `/invitation/reject-invitation`,
+                url: `/review/give-review`,
                 method: "POST",
                 body: data,
+            }),
+            invalidatesTags: ['invitation']
+        }),
+
+        getReview: builder.query({
+            query: (id) => ({
+                url: `/review/get-review/${id}`,
+                method: "GET",
             }),
             invalidatesTags: ['invitation']
         }),
@@ -46,6 +62,8 @@ export const {
     useGetTraineeForSentInvitationQuery,
     useGetMyInvitationQuery,
     useRejectInvitationMutation,
+    useGiveReviewMutation,
+    useGetReviewQuery
   } = invitationApi;
 
 export default invitationApi;

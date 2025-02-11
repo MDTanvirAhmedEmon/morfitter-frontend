@@ -1,5 +1,5 @@
 "use client";
-import { Avatar, message, Upload } from "antd";
+import { Avatar, message, Rate, Upload } from "antd";
 import Image from "next/image";
 import { useState } from "react";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
@@ -18,6 +18,7 @@ import AddSocialModal from "@/components/TrainerProfile/AddSocialModal";
 import { useUpdateTrainerProfileMutation } from "@/redux/features/profile/profileApi";
 import { useGetMySpecialismQuery } from "@/redux/features/specialism/specialismApi";
 import { useGetMyQualificationQuery } from "@/redux/features/qualification/qualificationApi";
+import { useGetReviewQuery } from "@/redux/features/invitation/invitationApi";
 
 const TrainerProfile = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -33,7 +34,10 @@ const TrainerProfile = () => {
   const [updateTrainerProfile, { isLoading }] = useUpdateTrainerProfileMutation();
   const { data: specialism } = useGetMySpecialismQuery(user?._id);
   const { data: qualification } = useGetMyQualificationQuery(user?._id);
-  console.log(specialism);
+  // review 
+  const { data: reviews } = useGetReviewQuery(user?._id);
+  console.log('review', reviews);
+
   const uploadImage = () => {
     const formData = new FormData();
 
@@ -189,8 +193,8 @@ const TrainerProfile = () => {
           <div className="right-information w-full lg:w-[75%] pt-5">
             <div className="user-details flex flex-col lg:flex-row lg:justify-between gap-5">
               <div className="user">
-                <div className="user-name text-4xl font-semibold">
-                  Emma Watson
+                <div className="user-name text-4xl font-semibold capitalize">
+                  {user?.firstName} {user?.lastName}
                 </div>
                 <div className="mt-2 text-2xl">New York</div>
               </div>
@@ -275,20 +279,62 @@ const TrainerProfile = () => {
                   }
                 </div>
               </div>
-
-              <div className="qualification flex  justify-between items-center  border py-4 px-6 rounded-md mb-4">
-                <div className="flex  gap-3 md:pr-8">
-                  <h2 className="title text-lg md:text-2xl font-medium text-[#535353]">
-                    Customer Testimonials
-                  </h2>
+              <div className="border py-4 px-6">
+                <div className="qualification flex  justify-between items-center   rounded-md mb-4">
+                  <div className="flex  gap-3 md:pr-8">
+                    <h2 className="title text-lg md:text-2xl font-medium text-[#535353]">
+                      Customer Testimonials
+                    </h2>
+                  </div>
+                  <button
+                    onClick={() => setTestimonialsVisible(true)}
+                    className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full "
+                  >
+                    Add
+                  </button>
                 </div>
-                <button
-                  onClick={() => setTestimonialsVisible(true)}
-                  className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full "
-                >
-                  Add
-                </button>
+                <div className=" mt-5">
+                  <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-4">
+                    {/* when you have data do map here */}
+                    <div className="space-y-4">
+                      {reviews?.data?.map((item) => (
+                        <div
+                          key={item?._id}
+                          className="flex items-start gap-4 bg-white shadow-md rounded-lg p-4 border border-gray-200"
+                        >
+                          {/* Profile Image */}
+                          <Image
+                            className="w-16 h-16 object-cover rounded-full border-2 border-gray-300"
+                            src={`http://192.168.0.118:5000${item?.traineeData?.profileImageUrl}`}
+                            height={200}
+                            width={200}
+                            alt="profile"
+                          />
+
+                          {/* Review Content */}
+                          <div className="flex-1">
+                            {/* Name & Rating */}
+                            <div className="flex justify-between items-center">
+                              <h2 className="text-lg font-semibold text-gray-800 capitalize">
+                                {item?.traineeData?.firstName} {item?.traineeData?.lastName}
+                              </h2>
+                              <Rate disabled defaultValue={item?.rating} className="text-yellow-500" />
+                            </div>
+
+                            {/* Review Text */}
+                            <p className="text-gray-600 mt-1 text-sm leading-relaxed">
+                              {item?.review_text}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+
+                  </div>
+                </div>
               </div>
+
 
               <div className="qualification flex  justify-between items-center  border py-4 px-6 rounded-md mb-4">
                 <div className="flex  gap-3 md:pr-8">
