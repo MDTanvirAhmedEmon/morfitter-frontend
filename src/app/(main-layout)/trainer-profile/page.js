@@ -19,6 +19,7 @@ import { useUpdateTrainerProfileMutation } from "@/redux/features/profile/profil
 import { useGetMySpecialismQuery } from "@/redux/features/specialism/specialismApi";
 import { useGetMyQualificationQuery } from "@/redux/features/qualification/qualificationApi";
 import { useGetReviewQuery } from "@/redux/features/invitation/invitationApi";
+import { useGetMySessionQuery } from "@/redux/features/session/sessionApi";
 
 const TrainerProfile = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -37,6 +38,10 @@ const TrainerProfile = () => {
   // review 
   const { data: reviews } = useGetReviewQuery(user?._id);
   console.log('review', reviews);
+
+  // me session
+  const { data: session } = useGetMySessionQuery(user?._id);
+  console.log('session', session);
 
   const uploadImage = () => {
     const formData = new FormData();
@@ -386,6 +391,20 @@ const TrainerProfile = () => {
                   </button>
                 </Link>
               </div>
+            </div>
+            <div className="text-white bg-secondary px-4 py-2 text-center text-lg rounded w-full my-4 ">
+              Current Training Session
+            </div>
+            <div className=" grid grid-cols-4 gap-3">
+              {
+                session?.data?.data?.map((item) => (
+                  <Link key={item?._id} href={`/trainer-profile/my-session/${item?._id}`}>
+                    <div >
+                      <Image alt="session" src={`http://192.168.0.118:5000${item?.promo_image}`} height={500} width={500} className=" w-[300px] h-[380px] object-cover" />
+                    </div>
+                  </Link>
+                ))
+              }
             </div>
 
             <div className=" flex flex-col justify-center items-center mt-6">
