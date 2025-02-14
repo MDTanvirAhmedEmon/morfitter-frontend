@@ -51,7 +51,7 @@ const invitationApi = baseApi.injectEndpoints({
                 url: `/review/get-review/${id}`,
                 method: "GET",
             }),
-            invalidatesTags: ['invitation']
+            providesTags: ['invitation']
         }),
 
     }),

@@ -29,7 +29,7 @@ const contentApi = baseApi.injectEndpoints({
       providesTags: ['content']
     }),
 
-    
+
     deleteContent: builder.mutation({
       query: (id) => ({
         url: `/content/${id}`,
@@ -38,9 +38,35 @@ const contentApi = baseApi.injectEndpoints({
       invalidatesTags: ['content']
     }),
 
+    likeAndDislike: builder.mutation({
+      query: (data) => ({
+        url: "/like/like-dislike",
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ['content']
+    }),
+
+    doComment: builder.mutation({
+      query: (data) => ({
+        url: "/comment/do-comment",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ['comments']
+    }),
+
+    getAllComments: builder.query({
+      query: (id) => ({
+        url: `/comment/${id}`,
+        method: "GET",
+      }),
+      providesTags: ['comments']
+    }),
+
   }),
 });
 
-export const { useGetAllContentsQuery, useCreateContentMutation, useGetMyContentQuery, useDeleteContentMutation } = contentApi;
+export const { useGetAllContentsQuery, useCreateContentMutation, useGetMyContentQuery, useDeleteContentMutation, useLikeAndDislikeMutation, useDoCommentMutation, useGetAllCommentsQuery } = contentApi;
 
 export default contentApi;
