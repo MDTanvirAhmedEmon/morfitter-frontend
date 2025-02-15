@@ -18,12 +18,29 @@ const sessionApi = baseApi.injectEndpoints({
           }),
           providesTags: ['session']
         }),
+        getSingleSession: builder.query({
+          query: (id) => ({
+            url: `/session/single/${id}`,
+            method: "GET",
+          }),
+          providesTags: ['session']
+        }),
+        addSession: builder.mutation({
+          query: ({formData, id}) => ({
+              url: `/session/${id}`,
+              method: "PATCH",
+              body: formData,
+          }),
+          invalidatesTags: ['session']
+      }),
     }),
 });
 
 export const {
     useCreateSessionMutation,
     useGetMySessionQuery,
+    useGetSingleSessionQuery,
+    useAddSessionMutation,
 } = sessionApi;
 
 export default sessionApi;
