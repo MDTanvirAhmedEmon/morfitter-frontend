@@ -3,36 +3,64 @@ import { BsSend } from "react-icons/bs";
 import profileImage from '../../assets/content/follwing2.png'
 import Image from "next/image";
 import { useState } from "react";
+import { useDoCommentMutation, useGetAllCommentsQuery } from "@/redux/features/content/contentApi";
 
-const BlogComments = () => {
-    const [replyComments, setReplyComments] = useState(false);
+const BlogComments = ({ id }) => {
+    const [comments, setComments] = useState('');
+
+    const { data } = useGetAllCommentsQuery(id);
+    console.log(data?.data);
+    const [doComment, { isLoading }] = useDoCommentMutation();
+
+    const handleComment = () => {
+        const commentData = {
+            text: comments,
+            content_id: id
+        }
+        doComment(commentData).unwrap()
+            .then(() => {
+                setComments('')
+            })
+    }
 
     return (
         <div className=" flex lg:gap-6">
             <div className=' lg:w-1/2'>
                 <div className=" mt-5">
-                    <Input placeholder="Add a comment..." suffix={<BsSend className=" cursor-pointer w-8 h-8 " />} />
+                    <Input value={comments} onChange={(e) => setComments(e.target.value)} placeholder="Add a comment..." suffix={<BsSend onClick={handleComment} className=" cursor-pointer w-8 h-8 " />} />
                 </div>
 
                 {/* Comments */}
                 <h2 className=" text-2xl font-semibold my-5">All Comments</h2>
-                <div>
-                    <div className=" flex items-center gap-2">
-                        <Image className=" rounded-full w-14" src={profileImage} height={0} width={0} alt="profile" />
-                        <div>
-                            <p className=" text-lg font-semibold">Thila Palany</p>
-                            <p className=" text-lg">Trainer</p>
+                {
+                    data?.data?.map((item) => (
+                        <div key={item?._id} className="bg-white p-4 rounded-lg shadow-md mb-4 border border-gray-200">
+                            <div className="flex items-center gap-4">
+                                <Image
+                                    className="rounded-full border border-gray-300"
+                                    src={`http://192.168.0.118:5000${item?.user_image}`}
+                                    height={50}
+                                    width={50}
+                                    alt="profile"
+                                />
+                                <div>
+                                    <p className="text-lg font-semibold text-gray-900 capitalize">{item?.user_name}</p>
+                                    <p className="text-sm text-gray-600">{item?.role}</p>
+                                </div>
+                            </div>
+                            <div className="mt-3 text-gray-800 text-[15px] leading-relaxed">
+                                {item?.text}
+                            </div>
                         </div>
+                    ))
+                }
 
-                    </div>
-                    <div className=" mt-3">
-                        Whether you&apos;re a beginner or a seasoned athlete, our expert trainers will guide you every step of the way. Build strength, improve endurance, and boost your overall health with workouts designed just for you. Join our community and transform your body today!
-                    </div>
-                    <button onClick={() => setReplyComments(!replyComments)} className="bookBtn text-md font-medium leading-8 text-white mt-2 bg-secondary hover:bg-greenColor px-3 md:px-5 rounded-full capitalize transition-all">
+
+                {/* <button onClick={() => setReplyComments(!replyComments)} className="bookBtn text-md font-medium leading-8 text-white mt-2 bg-secondary hover:bg-greenColor px-3 md:px-5 rounded-full capitalize transition-all">
                         Reply
-                    </button>
-                    {/* reply */}
-                    {
+                    </button> */}
+                {/* reply */}
+                {/* {
                         replyComments &&
                         <div className=" mt-3 ml-14">
                             <div className=" my-5">
@@ -52,9 +80,7 @@ const BlogComments = () => {
                                 Reply
                             </button>
                         </div>
-                    }
-
-                </div>
+                    } */}
             </div>
             <div className=' lg:w-1/2 mt-5'>
 

@@ -1,5 +1,4 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { baseApi } from "./api/baseApi";
 import { persistStore, persistReducer } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import {
@@ -12,6 +11,7 @@ import {
 } from "redux-persist";
 import { authSlice } from "./features/auth/authSlice";
 import { registerSlice } from "./features/auth/registerSlice";
+import { baseApi } from "./api/baseApi";
 
 // Handle storage creation for SSR
 const createNoopStorage = () => {

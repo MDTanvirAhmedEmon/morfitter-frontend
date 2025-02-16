@@ -1,19 +1,32 @@
 'use client'
 import Image from 'next/image';
-import follower from '../../assets/content/follwing2.png'
+// import follower from '../../assets/content/follwing2.png'
 import Calisthenics from '../../assets/content/colle.svg'
-import Post1 from '../../assets/content/post1.png'
+// import Post1 from '../../assets/content/post1.png'
 import { useState } from 'react';
 import ShareModal from './ShareModal';
 import BlogComments from './BlogComments';
+import { useGetAllCommentsQuery, useLikeAndDislikeMutation } from '@/redux/features/content/contentApi';
+import { useSelector } from 'react-redux';
 
 const SingleBlog = ({ content }) => {
+  const { role } = useSelector((state) => state.auth)
 
-  console.log(content);
+  const { data } = useGetAllCommentsQuery(content?._id);
 
   const shareUrl = `${typeof window !== 'undefined' && window.location}`;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [openComment, setOpenComment] = useState(false)
+
+  const [likeAndDislike, { isLoading }] = useLikeAndDislikeMutation();
+
+  const handleLike = () => {
+    const likeData = {
+      contentId: content?._id,
+      userId: role?.id  // user _id
+    }
+    likeAndDislike(likeData).unwrap()
+  }
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -82,7 +95,7 @@ const SingleBlog = ({ content }) => {
 
           {/* Button Section */}
           <div className="btn-part flex gap-3 md:gap-12 items-center mt-6">
-            <button className="btn-item like px-2 flex gap-2 justify-center items-center shadow-md w-40 h-11 rounded-lg bg-[#0ba59313] border border-greenColor text-greenColor">
+            <button onClick={handleLike} className={`btn-item like px-2 flex gap-2 justify-center items-center  w-40 h-11 rounded-lg bg-[#0ba59313] border text-greenColor border-greenColor ${content?.isLiked ? 'shadow shadow-greenColor' : ""}  `}>
               <svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   fillRule="evenodd"
@@ -91,8 +104,8 @@ const SingleBlog = ({ content }) => {
                   fill="#0BA593"
                 />
               </svg>
-              <span className=' hidden md:block'>Like 10</span>
-              <span className=' block md:hidden'>10</span>
+              <span className=' hidden md:block'>Like {content?.totalLikes}</span>
+              <span className=' block md:hidden'>{content?.totalLikes}</span>
             </button>
             <button onClick={() => setOpenComment(!openComment)} className="btn-item comment px-2 flex gap-2 justify-center items-center shadow-md w-40 h-11 rounded-lg bg-red-50 border border-red-600 text-red-600">
               <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -103,8 +116,8 @@ const SingleBlog = ({ content }) => {
                   fill="#E26972"
                 />
               </svg>
-              <span className=' hidden md:block'>Comment 3</span>
-              <span className=' block md:hidden'>3</span>
+              <span className=' hidden md:block'>Comment {data?.data?.length}</span>
+              <span className=' block md:hidden'>{data?.data?.length}</span>
             </button>
             <button onClick={showModal} className="btn-item share flex px-2 gap-2 justify-center items-center shadow-md w-40 h-11 rounded-lg bg-[#572c5725] border border-secondary text-secondary">
               <svg width="23" height="26" viewBox="0 0 23 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -119,7 +132,7 @@ const SingleBlog = ({ content }) => {
             </button>
           </div>
           {openComment &&
-            <BlogComments></BlogComments>
+            <BlogComments id={content?._id}></BlogComments>
           }
 
 
