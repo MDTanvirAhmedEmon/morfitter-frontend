@@ -5,7 +5,7 @@ import Image from "next/image";
 const SingleModalItem = ({ item }) => {
 
     const [form] = Form.useForm();
-    const [giveReview, {isLoading}] = useGiveReviewMutation();
+    const [giveReview, { isLoading }] = useGiveReviewMutation();
     const onFinish = (values) => {
         const reviewData = {
             trainer_id: item?.trainer_id,
@@ -13,31 +13,31 @@ const SingleModalItem = ({ item }) => {
             review_text: values?.review_text,
             rating: values?.rating
         }
-        
+
         giveReview(reviewData).unwrap()
-        .then(() => {
-            message.success(`Review submitted successfully`)
-        })
-        .catch((error) => {
-            message.error(error?.data?.message)
-        })
+            .then(() => {
+                message.success(`Review submitted successfully`)
+            })
+            .catch((error) => {
+                message.error(error?.data?.message)
+            })
     };
-    const [ rejectInvitation ] = useRejectInvitationMutation();
+    const [rejectInvitation] = useRejectInvitationMutation();
     const handleReject = () => {
         rejectInvitation(item?._id).unwrap()
-        .then(() => {
-            message.success(`Rejected Successfully`)
-        })
-        .catch((error) => {
-            message.error(error?.data?.message)
-        })
+            .then(() => {
+                message.success(`Rejected Successfully`)
+            })
+            .catch((error) => {
+                message.error(error?.data?.message)
+            })
     }
 
     return (
         <div className=" shadow-md px-5 py-5 mt-5 w-full">
             <div className=" flex justify-between items-center">
                 <div className=" flex items-center gap-2">
-                    <Image className=" w-14 rounded-2xl " src={`http://192.168.0.118:5000${item?.trainerData?.profileImageUrl}`} height={200} width={200} alt="profile" />
+                    <Image className=" w-14 rounded-2xl " src={`http://10.0.60.166:5000${item?.trainerData?.profileImageUrl}`} height={200} width={200} alt="profile" />
                     <h3 className=" capitalize text-lg">{item?.trainerData?.firstName} {item?.trainerData?.lastName}</h3>
                 </div>
                 <div>

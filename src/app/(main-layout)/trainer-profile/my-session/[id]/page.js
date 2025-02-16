@@ -1,14 +1,16 @@
 "use client";
 import AddSessionContentModal from "@/components/TrainerProfile/AddSessionContentModal";
-import { useGetSingleSessionQuery } from "@/redux/features/session/sessionApi";
+import { useDeletSessionVideoMutation, useDeletWholeSessionMutation, useGetSingleSessionQuery } from "@/redux/features/session/sessionApi";
+import { message, Popconfirm } from "antd";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
-const BASE_URL = "http://192.168.0.118:5000";
+const BASE_URL = "http://10.0.60.166:5000";
 
 const SingleSession = () => {
     const { id } = useParams();
+    const router = useRouter();
     const { data } = useGetSingleSessionQuery(id);
     const session = data?.data;
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,6 +23,32 @@ const SingleSession = () => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+    const [deletSessionVideo] = useDeletSessionVideoMutation();
+    const [deletWholeSession, { isLoading }] = useDeletWholeSessionMutation();
+    const confirm = (content) => {
+        const data = {
+            sessionId: id,
+            contentId: content?._id
+        }
+        deletSessionVideo(data).unwrap()
+            .then(() => {
+                message.success('Deleted Successfully')
+            })
+            .catch((error) => {
+                message.error(error?.data?.message)
+            })
+    };
+
+    const handleDeleteSession = () => {
+        deletWholeSession(id).unwrap()
+            .then(() => {
+                message.success('Session deleted successfully')
+                router.push(`/trainer-profile`)
+            })
+            .catch((error) => {
+                message.error(error?.data?.message)
+            })
+    }
 
     return (
         <div className="bg-white min-h-screen">
@@ -74,8 +102,24 @@ const SingleSession = () => {
                         <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6">
                             {session.recordedContent.map((content, index) => (
                                 <div key={content._id} className="border p-4 rounded-lg shadow-md bg-gray-50">
-                                    <h3 className="text-lg font-semibold text-teal-600">{index + 1}. {content.title}</h3>
-                                    <p className="text-gray-600">⏳ Duration: {content.duration}</p>
+                                    <div className=" flex justify-between items-center">
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-teal-600">{index + 1}. {content.title}</h3>
+                                            <p className="text-gray-600">⏳ Duration: {content.duration}</p>
+                                        </div>
+                                        <Popconfirm
+                                            title="Delete the video"
+                                            description="Are you sure to delete this video?"
+                                            onConfirm={() => confirm(content)}
+                                            okText="Yes"
+                                            cancelText="No"
+                                        >
+                                            <button className=" bg-red-600 px-2 py-1 text-white rounded">Delete</button>
+                                        </Popconfirm>
+
+                                    </div>
+
+
                                     <video controls className="w-full mt-3 rounded-lg" src={`${BASE_URL}${content.url}`}>
                                         Your browser does not support the video tag.
                                     </video>
@@ -84,6 +128,18 @@ const SingleSession = () => {
                         </div>
                     )}
                 </div>
+                <div className=" flex justify-end">
+                    <Popconfirm
+                        title="Delete the session"
+                        description="Are you sure to delete this session?"
+                        onConfirm={handleDeleteSession}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <button className=" bg-red-600 px-2 py-1 text-white rounded">Delete Whole Session</button>
+                    </Popconfirm>
+                </div>
+
             </div>
         </div>
     );

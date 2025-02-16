@@ -1,4 +1,4 @@
 
 export const getBaseUrl = () => {
-  return "http://192.168.0.118:5000";
+  return "http://10.0.60.166:5000";
 };

@@ -38,7 +38,7 @@ const BlogComments = ({ id }) => {
                             <div className="flex items-center gap-4">
                                 <Image
                                     className="rounded-full border border-gray-300"
-                                    src={`http://192.168.0.118:5000${item?.user_image}`}
+                                    src={`http://10.0.60.166:5000${item?.user_image}`}
                                     height={50}
                                     width={50}
                                     alt="profile"

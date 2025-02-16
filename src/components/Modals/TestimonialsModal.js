@@ -63,7 +63,7 @@ function TestimonialsModal({ setTestimonialsVisible }) {
             data?.data?.data?.map((user) => (
               <div key={user?._id} className="mt-5 flex justify-between items-center gap-2">
                 <div className="flex items-center justify-center gap-2">
-                  <Image src={`http://192.168.0.118:5000${user?.profileImageUrl}`} width={100} className="w-10 rounded-full" height={100} alt="profile-image" />
+                  <Image src={`http://10.0.60.166:5000${user?.profileImageUrl}`} width={100} className="w-10 rounded-full" height={100} alt="profile-image" />
                   <p className="text-lg">{user?.firstName} {user?.lastName}</p>
                 </div>
                 <div>
