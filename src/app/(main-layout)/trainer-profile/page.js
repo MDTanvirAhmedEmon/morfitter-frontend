@@ -75,7 +75,7 @@ const TrainerProfile = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://192.168.0.118:5000${user?.profileImageUrl}`;
+  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${user?.profileImageUrl}`;
 
 
 
@@ -310,7 +310,7 @@ const TrainerProfile = () => {
                           {/* Profile Image */}
                           <Image
                             className="w-16 h-16 object-cover rounded-full border-2 border-gray-300"
-                            src={`http://192.168.0.118:5000${item?.traineeData?.profileImageUrl}`}
+                            src={`http://10.0.60.166:5000${item?.traineeData?.profileImageUrl}`}
                             height={200}
                             width={200}
                             alt="profile"
@@ -400,7 +400,7 @@ const TrainerProfile = () => {
                 session?.data?.data?.map((item) => (
                   <Link key={item?._id} href={`/trainer-profile/my-session/${item?._id}`}>
                     <div >
-                      <Image alt="session" src={`http://192.168.0.118:5000${item?.promo_image}`} height={500} width={500} className=" w-[300px] h-[380px] object-cover" />
+                      <Image alt="session" src={`http://10.0.60.166:5000${item?.promo_image}`} height={500} width={500} className=" w-[300px] h-[380px] object-cover" />
                     </div>
                   </Link>
                 ))

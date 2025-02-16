@@ -57,8 +57,8 @@ const Profile = () => {
         setIsModalOpen(false);
     };
     // invitation
-    const { data:invitation } = useGetMyInvitationQuery(user?._id);
-    
+    const { data: invitation } = useGetMyInvitationQuery(user?._id);
+
 
     const { data } = useGetMeQuery();
     dispatch(setUser(data?.data?.[0]?.traineeDetails?.[0]));
@@ -80,7 +80,7 @@ const Profile = () => {
             })
     }
 
-    const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://192.168.0.118:5000${user?.profileImageUrl}`;
+    const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${user?.profileImageUrl}`;
 
     return (
         <section className=" py-10 md:py-20">
@@ -255,7 +255,7 @@ const Profile = () => {
                                 {
                                     following?.data?.map((item) => (
                                         <div key={item?._id} className=" flex items-center gap-3 shadow-lg px-3 py-2 rounded-lg">
-                                            <Image className=" w-14 rounded-2xl " src={`http://192.168.0.118:5000${item?.followingDetails?.profileImageUrl}`} height={200} width={200} alt="profile" />
+                                            <Image className=" w-14 rounded-2xl " src={`http://10.0.60.166:5000${item?.followingDetails?.profileImageUrl}`} height={200} width={200} alt="profile" />
                                             <div>
                                                 <h2 className=" text-xl font-semibold capitalize">{item?.followingDetails?.firstName} {item?.followingDetails?.lastName}</h2>
                                                 <p>{item?.followingDetails?.role}</p>
@@ -275,7 +275,7 @@ const Profile = () => {
 
                             <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
                                 <div className=" text-gray-500 text-lg md:text-xl font-bold">Customer testimonials</div>
-                                <Badge count={invitation?.data?.length}> 
+                                <Badge count={invitation?.data?.length}>
                                     <button onClick={showInvitationModal} className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg "><FaPlus className=" text-greenColor" /></button>
                                 </Badge>
                             </div>
