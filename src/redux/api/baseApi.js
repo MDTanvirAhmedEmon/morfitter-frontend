@@ -62,7 +62,10 @@ export const baseApi = createApi({
     "session",
     "new-users",
     "all-trainers",
-    "all-users"
+    "all-users",
+    "all-personal-trainer",
+    "user-management",
+    "privacy",
   ],
   endpoints: () => ({}),
 });
