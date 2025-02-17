@@ -1,17 +1,25 @@
+import { getBaseUrl } from "@/config/envConfig";
+import { useGetAllNewUsersQuery } from "@/redux/features/admin/newUserApi";
 import { Avatar, Table } from "antd";
 
 const NewUsers = () => {
+  const { data: getAllNewUsersData } = useGetAllNewUsersQuery();
+  console.log(getAllNewUsersData?.data);
+
   // Define columns for the table
   const columns = [
     {
       title: "Name",
-      dataIndex: "name",
+      dataIndex: "userInfo",
       key: "name",
-      render: (name) => (
-        <a>
-          {name.firstName} {name.middleName || ""} {name.lastName}
-        </a>
-      ),
+      render: (userInfo) =>
+        userInfo ? (
+          <a>
+            {userInfo.firstName} {userInfo.lastName}
+          </a>
+        ) : (
+          "N/A"
+        ),
     },
     {
       title: "Email",
@@ -20,70 +28,40 @@ const NewUsers = () => {
     },
     {
       title: "Address",
-      dataIndex: "address",
+      dataIndex: "userInfo",
       key: "address",
-      render: (address) => address || "N/A",
+      render: (userInfo) => (userInfo?.address ? userInfo.address : "N/A"),
     },
     {
-      title: "Skills",
-      dataIndex: "skills",
-      key: "skills",
-      render: (skills) => (skills.length ? skills.join(", ") : "N/A"),
+      title: "Contact No",
+      dataIndex: "userInfo",
+      key: "contactNo",
+      render: (userInfo) => (userInfo?.contactNo ? userInfo.contactNo : "N/A"),
     },
     {
       title: "Image",
       key: "profileImage",
-      render: (_, record) => <Avatar size={40} src={record?.profileImage} />,
-    },
-  ];
-
-  // Static data for the table
-  const data = [
-    {
-      key: "1",
-      name: { firstName: "John", middleName: "D.", lastName: "Doe" },
-      email: "john.doe@example.com",
-      address: "123 Main St, Springfield",
-      skills: ["JavaScript", "React", "Node.js"],
-      profileImage: "https://avatar.iran.liara.run/public/31",
-    },
-    {
-      key: "2",
-      name: { firstName: "Jane", middleName: "", lastName: "Smith" },
-      email: "jane.smith@example.com",
-      address: "456 Oak Ave, Metropolis",
-      skills: ["Python", "Django"],
-      profileImage: "https://avatar.iran.liara.run/public/45",
-    },
-    {
-      key: "3",
-      name: { firstName: "Mike", middleName: "A.", lastName: "Brown" },
-      email: "mike.brown@example.com",
-      address: "",
-      skills: [],
-      profileImage: "https://avatar.iran.liara.run/public/36",
-    },
-    {
-      key: "4",
-      name: { firstName: "Emily", middleName: "C.", lastName: "Clark" },
-      email: "emily.clark@example.com",
-      address: "789 Elm St, Gotham",
-      skills: ["Java", "Spring Boot"],
-      profileImage: "https://avatar.iran.liara.run/public/19",
-    },
-    {
-      key: "5",
-      name: { firstName: "Sophia", middleName: "", lastName: "Williams" },
-      email: "sophia.williams@example.com",
-      address: "321 Pine Rd, Star City",
-      skills: ["C#", ".NET"],
-      profileImage: "https://avatar.iran.liara.run/public/17",
+      dataIndex: "userInfo",
+      render: (userInfo) =>
+        userInfo?.profileImageUrl ? (
+          <Avatar
+            size={40}
+            src={`${getBaseUrl()}${userInfo?.profileImageUrl}`}
+          />
+        ) : (
+          <Avatar size={40} src="https://avatar.iran.liara.run/public/43" />
+        ),
     },
   ];
 
   return (
     <div>
-      <Table pagination={false} columns={columns} dataSource={data} />
+      <Table
+        pagination={false}
+        columns={columns}
+        dataSource={getAllNewUsersData?.data || []}
+        rowKey="_id"
+      />
     </div>
   );
 };

@@ -1,5 +1,13 @@
 /* eslint-disable react/prop-types */
-import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { useGetAllUsersQuery } from "@/redux/features/admin/userApi";
+import {
+  Area,
+  AreaChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 const AreaCharts = () => {
   // Static data for the chart
@@ -18,14 +26,18 @@ const AreaCharts = () => {
     { month: "Dec", netRevenue: 2800 },
   ];
 
+  const { data: getAllUsersData, isLoading } = useGetAllUsersQuery();
+
+  const UserData = getAllUsersData?.data || [];
+
   // Custom Tooltip for the chart
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
-      const { month, netRevenue } = payload[0].payload;
+      const { month, user } = payload[0].payload;
       return (
         <div className="custom-tooltip bg-white py-3 px-2 rounded border">
           <p className="label">{`Month: ${month}`}</p>
-          <p className="label">{`Revenue: $${netRevenue}`}</p>
+          <p className="label">{`User: $${user}`}</p>
         </div>
       );
     }
@@ -35,7 +47,7 @@ const AreaCharts = () => {
   return (
     <ResponsiveContainer width="100%" height={400}>
       <AreaChart
-        data={revenueData}
+        data={UserData}
         margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
       >
         <defs>
@@ -49,7 +61,7 @@ const AreaCharts = () => {
         <Tooltip content={<CustomTooltip />} />
         <Area
           type="monotone"
-          dataKey="netRevenue"
+          dataKey="user"
           stroke="#0ba593"
           fillOpacity={1}
           fill="url(#colorPv)"
