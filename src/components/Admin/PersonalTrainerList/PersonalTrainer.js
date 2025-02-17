@@ -1,11 +1,13 @@
 import { getBaseUrl } from "@/config/envConfig";
 import { useGetallPersonalTrainerQuery } from "@/redux/features/admin/allPersonalTrainer/allPersonalTrainerApi";
-import { Avatar, Popconfirm, Table } from "antd";
+import { Avatar, Pagination, Popconfirm, Table } from "antd";
+import { useState } from "react";
 
 const PersonalTrainersTable = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const { data: getallPersonalTrainerData, isLoading } =
-    useGetallPersonalTrainerQuery();
-  console.log(getallPersonalTrainerData?.data);
+    useGetallPersonalTrainerQuery({ page: currentPage });
+  // console.log(getallPersonalTrainerData?.data);
 
   const columns = [
     {
@@ -54,7 +56,7 @@ const PersonalTrainersTable = () => {
       render: (userData) => (
         <button
           className={`cursor-default px-2 py-1 rounded-md ${
-            userData?.status === "active"
+            userData?.status === "in-progress"
               ? "bg-green-500 text-white"
               : "bg-yellow-500 text-black"
           }`}
@@ -90,6 +92,10 @@ const PersonalTrainersTable = () => {
     return <p>Loading trainers...</p>;
   }
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div>
       <Table
@@ -97,6 +103,16 @@ const PersonalTrainersTable = () => {
         columns={columns}
         dataSource={getallPersonalTrainerData?.data?.data || []}
       />
+      <div className="mt-5 flex justify-end ">
+        {getallPersonalTrainerData?.data?.data?.length !== 0 && (
+          <Pagination
+            current={getallPersonalTrainerData?.data?.meta?.page}
+            pageSize={getallPersonalTrainerData?.data?.meta?.limit}
+            total={getallPersonalTrainerData?.data?.meta?.total}
+            onChange={handlePageChange}
+          />
+        )}
+      </div>
     </div>
   );
 };

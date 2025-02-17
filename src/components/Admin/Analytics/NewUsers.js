@@ -9,6 +9,20 @@ const NewUsers = () => {
   // Define columns for the table
   const columns = [
     {
+      title: "Image",
+      key: "profileImage",
+      dataIndex: "userInfo",
+      render: (userInfo) =>
+        userInfo?.profileImageUrl ? (
+          <Avatar
+            size={40}
+            src={`${getBaseUrl()}${userInfo?.profileImageUrl}`}
+          />
+        ) : (
+          <Avatar size={40} src="https://avatar.iran.liara.run/public/43" />
+        ),
+    },
+    {
       title: "Name",
       dataIndex: "userInfo",
       key: "name",
@@ -37,20 +51,6 @@ const NewUsers = () => {
       dataIndex: "userInfo",
       key: "contactNo",
       render: (userInfo) => (userInfo?.contactNo ? userInfo.contactNo : "N/A"),
-    },
-    {
-      title: "Image",
-      key: "profileImage",
-      dataIndex: "userInfo",
-      render: (userInfo) =>
-        userInfo?.profileImageUrl ? (
-          <Avatar
-            size={40}
-            src={`${getBaseUrl()}${userInfo?.profileImageUrl}`}
-          />
-        ) : (
-          <Avatar size={40} src="https://avatar.iran.liara.run/public/43" />
-        ),
     },
   ];
 
