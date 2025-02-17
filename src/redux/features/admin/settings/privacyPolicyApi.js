@@ -10,11 +10,15 @@ const privacyPolicyApi = baseApi.injectEndpoints({
     }),
 
     updatePrivacy: builder.mutation({
-      query: (data, _id) => ({
-        url: `/policy-term/policy/${_id}`,
-        method: "POST",
-        body: data,
-      }),
+      query: (data, _id) => {
+        console.log("privacy api", data, _id);
+        const { policyId, ...privacy } = data;
+        return {
+          url: `policy-term/policy/${policyId}`,
+          method: "PATCH",
+          body: privacy,
+        };
+      },
     }),
   }),
 });
