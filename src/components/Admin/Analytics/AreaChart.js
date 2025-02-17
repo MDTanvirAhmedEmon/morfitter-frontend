@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useGetAllUsersQuery } from "@/redux/features/admin/userApi";
+import { useGetAllUsersQuery } from "@/redux/features/admin/analytic/userApi";
 import {
   Area,
   AreaChart,

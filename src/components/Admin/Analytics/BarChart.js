@@ -1,4 +1,4 @@
-import { useGetAllTrainersQuery } from "@/redux/features/admin/trainerApi";
+import { useGetAllTrainersQuery } from "@/redux/features/admin/analytic/trainerApi";
 import {
   Bar,
   BarChart,

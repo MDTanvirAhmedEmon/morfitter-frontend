@@ -1,5 +1,5 @@
 import { getBaseUrl } from "@/config/envConfig";
-import { useGetAllNewUsersQuery } from "@/redux/features/admin/newUserApi";
+import { useGetAllNewUsersQuery } from "@/redux/features/admin/analytic/newUserApi";
 import { Avatar, Table } from "antd";
 
 const NewUsers = () => {
