@@ -1,14 +1,30 @@
 "use client";
 import SingleSessionSkeleton from '@/components/Skeleton/SingleSessionSkeleton';
-import { useGetSingleSessionQuery } from '@/redux/features/session/sessionApi';
-import { useParams } from 'next/navigation';
+import { useCheckEnrollmentMutation, useGetSingleSessionQuery } from '@/redux/features/session/sessionApi';
+import { useParams, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const BASE_URL = "http://10.0.60.166:5000";
 
 const SingleSessionOfPt = () => {
     const { id } = useParams();
+    const router = useRouter();
+    const { role } = useSelector((state) => state.auth);
+
+    const [checkEnrollment ] = useCheckEnrollmentMutation();
+    useEffect(() => {
+        if (id && role?.id) {
+            checkEnrollment({ session_id: id, user_id: role.id }).unwrap()
+            .then((data) => {
+                !data?.data?.enrolled && 
+                router.push(`/`)
+            })
+        }
+    }, []);
+
     const { data, isLoading, error } = useGetSingleSessionQuery(id);
+    console.log(data);
 
     const videoTutorials = data?.data?.recordedContent?.map(video => ({
         ...video,
@@ -46,9 +62,8 @@ const SingleSessionOfPt = () => {
                     {videoTutorials.map((tutorial, index) => (
                         <li
                             key={tutorial._id}
-                            className={`p-2 rounded-md cursor-pointer ${
-                                index === currentVideoIndex ? "bg-primary text-white" : "bg-gray-200 text-black"
-                            }`}
+                            className={`p-2 rounded-md cursor-pointer ${index === currentVideoIndex ? "bg-primary text-white" : "bg-gray-200 text-black"
+                                }`}
                             onClick={() => setCurrentVideoIndex(index)}
                         >
                             {index + 1}. {tutorial.title}
@@ -68,18 +83,16 @@ const SingleSessionOfPt = () => {
                 <p className="text-gray-600 mb-4">{videoTutorials[currentVideoIndex]?.description || "No description available."}</p>
                 <div className="flex justify-between">
                     <button
-                        className={`px-4 py-2 rounded-md ${
-                            currentVideoIndex > 0 ? "bg-primary text-white" : "bg-gray-300 text-gray-600 cursor-not-allowed"
-                        }`}
+                        className={`px-4 py-2 rounded-md ${currentVideoIndex > 0 ? "bg-primary text-white" : "bg-gray-300 text-gray-600 cursor-not-allowed"
+                            }`}
                         onClick={handlePrevious}
                         disabled={currentVideoIndex === 0}
                     >
                         Previous
                     </button>
                     <button
-                        className={`px-4 py-2 rounded-md ${
-                            currentVideoIndex < videoTutorials.length - 1 ? "bg-primary text-white" : "bg-gray-300 text-gray-600 cursor-not-allowed"
-                        }`}
+                        className={`px-4 py-2 rounded-md ${currentVideoIndex < videoTutorials.length - 1 ? "bg-primary text-white" : "bg-gray-300 text-gray-600 cursor-not-allowed"
+                            }`}
                         onClick={handleNext}
                         disabled={currentVideoIndex === videoTutorials.length - 1}
                     >
