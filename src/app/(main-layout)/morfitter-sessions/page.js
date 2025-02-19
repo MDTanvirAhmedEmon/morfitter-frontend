@@ -8,17 +8,25 @@ import { useGetAllSessionQuery } from '@/redux/features/session/sessionApi';
 import { useState } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
 import SessionSkeleton from '@/components/Skeleton/SessionSkeleton';
+import EnrollModal from '@/components/Sessions/EnrollModal';
 
 const MorfitterSessions = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [sessionType, setSessionType] = useState(null);
     const [specialism, setSpecialism] = useState(null);
     const [searchTerm, setSearchTerm] = useState(null);
-    console.log({
-        page: currentPage,
-        sessionType: sessionType,
-        otherFocus: specialism,
-    });
+    const [selectedSession, setSelectedSession] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
     const { data, isLoading } = useGetAllSessionQuery({
         page: currentPage,
         sessionType: sessionType || undefined,
@@ -80,11 +88,14 @@ const MorfitterSessions = () => {
                         <div className=' mt-10 grid grid-cols-2 lg:grid-cols-4 gap-10'>
                             {
                                 data?.data?.data?.map((item) => (
-                                    <Link key={item?._id} href={`/morfitter-sessions/single-session-of-pt/${item?._id}`}>
-                                        <div className=' cursor-pointer'>
-                                            <Image className=' w-full h-[450px] object-cover' src={`http://10.0.60.166:5000${item?.promo_image}`} alt='session' width={500} height={500} />
-                                        </div>
-                                    </Link>
+                                    // <Link key={item?._id} href={`/morfitter-sessions/single-session-of-pt/${item?._id}`}>
+                                    <div key={item?._id} className=' cursor-pointer'>
+                                        <Image onClick={() => {
+                                            setSelectedSession(item);
+                                            showModal();
+                                        }} className=' w-full h-[450px] object-cover' src={`http://10.0.60.166:5000${item?.promo_image}`} alt='session' width={500} height={500} />
+                                    </div>
+                                    // </Link>
                                 ))
                             }
 
@@ -102,7 +113,7 @@ const MorfitterSessions = () => {
                     }
                 </div>
             </div>
-
+            <EnrollModal isModalOpen={isModalOpen} handleCancel={handleCancel} handleOk={handleOk} session={selectedSession}></EnrollModal>
         </div>
     );
 };
