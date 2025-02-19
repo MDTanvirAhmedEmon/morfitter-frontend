@@ -85,8 +85,8 @@ const Profile = () => {
     const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${user?.profileImageUrl}`;
 
     return (
-        <section className=" py-10 md:py-20"> 
-        <p></p>
+        <section className=" py-10 md:py-20">
+            <p></p>
             <div className="container mx-auto flex">
                 <div className="details-info flex flex-col lg:flex-row gap-5 p-5 min-h-[660px] w-full rounded-lg shadow-lg">
                     {/* Profile Section */}
@@ -273,7 +273,9 @@ const Profile = () => {
                         <div className=" flex flex-col md:flex-row gap-5 w-full mt-4">
                             <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
                                 <div className=" text-gray-500 text-lg md:text-xl font-bold">My training</div>
-                                <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg "><FaPlus className=" text-greenColor" /></button>
+                                <Link href={`/profile/my-enrolled-session`}>
+                                    <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg "><FaPlus className=" text-greenColor" /></button>
+                                </Link>
                             </div>
 
                             <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">

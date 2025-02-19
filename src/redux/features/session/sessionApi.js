@@ -76,6 +76,13 @@ const sessionApi = baseApi.injectEndpoints({
       invalidatesTags: ['session']
     }),
 
+    myEnrolledSession: builder.query({
+      query: () => ({
+        url: `/access/my-enrolled-session`,
+        method: "GET",
+      }),
+    }),
+
   }),
 });
 
@@ -89,6 +96,7 @@ export const {
   useDeletWholeSessionMutation,
   useEnrollSessionMutation,
   useCheckEnrollmentMutation,
+  useMyEnrolledSessionQuery,
 } = sessionApi;
 
 export default sessionApi;

@@ -1,11 +1,13 @@
 import { useCheckEnrollmentMutation, useEnrollSessionMutation } from "@/redux/features/session/sessionApi";
 import { message, Modal } from "antd";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const EnrollModal = ({ isModalOpen, handleCancel, handleOk, session }) => {
     console.log(session);
     const { role } = useSelector((state) => state.auth);
+    const router = useRouter();
 
     const [checkEnrollment, { data }] = useCheckEnrollmentMutation();
     console.log(data);
@@ -29,6 +31,7 @@ const EnrollModal = ({ isModalOpen, handleCancel, handleOk, session }) => {
             .then(() => {
                 message.success("Enrolled Successfully");
                 handleOk()
+                router.push(`/profile/my-enrolled-session`)
             })
             .catch((error) => {
                 message.error(error?.data?.message);
