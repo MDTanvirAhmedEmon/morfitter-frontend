@@ -29,7 +29,7 @@ const baseQueryWithRefreshToken = async (args, api, extraOptions) => {
 
   if (result?.error?.status === 401) {
     const res = await fetch(
-      `http://10.0.60.166:5000/api/v1/auth/refresh-token`,
+      `http://localhost:5000/api/v1/auth/refresh-token`,
       {
         method: "POST",
         credentials: "include",

@@ -9,9 +9,9 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import { authSlice } from "./features/auth/authSlice";
 import { registerSlice } from "./features/auth/registerSlice";
 import { baseApi } from "./api/baseApi";
+import { authSlice } from "./features/auth/authSlice";
 
 // Handle storage creation for SSR
 const createNoopStorage = () => {
