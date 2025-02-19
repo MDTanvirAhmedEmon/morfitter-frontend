@@ -10,21 +10,6 @@ import {
 } from "recharts";
 
 const AreaCharts = () => {
-  // Static data for the chart
-  const revenueData = [
-    { month: "Jan", netRevenue: 1200 },
-    { month: "Feb", netRevenue: 1500 },
-    { month: "Mar", netRevenue: 800 },
-    { month: "Apr", netRevenue: 1600 },
-    { month: "May", netRevenue: 2000 },
-    { month: "Jun", netRevenue: 1700 },
-    { month: "Jul", netRevenue: 2200 },
-    { month: "Aug", netRevenue: 1900 },
-    { month: "Sept", netRevenue: 2100 },
-    { month: "Oct", netRevenue: 2300 },
-    { month: "Nov", netRevenue: 2500 },
-    { month: "Dec", netRevenue: 2800 },
-  ];
 
   const { data: getAllUsersData, isLoading } = useGetAllUsersQuery();
 
@@ -37,7 +22,7 @@ const AreaCharts = () => {
       return (
         <div className="custom-tooltip bg-white py-3 px-2 rounded border">
           <p className="label">{`Month: ${month}`}</p>
-          <p className="label">{`User: $${user}`}</p>
+          <p className="label">{`Users: ${user}`}</p>
         </div>
       );
     }
