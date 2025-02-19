@@ -10,6 +10,7 @@ import { useGetAllCommentsQuery, useLikeAndDislikeMutation } from '@/redux/featu
 import { useSelector } from 'react-redux';
 
 const SingleBlog = ({ content }) => {
+  console.log(content);
   const { role } = useSelector((state) => state.auth)
 
   const { data } = useGetAllCommentsQuery(content?._id);

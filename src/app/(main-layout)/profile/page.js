@@ -79,11 +79,14 @@ const Profile = () => {
                 message.error(error?.data?.message)
             })
     }
+    // const profilePicture = user?.profilePicture ? `http://10.0.60.166:5000${user?.profileImageUrl}` : follower1;
+    // const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : profilePicture;
 
     const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${user?.profileImageUrl}`;
 
     return (
-        <section className=" py-10 md:py-20">
+        <section className=" py-10 md:py-20"> 
+        <p></p>
             <div className="container mx-auto flex">
                 <div className="details-info flex flex-col lg:flex-row gap-5 p-5 min-h-[660px] w-full rounded-lg shadow-lg">
                     {/* Profile Section */}

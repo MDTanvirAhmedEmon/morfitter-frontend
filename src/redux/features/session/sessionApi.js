@@ -56,6 +56,26 @@ const sessionApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['session']
     }),
+
+    // Enroll ======================
+    enrollSession: builder.mutation({
+      query: (data) => ({
+        url: `/access/enroll`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ['session']
+    }),
+
+    checkEnrollment: builder.mutation({
+      query: (data) => ({
+        url: `/access/check-existence`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ['session']
+    }),
+
   }),
 });
 
@@ -67,6 +87,8 @@ export const {
   useAddSessionMutation,
   useDeletSessionVideoMutation,
   useDeletWholeSessionMutation,
+  useEnrollSessionMutation,
+  useCheckEnrollmentMutation,
 } = sessionApi;
 
 export default sessionApi;
