@@ -20,7 +20,7 @@ import { useGetMySpecialismQuery } from "@/redux/features/specialism/specialismA
 import { useGetMyQualificationQuery } from "@/redux/features/qualification/qualificationApi";
 import { useGetReviewQuery } from "@/redux/features/invitation/invitationApi";
 import { useGetMySessionQuery } from "@/redux/features/session/sessionApi";
-
+import defaultProfilePic from '../../../assets/profile/profile_image.webp'
 const TrainerProfile = () => {
   const [profilePic, setProfilePic] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -310,7 +310,10 @@ const TrainerProfile = () => {
                           {/* Profile Image */}
                           <Image
                             className="w-16 h-16 object-cover rounded-full border-2 border-gray-300"
-                            src={`http://10.0.60.166:5000${item?.traineeData?.profileImageUrl}`}
+                            src={item?.traineeData?.profileImageUrl
+                              ? `http://10.0.60.166:5000${item?.traineeData?.profileImageUrl}`
+                              : defaultProfilePic
+                            }
                             height={200}
                             width={200}
                             alt="profile"

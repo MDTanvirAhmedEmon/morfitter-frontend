@@ -26,7 +26,7 @@ const InvitationModal = ({ isInvitationModalOpen, handleInvitationCancel, handle
                 }
                 {
                     data?.map(item => (
-                        <SingleModalItem key={item?._id} item={item}></SingleModalItem>
+                        <SingleModalItem key={item?._id} item={item} handleInvitationOk={handleInvitationOk}></SingleModalItem>
                     ))
                 }
             </div>

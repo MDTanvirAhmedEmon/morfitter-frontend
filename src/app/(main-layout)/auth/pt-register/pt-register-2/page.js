@@ -10,11 +10,11 @@ import logo1 from "../../../../../assets/logo1.svg";
 import logo2 from "../../../../../assets/logo2.svg";
 import logo3 from "../../../../../assets/logo3.svg";
 import logo4 from "../../../../../assets/logo4.svg";
-// import logo5 from "../../../../../assets/logo5.svg";
+import logo5 from "../../../../../assets/logo5.svg";
 import logo6 from "../../../../../assets/logo6.svg";
 import logo7 from "../../../../../assets/logo7.svg";
 import logo8 from "../../../../../assets/logo8.svg";
-// import logo9 from "../../../../../assets/logo9.svg";
+import logo9 from "../../../../../assets/logo9.svg";
 import { useCreateTrainerMutation } from "@/redux/features/auth/authApi";
 import { setRole, setToken, setUser } from "@/redux/features/auth/authSlice";
 import { clearRegisterInfo } from "@/redux/features/auth/registerSlice";
@@ -35,17 +35,16 @@ const PTRegister2 = () => {
   //   const [radius, setRadius] = useState(null);
   const [consultation, setConsultation] = useState(null);
 
-
   const interests = [
-    { name: "Boxercise", icon: logo1 },
-    { name: "Calisthenics", icon: logo2 },
-    { name: "Circuit Training", icon: logo3 },
-    { name: "Core Strength", icon: logo4 },
-    { name: "Fat Burners", icon: logo4 },
-    { name: "Flexibility & Mobility", icon: logo6 },
-    { name: "Zumba", icon: logo7 },
-    { name: "HIIT", icon: logo8 },
-    { name: "Pilates", icon: logo8 }
+    { name: "boxercise", icon: logo1 },
+    { name: "calisthenics", icon: logo2 },
+    { name: "circuit training", icon: logo3 },
+    { name: "core strength", icon: logo4 },
+    { name: "fat burners", icon: logo5 },
+    { name: "flexibility & mobility", icon: logo6 },
+    { name: "zumba", icon: logo7 },
+    { name: "hitt", icon: logo8 },
+    { name: "pilates", icon: logo9 }
   ];
 
   const handleLogoClick = (index) => {
@@ -77,7 +76,7 @@ const PTRegister2 = () => {
           radius: values?.radius,
           about: values?.aboutMe,
           consultationType: consultation,
-
+          specialism: selectedLogos,
         },
       },
       specialism: selectedLogos,
@@ -325,15 +324,15 @@ const PTRegister2 = () => {
                   {interests.map((logo, index) => (
                     <div
                       key={index}
-                      onClick={() => handleLogoClick(logo.name)}
-                      className={`flex items-center justify-center w-[100px] lg:w-[110px] h-[100px] lg:h-[110px] px-7 text-center cursor-pointer ${selectedLogos.includes(logo.name)
+                      onClick={() => handleLogoClick(logo?.name)}
+                      className={`flex items-center justify-center w-[100px] lg:w-[110px] h-[100px] lg:h-[110px] px-7 text-center cursor-pointer ${selectedLogos?.includes(logo?.name)
                         ? "border-4 border-greenColor shadow shadow-greenColor"
                         : "border-2 border-solid border-transparent"
                         } rounded transition-all duration-300`}
                       style={{
                         borderWidth: "2px",
                         borderStyle: "solid",
-                        borderImage: selectedLogos.includes(logo.name)
+                        borderImage: selectedLogos?.includes(logo?.name)
                           ? "none"
                           : "linear-gradient(180deg, rgba(11, 165, 147, 0.05) 0%, #08776a 51%, rgba(11, 165, 147, 0.05) 100%) 1", // Gradient for unselected logos
                       }}

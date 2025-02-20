@@ -14,23 +14,37 @@ import Link from 'next/link';
 
 
 const FindTrainers = () => {
-    const [selectedLogos, setSelectedLogos] = useState([]);
+    const [selectedLogos, setSelectedLogos] = useState(null);
     const [interest, setInterest] = useState(null);
     const [formats, setFormats] = useState(null);
     const [online, setOnline] = useState(null);
     const [faceToFace, setFaceToFace] = useState(null);
     const [type, setType] = useState(null);
 
-    const logos = [logo1, logo2, logo3, logo4, logo5, logo6, logo7, logo8, logo9, logo2];
+
+    const interests = [
+        { name: "boxercise", icon: logo1 },
+        { name: "calisthenics", icon: logo2 },
+        { name: "circuit training", icon: logo3 },
+        { name: "core strength", icon: logo4 },
+        { name: "fat burners", icon: logo5 },
+        { name: "flexibility & mobility", icon: logo6 },
+        { name: "zumba", icon: logo7 },
+        { name: "hitt", icon: logo8 },
+        { name: "pilates", icon: logo9 }
+    ];
+    const queryParams = new URLSearchParams();
+    if (selectedLogos) queryParams.append("specialism", selectedLogos);
+    if (online) queryParams.append("onlineSession", online);
+    if (faceToFace) queryParams.append("faceToFace", faceToFace);
+    if (type) queryParams.append("consultationType", type);
+
     const handleLogoClick = (index) => {
-        setSelectedLogos((prevSelected) => {
-            if (prevSelected.includes(index)) {
-                return prevSelected.filter((item) => item !== index);
-            } else {
-                return [...prevSelected, index];
-            }
-        });
+        setSelectedLogos((prevSelected) => 
+            prevSelected === index ? null : index
+        );
     };
+    
     return (
         <div className=' py-16'>
             <div className=' md:container mx-3 md:mx-auto'>
@@ -50,24 +64,30 @@ const FindTrainers = () => {
                     <div>
                         <p>Select specialism (Optional)</p>
                         <div className="flex gap-1 overflow-x-auto mt-4">
-                            <div className="flex gap-1 flex-nowrap xl:flex-wrap">
-                                {logos.map((logo, index) => (
+                            <div className="flex gap-3 flex-nowrap xl:flex-wrap">
+                                {interests.map((logo, index) => (
                                     <div
                                         key={index}
-                                        onClick={() => handleLogoClick(index)}
-                                        className={`flex items-center justify-center w-[120px] lg:w-[145px] h-[120px] lg:h-[145px] px-7 text-center cursor-pointer ${selectedLogos.includes(index)
+                                        onClick={() => handleLogoClick(logo?.name)}
+                                        className={`flex items-center justify-center w-[120px] lg:w-[145px] h-[120px] lg:h-[145px] px-7 text-center cursor-pointer ${selectedLogos?.includes(logo?.name)
                                             ? 'border-4 border-greenColor shadow shadow-greenColor'
                                             : 'border-2 border-solid border-transparent'
                                             } rounded transition-all duration-300`}
                                         style={{
                                             borderWidth: '2px',
                                             borderStyle: 'solid',
-                                            borderImage: selectedLogos.includes(index)
+                                            borderImage: selectedLogos?.includes(logo?.name)
                                                 ? 'none'
                                                 : 'linear-gradient(180deg, rgba(11, 165, 147, 0.05) 0%, #08776a 51%, rgba(11, 165, 147, 0.05) 100%) 1', // Gradient for unselected logos
                                         }}
                                     >
-                                        <Image src={logo} alt={`Logo ${index + 1}`} height={170} width={170} className="w-full h-full object-contain" />
+                                        <Image
+                                            src={logo?.icon}
+                                            alt={`Logo ${logo?.name}`}
+                                            height={170}
+                                            width={170}
+                                            className="w-full h-full object-contain"
+                                        />
                                     </div>
                                 ))}
                             </div>
@@ -78,37 +98,37 @@ const FindTrainers = () => {
                     <div className='  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mt-14 mb-8'>
                         <p className=' xl:w-[15%]'>Session formats available:</p>
                         <div className=" grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-4 items-center">
-                            <button onClick={() => setFormats('Bespoke')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${formats === 'Bespoke' ? 'bg-greenColor' : 'bg-secondary'}`}>Bespoke</button>
-                            <button onClick={() => setFormats('Group')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${formats === 'Group' ? 'bg-greenColor' : 'bg-secondary'}`}>Group</button>
-                            <button onClick={() => setFormats('Both')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${formats === 'Both' ? 'bg-greenColor' : 'bg-secondary'}`}>Both</button>
+                            <button onClick={() => setFormats('bespoke')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${formats === 'bespoke' ? 'bg-greenColor' : 'bg-secondary'}`}>Bespoke</button>
+                            <button onClick={() => setFormats('group')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${formats === 'group' ? 'bg-greenColor' : 'bg-secondary'}`}>Group</button>
+                            <button onClick={() => setFormats('both')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${formats === 'both' ? 'bg-greenColor' : 'bg-secondary'}`}>Both</button>
                         </div>
                     </div>
 
                     <div className='  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-8'>
                         <p className=' xl:w-[15%]'>I condact online sessions:</p>
                         <div className=" grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-4 items-center">
-                            <button onClick={() => setOnline('Yes')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${online === 'Yes' ? 'bg-greenColor' : 'bg-secondary'}`}>Yes</button>
-                            <button onClick={() => setOnline('No')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${online === 'No' ? 'bg-greenColor' : 'bg-secondary'}`}>No</button>
+                            <button onClick={() => setOnline('yes')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${online === 'yes' ? 'bg-greenColor' : 'bg-secondary'}`}>Yes</button>
+                            <button onClick={() => setOnline('no')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${online === 'no' ? 'bg-greenColor' : 'bg-secondary'}`}>No</button>
                         </div>
                     </div>
 
                     <div className='  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-8'>
                         <p className=' xl:w-[15%]'>I conduct face to face sessions:</p>
                         <div className=" grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-4 items-center">
-                            <button onClick={() => setFaceToFace('Yes')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${faceToFace === 'Yes' ? 'bg-greenColor' : 'bg-secondary'}`}>Yes</button>
-                            <button onClick={() => setFaceToFace('No')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${faceToFace === 'No' ? 'bg-greenColor' : 'bg-secondary'}`}>No</button>
+                            <button onClick={() => setFaceToFace('yes')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${faceToFace === 'yes' ? 'bg-greenColor' : 'bg-secondary'}`}>Yes</button>
+                            <button onClick={() => setFaceToFace('no')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${faceToFace === 'no' ? 'bg-greenColor' : 'bg-secondary'}`}>No</button>
                         </div>
                     </div>
 
                     <div className='  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-8'>
                         <p className=' xl:w-[15%]'>Consultations I offer are:</p>
                         <div className=" grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-4 items-center">
-                            <button onClick={() => setType('Free')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${type === 'Free' ? 'bg-greenColor' : 'bg-secondary'}`}>Free</button>
-                            <button onClick={() => setType('Paid')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${type === 'Paid' ? 'bg-greenColor' : 'bg-secondary'}`}>Paid</button>
+                            <button onClick={() => setType('free')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${type === 'free' ? 'bg-greenColor' : 'bg-secondary'}`}>Free</button>
+                            <button onClick={() => setType('paid')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${type === 'paid' ? 'bg-greenColor' : 'bg-secondary'}`}>Paid</button>
                         </div>
                     </div>
                     <div className=' flex justify-center mt-5'>
-                        <Link href={`/find-trainers/consultation-result`}><button className={` text-white rounded-full px-10 py-[8px] bg-secondary hover:bg-greenColor`}>Enter</button></Link>
+                        <Link href={`/find-trainers/consultation-result?${queryParams.toString()}`}><button className={` text-white rounded-full px-10 py-[8px] bg-secondary hover:bg-greenColor`}>Enter</button></Link>
                     </div>
 
                 </div>
