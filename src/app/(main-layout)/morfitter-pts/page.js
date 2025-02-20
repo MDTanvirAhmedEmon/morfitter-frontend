@@ -6,6 +6,9 @@ import logo3 from '../../../assets/logo3.svg';
 import logo4 from '../../../assets/logo4.svg';
 import logo5 from '../../../assets/logo5.svg';
 import logo6 from '../../../assets/logo6.svg';
+import logo7 from '../../../assets/logo7.svg';
+import logo8 from '../../../assets/logo8.svg';
+import logo9 from '../../../assets/logo9.svg';
 import { Input, Pagination } from "antd";
 import { CiSearch } from "react-icons/ci";
 import Link from "next/link";
@@ -20,7 +23,17 @@ const MorfitterPts = () => {
         setCurrentPage(page);
     };
 
-    const logos = [logo1, logo2, logo3, logo4, logo5, logo6];
+    const interests = [
+        { name: "boxercise", icon: logo1 },
+        { name: "calisthenics", icon: logo2 },
+        { name: "circuit training", icon: logo3 },
+        { name: "core strength", icon: logo4 },
+        { name: "fat burners", icon: logo5 },
+        { name: "flexibility & mobility", icon: logo6 },
+        { name: "zumba", icon: logo7 },
+        { name: "hitt", icon: logo8 },
+        { name: "pilates", icon: logo9 }
+    ];
 
     const { data } = useGetAllTrainerQuery({ page: currentPage, searchTerm: searchTerm });
     console.log(data);
@@ -42,7 +55,7 @@ const MorfitterPts = () => {
                             <Image
                                 className=" w-32 rounded-full"
                                 src={item?.profileImageUrl
-                                    ? `http://10.0.60.166:5000${item.profileImageUrl}`
+                                    ? `http://10.0.60.166:5000${item?.profileImageUrl}`
                                     : profileImage}
                                 width={300}
                                 height={300}
@@ -69,25 +82,32 @@ const MorfitterPts = () => {
                                 <div className="flex gap-2 overflow-x-auto mt-4">
                                     {/* Use grid for better responsiveness */}
                                     <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-9 gap-4 w-full">
-                                        {logos.map((logo, index) => (
-                                            <div
-                                                key={index}
-                                                className="flex items-center justify-center w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] lg:w-[100px] lg:h-[100px] p-2 text-center  rounded border-2 border-solid border-transparent transition-all duration-300"
-                                                style={{
-                                                    borderImage:
-                                                        'linear-gradient(180deg, rgba(11, 165, 147, 0.05) 0%, #08776a 51%, rgba(11, 165, 147, 0.05) 100%) 1',
-                                                }}
-                                            >
-                                                <Image
-                                                    src={logo}
-                                                    alt={`Logo ${index + 1}`}
-                                                    height={170}
-                                                    width={170}
-                                                    className="w-full h-full object-contain"
-                                                />
-                                            </div>
-                                        ))}
+                                        {item?.allSpecialism?.map((spec, index) => {
+                                            const matchedInterest = interests?.find(interest =>
+                                                interest?.name?.toLowerCase() === spec?.specialism?.toLowerCase()
+                                            );
+
+                                            return matchedInterest ? (
+                                                <div
+                                                    key={index}
+                                                    className="flex items-center justify-center w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] lg:w-[100px] lg:h-[100px] p-2 text-center rounded border-2 border-solid border-transparent transition-all duration-300"
+                                                    style={{
+                                                        borderImage:
+                                                            'linear-gradient(180deg, rgba(11, 165, 147, 0.05) 0%, #08776a 51%, rgba(11, 165, 147, 0.05) 100%) 1',
+                                                    }}
+                                                >
+                                                    <Image
+                                                        src={matchedInterest?.icon}
+                                                        alt={spec?.specialism}
+                                                        height={170}
+                                                        width={170}
+                                                        className="w-full h-full object-contain"
+                                                    />
+                                                </div>
+                                            ) : null;
+                                        })}
                                     </div>
+
                                 </div>
                             </div>
                             <Link href={`/morfitter-pts/${item?._id}`}>

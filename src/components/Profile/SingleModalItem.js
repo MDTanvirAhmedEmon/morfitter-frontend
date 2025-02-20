@@ -2,7 +2,7 @@ import { useGiveReviewMutation, useRejectInvitationMutation } from "@/redux/feat
 import { Rate, Form, Input, Button, message } from "antd";
 import Image from "next/image";
 
-const SingleModalItem = ({ item }) => {
+const SingleModalItem = ({ item, handleInvitationOk }) => {
 
     const [form] = Form.useForm();
     const [giveReview, { isLoading }] = useGiveReviewMutation();
@@ -17,6 +17,7 @@ const SingleModalItem = ({ item }) => {
         giveReview(reviewData).unwrap()
             .then(() => {
                 message.success(`Review submitted successfully`)
+                handleInvitationOk()
             })
             .catch((error) => {
                 message.error(error?.data?.message)
@@ -27,6 +28,7 @@ const SingleModalItem = ({ item }) => {
         rejectInvitation(item?._id).unwrap()
             .then(() => {
                 message.success(`Rejected Successfully`)
+                handleInvitationOk()
             })
             .catch((error) => {
                 message.error(error?.data?.message)

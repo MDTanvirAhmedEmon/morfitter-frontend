@@ -1,11 +1,11 @@
 import { Avatar, message, Spin } from "antd";
-import { UserOutlined } from "@ant-design/icons";
 import { IoCloseSharp } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { useCreateInvitationMutation, useGetTraineeForSentInvitationQuery } from "@/redux/features/invitation/invitationApi";
 import Image from "next/image";
 import { useState } from "react";
 import InvitationSkeleton from "../Skeleton/InvitationSkeleton";
+import defaultProfilePic from '../../assets/profile/profile_image.webp'
 
 function TestimonialsModal({ setTestimonialsVisible }) {
 
@@ -63,7 +63,13 @@ function TestimonialsModal({ setTestimonialsVisible }) {
             data?.data?.data?.map((user) => (
               <div key={user?._id} className="mt-5 flex justify-between items-center gap-2">
                 <div className="flex items-center justify-center gap-2">
-                  <Image src={`http://10.0.60.166:5000${user?.profileImageUrl}`} width={100} className="w-10 rounded-full" height={100} alt="profile-image" />
+                  <Image
+
+                    src={user?.profileImageUrl
+                      ? `http://10.0.60.166:5000${user?.profileImageUrl}`
+                      : defaultProfilePic
+                    }
+                    width={100} className="w-10 h-10 object-cover rounded-full" height={100} alt="profile-image" />
                   <p className="text-lg">{user?.firstName} {user?.lastName}</p>
                 </div>
                 <div>
