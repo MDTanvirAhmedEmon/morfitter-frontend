@@ -75,6 +75,13 @@ const authApi = baseApi.injectEndpoints({
       providesTags: ['user']
     }),
 
+    getSingleUser: builder.query({
+      query: (id) => ({
+        url: `/users/view-user/${id}`,
+        method: "GET",
+      }),
+    }),
+
   }),
 });
 
@@ -88,6 +95,7 @@ export const {
   useResetPasswordMutation,
   useChangePasswordMutation,
   useGetMeQuery,
+  useGetSingleUserQuery,
 } = authApi;
 
 export default authApi;
