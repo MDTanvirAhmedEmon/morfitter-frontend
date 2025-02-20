@@ -1,6 +1,7 @@
 import { useGiveReviewMutation, useRejectInvitationMutation } from "@/redux/features/invitation/invitationApi";
 import { Rate, Form, Input, Button, message } from "antd";
 import Image from "next/image";
+import defaultProfilePic from '../../assets/profile/profile_image.webp'
 
 const SingleModalItem = ({ item, handleInvitationOk }) => {
 
@@ -39,7 +40,13 @@ const SingleModalItem = ({ item, handleInvitationOk }) => {
         <div className=" shadow-md px-5 py-5 mt-5 w-full">
             <div className=" flex justify-between items-center">
                 <div className=" flex items-center gap-2">
-                    <Image className=" w-14 rounded-2xl " src={`http://10.0.60.166:5000${item?.trainerData?.profileImageUrl}`} height={200} width={200} alt="profile" />
+                    <Image 
+                    className=" w-14 rounded-2xl object-cover " 
+                    src={item?.traineeData?.profileImageUrl 
+                        ? `http://10.0.60.166:5000${item?.trainerData?.profileImageUrl}`
+                        : defaultProfilePic
+                      }
+                     height={200} width={200} alt="profile" />
                     <h3 className=" capitalize text-lg">{item?.trainerData?.firstName} {item?.trainerData?.lastName}</h3>
                 </div>
                 <div>

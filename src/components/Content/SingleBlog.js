@@ -9,10 +9,13 @@ import BlogComments from './BlogComments';
 import { useGetAllCommentsQuery, useLikeAndDislikeMutation } from '@/redux/features/content/contentApi';
 import { useSelector } from 'react-redux';
 import profileImage from '../../assets/profile/profile_image.webp'
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const SingleBlog = ({ content }) => {
-  console.log(content);
+
   const { role } = useSelector((state) => state.auth)
+  const router = useRouter();
 
   const { data } = useGetAllCommentsQuery(content?._id);
 
@@ -41,6 +44,12 @@ const SingleBlog = ({ content }) => {
   };
   const date = new Date(content?.createdAt);
 
+  const handlePushViewUser = () => {
+    if (content?.userDetails?.role === 'trainer') {
+      router.push(`/view-trainer-profile/${content?.userInfo?._id}`)
+    }
+  }
+
   const formattedDate = date.toLocaleDateString("en-US", {
     month: "short",
     day: "2-digit",
@@ -68,7 +77,7 @@ const SingleBlog = ({ content }) => {
                 className="w-28 h-24 rounded-lg object-cover " />
 
               <div className="">
-                <div className="text-lg md:text-xl font-semibold">{content?.userInfo?.firstName} {content?.userInfo?.lastName}</div>
+                <span onClick={handlePushViewUser} className="text-lg md:text-xl capitalize font-semibold cursor-pointer">{content?.userInfo?.firstName} {content?.userInfo?.lastName}</span>
                 <div className="flex items-center mt-1 gap-1">
                   <Image src={Calisthenics} width={0} height={0} alt="Calisthenics" />
                   <span className=" text-xl md:text-2xl text-secondary">{content?.specialism}</span>
@@ -86,12 +95,31 @@ const SingleBlog = ({ content }) => {
           {/* Post Content */}
           <div className=" mt-3 md:mt-6 grid grid-cols-1 lg:grid-cols-2 gap-5">
             <div className="rounded-2xl w-full overflow-hidden">
-              <Image
-                src={`http://10.0.60.166:5000${content?.imageUrl}`}
-                alt="Post Content"
-                width={500}
-                height={500}
-                className="w-full h-[450px] object-cover" />
+
+              {
+                content?.imageUrl &&
+                <Image
+
+                  src={
+                    `http://10.0.60.166:5000${content?.imageUrl}`
+                  }
+
+                  alt="Post Content"
+                  width={500}
+                  height={500}
+                  className="w-full h-[450px] object-cover" />
+              }
+
+              {
+                content?.videoUrl &&
+                <video
+                  controls
+                  className="w-full rounded-lg "
+                >
+                  <source src={`http://10.0.60.166:5000${content?.videoUrl}`} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              }
             </div>
 
             {/* Description Part */}
