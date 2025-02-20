@@ -8,6 +8,7 @@ import ShareModal from './ShareModal';
 import BlogComments from './BlogComments';
 import { useGetAllCommentsQuery, useLikeAndDislikeMutation } from '@/redux/features/content/contentApi';
 import { useSelector } from 'react-redux';
+import profileImage from '../../assets/profile/profile_image.webp'
 
 const SingleBlog = ({ content }) => {
   console.log(content);
@@ -57,7 +58,15 @@ const SingleBlog = ({ content }) => {
         <div className=" w-full">
           <div className=' flex flex-col md:flex-row justify-between gap-4 md:gap-8'>
             <div className=" flex items-center gap-8">
-              <Image src={`http://10.0.60.166:5000${content?.userInfo?.profileImageUrl}`} width={200} height={200} alt="Follower" className="w-28 h-24 rounded-lg " />
+              <Image
+                src={content?.userInfo?.profileImageUrl
+                  ? `http://10.0.60.166:5000${content?.userInfo?.profileImageUrl}`
+                  : profileImage}
+                width={200}
+                height={200}
+                alt="user"
+                className="w-28 h-24 rounded-lg object-cover " />
+
               <div className="">
                 <div className="text-lg md:text-xl font-semibold">{content?.userInfo?.firstName} {content?.userInfo?.lastName}</div>
                 <div className="flex items-center mt-1 gap-1">

@@ -1,9 +1,6 @@
 "use client"
 import { Input, Pagination, Select } from 'antd';
-import session1 from '../../../assets/session/download.jpg'
-import session2 from '../../../assets/session/rated.jpg'
 import Image from 'next/image';
-import Link from 'next/link';
 import { useGetAllSessionQuery } from '@/redux/features/session/sessionApi';
 import { useState } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
