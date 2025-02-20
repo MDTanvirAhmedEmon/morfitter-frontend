@@ -1,37 +1,37 @@
 "use client";
 import { Avatar, Rate } from "antd";
 import Image from "next/image";
-import { useState } from "react";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import circle from "../../../../assets/circle.svg";
+import circle from "../../../assets/circle.svg";
 import Link from "next/link";
 import { useGetMySpecialismQuery } from "@/redux/features/specialism/specialismApi";
 import { useGetMyQualificationQuery } from "@/redux/features/qualification/qualificationApi";
 import { useGetReviewQuery } from "@/redux/features/invitation/invitationApi";
 import { useGetMySessionQuery } from "@/redux/features/session/sessionApi";
-import defaultProfilePic from '../../../../assets/profile/profile_image.webp'
-import { useGetSingleTrainerQuery } from "@/redux/features/trainer/trainerApi";
-import { useParams } from "next/navigation";
+import defaultProfilePic from '../../../assets/profile/profile_image.webp'
+import defaultProfileImage from '../../../assets/profile/profile_image.webp'
+import {  useSearchParams } from "next/navigation";
+import { useGetSingleUserQuery } from "@/redux/features/auth/authApi";
 
 const ViewTrainerProfile = () => {
-  const [profilePic, setProfilePic] = useState(null);
-  const {id} = useParams();
+  const searchParams = useSearchParams();
 
-  const { data:trainer } = useGetSingleTrainerQuery(id);
+  const trainerId = searchParams.get("trainer");
+  const userId = searchParams.get("userId");
 
-  const { data: specialism } = useGetMySpecialismQuery(id);
-  const { data: qualification } = useGetMyQualificationQuery(id);
+  const { data:trainer } = useGetSingleUserQuery(userId);
+
+  const { data: specialism } = useGetMySpecialismQuery(trainerId);
+  const { data: qualification } = useGetMyQualificationQuery(trainerId);
 
   // review 
-  const { data: reviews } = useGetReviewQuery(id);
+  const { data: reviews } = useGetReviewQuery(trainerId);
   console.log(reviews);
   // me session
-  const { data: session } = useGetMySessionQuery(id);
+  const { data: session } = useGetMySessionQuery(trainerId);
 
-
-
-  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${trainer?.data?.profileImageUrl}`;
+  const profilePicUrl = trainer?.data?.userInfo?.profileImageUrl ? `http://10.0.60.166:5000${trainer?.data?.userInfo?.profileImageUrl}` : defaultProfileImage;
 
   return (
     <section className=" py-10 md:py-20">
@@ -54,18 +54,6 @@ const ViewTrainerProfile = () => {
               />
 
             </div>
-            {
-              profilePic &&
-              <div className=" flex justify-center mb-2">
-                <button
-                  onClick={uploadImage}
-                  className="add-btn text-white bg-secondary px-4 md:px-6 py-1 md:py-2 rounded-full"
-                >
-                  Upload Image
-                </button>
-              </div>
-            }
-
 
             <p className="desc text-center text-greenColor underline text-xl my-2 px-10 capitalize">
               Invite friends, family or acquaintances
@@ -74,8 +62,8 @@ const ViewTrainerProfile = () => {
             <div className="social-media w-full p-2 rounded-lg shadow-xl">
 
               {
-                trainer?.data?.TikTok && (
-                  <Link href={trainer?.data?.TikTok} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
+                trainer?.data?.userInfo?.TikTok && (
+                  <Link href={trainer?.data?.userInfo?.TikTok} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
                     <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
                       <FaTiktok size={20} />
                     </div>
@@ -85,8 +73,8 @@ const ViewTrainerProfile = () => {
               }
 
               {
-                trainer?.data?.Instagram && (
-                  <Link href={trainer?.data?.Instagram} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
+                trainer?.data?.userInfo?.Instagram && (
+                  <Link href={trainer?.data?.userInfo?.Instagram} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
                     <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
                       <FaInstagram size={20} />
                     </div>
@@ -96,8 +84,8 @@ const ViewTrainerProfile = () => {
               }
 
               {
-                trainer?.data?.Facebook && (
-                  <Link href={trainer?.data?.Facebook} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
+                trainer?.data?.userInfo?.Facebook && (
+                  <Link href={trainer?.data?.userInfo?.Facebook} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
                     <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
                       <FaFacebookF size={20} />
                     </div>
@@ -107,8 +95,8 @@ const ViewTrainerProfile = () => {
               }
 
               {
-                trainer?.data?.Youtube && (
-                  <Link href={trainer?.data?.Youtube} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
+                trainer?.data?.userInfo?.Youtube && (
+                  <Link href={trainer?.data?.userInfo?.Youtube} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
                     <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
                       <FaYoutube size={20} />
                     </div>
@@ -118,8 +106,8 @@ const ViewTrainerProfile = () => {
               }
 
               {
-                trainer?.data?.Twitter && (
-                  <Link href={trainer?.data?.Twitter} target="_blank" className="item flex items-center gap-2 p-2">
+                trainer?.data?.userInfo?.Twitter && (
+                  <Link href={trainer?.data?.userInfo?.Twitter} target="_blank" className="item flex items-center gap-2 p-2">
                     <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
                       <FaXTwitter size={20} />
                     </div>
@@ -137,7 +125,7 @@ const ViewTrainerProfile = () => {
             <div className="user-details flex flex-col lg:flex-row lg:justify-between gap-5">
               <div className="user">
                 <div className="user-name text-4xl font-semibold capitalize">
-                  {trainer?.data?.firstName} {trainer?.data?.lastName}
+                  {trainer?.data?.userInfo?.firstName} {trainer?.data?.userInfo?.lastName}
                 </div>
                 <div className="mt-2 text-2xl">New York</div>
               </div>
@@ -264,7 +252,7 @@ const ViewTrainerProfile = () => {
             <div className=" grid grid-cols-4 gap-3">
               {
                 session?.data?.data?.map((item) => (
-                  <Link key={item?._id} href={`/morfitter-pts/${id}`}>
+                  <Link key={item?._id} href={`/morfitter-pts/${trainerId}`}>
                     <div >
                       <Image alt="session" src={`http://10.0.60.166:5000${item?.promo_image}`} height={500} width={500} className=" w-[300px] h-[380px] object-cover" />
                     </div>
