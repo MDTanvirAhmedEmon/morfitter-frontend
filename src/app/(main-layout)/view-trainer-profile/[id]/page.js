@@ -1,84 +1,36 @@
 "use client";
-import { Avatar, message, Rate, Upload } from "antd";
+import { Avatar, Rate } from "antd";
 import Image from "next/image";
 import { useState } from "react";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { PiCamera } from "react-icons/pi";
-import circle from "../../../assets/circle.svg";
-import { FaPlus } from "react-icons/fa";
+import circle from "../../../../assets/circle.svg";
 import Link from "next/link";
-import QualificationModal from "@/components/Modals/QualificationModal";
-import SpecialismsModal from "@/components/Modals/SpecialismsModal";
-import TestimonialsModal from "@/components/Modals/TestimonialsModal";
-import { useGetMeQuery } from "@/redux/features/auth/authApi";
-import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "@/redux/features/auth/authSlice";
-import AddSocialModal from "@/components/TrainerProfile/AddSocialModal";
-import { useUpdateTrainerProfileMutation } from "@/redux/features/profile/profileApi";
 import { useGetMySpecialismQuery } from "@/redux/features/specialism/specialismApi";
 import { useGetMyQualificationQuery } from "@/redux/features/qualification/qualificationApi";
 import { useGetReviewQuery } from "@/redux/features/invitation/invitationApi";
 import { useGetMySessionQuery } from "@/redux/features/session/sessionApi";
-import defaultProfilePic from '../../../assets/profile/profile_image.webp'
+import defaultProfilePic from '../../../../assets/profile/profile_image.webp'
+import { useGetSingleTrainerQuery } from "@/redux/features/trainer/trainerApi";
+import { useParams } from "next/navigation";
 
-const TrainerProfile = () => {
+const ViewTrainerProfile = () => {
   const [profilePic, setProfilePic] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { user } = useSelector((state) => state.auth)
-  const [qualificationVisible, setQualificationVisible] = useState(false);
-  const [specialismsVisible, setSpecialismsVisible] = useState(false);
-  const [testimonialsVisible, setTestimonialsVisible] = useState(false);
-  const dispatch = useDispatch();
-  const { data } = useGetMeQuery();
-  dispatch(setUser(data?.data?.[0]?.trainerDetails?.[0]));
+  const {id} = useParams();
 
-  const [updateTrainerProfile, { isLoading }] = useUpdateTrainerProfileMutation();
-  const { data: specialism } = useGetMySpecialismQuery(user?._id);
-  const { data: qualification } = useGetMyQualificationQuery(user?._id);
+  const { data:trainer } = useGetSingleTrainerQuery(id);
+
+  const { data: specialism } = useGetMySpecialismQuery(id);
+  const { data: qualification } = useGetMyQualificationQuery(id);
+
   // review 
-  const { data: reviews } = useGetReviewQuery(user?._id);
-  console.log('review', reviews);
-
+  const { data: reviews } = useGetReviewQuery(id);
   // me session
-  const { data: session } = useGetMySessionQuery(user?._id);
-  console.log('session', session);
-
-  const uploadImage = () => {
-    const formData = new FormData();
-
-    formData.append('data', JSON.stringify({}));
-    if (profilePic) {
-      formData.append('file', profilePic);
-    }
-
-    updateTrainerProfile({ data: formData, id: user?._id }).unwrap()
-      .then(() => {
-        message.success(`Updated Successfully`)
-        setProfilePic(null)
-      })
-      .catch((error) => {
-        message.error(error?.data?.message)
-      })
-  }
+  const { data: session } = useGetMySessionQuery(id);
 
 
-  const handleProfilePicUpload = (e) => {
-    setProfilePic(e.file.originFileObj);
-  };
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${user?.profileImageUrl}`;
-
-
+  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${trainer?.data?.profileImageUrl}`;
 
   return (
     <section className=" py-10 md:py-20">
@@ -99,13 +51,7 @@ const TrainerProfile = () => {
                 src={profilePicUrl || "/default-avatar.png"}
                 className="border-4 m-[7px]"
               />
-              <Upload
-                showUploadList={false}
-                onChange={handleProfilePicUpload}
-                className="absolute bottom-4 right-3 flex justify-center items-center h-[28px] bg-teal-500 px-1 py-1 rounded-full cursor-pointer "
-              >
-                <PiCamera className=" w-5 h-5 text-white" />
-              </Upload>
+
             </div>
             {
               profilePic &&
@@ -127,8 +73,8 @@ const TrainerProfile = () => {
             <div className="social-media w-full p-2 rounded-lg shadow-xl">
 
               {
-                user?.TikTok && (
-                  <Link href={user?.TikTok} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
+                trainer?.data?.TikTok && (
+                  <Link href={trainer?.data?.TikTok} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
                     <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
                       <FaTiktok size={20} />
                     </div>
@@ -138,8 +84,8 @@ const TrainerProfile = () => {
               }
 
               {
-                user?.Instagram && (
-                  <Link href={user?.Instagram} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
+                trainer?.data?.Instagram && (
+                  <Link href={trainer?.data?.Instagram} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
                     <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
                       <FaInstagram size={20} />
                     </div>
@@ -149,8 +95,8 @@ const TrainerProfile = () => {
               }
 
               {
-                user?.Facebook && (
-                  <Link href={user?.Facebook} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
+                trainer?.data?.Facebook && (
+                  <Link href={trainer?.data?.Facebook} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
                     <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
                       <FaFacebookF size={20} />
                     </div>
@@ -160,8 +106,8 @@ const TrainerProfile = () => {
               }
 
               {
-                user?.Youtube && (
-                  <Link href={user?.Youtube} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
+                trainer?.data?.Youtube && (
+                  <Link href={trainer?.data?.Youtube} target="_blank" className="item flex items-center gap-2 p-2 border-b border-gray-300">
                     <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
                       <FaYoutube size={20} />
                     </div>
@@ -171,8 +117,8 @@ const TrainerProfile = () => {
               }
 
               {
-                user?.Twitter && (
-                  <Link href={user?.Twitter} target="_blank" className="item flex items-center gap-2 p-2">
+                trainer?.data?.Twitter && (
+                  <Link href={trainer?.data?.Twitter} target="_blank" className="item flex items-center gap-2 p-2">
                     <div className="icon w-8 h-8 rounded-full bg-primary text-white text-center flex items-center justify-center">
                       <FaXTwitter size={20} />
                     </div>
@@ -181,18 +127,8 @@ const TrainerProfile = () => {
                 )
               }
 
-
-              <div className=" flex justify-center mt-4 mb-6">
-                <button
-                  onClick={showModal}
-                  className="add-btn text-white bg-secondary px-4 md:px-6 py-1 md:py-2 rounded-full"
-                >
-                  Add Socail Link
-                </button>
-              </div>
-
             </div>
-            <AddSocialModal isModalOpen={isModalOpen} handleCancel={handleCancel} handleOk={handleOk} ></AddSocialModal>
+
           </div>
 
           {/* Right Information Section */}
@@ -200,7 +136,7 @@ const TrainerProfile = () => {
             <div className="user-details flex flex-col lg:flex-row lg:justify-between gap-5">
               <div className="user">
                 <div className="user-name text-4xl font-semibold capitalize">
-                  {user?.firstName} {user?.lastName}
+                  {trainer?.data?.firstName} {trainer?.data?.lastName}
                 </div>
                 <div className="mt-2 text-2xl">New York</div>
               </div>
@@ -224,14 +160,6 @@ const TrainerProfile = () => {
                   </div>
                 </div>
 
-                <div className="item text-center px-14 py-1 md:py-4 border bg-[#e2697121] border-black rounded-xl shadow-lg">
-                  <div className="total text-xl md:text-3xl font-bold text-black">
-                    £46
-                  </div>
-                  <div className="title text-lg text-gray-900 capitalize">
-                    Revenue
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -248,12 +176,6 @@ const TrainerProfile = () => {
                       </span>
                     </p>
                   </div>
-                  <button
-                    onClick={() => setQualificationVisible(true)}
-                    className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full"
-                  >
-                    Add
-                  </button>
                 </div>
                 <div className=" px-6 pb-4">
                   {
@@ -270,12 +192,7 @@ const TrainerProfile = () => {
                       Specialisms
                     </h2>
                   </div>
-                  <button
-                    onClick={() => setSpecialismsVisible(true)}
-                    className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full "
-                  >
-                    Add
-                  </button>
+
                 </div>
                 <div className=" px-6 pb-4">
                   {
@@ -292,12 +209,7 @@ const TrainerProfile = () => {
                       Customer Testimonials
                     </h2>
                   </div>
-                  <button
-                    onClick={() => setTestimonialsVisible(true)}
-                    className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full "
-                  >
-                    Add
-                  </button>
+
                 </div>
                 <div className=" mt-5">
                   <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-4">
@@ -338,71 +250,20 @@ const TrainerProfile = () => {
                         </div>
                       ))}
                     </div>
-
-
                   </div>
                 </div>
               </div>
 
 
-              <div className="qualification flex  justify-between items-center  border py-4 px-6 rounded-md mb-4">
-                <div className="flex  gap-3 md:pr-8">
-                  <h2 className="title text-lg md:text-2xl font-medium text-[#535353]">
-                    My Content
-                  </h2>
-                </div>
-                <Link href={`/trainer-profile/my-content`}>
-                  <button
-                    className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full "
-                  >
-                    View
-                  </button>
-                </Link>
-              </div>
             </div>
 
-            {/* Blogging Section */}
-            <div className=" flex flex-col md:flex-row gap-5 w-full mt-5">
-              <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
-                <div className=" text-gray-500 text-lg md:text-xl font-bold">
-                  Blog
-                </div>
-                <Link href={`/trainer-profile/creating-content`}>
-                  <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg ">
-                    <FaPlus className=" text-greenColor" />
-                  </button>
-                </Link>
-              </div>
-
-              <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
-                <div className=" text-gray-500 text-lg md:text-xl font-bold">
-                  Video
-                </div>
-                <Link href={`/trainer-profile/creating-content`}>
-                  <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg ">
-                    <FaPlus className=" text-greenColor" />
-                  </button>
-                </Link>
-              </div>
-
-              <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
-                <div className=" text-gray-500 text-lg md:text-xl font-bold">
-                  Images
-                </div>
-                <Link href={`/trainer-profile/creating-content`}>
-                  <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg ">
-                    <FaPlus className=" text-greenColor" />
-                  </button>
-                </Link>
-              </div>
-            </div>
             <div className="text-white bg-secondary px-4 py-2 text-center text-lg rounded w-full my-4 ">
               Current Training Session
             </div>
             <div className=" grid grid-cols-4 gap-3">
               {
                 session?.data?.data?.map((item) => (
-                  <Link key={item?._id} href={`/trainer-profile/my-session/${item?._id}`}>
+                  <Link key={item?._id} href={`/morfitter-pts/${id}`}>
                     <div >
                       <Image alt="session" src={`http://10.0.60.166:5000${item?.promo_image}`} height={500} width={500} className=" w-[300px] h-[380px] object-cover" />
                     </div>
@@ -412,31 +273,16 @@ const TrainerProfile = () => {
             </div>
 
             <div className=" flex flex-col justify-center items-center mt-6">
-              <Link href={`/trainer-profile/creating-session`}>
-                <button className=" text-white bg-secondary px-4 py-2 w-[300px] text-center text-lg rounded-full ">
-                  Create a training Session
-                </button>
-              </Link>
-              <p className="text-center text-secondary font-semibold underline text-lg mt-3">
-                Reporting Dashboard
-              </p>
+
             </div>
           </div>
         </div>
       </div>
-      {qualificationVisible && (
-        <QualificationModal setQualificationVisible={setQualificationVisible} />
-      )}
-      {specialismsVisible && (
-        <SpecialismsModal setSpecialismsVisible={setSpecialismsVisible} />
-      )}
-      {testimonialsVisible && (
-        <TestimonialsModal setTestimonialsVisible={setTestimonialsVisible} />
-      )}
+
     </section>
   );
 };
 
-export default TrainerProfile;
+export default ViewTrainerProfile;
 
 // (NOTES: Person needs to be abel tot add multiple refer to https://www.yourpersonaltraininguk.co.uk/trainers/barbara-veloso)

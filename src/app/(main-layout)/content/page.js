@@ -3,7 +3,7 @@ import Image from "next/image";
 import gymbg from "../../../assets/content/gym1.png";
 import gymbg2 from "../../../assets/content/gym2.png";
 import fitnessTeam from "../../../assets/content/fitnessTeam.png";
-import { ConfigProvider, Pagination, Select } from "antd";
+import { Pagination, Select } from "antd";
 import { useGetAllContentsQuery } from "@/redux/features/content/contentApi";
 import SingleBlog from "@/components/Content/SingleBlog";
 import { useState } from "react";

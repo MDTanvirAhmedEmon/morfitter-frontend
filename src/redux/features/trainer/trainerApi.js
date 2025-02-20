@@ -19,6 +19,12 @@ const trainerApi = baseApi.injectEndpoints({
                 params,
             }),
         }),
+        getSingleTrainer: builder.query({
+            query: (id) => ({
+                url: `/trainer/${id}`,
+                method: "GET",
+            }),
+        }),
         getSingleTrainerSession: builder.query({
             query: ({ id, ...params }) => ({
                 url: `/session/${id}`,
@@ -31,6 +37,6 @@ const trainerApi = baseApi.injectEndpoints({
     }),
 });
 
-export const { useGetAllTrainerQuery, useGetSingleTrainerSessionQuery } = trainerApi;
+export const { useGetAllTrainerQuery, useGetSingleTrainerSessionQuery, useGetSingleTrainerQuery } = trainerApi;
 
 export default trainerApi;

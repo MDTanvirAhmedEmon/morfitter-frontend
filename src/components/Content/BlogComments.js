@@ -1,6 +1,6 @@
 import { Input } from "antd";
 import { BsSend } from "react-icons/bs";
-import profileImage from '../../assets/content/follwing2.png'
+import defaultProfilePic from '../../assets/profile/profile_image.webp'
 import Image from "next/image";
 import { useState } from "react";
 import { useDoCommentMutation, useGetAllCommentsQuery } from "@/redux/features/content/contentApi";
@@ -38,7 +38,9 @@ const BlogComments = ({ id }) => {
                             <div className="flex items-center gap-4">
                                 <Image
                                     className="rounded-full border border-gray-300"
-                                    src={`http://10.0.60.166:5000${item?.user_image}`}
+                                    src={item?.user_image
+                                        ? `http://10.0.60.166:5000${item?.user_image}`
+                                        : defaultProfilePic}
                                     height={50}
                                     width={50}
                                     alt="profile"
