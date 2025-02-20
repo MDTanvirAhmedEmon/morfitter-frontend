@@ -22,6 +22,7 @@ import AddProfileSocialModal from "@/components/Profile/AddProfileSocialModal";
 import { useGetWhoIAmFollowingQuery } from "@/redux/features/follower/followerApi";
 import { useGetMyInvitationQuery } from "@/redux/features/invitation/invitationApi";
 import InvitationModal from "@/components/Profile/InvitationModal";
+import defaultProfilePic from '../../../assets/profile/profile_image.webp'
 
 const Profile = () => {
     const [profilePic, setProfilePic] = useState(null);
@@ -258,7 +259,13 @@ const Profile = () => {
                                 {
                                     following?.data?.map((item) => (
                                         <div key={item?._id} className=" flex items-center gap-3 shadow-lg px-3 py-2 rounded-lg">
-                                            <Image className=" w-14 rounded-2xl " src={`http://10.0.60.166:5000${item?.followingDetails?.profileImageUrl}`} height={200} width={200} alt="profile" />
+                                            <Image className=" w-14 rounded-2xl "
+
+                                             src={item?.followingDetails?.profileImageUrl 
+                                                ? `http://10.0.60.166:5000${item?.followingDetails?.profileImageUrl}`
+                                                : defaultProfilePic
+                                              }
+                                              height={200} width={200} alt="profile" />
                                             <div>
                                                 <h2 className=" text-xl font-semibold capitalize">{item?.followingDetails?.firstName} {item?.followingDetails?.lastName}</h2>
                                                 <p>{item?.followingDetails?.role}</p>

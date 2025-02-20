@@ -25,6 +25,7 @@ const ViewTrainerProfile = () => {
 
   // review 
   const { data: reviews } = useGetReviewQuery(id);
+  console.log(reviews);
   // me session
   const { data: session } = useGetMySessionQuery(id);
 

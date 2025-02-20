@@ -48,6 +48,9 @@ const SingleBlog = ({ content }) => {
     if (content?.userDetails?.role === 'trainer') {
       router.push(`/view-trainer-profile/${content?.userInfo?._id}`)
     }
+    if (content?.userDetails?.role === 'trainee') {
+      router.push(`/view-user-profile/?trainee=${content?.userInfo?._id}&userId=${content?.userId}`)
+    }
   }
 
   const formattedDate = date.toLocaleDateString("en-US", {
