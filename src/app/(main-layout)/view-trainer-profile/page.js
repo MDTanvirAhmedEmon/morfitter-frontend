@@ -1,5 +1,5 @@
 "use client";
-import { Avatar, Rate } from "antd";
+import { Avatar, message, Rate } from "antd";
 import Image from "next/image";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -11,19 +11,23 @@ import { useGetReviewQuery } from "@/redux/features/invitation/invitationApi";
 import { useGetMySessionQuery } from "@/redux/features/session/sessionApi";
 import defaultProfilePic from '../../../assets/profile/profile_image.webp'
 import defaultProfileImage from '../../../assets/profile/profile_image.webp'
-import {  useSearchParams } from "next/navigation";
-import { useGetSingleUserQuery } from "@/redux/features/auth/authApi";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useDofolowUnfollowMutation, useGetSingleUserQuery } from "@/redux/features/follower/followerApi";
+import { useSelector } from "react-redux";
 
 const ViewTrainerProfile = () => {
   const searchParams = useSearchParams();
-
+  const [isFollowing, setIsFollowing] = useState(false);
   const trainerId = searchParams.get("trainer");
   const userId = searchParams.get("userId");
-
-  const { data:trainer } = useGetSingleUserQuery(userId);
+  const { role } = useSelector((state) => state.auth)
+  const { data: trainer } = useGetSingleUserQuery(userId);
+  console.log('trainer info', trainer);
 
   const { data: specialism } = useGetMySpecialismQuery(trainerId);
   const { data: qualification } = useGetMyQualificationQuery(trainerId);
+  const [dofolowUnfollow] = useDofolowUnfollowMutation();
 
   // review 
   const { data: reviews } = useGetReviewQuery(trainerId);
@@ -32,6 +36,19 @@ const ViewTrainerProfile = () => {
   const { data: session } = useGetMySessionQuery(trainerId);
 
   const profilePicUrl = trainer?.data?.userInfo?.profileImageUrl ? `http://10.0.60.166:5000${trainer?.data?.userInfo?.profileImageUrl}` : defaultProfileImage;
+
+  const handleFollowUnfollow = () => {
+    dofolowUnfollow({
+      follower_id: role?.id, // logged in User _id 
+      following_id: trainer?.data?.userInfo?.user
+    }
+    ).unwrap()
+      .then((res) => {
+      })
+      .catch((err) => {
+        message.error(err?.data?.message)
+      })
+  }
 
   return (
     <section className=" py-10 md:py-20">
@@ -129,6 +146,18 @@ const ViewTrainerProfile = () => {
                 </div>
                 <div className="mt-2 text-2xl">New York</div>
               </div>
+              <button
+                onClick={handleFollowUnfollow}
+                className={`w-[120px] py-1.5 text-lg font-medium rounded-md transition-all duration-300 border 
+               ${trainer?.data?.isFollowing
+                    ? "bg-primary text-white border-primary hover:bg-primary"
+                    : "bg-transparent text-gray-700 border-gray-400 hover:bg-gray-100"
+                  }
+                  `}
+              >
+                {trainer?.data?.isFollowing ? "Follow" : "Following"}
+              </button>
+
 
               <div className="following-follower grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div className="item text-center px-14 py-1 md:py-4 rounded-xl bg-[#0ba5931a] border border-greenColor shadow-lg">
