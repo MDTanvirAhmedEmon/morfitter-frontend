@@ -9,27 +9,40 @@ const privacyPolicyApi = baseApi.injectEndpoints({
       }),
       providesTags: ['admin']
     }),
-    getPrivacy: builder.query({
-      query: () => ({
-        url: "/policy-term/policy",
-        method: "GET",
-      }),
-    }),
 
-    updatePrivacy: builder.mutation({
-      query: (data, _id) => {
-        const { policyId, ...privacy } = data;
-        return {
-          url: `/policy-term/policy/${policyId}`,
-          method: "PATCH",
-          body: privacy,
-        };
-      },
+    getPrivacyPolicy: builder.query({
+      query: () => ({
+        url: `/policy-term/policy`,
+        method: 'GET',
+      }),
+      providesTags: ['policy']
+    }),
+    addPrivacyPolicy: builder.mutation({
+      query: (data) => ({
+        url: `/policy-term/create-policy`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['policy']
+    }),
+    updatePrivacyPolicy: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/policy-term/policy/${id}`,
+        method: 'PATCH',
+        body: data,
+      }),
+      invalidatesTags: ['policy']
     }),
   }),
 });
 
-export const { useGetPrivacyQuery, useUpdatePrivacyMutation, useGetAdminInfoQuery } =
+export const { 
+  useGetAdminInfoQuery,
+  useGetPrivacyPolicyQuery,
+  useAddPrivacyPolicyMutation,
+  useUpdatePrivacyPolicyMutation
+
+} =
   privacyPolicyApi;
 
 export default privacyPolicyApi;
