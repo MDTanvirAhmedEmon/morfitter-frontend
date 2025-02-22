@@ -14,7 +14,7 @@ import { FaPlus } from "react-icons/fa";
 // import follower5 from '../../../assets/profile/following5.png'
 // import follower6 from '../../../assets/profile/following6.png'
 import Link from "next/link";
-import { useUpdateTraineeProfileMutation } from "@/redux/features/profile/profileApi";
+import { useGetMembershipQuery, useUpdateTraineeProfileMutation } from "@/redux/features/profile/profileApi";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetMeQuery } from "@/redux/features/auth/authApi";
 import { setUser } from "@/redux/features/auth/authSlice";
@@ -23,6 +23,7 @@ import { useGetWhoIAmFollowingQuery } from "@/redux/features/follower/followerAp
 import { useGetMyInvitationQuery } from "@/redux/features/invitation/invitationApi";
 import InvitationModal from "@/components/Profile/InvitationModal";
 import defaultProfilePic from '../../../assets/profile/profile_image.webp'
+import { useGetMyFollowersQuery } from "@/redux/features/trainer/trainerApi";
 
 const Profile = () => {
     const [profilePic, setProfilePic] = useState(null);
@@ -33,10 +34,12 @@ const Profile = () => {
     const dispatch = useDispatch();
     const [updateTraineeProfile, { isLoading }] = useUpdateTraineeProfileMutation();
     const { data: following } = useGetWhoIAmFollowingQuery(role?.id);
-    console.log(following?.data);
     const handleProfilePicUpload = (e) => {
         setProfilePic(e.file.originFileObj);
     };
+    const { data: membership } = useGetMembershipQuery();
+    console.log(membership);
+    const { data: myFollower } = useGetMyFollowersQuery(role?.id);
 
     const showInvitationModal = () => {
         setIsInvitationModalOpen(true);
@@ -200,12 +203,12 @@ const Profile = () => {
                             <div className="following-follower grid grid-cols-1 md:grid-cols-3 gap-5">
 
                                 <div className="item text-center px-14 py-1 md:py-4 rounded-xl bg-[#0ba5931a] border border-greenColor shadow-lg">
-                                    <div className="total text-xl md:text-3xl font-bold text-greenColor">36</div>
+                                    <div className="total text-xl md:text-3xl font-bold text-greenColor">{myFollower?.data?.totalFollower}</div>
                                     <div className="title text-lg  text-greenColor capitalize">Followers</div>
                                 </div>
 
                                 <div className="item text-center px-14 py-1 md:py-4 bg-[#e2697121] border border-primary rounded-xl shadow-lg">
-                                    <div className="total text-xl md:text-3xl font-bold text-primary">8</div>
+                                    <div className="total text-xl md:text-3xl font-bold text-primary">{membership?.data?.[0]?.totalMembership}</div>
                                     <div className="title text-lg text-primary capitalize">membership</div>
                                 </div>
 
@@ -259,13 +262,13 @@ const Profile = () => {
                                 {
                                     following?.data?.map((item) => (
                                         <div key={item?._id} className=" flex items-center gap-3 shadow-lg px-3 py-2 rounded-lg">
-                                            <Image className=" w-14 rounded-2xl "
+                                            <Image className=" w-14 rounded-2xl object-cover "
 
-                                             src={item?.followingDetails?.profileImageUrl 
-                                                ? `http://10.0.60.166:5000${item?.followingDetails?.profileImageUrl}`
-                                                : defaultProfilePic
-                                              }
-                                              height={200} width={200} alt="profile" />
+                                                src={item?.followingDetails?.profileImageUrl
+                                                    ? `http://10.0.60.166:5000${item?.followingDetails?.profileImageUrl}`
+                                                    : defaultProfilePic
+                                                }
+                                                height={200} width={200} alt="profile" />
                                             <div>
                                                 <h2 className=" text-xl font-semibold capitalize">{item?.followingDetails?.firstName} {item?.followingDetails?.lastName}</h2>
                                                 <p>{item?.followingDetails?.role}</p>

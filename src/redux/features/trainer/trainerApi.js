@@ -33,10 +33,22 @@ const trainerApi = baseApi.injectEndpoints({
             }),
             providesTags: ['session']
         }),
+        getMembers: builder.query({
+            query: (id) => ({
+                url: `/access/total-members/${id}`,
+                method: "GET",
+            }),
+        }),
+        getMyFollowers: builder.query({
+            query: (id) => ({
+                url: `/follower/${id}`,
+                method: "GET",
+            }),
+        }),
 
     }),
 });
 
-export const { useGetAllTrainerQuery, useGetSingleTrainerSessionQuery, useGetSingleTrainerQuery } = trainerApi;
+export const { useGetAllTrainerQuery, useGetSingleTrainerSessionQuery, useGetSingleTrainerQuery, useGetMembersQuery, useGetMyFollowersQuery } = trainerApi;
 
 export default trainerApi;
