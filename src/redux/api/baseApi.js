@@ -71,6 +71,8 @@ export const baseApi = createApi({
     "all-personal-trainer",
     "user-management",
     "follow",
+    'admin',
+    'policy',
   ],
   endpoints: () => ({}),
 });

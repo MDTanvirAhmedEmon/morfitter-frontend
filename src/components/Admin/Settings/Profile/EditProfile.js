@@ -1,37 +1,67 @@
+import { useUpdateAdminMutation } from "@/redux/features/admin/settings/profileApi";
+import { message, Spin } from "antd";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 function EditProfile() {
   const { user } = useSelector((state) => state.auth);
-  const [profilePic] = useState(null);
+
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    contact: '',
+    // contact: '',
   });
 
   // Set default form data when user is available
   useEffect(() => {
     if (user) {
       setFormData({
-        name: `${user.firstName} ${user.lastName}`,
-        email: user.email || '',
-        contact: user.contactNo || '',
+        firstName: user?.firstName || '',
+        lastName: user?.lastName || '',
+        email: user?.email || '',
+        // contact: user?.contactNo || '',
       });
     }
   }, [user]);
 
+  const [updateAdmin, { isLoading }] = useUpdateAdminMutation();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [name]: value,
-    });
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    const formData = new FormData();
+    const data = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      // contactNo: formData.contact,
+    }
+    formData.append('data', JSON.stringify(data))
+
+    updateAdmin(formData)
+      .unwrap()
+      .then(() => {
+        message.success("Update Successfully");
+
+        // Optionally reset form data if needed
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          // contact: '',
+        });
+      })
+      .catch((error) => {
+        message.error(error?.data?.message || "Error updating profile");
+      });
   };
 
   return (
@@ -42,15 +72,29 @@ function EditProfile() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-md font-medium text-[#575757] mb-2">
-            User Name
+            First Name
           </label>
           <input
             type="text"
-            name="name"
-            value={formData.name}
+            name="firstName"
+            value={formData.firstName}
             onChange={handleChange}
             className="w-full px-2 py-3 border-2 border-[#F2F2F2] rounded-md focus:outline-none text-md"
-            placeholder="Enter Name"
+            placeholder="Enter first name"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-md font-medium text-[#575757] mb-2">
+            Last Name
+          </label>
+          <input
+            type="text"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            className="w-full px-2 py-3 border-2 border-[#F2F2F2] rounded-md focus:outline-none text-md"
+            placeholder="Enter last name"
             required
           />
         </div>
@@ -68,7 +112,7 @@ function EditProfile() {
             required
           />
         </div>
-        <div>
+        {/* <div>
           <label className="block text-md font-medium text-[#575757] mb-2">
             Contact No
           </label>
@@ -81,25 +125,15 @@ function EditProfile() {
             placeholder="Enter Contact Number"
             required
           />
-        </div>
+        </div> */}
 
         <div className="text-center my-5">
-          {profilePic ? (
-            <button
-              type="button"
-              onClick={() => alert("Uploading image...")}
-              className="bg-primary text-white p-2 px-10 py-2 rounded-md shadow-lg"
-            >
-              Upload Picture
-            </button>
-          ) : (
-            <button
-              type="submit"
-              className="font-bold bg-primary text-white p-2 px-10 py-2 rounded-md shadow-lg"
-            >
-              Save Changes
-            </button>
-          )}
+          <button
+            type="submit"
+            className="font-bold bg-primary text-white p-2 px-10 py-2 rounded-md shadow-lg"
+          >
+            {isLoading ? <Spin /> : "Save & Changes"}
+          </button>
         </div>
       </form>
     </div>

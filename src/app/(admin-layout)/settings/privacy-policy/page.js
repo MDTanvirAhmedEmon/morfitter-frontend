@@ -1,99 +1,107 @@
 "use client";
-import {
-  useGetPrivacyQuery,
-  useUpdatePrivacyMutation,
-} from "@/redux/features/admin/settings/privacyPolicyApi";
 import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { message } from "antd";
+import { Button, Form, message, Spin } from "antd";
+import { useAddPrivacyPolicyMutation, useGetPrivacyPolicyQuery, useUpdatePrivacyPolicyMutation } from "@/redux/features/admin/settings/privacyPolicyApi";
 
 const PrivacyPolicy = () => {
+  const [form] = Form.useForm();
   const [content, setContent] = useState("");
 
-  const { data: privacyData, isLoading, error } = useGetPrivacyQuery();
-
-  const [updatePrivacy] = useUpdatePrivacyMutation();
-
-  const policyItem = privacyData?.data?.[0];
-  const policyId = policyItem?._id;
-  const policyText = policyItem?.policy;
+  const { data } = useGetPrivacyPolicyQuery();
+  console.log(data?.data?.[0]?.policy);
 
   useEffect(() => {
-    if (policyText) {
-      setContent(policyText);
-    }
-  }, [policyText]);
+    setContent(data?.data?.[0]?.policy)
+  }, [data])
 
-  const handleSave = async () => {
-    if (!policyId) {
-      message.error("Policy ID is missing. Unable to update.");
-      return;
-    }
+  const [addPrivacyPolicy, { isLoading }] = useAddPrivacyPolicyMutation()
 
+  const [updatePrivacyPolicy, { isLoading: updataIsloading }] = useUpdatePrivacyPolicyMutation();
+
+  const handleSubmit = () => {
     const finalData = {
-      privacy: { content },
-    };
+      policy: content
+    }
 
-    message.loading({ content: "Saving...", key: "saving" });
-
-    try {
-      await updatePrivacy({ data: finalData, policyId }).unwrap();
-
-      message.success({
-        content: "Privacy policy updated successfully!",
-        key: "saving",
-        duration: 2,
-      });
-    } catch (error) {
-      console.error("Error updating content:", error);
-
-      message.error({
-        content: "Failed to save privacy policy. Please try again.",
-        key: "saving",
-      });
+    if (!data?.data?.[0]?.policy) {
+      addPrivacyPolicy(finalData).unwrap()
+        .then(() => {
+          message.success('Privacy Policy Added Successfully');
+        })
+        .catch((error) => {
+          message.error(error?.data?.message || 'Something went wrong!');
+        });
+    } else {
+      updatePrivacyPolicy({ id: data?.data?.[0]?._id, data: finalData }).unwrap()
+        .then(() => {
+          message.success('Privacy Policy Updated Successfully');
+        })
+        .catch((error) => {
+          message.error(error?.data?.message || 'Something went wrong!');
+        });
     }
   };
 
-  return (
-    <div className="px-5 pb-5">
-      <h3 className="font-semibold pb-5 text-xl text-[#242424]">
-        Privacy Policy
-      </h3>
 
-      <div className="bg-white rounded shadow p-5 h-full">
-        <ReactQuill
-          theme="snow"
-          value={content}
-          onChange={setContent}
-          className="bg-white h-full"
-          modules={{
-            toolbar: [
-              ["bold", "italic", "underline"],
-              [{ list: "ordered" }, { list: "bullet" }],
-              ["link", "image"],
-            ],
-          }}
-        />
-      </div>
-      <div className="text-center py-6">
-        <button
-          type="submit"
-          onClick={handleSave}
-          disabled={isLoading}
-          className="w-full px-10 py-3 mt-20 rounded bg-primary text-white font-semibold shadow-lg flex items-center justify-center hover:bg-primary"
+  const quillModules = {
+    toolbar: [
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ size: [] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link", "image", "video"],
+      ["clean"],
+    ],
+  };
+
+  const quillFormats = [
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "link",
+    "image",
+    "video",
+  ];
+
+  return (
+    <div className="bg-white p-4 rounded-md  h-auto mx-auto  ">
+      <p className='text-3xl font-bold my-5'>Privacy Policy</p>
+      <Form form={form} layout="vertical" onFinish={handleSubmit}>
+        <Form.Item
+          rules={[
+            { required: true, message: "Please input your blog content!" },
+          ]}
         >
-          Save changes
-        </button>
-        {/* Error handling */}
-        {error && (
-          <div className="mt-6 text-center text-red-600">
-            <p>
-              Error fetching data: {error.message || "Something went wrong."}
-            </p>
-          </div>
-        )}
-      </div>
+          <ReactQuill
+            value={content}
+            onChange={setContent}
+            placeholder="Write your privacy policy here..."
+            modules={quillModules}
+            formats={quillFormats}
+            className="h-96 mb-10"
+          />
+        </Form.Item>
+
+        <Form.Item>
+          <button
+            disabled={isLoading}
+            type="primary"
+            htmlType="submit"
+            className="mt-4 bg-primary text-white px-6 py-1 rounded-md"
+          >
+            Submit {isLoading && <Spin></Spin>}
+          </button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };

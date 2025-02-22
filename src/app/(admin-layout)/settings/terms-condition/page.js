@@ -1,40 +1,104 @@
 "use client";
-import { useState } from "react";
+import { useAddTermsMutation, useGetTermsQuery, useUpdateTermsMutation } from "@/redux/features/admin/settings/TermsApi";
+import { Form, message, Spin } from "antd";
+import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-const TermsAndCondition = () => {
-  const [value, setValue] = useState(
-    "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum."
-  );
-  return (
-    <div className="px-5 pb-5">
-      <h3 className="font-semibold pb-5 text-xl text-[#242424]">
-        Terms and Conditions
-      </h3>
 
-      <div className=" bg-white rounded shadow p-5 h-full">
-        <ReactQuill
-          theme="snow"
-          value={value}
-          onChange={setValue}
-          className="bg-white h-full"
-          modules={{
-            toolbar: [
-              ["bold", "italic", "underline"],
-              [{ list: "ordered" }, { list: "bullet" }],
-              ["link", "image"],
-            ],
-          }}
-        />
-      </div>
-      <div className="text-center py-6">
-        <button
-          onClick={() => console.log(value)}
-          className="bg-primary text-white font-semibold px-6 py-2 rounded transition duration-200"
+const TermsAndCondition = () => {
+  const [form] = Form.useForm();
+  const [content, setContent] = useState("");
+  const { data } = useGetTermsQuery();
+
+  useEffect(() => {
+    setContent(data?.data?.[0]?.term)
+  }, [data])
+
+  const [addTerms, { isLoading }] = useAddTermsMutation()
+
+  const [updateTerms, { isLoading: updataIsloading }] = useUpdateTermsMutation();
+
+  const handleSubmit = () => {
+    const finalData = {
+      term: content
+    }
+
+    if (!data?.data?.[0]?.term) {
+      addTerms(finalData).unwrap()
+        .then(() => {
+          message.success('Terms And Condition Added Successfully');
+        })
+        .catch((error) => {
+          message.error(error?.data?.message || 'Something went wrong!');
+        });
+    } else {
+      updateTerms({ id: data?.data?.[0]?._id, data: finalData }).unwrap()
+        .then(() => {
+          message.success('Terms And Condition Updated Successfully');
+        })
+        .catch((error) => {
+          message.error(error?.data?.message || 'Something went wrong!');
+        });
+    }
+  };
+
+
+  const quillModules = {
+    toolbar: [
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ size: [] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link", "image", "video"],
+      ["clean"],
+    ],
+  };
+
+  const quillFormats = [
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "link",
+    "image",
+    "video",
+  ];
+  return (
+    <div className="bg-white p-4 rounded-md  h-auto mx-auto  ">
+      <p className='text-3xl font-bold my-5'>Terms & Condition</p>
+      <Form form={form} layout="vertical" onFinish={handleSubmit}>
+        <Form.Item
+          rules={[
+            { required: true, message: "Please input your blog content!" },
+          ]}
         >
-          Save changes
-        </button>
-      </div>
+          <ReactQuill
+            value={content}
+            onChange={setContent}
+            placeholder="Write your privacy policy here..."
+            modules={quillModules}
+            formats={quillFormats}
+            className="h-96 mb-10"
+          />
+        </Form.Item>
+
+        <Form.Item>
+          <button
+            disabled={isLoading}
+            type="primary"
+            htmlType="submit"
+            className="mt-4 bg-primary text-white px-6 py-1 rounded-md"
+          >
+            Submit {isLoading && <Spin></Spin>}
+          </button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };
