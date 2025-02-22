@@ -39,7 +39,13 @@ const LogIn = () => {
           description: data?.data?.message,
           placement: "topRight",
         });
-        router.push("/");
+        console.log(verifiedToken);
+        if (verifiedToken?.role === "trainee") {
+          router.push("/profile");
+          // router.push("/");
+        } else if (verifiedToken?.role === "trainer") {
+          router.push("/trainer-profile");
+        }
       })
       .catch((error) => {
         console.log('error', error);

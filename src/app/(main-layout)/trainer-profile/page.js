@@ -21,11 +21,12 @@ import { useGetMyQualificationQuery } from "@/redux/features/qualification/quali
 import { useGetReviewQuery } from "@/redux/features/invitation/invitationApi";
 import { useGetMySessionQuery } from "@/redux/features/session/sessionApi";
 import defaultProfilePic from '../../../assets/profile/profile_image.webp'
+import { useGetMembersQuery, useGetMyFollowersQuery } from "@/redux/features/trainer/trainerApi";
 
 const TrainerProfile = () => {
   const [profilePic, setProfilePic] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { user } = useSelector((state) => state.auth)
+  const { user, role } = useSelector((state) => state.auth)
   const [qualificationVisible, setQualificationVisible] = useState(false);
   const [specialismsVisible, setSpecialismsVisible] = useState(false);
   const [testimonialsVisible, setTestimonialsVisible] = useState(false);
@@ -34,12 +35,14 @@ const TrainerProfile = () => {
   dispatch(setUser(data?.data?.[0]?.trainerDetails?.[0]));
 
   const [updateTrainerProfile, { isLoading }] = useUpdateTrainerProfileMutation();
+  const { data: myFollower } = useGetMyFollowersQuery(role?.id);
   const { data: specialism } = useGetMySpecialismQuery(user?._id);
   const { data: qualification } = useGetMyQualificationQuery(user?._id);
   // review 
   const { data: reviews } = useGetReviewQuery(user?._id);
   console.log('review', reviews);
-
+  // members 
+  const { data: members } = useGetMembersQuery(user?._id);
   // me session
   const { data: session } = useGetMySessionQuery(user?._id);
   console.log('session', session);
@@ -205,10 +208,10 @@ const TrainerProfile = () => {
                 <div className="mt-2 text-2xl">New York</div>
               </div>
 
-              <div className="following-follower grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div className="following-follower grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="item text-center px-14 py-1 md:py-4 rounded-xl bg-[#0ba5931a] border border-greenColor shadow-lg">
                   <div className="total text-xl md:text-3xl font-bold text-greenColor">
-                    50
+                    {myFollower?.data?.totalFollower}
                   </div>
                   <div className="title text-lg  text-greenColor capitalize">
                     Followers
@@ -217,13 +220,13 @@ const TrainerProfile = () => {
 
                 <div className="item text-center px-14 py-1 md:py-4 bg-[#e2697121] border border-primary rounded-xl shadow-lg">
                   <div className="total text-xl md:text-3xl font-bold text-primary">
-                    30
+                    {members?.data?.[0]?.totalMembers}
                   </div>
                   <div className="title text-lg text-primary capitalize">
                     Members
                   </div>
                 </div>
-
+{/* 
                 <div className="item text-center px-14 py-1 md:py-4 border bg-[#e2697121] border-black rounded-xl shadow-lg">
                   <div className="total text-xl md:text-3xl font-bold text-black">
                     £46
@@ -231,7 +234,7 @@ const TrainerProfile = () => {
                   <div className="title text-lg text-gray-900 capitalize">
                     Revenue
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
 

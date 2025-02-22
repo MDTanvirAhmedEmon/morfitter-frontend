@@ -1,28 +1,39 @@
 "use client"
-import { Avatar } from "antd";
+import { Avatar, message } from "antd";
 import Image from "next/image";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import circle from '../../../assets/circle.svg'
 import Link from "next/link";
-import { useGetSingleUserQuery } from "@/redux/features/auth/authApi";
-import { useGetWhoIAmFollowingQuery } from "@/redux/features/follower/followerApi";
+import { useDofolowUnfollowMutation, useGetSingleUserQuery, useGetWhoIAmFollowingQuery } from "@/redux/features/follower/followerApi";
 import { useSearchParams } from "next/navigation";
 import defaultProfileImage from '../../../assets/profile/profile_image.webp'
+import { useSelector } from "react-redux";
 
 const ViewUserProfile = () => {
 
     const searchParams = useSearchParams();
-
+    const { role } = useSelector((state) => state.auth)
     const traineeId = searchParams.get("trainee");
     const userId = searchParams.get("userId");
-
+    const [dofolowUnfollow] = useDofolowUnfollowMutation();
     const { data: trainee } = useGetSingleUserQuery(userId)
     console.log(trainee);
 
     const { data: following } = useGetWhoIAmFollowingQuery(userId);
     console.log(following?.data);
-
+    const handleFollowUnfollow = () => {
+        dofolowUnfollow({
+            follower_id: role?.id, // logged in User _id 
+            following_id: trainee?.data?.userInfo?.user
+        }
+        ).unwrap()
+            .then((res) => {
+            })
+            .catch((err) => {
+                message.error(err?.data?.message)
+            })
+    }
     const profilePicUrl = trainee?.data?.userInfo?.profileImageUrl ? `http://10.0.60.166:5000${trainee?.data?.userInfo?.profileImageUrl}` : defaultProfileImage;
 
     return (
@@ -110,6 +121,17 @@ const ViewUserProfile = () => {
                                 <div className="user-name text-4xl font-semibold capitalize">{trainee?.data?.userInfo?.firstName} {trainee?.data?.userInfo?.lastName}</div>
                                 <div className="mt-2 text-2xl">New York</div>
                             </div>
+                            <button
+                                onClick={handleFollowUnfollow}
+                                className={`w-[120px] py-1.5 text-lg font-medium rounded-md transition-all duration-300 border 
+                                ${trainee?.data?.isFollowing
+                                        ? "bg-primary text-white border-primary hover:bg-primary"
+                                        : "bg-transparent text-gray-700 border-gray-400 hover:bg-gray-100"
+                                    }
+                                `}
+                            >
+                                {trainee?.data?.isFollowing ? "Follow" : "Following"}
+                            </button>
 
                             <div className="following-follower grid grid-cols-1 md:grid-cols-2 gap-5">
 
@@ -135,12 +157,12 @@ const ViewUserProfile = () => {
                                 {
                                     following?.data?.map((item) => (
                                         <div key={item?._id} className=" flex items-center gap-3 shadow-lg px-3 py-2 rounded-lg">
-                                            <Image className=" w-14 rounded-2xl " 
-                                            src={item?.followingDetails?.profileImageUrl 
-                                                ? `http://10.0.60.166:5000${item?.followingDetails?.profileImageUrl}`
-                                                : defaultProfileImage
-                                              }
-                                             height={200} width={200} alt="profile" />
+                                            <Image className=" w-14 rounded-2xl "
+                                                src={item?.followingDetails?.profileImageUrl
+                                                    ? `http://10.0.60.166:5000${item?.followingDetails?.profileImageUrl}`
+                                                    : defaultProfileImage
+                                                }
+                                                height={200} width={200} alt="profile" />
                                             <div>
                                                 <h2 className=" text-xl font-semibold capitalize">{item?.followingDetails?.firstName} {item?.followingDetails?.lastName}</h2>
                                                 <p>{item?.followingDetails?.role}</p>

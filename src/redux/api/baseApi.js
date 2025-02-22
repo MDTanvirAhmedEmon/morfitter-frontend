@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 const baseQuery = fetchBaseQuery({
   // baseUrl: `http://10.0.60.166:5000/api/v1`,
   baseUrl: `http://localhost:5000/api/v1`,
-
+  credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     // const token = getState()?.auth?.token;
     const token = Cookies.get('morfitter-token');
@@ -29,22 +29,25 @@ const baseQueryWithRefreshToken = async (args, api, extraOptions) => {
   }
 
   if (result?.error?.status === 401) {
-    const res = await fetch(
-      `http://localhost:5000/api/v1/auth/refresh-token`,
-      {
-        method: "POST",
-        credentials: "include",
-      }
-    );
-
+    const res = await fetch(`http://localhost:5000/api/v1/auth/refresh-token`, {
+      method: "POST",
+      credentials: "include",
+    });
+    if (!res.ok) {
+      api.dispatch(logout());
+      window.location.href = '/auth/login';
+      return result;
+    }
     const data = await res.json();
 
     if (data?.data?.accessToken) {
+      console.log(data?.data?.accessToken);
       api.dispatch(setToken(data.data.accessToken));
       Cookies.set('morfitter-token', data?.data?.accessToken)
       result = await baseQuery(args, api, extraOptions);
     } else {
       api.dispatch(logout());
+      window.location.href = '/auth/login';
     }
   }
 
@@ -67,6 +70,7 @@ export const baseApi = createApi({
     "all-users",
     "all-personal-trainer",
     "user-management",
+    "follow",
   ],
   endpoints: () => ({}),
 });

@@ -17,7 +17,7 @@ const EnrollModal = ({ isModalOpen, handleCancel, handleOk, session }) => {
         if (session?._id && role?.id) {
             checkEnrollment({ session_id: session._id, user_id: role.id });
         }
-    }, [checkEnrollment, role.id, session]);
+    }, [checkEnrollment, role?.id, session]);
 
     const handleFreeEnroll = () => {
         const enrollData = {

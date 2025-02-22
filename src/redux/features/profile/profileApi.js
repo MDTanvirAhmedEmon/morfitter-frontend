@@ -21,6 +21,13 @@ const profileApi = baseApi.injectEndpoints({
             invalidatesTags: ['user']
         }),
 
+        getMembership: builder.query({
+            query: () => ({
+                url: `/access/total-membership`,
+                method: "GET",
+            }),
+        }),
+
         // getMe: builder.query({
         //   query: () => ({
         //     url: "/users/get-me",
@@ -34,6 +41,7 @@ const profileApi = baseApi.injectEndpoints({
 export const {
     useUpdateTrainerProfileMutation,
     useUpdateTraineeProfileMutation,
+    useGetMembershipQuery,
 } = profileApi;
 
 export default profileApi;
