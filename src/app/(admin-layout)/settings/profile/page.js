@@ -9,21 +9,13 @@ import { useSelector } from "react-redux";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth)
-  console.log(user);
-  const [profilePic, setProfilePic] = useState(user);
+  const [profilePic, setProfilePic] = useState(null);
   const [activeTab, setActiveTab] = useState("editProfile");
 
-  useEffect(() => {
-    return () => {
-      if (profilePic) {
-        URL.revokeObjectURL(profilePic);
-      }
-    };
-  }, [profilePic]);
+  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${user?.profileImageUrl}`;
 
-  const handleProfilePicUpload = ({ file }) => {
-    const imageUrl = URL.createObjectURL(file);
-    setProfilePic(imageUrl);
+  const handleProfilePicUpload = (e) => {
+    setProfilePic(e.file);
   };
 
   return (
@@ -34,7 +26,7 @@ const Profile = () => {
             <div className="relative">
               <Avatar
                 size={140}
-                src={profilePic || profile_image.src}
+                src={profilePicUrl || profile_image}
                 className="border-4 border-buttonPrimary shadow-xl"
               />
               <Upload
@@ -47,8 +39,8 @@ const Profile = () => {
               </Upload>
             </div>
             <div>
-              <p className="text-xl md:text-2xl font-bold">Mr. Simoon</p>
-              <p className="text-sm font-semibold">Admin</p>
+              <p className="text-xl md:text-2xl font-bold capitalize">{user?.firstName} {user?.lastName}</p>
+              <p className="text-sm font-semibold">{user?.role}</p>
             </div>
           </div>
           <div className="flex justify-center items-center gap-5 text-md md:text-xl font-semibold my-5">

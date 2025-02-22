@@ -1,10 +1,39 @@
-import React from "react";
-import { useState } from "react";
+import { useChangeAdminPasswordMutation } from "@/redux/features/admin/settings/profileApi";
+import { message, Spin } from "antd";
+import React, { useState } from "react";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 function ChangePass() {
-  const [isEyeOpen, setIsEyeOpen] = useState();
-  const handleSubmit = () => {};
+  const [isEyeOpen, setIsEyeOpen] = useState(false);
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+
+  const [changeAdminPassword, { isLoading }] = useChangeAdminPasswordMutation();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if( newPassword !== confirmNewPassword){
+      message.error(`Confirm password did not match!`)
+      return;
+    }
+    const data ={
+      oldPassword,
+      newPassword,
+    }
+
+    changeAdminPassword(data).unwrap()
+    .then(() => {
+      message.success('Password updated successfully')
+      setOldPassword('');
+      setNewPassword('');
+      setConfirmNewPassword('');
+    })
+    .catch((error) => {
+      message.error(error?.data?.message)
+    })
+  };
+
   return (
     <div className="bg-white px-20 w-[715px] pt-10 pb-5 rounded-md">
       <p className="text-primary text-center font-bold text-xl mb-5">
@@ -13,7 +42,7 @@ function ChangePass() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="w-full">
           <label
-            htmlFor="password"
+            htmlFor="oldPassword"
             className="text-[15px] font-[400] text-[#575757]"
           >
             Old Password
@@ -21,27 +50,30 @@ function ChangePass() {
           <div className="w-full relative">
             <input
               type={isEyeOpen ? "text" : "password"}
-              name="password"
-              id="password"
-              placeholder="Password"
+              name="oldPassword"
+              id="oldPassword"
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+              placeholder="Enter Old Password"
               className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-12 py-3 w-full mt-1"
             />
             {isEyeOpen ? (
               <IoEyeOutline
-                className=" absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
+                className="absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
                 onClick={() => setIsEyeOpen(false)}
               />
             ) : (
               <IoEyeOffOutline
-                className=" absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
+                className="absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
                 onClick={() => setIsEyeOpen(true)}
               />
             )}
           </div>
         </div>
+
         <div className="w-full">
           <label
-            htmlFor="password"
+            htmlFor="newPassword"
             className="text-[15px] font-[400] text-[#575757]"
           >
             New Password
@@ -49,47 +81,52 @@ function ChangePass() {
           <div className="w-full relative">
             <input
               type={isEyeOpen ? "text" : "password"}
-              name="password"
-              id="password"
-              placeholder="Password"
+              name="newPassword"
+              id="newPassword"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="Enter New Password"
               className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-12 py-3 w-full mt-1"
             />
             {isEyeOpen ? (
               <IoEyeOutline
-                className=" absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
+                className="absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
                 onClick={() => setIsEyeOpen(false)}
               />
             ) : (
               <IoEyeOffOutline
-                className=" absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
+                className="absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
                 onClick={() => setIsEyeOpen(true)}
               />
             )}
           </div>
         </div>
+
         <div className="w-full">
           <label
-            htmlFor="password"
+            htmlFor="confirmNewPassword"
             className="text-[15px] font-[400] text-[#575757]"
           >
-            New Password
+            Confirm New Password
           </label>
           <div className="w-full relative">
             <input
               type={isEyeOpen ? "text" : "password"}
-              name="password"
-              id="password"
-              placeholder="Password"
+              name="confirmNewPassword"
+              id="confirmNewPassword"
+              value={confirmNewPassword}
+              onChange={(e) => setConfirmNewPassword(e.target.value)}
+              placeholder="Confirm New Password"
               className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-12 py-3 w-full mt-1"
             />
             {isEyeOpen ? (
               <IoEyeOutline
-                className=" absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
+                className="absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
                 onClick={() => setIsEyeOpen(false)}
               />
             ) : (
               <IoEyeOffOutline
-                className=" absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
+                className="absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
                 onClick={() => setIsEyeOpen(true)}
               />
             )}
@@ -101,7 +138,7 @@ function ChangePass() {
             type="submit"
             className="font-bold bg-primary text-white p-2 px-10 py-2 rounded-md shadow-lg"
           >
-            Save & Changes
+            {isLoading ? <Spin /> : "Save & Changes"}
           </button>
         </div>
       </form>

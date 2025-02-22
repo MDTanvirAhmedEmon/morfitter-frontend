@@ -1,5 +1,5 @@
 "use client";
-import { Avatar, message, Popconfirm, Popover, Rate, Upload } from "antd";
+import { Avatar, message, Popconfirm, Rate, Upload } from "antd";
 import Image from "next/image";
 import { useState } from "react";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
