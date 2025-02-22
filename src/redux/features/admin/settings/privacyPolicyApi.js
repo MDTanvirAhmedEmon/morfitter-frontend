@@ -7,6 +7,7 @@ const privacyPolicyApi = baseApi.injectEndpoints({
         url: "/admin/get-admin-info",
         method: "GET",
       }),
+      providesTags: ['admin']
     }),
     getPrivacy: builder.query({
       query: () => ({

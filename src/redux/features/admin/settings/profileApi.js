@@ -9,12 +9,21 @@ const profileApi = baseApi.injectEndpoints({
                 body: data,
             }),
         }),
+        updateAdmin: builder.mutation({
+            query: (data) => ({
+                url: `/admin/update`,
+                method: "PATCH",
+                body: data,
+            }),
+            invalidatesTags: ['admin']
+        }),
 
     }),
 });
 
 export const {
     useChangeAdminPasswordMutation,
+    useUpdateAdminMutation,
 } =
     profileApi;
 
