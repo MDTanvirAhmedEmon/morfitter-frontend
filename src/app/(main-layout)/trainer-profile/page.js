@@ -1,5 +1,5 @@
 "use client";
-import { Avatar, message, Rate, Upload } from "antd";
+import { Avatar, message, Popconfirm, Popover, Rate, Upload } from "antd";
 import Image from "next/image";
 import { useState } from "react";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
@@ -16,8 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/features/auth/authSlice";
 import AddSocialModal from "@/components/TrainerProfile/AddSocialModal";
 import { useUpdateTrainerProfileMutation } from "@/redux/features/profile/profileApi";
-import { useGetMySpecialismQuery } from "@/redux/features/specialism/specialismApi";
-import { useGetMyQualificationQuery } from "@/redux/features/qualification/qualificationApi";
+import { useDeleteSpecialismMutation, useGetMySpecialismQuery } from "@/redux/features/specialism/specialismApi";
+import { useDeleteQualificationMutation, useGetMyQualificationQuery } from "@/redux/features/qualification/qualificationApi";
 import { useGetReviewQuery } from "@/redux/features/invitation/invitationApi";
 import { useGetMySessionQuery } from "@/redux/features/session/sessionApi";
 import defaultProfilePic from '../../../assets/profile/profile_image.webp'
@@ -81,7 +81,29 @@ const TrainerProfile = () => {
   };
   const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${user?.profileImageUrl}`;
 
+  const[ deleteSpecialism ] = useDeleteSpecialismMutation();
 
+  const confirmSpecialism = (id) => {
+    deleteSpecialism(id).unwrap()
+    .then( () => {
+      message.success('Deleted Successfully')
+    }) 
+    .catch((error) => {
+      message.error(error?.data?.message)
+    })
+  };
+
+  const[ deleteQualification ] = useDeleteQualificationMutation();
+
+  const confirmQualification = (id) => {
+    deleteQualification(id).unwrap()
+    .then( () => {
+      message.success('Deleted Successfully')
+    }) 
+    .catch((error) => {
+      message.error(error?.data?.message)
+    })
+  };
 
   return (
     <section className=" py-10 md:py-20">
@@ -226,7 +248,7 @@ const TrainerProfile = () => {
                     Members
                   </div>
                 </div>
-{/* 
+                {/* 
                 <div className="item text-center px-14 py-1 md:py-4 border bg-[#e2697121] border-black rounded-xl shadow-lg">
                   <div className="total text-xl md:text-3xl font-bold text-black">
                     £46
@@ -258,10 +280,21 @@ const TrainerProfile = () => {
                     Add
                   </button>
                 </div>
-                <div className=" px-6 pb-4">
+                <div className=" px-6 pb-4 md:w-[20%]">
                   {
                     qualification?.data?.map((item) =>
-                      <p className=" mb-2" key={item?._id}>{item?.qualification}</p>
+                      <Popconfirm
+                        key={item?._id}
+                        title="Delete the qualification"
+                        description="Are you sure to delete this qualification?"
+                        onConfirm={() => confirmQualification(item?._id)}
+                        okText="Yes"
+                        cancelText="No"
+                      >
+                        <p className=" mb-2 cursor-pointer capitalize" key={item?._id}>{item?.qualification}</p>
+
+                      </Popconfirm>
+
                     )
                   }
                 </div>
@@ -269,7 +302,7 @@ const TrainerProfile = () => {
               <div className="border mb-4">
                 <div className="qualification flex  justify-between items-center  pt-4 px-6 rounded-md ">
                   <div className="flex  gap-3 md:pr-8">
-                    <h2 className="title text-lg md:text-2xl mb-2 font-medium text-[#535353]">
+                    <h2 className="title text-lg md:text-2xl mb-2 font-medium text-[#535353] capitalize">
                       Specialisms
                     </h2>
                   </div>
@@ -280,10 +313,22 @@ const TrainerProfile = () => {
                     Add
                   </button>
                 </div>
-                <div className=" px-6 pb-4">
+                <div className=" px-6 pb-4 flex flex-col  md:w-[20%]">
                   {
                     specialism?.data?.map((item) =>
-                      <p className=" mb-2" key={item?._id}>{item?.specialism}</p>
+                      <Popconfirm
+                        key={item?._id}
+                        title="Delete the specialisms"
+                        description="Are you sure to delete this specialisms?"
+                        onConfirm={() => confirmSpecialism(item?._id)}
+                        okText="Yes"
+                        cancelText="No"
+                      >
+                        <p className=" mb-2 w-auto cursor-pointer capitalize" >{item?.specialism}</p>
+
+
+                      </Popconfirm>
+
                     )
                   }
                 </div>
@@ -427,16 +472,22 @@ const TrainerProfile = () => {
           </div>
         </div>
       </div>
-      {qualificationVisible && (
-        <QualificationModal setQualificationVisible={setQualificationVisible} />
-      )}
-      {specialismsVisible && (
-        <SpecialismsModal setSpecialismsVisible={setSpecialismsVisible} />
-      )}
-      {testimonialsVisible && (
-        <TestimonialsModal setTestimonialsVisible={setTestimonialsVisible} />
-      )}
-    </section>
+      {
+        qualificationVisible && (
+          <QualificationModal setQualificationVisible={setQualificationVisible} />
+        )
+      }
+      {
+        specialismsVisible && (
+          <SpecialismsModal setSpecialismsVisible={setSpecialismsVisible} />
+        )
+      }
+      {
+        testimonialsVisible && (
+          <TestimonialsModal setTestimonialsVisible={setTestimonialsVisible} />
+        )
+      }
+    </section >
   );
 };
 

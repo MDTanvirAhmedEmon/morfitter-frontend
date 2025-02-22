@@ -1,15 +1,18 @@
 "use client";
 import AddSessionContentModal from "@/components/TrainerProfile/AddSessionContentModal";
-import { useDeletSessionVideoMutation, useDeletWholeSessionMutation, useGetSingleSessionQuery } from "@/redux/features/session/sessionApi";
+import { useDeletSessionVideoMutation, useDeletWholeSessionMutation, useGetSingleSessionQuery, useGetTotalEntrolledUserSessionQuery } from "@/redux/features/session/sessionApi";
 import { message, Popconfirm } from "antd";
 import Image from "next/image";
+import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
+import profileImage from "../../../../../assets/profile/profile_image.webp";
 
 const BASE_URL = "http://10.0.60.166:5000";
 
 const SingleSession = () => {
     const { id } = useParams();
+
     const router = useRouter();
     const { data } = useGetSingleSessionQuery(id);
     const session = data?.data;
@@ -23,6 +26,8 @@ const SingleSession = () => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+    const { data: allEntrolledUser } = useGetTotalEntrolledUserSessionQuery(id);
+
     const [deletSessionVideo] = useDeletSessionVideoMutation();
     const [deletWholeSession, { isLoading }] = useDeletWholeSessionMutation();
     const confirm = (content) => {
@@ -127,6 +132,73 @@ const SingleSession = () => {
                             ))}
                         </div>
                     )}
+                </div>
+                <div className=" bg-gray-50 py-10 px-4 ">
+                    <h1 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
+                        Enrolled Users
+                    </h1>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {allEntrolledUser?.data?.map((user) => (
+                            <div
+                                key={user?._id}
+                                className="bg-white shadow-lg rounded-lg p-5 "
+                            >
+
+                                <div className="flex items-center space-x-4">
+                                    <Image
+                                        src={user?.additionalInfo?.profileImageUrl
+                                            ? `http://10.0.60.166:5000${user?.additionalInfo?.profileImageUrl}`
+                                            : profileImage}
+                                        alt="Profile"
+                                        width={300}
+                                        height={300}
+                                        className="w-16 h-16 rounded-full object-cover border-2 border-gray-300"
+                                    />
+                                    <div>
+                                        <h2 className="text-lg font-bold text-gray-800 capitalize">
+                                            <Link href={`/view-user-profile/?trainee=${user?.additionalInfo?._id}&userId=${user?.user_id}`}> {user?.additionalInfo?.firstName} {user?.additionalInfo?.lastName}</Link>
+                                        </h2>
+                                        <p className="text-sm text-gray-600 capitalize">{user?.additionalInfo?.country}</p>
+                                    </div>
+                                </div>
+
+
+                                <div className="mt-4 flex space-x-3">
+                                    {user?.additionalInfo?.Facebook && (
+                                        <Link
+                                            href={user?.additionalInfo?.Facebook}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-500 hover:text-blue-600"
+                                        >
+                                            <i className="fab fa-twitter text-xl">Facebook</i>
+                                        </Link>
+                                    )}
+                                    {user?.additionalInfo?.Instagram && (
+                                        <Link
+                                            href={user?.additionalInfo?.Instagram}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-pink-500 hover:text-pink-600"
+                                        >
+                                            <i className="fab fa-instagram text-xl">Instagram</i>
+                                        </Link>
+                                    )}
+                                    {user?.additionalInfo?.Youtube && (
+                                        <Link
+                                            href={user?.additionalInfo?.Youtube}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-red-500 hover:text-red-600"
+                                        >
+                                            <i className="fab fa-youtube text-xl">Youtube</i>
+                                        </Link>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
                 <div className=" flex justify-end">
                     <Popconfirm

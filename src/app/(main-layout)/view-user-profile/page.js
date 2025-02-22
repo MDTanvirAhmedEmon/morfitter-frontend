@@ -9,6 +9,7 @@ import { useDofolowUnfollowMutation, useGetSingleUserQuery, useGetWhoIAmFollowin
 import { useSearchParams } from "next/navigation";
 import defaultProfileImage from '../../../assets/profile/profile_image.webp'
 import { useSelector } from "react-redux";
+import { useGetMyFollowersQuery } from "@/redux/features/trainer/trainerApi";
 
 const ViewUserProfile = () => {
 
@@ -19,7 +20,7 @@ const ViewUserProfile = () => {
     const [dofolowUnfollow] = useDofolowUnfollowMutation();
     const { data: trainee } = useGetSingleUserQuery(userId)
     console.log(trainee);
-
+    const { data: myFollower } = useGetMyFollowersQuery(role?.id);
     const { data: following } = useGetWhoIAmFollowingQuery(userId);
     console.log(following?.data);
     const handleFollowUnfollow = () => {
@@ -136,7 +137,7 @@ const ViewUserProfile = () => {
                             <div className="following-follower grid grid-cols-1 md:grid-cols-2 gap-5">
 
                                 <div className="item text-center px-14 py-1 md:py-4 rounded-xl bg-[#0ba5931a] border border-greenColor shadow-lg">
-                                    <div className="total text-xl md:text-3xl font-bold text-greenColor">36</div>
+                                    <div className="total text-xl md:text-3xl font-bold text-greenColor">{myFollower?.data?.totalFollower}</div>
                                     <div className="title text-lg  text-greenColor capitalize">Followers</div>
                                 </div>
 

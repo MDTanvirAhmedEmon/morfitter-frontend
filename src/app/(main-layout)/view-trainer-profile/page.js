@@ -15,6 +15,7 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useDofolowUnfollowMutation, useGetSingleUserQuery } from "@/redux/features/follower/followerApi";
 import { useSelector } from "react-redux";
+import { useGetMembersQuery, useGetMyFollowersQuery } from "@/redux/features/trainer/trainerApi";
 
 const ViewTrainerProfile = () => {
   const searchParams = useSearchParams();
@@ -28,7 +29,8 @@ const ViewTrainerProfile = () => {
   const { data: specialism } = useGetMySpecialismQuery(trainerId);
   const { data: qualification } = useGetMyQualificationQuery(trainerId);
   const [dofolowUnfollow] = useDofolowUnfollowMutation();
-
+  const { data: members } = useGetMembersQuery(trainerId);
+  const { data: myFollower } = useGetMyFollowersQuery(userId);
   // review 
   const { data: reviews } = useGetReviewQuery(trainerId);
   console.log(reviews);
@@ -162,7 +164,7 @@ const ViewTrainerProfile = () => {
               <div className="following-follower grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div className="item text-center px-14 py-1 md:py-4 rounded-xl bg-[#0ba5931a] border border-greenColor shadow-lg">
                   <div className="total text-xl md:text-3xl font-bold text-greenColor">
-                    50
+                    {myFollower?.data?.totalFollower}
                   </div>
                   <div className="title text-lg  text-greenColor capitalize">
                     Followers
@@ -171,7 +173,7 @@ const ViewTrainerProfile = () => {
 
                 <div className="item text-center px-14 py-1 md:py-4 bg-[#e2697121] border border-primary rounded-xl shadow-lg">
                   <div className="total text-xl md:text-3xl font-bold text-primary">
-                    30
+                    {members?.data?.[0]?.totalMembers}
                   </div>
                   <div className="title text-lg text-primary capitalize">
                     Members
