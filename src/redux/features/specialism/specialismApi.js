@@ -20,9 +20,17 @@ const specialismApi = baseApi.injectEndpoints({
             providesTags: ['specialism']
         }),
 
+        deleteSpecialism: builder.mutation({
+            query: (id) => ({
+                url: `/specialism/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ['specialism']
+        }),
+
     }),
 });
 
-export const { useCreateSpecialismMutation, useGetMySpecialismQuery } = specialismApi;
+export const { useCreateSpecialismMutation, useGetMySpecialismQuery, useDeleteSpecialismMutation } = specialismApi;
 
 export default specialismApi;

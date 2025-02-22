@@ -83,6 +83,13 @@ const sessionApi = baseApi.injectEndpoints({
       }),
     }),
 
+    getTotalEntrolledUserSession: builder.query({
+      query: (id) => ({
+        url: `access/total-enrollment/${id}`,
+        method: "GET",
+      }),
+    }),
+
   }),
 });
 
@@ -97,6 +104,7 @@ export const {
   useEnrollSessionMutation,
   useCheckEnrollmentMutation,
   useMyEnrolledSessionQuery,
+  useGetTotalEntrolledUserSessionQuery,
 } = sessionApi;
 
 export default sessionApi;

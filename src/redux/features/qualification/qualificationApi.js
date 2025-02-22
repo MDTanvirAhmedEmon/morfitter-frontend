@@ -20,9 +20,17 @@ const qualificationApi = baseApi.injectEndpoints({
             providesTags: ['qualification']
         }),
 
+        deleteQualification: builder.mutation({
+            query: (id) => ({
+                url: `/qualification/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ['qualification']
+        }),
+
     }),
 });
 
-export const { useCreateQualificationMutation, useGetMyQualificationQuery } = qualificationApi;
+export const { useCreateQualificationMutation, useGetMyQualificationQuery, useDeleteQualificationMutation } = qualificationApi;
 
 export default qualificationApi;
