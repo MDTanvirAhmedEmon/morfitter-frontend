@@ -1,16 +1,24 @@
-import { useGetallUserManagementQuery } from "@/redux/features/admin/userManagement/userManagementApi";
+import { useGetallUserManagementQuery, useUpdateUserMutation } from "@/redux/features/admin/userManagement/userManagementApi";
 import { Avatar, message, Pagination, Popconfirm, Table } from "antd";
 import { useState } from "react";
 
-const AllUsers = () => {
+const AllUsers = ({ searchQuery }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const { data: getallUserManagementData, isLoading } =
-    useGetallUserManagementQuery({ page: currentPage });
+    useGetallUserManagementQuery({ page: currentPage, searchTerm: searchQuery });
+  console.log(getallUserManagementData?.data?.data);
+  const [updateUser] = useUpdateUserMutation();
 
   // console.log(getallUserManagementData?.data);
 
   const confirm = (id) => {
-    message.success(`User with ID ${id} banned successfully`);
+    updateUser(id).unwrap()
+      .then(() => {
+        message.success('Status Changed Successfully')
+      })
+      .catch((error) => {
+        message.error(error?.data?.message)
+      })
   };
 
   const columns = [
@@ -18,11 +26,11 @@ const AllUsers = () => {
       title: "Image",
       dataIndex: "userData",
       key: "image",
-      render: (userData) =>
-        userData?.profileImageUrl ? (
+      render: (_, record) =>
+        record?.profileImageUrl ? (
           <Avatar
             size={40}
-            src={`${getBaseUrl()}${userData?.profileImageUrl}`}
+            src={`http://10.0.60.166:5000${record?.profileImageUrl}`}
           />
         ) : (
           <Avatar size={40} src="https://avatar.iran.liara.run/public/43" />
@@ -40,26 +48,25 @@ const AllUsers = () => {
       title: "Email",
       dataIndex: "userData",
       key: "email",
-      render: (userData) => userData?.email || "N/A",
+      render: (_, record) => record?.userData?.email,
     },
     {
       title: "Contact No",
       dataIndex: "contactNo",
-      key: "contactNo",
+      render: (_, record) => record?.contactNo,
     },
     {
       title: "User Status",
       dataIndex: "userData",
       key: "status",
-      render: (userData) => (
+      render: (_, record) => (
         <button
-          className={`cursor-default px-2 py-1 rounded-md ${
-            userData?.status === "in-progress"
+          className={`cursor-default px-2 py-1 rounded-md ${record?.userData?.status === "in-progress"
               ? "bg-green-500 text-white"
               : "bg-yellow-500 text-black"
-          }`}
+            }`}
         >
-          {userData?.status || "N/A"}
+          {record?.userData?.status || "N/A"}
         </button>
       ),
     },
@@ -68,15 +75,22 @@ const AllUsers = () => {
       key: "action",
       render: (_, record) => (
         <Popconfirm
-          title="Ban This User"
-          description="Are you sure you want to ban this user?"
-          onConfirm={() => confirm(record._id)}
+          title={`${record?.userData?.status === 'blocked' ? 'Unblock' : 'Ban'}  This User`}
+          description={`Are you sure you want to ${record?.userData?.status === 'blocked' ? 'unblock' : 'ban'} this user? `}
+          onConfirm={() => confirm(record?.userData?._id)}
           okText="Yes"
           cancelText="No"
         >
-          <button className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600">
-            Ban
-          </button>
+          {
+            record?.userData?.status === 'blocked' ?
+              <button className="bg-green-500 text-white px-2 py-1 rounded-md hover:bg-green-600">
+                unblock
+              </button> :
+              <button className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600">
+                Ban
+              </button>
+          }
+
         </Popconfirm>
       ),
     },
@@ -97,7 +111,7 @@ const AllUsers = () => {
         columns={columns}
         dataSource={getallUserManagementData?.data?.data || []}
       />
-      <div className="mt-5 flex justify-end ">
+      <div className="mt-6">
         {getallUserManagementData?.data?.data?.length !== 0 && (
           <Pagination
             current={getallUserManagementData?.data?.meta?.page}
