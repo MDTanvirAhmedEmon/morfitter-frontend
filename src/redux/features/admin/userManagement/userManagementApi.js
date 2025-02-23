@@ -13,11 +13,11 @@ const userManagementApi = baseApi.injectEndpoints({
 
     updateUser: builder.mutation({
       query: (id) => ({
-          url: `/users/block-unblock/${id}`,
-          method: "PATCH",
+        url: `/users/block-unblock/${id}`,
+        method: "PATCH",
       }),
       invalidatesTags: ['user-management']
-  }),
+    }),
   }),
 });
 

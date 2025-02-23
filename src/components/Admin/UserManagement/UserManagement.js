@@ -1,5 +1,5 @@
 import { useGetallUserManagementQuery, useUpdateUserMutation } from "@/redux/features/admin/userManagement/userManagementApi";
-import { Avatar, message, Pagination, Popconfirm, Table } from "antd";
+import { Avatar, message, Pagination, Popconfirm, Spin, Table } from "antd";
 import { useState } from "react";
 
 const AllUsers = ({ searchQuery }) => {
@@ -97,7 +97,7 @@ const AllUsers = ({ searchQuery }) => {
   ];
 
   if (isLoading) {
-    return <p>Loading trainers...</p>;
+    return <div className=" h-[40vh] flex justify-center items-center"><Spin size="large"></Spin></div>;
   }
 
   const handlePageChange = (page) => {
