@@ -14,6 +14,7 @@ import { FaUser } from 'react-icons/fa';
 import { FaUsers } from "react-icons/fa6";
 import { MdOutlineStarPurple500 } from "react-icons/md";
 import FindTrainersChats from './FindTrainersChats';
+import profileImage from '../../../../assets/profile/profile_image.webp'
 
 const TrainerItem = ({ trainer }) => {
     const [selectedLogos, setSelectedLogos] = useState([]);
@@ -53,7 +54,11 @@ const TrainerItem = ({ trainer }) => {
         <div className=" border-2 border-secondary p-2 md:p-3 rounded-lg md:flex items-center justify-between mb-5">
             <div className=' md:flex items-center gap-4'>
                 <div className=' flex items-center gap-3 shadow-[2px_8px_8px_2px_rgba(0,0,0,0.1)] py-4 px-4 lg:px-10 rounded-xl mb-5 md:mb-0'>
-                    <Image src={`http://10.0.60.166:5000${trainer?.profileImageUrl}`} alt='profile' width={300} height={300} className=' w-16 border-4 border-secondary rounded-lg' />
+                    <Image
+                        src={trainer?.profileImageUrl
+                            ? `http://10.0.60.166:5000${trainer?.profileImageUrl}`
+                            : profileImage}
+                        alt='profile' width={300} height={300} className=' w-16 border-4 border-secondary rounded-lg' />
                     <div>
                         <h2 className=' text-lg mb-1'>{trainer?.firstName} {trainer?.lastName}</h2>
                         <p className=' text-gray-500'>Trainer</p>
