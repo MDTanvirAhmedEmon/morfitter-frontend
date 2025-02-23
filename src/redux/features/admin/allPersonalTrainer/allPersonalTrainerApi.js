@@ -4,12 +4,13 @@ const allPersonalTrainerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getallPersonalTrainer: builder.query({
       query: (params) => ({
-        url: "trainer/dashboard",
+        url: "/trainer/dashboard",
         method: "GET",
         params,
       }),
-      providesTags: ["all-personal-trainer"],
+      providesTags: ["user-management"],
     }),
+
   }),
 });
 

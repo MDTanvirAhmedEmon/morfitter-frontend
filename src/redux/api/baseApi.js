@@ -73,6 +73,7 @@ export const baseApi = createApi({
     "follow",
     'admin',
     'policy',
+    'admin-content',
   ],
   endpoints: () => ({}),
 });

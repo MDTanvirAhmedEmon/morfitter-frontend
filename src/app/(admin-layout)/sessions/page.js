@@ -4,7 +4,7 @@ import React from "react";
 
 const Sessions = () => {
   return (
-    <div className="p-5">
+    <div className="">
       <SessionsPage />
     </div>
   );
