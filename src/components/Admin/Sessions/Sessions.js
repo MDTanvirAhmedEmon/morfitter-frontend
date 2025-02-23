@@ -1,12 +1,11 @@
 "use client"
 import { Input, message, Pagination, Select } from 'antd';
 import Image from 'next/image';
-import { useGetAllSessionQuery } from '@/redux/features/session/sessionApi';
 import { useState } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
 import SessionSkeleton from '@/components/Skeleton/SessionSkeleton';
 import Link from 'next/link';
-import { useBlockUnblockSessionMutation } from '@/redux/features/admin/session/adminSessionApi';
+import { useBlockUnblockSessionMutation, useGetAllSessionForAdminQuery } from '@/redux/features/admin/session/adminSessionApi';
 
 const SessionsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,7 +14,7 @@ const SessionsPage = () => {
   const [searchTerm, setSearchTerm] = useState(null);
   const [selectedSession, setSelectedSession] = useState(null);
 
-  const { data, isLoading } = useGetAllSessionQuery({
+  const { data, isLoading } = useGetAllSessionForAdminQuery({
     page: currentPage,
     sessionType: sessionType || undefined,
     fitnessFocus: specialism || undefined,

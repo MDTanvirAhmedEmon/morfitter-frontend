@@ -4,7 +4,7 @@ const contentManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllContentsForAdmin: builder.query({
       query: (params) => ({
-        url: "/content",
+        url: "/content/admin",
         method: "GET",
         params,
       }),
