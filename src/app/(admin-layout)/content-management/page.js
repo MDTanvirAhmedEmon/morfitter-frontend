@@ -3,7 +3,7 @@ import ContentManagementPage from "@/components/Admin/ContentManagement/ContentM
 
 const ContentManagement = () => {
   return (
-    <div className="p-5">
+    <div className="">
       <ContentManagementPage />
     </div>
   );

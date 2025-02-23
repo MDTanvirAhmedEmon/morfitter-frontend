@@ -43,10 +43,8 @@ const ContentManagementPage = () => {
         </ConfigProvider>
       </div>
 
-      {/* Simulating loading state */}
-      {false && "Loading..."}
 
-      <div className="grid grid-cols-2 xl:grid-cols-3 gap-14 mx-6 mb-6">
+      <div className="grid grid-cols-2 xl:grid-cols-3 gap-12 mb-6">
         {data?.data?.data?.map((item) => (
           <SingleContent
             key={item?._id}
@@ -56,7 +54,7 @@ const ContentManagementPage = () => {
       </div>
 
       {/* Pagination */}
-      <div className="my-8 ml-4">
+      <div className="my-8 ">
         <ConfigProvider
           theme={{
             components: {
