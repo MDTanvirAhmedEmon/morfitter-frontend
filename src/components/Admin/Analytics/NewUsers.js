@@ -1,9 +1,9 @@
 import { getBaseUrl } from "@/config/envConfig";
 import { useGetAllNewUsersQuery } from "@/redux/features/admin/analytic/newUserApi";
-import { Avatar, Table } from "antd";
+import { Avatar, Spin, Table } from "antd";
 
 const NewUsers = () => {
-  const { data: getAllNewUsersData } = useGetAllNewUsersQuery();
+  const { data: getAllNewUsersData, isLoading } = useGetAllNewUsersQuery();
   console.log(getAllNewUsersData?.data);
 
   // Define columns for the table
@@ -26,10 +26,10 @@ const NewUsers = () => {
       title: "Name",
       dataIndex: "userInfo",
       key: "name",
-      render: (userInfo) =>
-        userInfo ? (
+      render: (_, record) =>
+        record?.userInfo ? (
           <a>
-            {userInfo.firstName} {userInfo.lastName}
+            {record?.userInfo.firstName} {record?.userInfo.lastName}
           </a>
         ) : (
           "N/A"
@@ -39,20 +39,25 @@ const NewUsers = () => {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      render: (_, record) => (record?.email ? record?.email : "N/A"),
     },
     {
-      title: "Address",
-      dataIndex: "userInfo",
+      title: "Role",
+      dataIndex: "role",
       key: "address",
-      render: (userInfo) => (userInfo?.address ? userInfo.address : "N/A"),
+      render: (_, record) => (record?.role ? <p className=" capitalize">{record?.role}</p> : "N/A"),
     },
     {
       title: "Contact No",
       dataIndex: "userInfo",
       key: "contactNo",
-      render: (userInfo) => (userInfo?.contactNo ? userInfo.contactNo : "N/A"),
+      render: (_, record) => (record?.userInfo?.contactNo ? record.userInfo?.contactNo : "N/A"),
     },
   ];
+
+  if (isLoading) {
+    return <div className=" h-[40vh] flex justify-center items-center"><Spin size="large"></Spin></div>;
+  }
 
   return (
     <div>

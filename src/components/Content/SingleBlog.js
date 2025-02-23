@@ -10,7 +10,7 @@ import { useGetAllCommentsQuery, useLikeAndDislikeMutation } from '@/redux/featu
 import { useSelector } from 'react-redux';
 import profileImage from '../../assets/profile/profile_image.webp'
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+
 
 const SingleBlog = ({ content }) => {
 
