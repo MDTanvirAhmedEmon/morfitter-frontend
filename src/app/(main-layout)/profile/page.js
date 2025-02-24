@@ -1,5 +1,5 @@
 "use client"
-import { Avatar, Badge, message, Upload } from "antd";
+import { Avatar, Badge, message, Tooltip, Upload } from "antd";
 import Image from "next/image";
 import { useState } from "react";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
@@ -24,6 +24,7 @@ import { useGetMyInvitationQuery } from "@/redux/features/invitation/invitationA
 import InvitationModal from "@/components/Profile/InvitationModal";
 import defaultProfilePic from '../../../assets/profile/profile_image.webp'
 import { useGetMyFollowersQuery } from "@/redux/features/trainer/trainerApi";
+import { CiEdit } from "react-icons/ci";
 
 const Profile = () => {
     const [profilePic, setProfilePic] = useState(null);
@@ -85,6 +86,11 @@ const Profile = () => {
     }
     // const profilePicture = user?.profilePicture ? `http://10.0.60.166:5000${user?.profileImageUrl}` : follower1;
     // const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : profilePicture;
+    const text =
+        <div className=" flex gap-3 py-1">
+            <Link className=" bg-white text-black hover:text-black px-1 rounded " href={`/profile/edit-profile`}>Edit Profile</Link>
+            <Link className=" bg-white text-black hover:text-black px-1 rounded " href={`/setting/change-user-password`}>Change Password</Link>
+        </div>;
 
     const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${user?.profileImageUrl}`;
 
@@ -194,6 +200,12 @@ const Profile = () => {
 
                     {/* Right Information Section */}
                     <div className="right-information w-full lg:w-[75%] pt-5">
+                        <div className=" flex justify-end mb-4">
+                            <Tooltip placement="top" title={text}>
+                                <CiEdit className=" w-7 h-7 cursor-pointer" />
+                            </Tooltip>
+
+                        </div>
                         <div className="user-details flex flex-col lg:flex-row lg:justify-between gap-5">
                             <div className="user">
                                 <div className="user-name text-4xl font-semibold capitalize">{user?.firstName} {user?.lastName}</div>
@@ -294,6 +306,20 @@ const Profile = () => {
                                     <button onClick={showInvitationModal} className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg "><FaPlus className=" text-greenColor" /></button>
                                 </Badge>
                             </div>
+                        </div>
+                        <div className="qualification flex  justify-between items-center  mb-4 shadow-lg py-4 px-3 rounded-lg">
+                            <div className="flex  gap-3 md:pr-8">
+                                <h2 className="text-gray-500 text-lg md:text-xl font-bold">
+                                    My Content
+                                </h2>
+                            </div>
+                            <Link href={`/profile/my-content`}>
+                                <button
+                                    className="add-btn text-white bg-secondary px-3 md:px-6 py-0 md:py-2 rounded-full "
+                                >
+                                    View
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

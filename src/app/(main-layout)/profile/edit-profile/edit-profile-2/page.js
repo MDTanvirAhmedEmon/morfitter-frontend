@@ -3,7 +3,7 @@ import { Form, Input, notification, Spin } from "antd";
 import dynamic from "next/dynamic";
 import regiserImg from '../../../../../assets/fitness2.png'
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo1 from '../../../../../assets/logo1.svg';
 import logo2 from '../../../../../assets/logo2.svg';
 import logo3 from '../../../../../assets/logo3.svg';
@@ -12,26 +12,30 @@ import logo6 from '../../../../../assets/logo6.svg';
 import logo7 from '../../../../../assets/logo7.svg';
 import logo8 from '../../../../../assets/logo8.svg';
 import { IoMdArrowDropdown } from "react-icons/io";
-import { useCreateTraineeMutation } from "@/redux/features/auth/authApi";
 import { useDispatch, useSelector } from "react-redux";
-import { setRole, setToken, setUser } from "@/redux/features/auth/authSlice";
+import { setRole, setToken } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
-import { decodedToken } from "@/utils/VerifyJwtToken";
+
 import Cookies from "js-cookie";
 import { clearRegisterInfo } from "@/redux/features/auth/registerSlice";
+import { useUpdateTraineeProfileMutation } from "@/redux/features/profile/profileApi";
+import { decodedToken } from "@/utils/VerifyJwtToken";
 
 
-const UserRegister2 = () => {
-    const [selectedLogos, setSelectedLogos] = useState([]);
-    console.log('seletedLogos', selectedLogos);
+const EditProfile2 = () => {
+    const { user, role } = useSelector((state) => state.auth)
+    console.log(user);
+    const interest = user?.interest ? user?.interest : []
+    const [selectedLogos, setSelectedLogos] = useState(interest);
+
     const { info, profile } = useSelector((state) => state.register);
-    console.log(info, profile);
 
+    const [form] = Form.useForm();
 
-    const [createTrainee, { isLoading }] = useCreateTraineeMutation();
-    const [height, setHeight] = useState(null);
-    const [weight, setWeight] = useState(null);
-    const [fitterGoal, setFitterGoal] = useState(null);
+    const [updateTraineeProfile, { isLoading }] = useUpdateTraineeProfileMutation();
+    const [height, setHeight] = useState(user?.heightMeasurement);
+    const [weight, setWeight] = useState(user?.weightMeasurement);
+    const [fitterGoal, setFitterGoal] = useState(user?.fitterGoal);
 
     const dispatch = useDispatch();
     const router = useRouter();
@@ -55,24 +59,35 @@ const UserRegister2 = () => {
                 : [...prevSelected, index]
         );
     };
+    useEffect(() => {
+        if (user) {
+            form.setFieldsValue({
+                height: user?.height || "",
+                weight: user?.weight || "",
+                towardsGoal: user?.towardsGoal || "",
+                achieveGoal: user?.achieveGoal || ""
+            });
+
+            setFitterGoal(user?.fitterGoal || null);
+        }
+    }, [user, form]);
 
     const onFinish = (values) => {
         const data = {
-            userInfo: {
-                email: info.email,
-                password: info.password,
+            user: {
+                email: info?.email,
             },
-            traineeData: {
-                firstName: info.firstName,
-                lastName: info.lastName,
-                address: `${info.city}, ${info.country}`,
+            trainee: {
+                firstName: info?.firstName,
+                lastName: info?.lastName,
+                address: `${info?.city}, ${info?.country}`,
                 // gender: "male", // nai 
-                contactNo: info.mobile,
-                title: info.title,
-                userName: info.userName,
-                dob: info.dob,
-                country: info.country,
-                city: info.city,
+                contactNo: info?.mobile,
+                title: info?.title,
+                userName: info?.userName,
+                dob: info?.dob,
+                country: info?.country,
+                city: info?.city,
                 height: Number(values.height),
                 heightMeasurement: height,
                 weight: Number(values.weight),
@@ -84,37 +99,21 @@ const UserRegister2 = () => {
             }
         };
 
-        if (!fitterGoal) {
-            notification.error({
-                message: 'Please select your fitter goal',
-                placement: 'bottomRight',
-            });
-            return
-        }
-
-        if (!selectedLogos.length) {
-            notification.error({
-                message: 'Please select your interested area',
-                placement: 'bottomRight',
-            });
-            return
-        }
-
         const formData = new FormData();
         formData.append("data", JSON.stringify(data));
         formData.append("file", profile);
-        createTrainee(formData).unwrap()
-            .then((data) => {
-                const verifiedtToken = decodedToken(data?.data?.accessToken)
-                dispatch(setToken(data?.data?.accessToken));
-                Cookies.set('morfitter-token', data?.data?.accessToken)
-                dispatch(setRole(verifiedtToken));
-                dispatch(setUser(data?.data?.userInfo));
+        updateTraineeProfile({ data: formData, id: user?._id }).unwrap()
+            .then((res) => {
+                console.log(res);
+                const verifiedtToken = decodedToken(res?.data?.accessToken)
+                console.log(verifiedtToken);
                 dispatch(clearRegisterInfo());
+                dispatch(setToken(res?.data?.accessToken));
+                Cookies.set('morfitter-token', res?.data?.accessToken)
+                dispatch(setRole(verifiedtToken));
                 router.push('/profile')
                 notification.success({
-                    message: "Registration Successful",
-                    description: data?.data?.message,
+                    message: "Updated Successfully",
                     placement: 'topRight',
                 });
             })
@@ -147,6 +146,7 @@ const UserRegister2 = () => {
                 <div className="lg:w-1/2 flex flex-col justify-center md:p-8 rounded-lg ">
                     <Form
                         name="register"
+                        form={form}
                         onFinish={onFinish}
                         initialValues={{ remember: true }}
                         className=" space-x-0 md:space-y-4"
@@ -271,6 +271,6 @@ const UserRegister2 = () => {
 };
 
 // export default Register;
-export default dynamic(() => Promise.resolve(UserRegister2), {
+export default dynamic(() => Promise.resolve(EditProfile2), {
     ssr: false,
 });
