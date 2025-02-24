@@ -46,6 +46,8 @@ export const config = {
         '/trainer-profile/edit-profile',
         '/trainer-profile/edit-profile/edit-profile-2',
         '/profile',
+        '/profile/edit-profile',
+        '/profile/edit-profile/edit-profile-2',
         '/morfitter-sessions',
     ],
 };

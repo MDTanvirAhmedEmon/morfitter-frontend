@@ -15,8 +15,7 @@ import logo6 from "../../../../../assets/logo6.svg";
 import logo7 from "../../../../../assets/logo7.svg";
 import logo8 from "../../../../../assets/logo8.svg";
 import logo9 from "../../../../../assets/logo9.svg";
-import { useCreateTrainerMutation } from "@/redux/features/auth/authApi";
-import { setRole, setToken, setUser } from "@/redux/features/auth/authSlice";
+import {  setRole, setToken, setUser } from "@/redux/features/auth/authSlice";
 import { clearRegisterInfo } from "@/redux/features/auth/registerSlice";
 import { useRouter } from "next/navigation";
 import { decodedToken } from "@/utils/VerifyJwtToken";
@@ -27,14 +26,14 @@ const PTEditProfile2 = () => {
     const dispatch = useDispatch();
     const router = useRouter();
     const { user, role } = useSelector((state) => state.auth);
-    console.log('dsfjshdalifhnasfg',user?.specialism);
-    const specialism = user?.specialism? user?.specialism : []
+    console.log('dsfjshdalifhnasfg', user?.specialism);
+    const specialism = user?.specialism ? user?.specialism : []
     const [updateTrainer, { isLoading }] = useUpdateTrainerMutation();
 
     const [selectedLogos, setSelectedLogos] = useState(specialism);
     console.log('from select', selectedLogos);
     const { info, profile } = useSelector((state) => state.register);
-    console.log(info);
+    const email = info?.email ? info?.email : role?.email
     const [onlineSession, setOnlineSession] = useState(user?.onlineSession);
     const [faceToFace, setFaceToFace] = useState(user?.faceToFace);
     const [consultation, setConsultation] = useState(user?.consultationType);
@@ -62,19 +61,24 @@ const PTEditProfile2 = () => {
     const onFinish = (values) => {
         const fromData = new FormData()
         const data = {
-            firstName: info.firstName,
-            lastName: info.lastName,
-            dob: info.dob,
-            contactNo: info.mobile,
-            userName: info?.userName,
-            country: values?.country,
-            zipCode: Number(values?.postcode),
-            onlineSession: onlineSession,
-            faceToFace: faceToFace,
-            radius: values?.radius,
-            about: values?.aboutMe,
-            consultationType: consultation,
-            specialism: selectedLogos,
+            user: {
+                email: email,
+            },
+            trainer: {
+                firstName: info.firstName,
+                lastName: info.lastName,
+                dob: info.dob,
+                contactNo: info.mobile,
+                userName: info?.userName,
+                country: values?.country,
+                zipCode: Number(values?.postcode),
+                onlineSession: onlineSession,
+                faceToFace: faceToFace,
+                radius: values?.radius,
+                about: values?.aboutMe,
+                consultationType: consultation,
+                specialism: selectedLogos,
+            }
         };
         console.log("trainer page er data", data);
         fromData.append('data', JSON.stringify(data))
@@ -107,16 +111,22 @@ const PTEditProfile2 = () => {
         //     return;
         // }
 
-        updateTrainer({data:fromData, id: user?._id})
+        updateTrainer({ data: fromData, id: user?._id })
             .unwrap()
-            .then((data) => {
+            .then((res) => {
+                console.log(res);
+                const verifiedtToken = decodedToken(res?.data?.accessToken)
+                console.log(verifiedtToken);
                 dispatch(clearRegisterInfo());
+                dispatch(setToken(res?.data?.accessToken));
+                Cookies.set('morfitter-token', res?.data?.accessToken)
+                dispatch(setRole(verifiedtToken));
+                router.push("/trainer-profile");
                 notification.success({
                     message: "Updated Successfully",
                     description: data?.data?.message,
                     placement: "topRight",
                 });
-                router.push("/trainer-profile");
             })
             .catch((error) => {
                 notification.error({
@@ -159,14 +169,14 @@ const PTEditProfile2 = () => {
                         <div className="grid md:grid-cols-2 md:gap-4">
                             <Form.Item
                                 name="country"
-                                // rules={[{ required: true, message: "Please input your country!" }]}
+                            // rules={[{ required: true, message: "Please input your country!" }]}
                             >
                                 <Input placeholder="Country" className="w-full" />
                             </Form.Item>
 
                             <Form.Item
                                 name="postcode"
-                                // rules={[{ required: true, message: "Please input your zip code!" }]}
+                            // rules={[{ required: true, message: "Please input your zip code!" }]}
                             >
                                 <Input placeholder="Postcode or Zip code" className="w-full" />
                             </Form.Item>
@@ -270,7 +280,7 @@ const PTEditProfile2 = () => {
                         <div>
                             <Form.Item
                                 name="aboutMe"
-                                // rules={[{ required: true, message: "Please tell us about yourself!" }]}
+                            // rules={[{ required: true, message: "Please tell us about yourself!" }]}
                             >
                                 <TextArea placeholder="About me" />
                             </Form.Item>
@@ -309,8 +319,8 @@ const PTEditProfile2 = () => {
                                             key={index}
                                             onClick={() => handleLogoClick(logo?.name)}
                                             className={`flex items-center justify-center w-[100px] lg:w-[110px] h-[100px] lg:h-[110px] px-7 text-center cursor-pointer ${selectedLogos.includes(logo?.name)
-                                                    ? "border-4 border-greenColor shadow shadow-greenColor"
-                                                    : "border-2 border-solid border-transparent"
+                                                ? "border-4 border-greenColor shadow shadow-greenColor"
+                                                : "border-2 border-solid border-transparent"
                                                 } rounded transition-all duration-300`}
                                             style={{
                                                 borderWidth: "2px",

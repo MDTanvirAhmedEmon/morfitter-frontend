@@ -17,7 +17,7 @@ const AddSocialModal = ({ isModalOpen, handleCancel, handleOk }) => {
     const onFinish = (values) => {
         const formData = new FormData();
         console.log("Submitted Values:", values);
-        formData.append('data', JSON.stringify(values));
+        formData.append('data', JSON.stringify({trainer:values}));
         updateTrainerProfile({ data: formData, id: user?._id }).unwrap()
             .then(() => {
                 message.success(`Updated Successfully`)

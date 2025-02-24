@@ -51,7 +51,7 @@ const TrainerProfile = () => {
   const uploadImage = () => {
     const formData = new FormData();
 
-    formData.append('data', JSON.stringify({}));
+    formData.append('data', JSON.stringify({trainer:{}}));
     if (profilePic) {
       formData.append('file', profilePic);
     }

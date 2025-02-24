@@ -82,7 +82,7 @@ const PTRegister2 = () => {
       specialism: selectedLogos,
     };
     console.log("trainer page er data", data);
-    // Function to remove `null`, `undefined`, and empty arrays `[]`
+
     const cleanObject = (obj) => {
       return Object.fromEntries(
         Object.entries(obj).filter(([_, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))

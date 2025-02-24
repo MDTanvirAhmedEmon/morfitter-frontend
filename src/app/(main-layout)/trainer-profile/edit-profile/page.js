@@ -32,6 +32,7 @@ const PTEditProfile = () => {
             firstName: values.name,
             lastName: values.surname,
             dob: dob,
+            email: values.email,
             mobile: values.mobile,
             userName: values?.userName,
         };
