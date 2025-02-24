@@ -57,48 +57,57 @@ const UserRegister2 = () => {
     };
 
     const onFinish = (values) => {
+        const traineeData = {
+            firstName: info.firstName,
+            lastName: info.lastName,
+            address: `${info.city}, ${info.country}`,
+            contactNo: info.mobile,
+            title: info.title,
+            userName: info.userName,
+            dob: info.dob,
+            country: info.country,
+            city: info.city,
+            height: values.height ? Number(values.height) : null,
+            heightMeasurement: height,
+            weight: values.weight ? Number(values.weight) : null,
+            weightMeasurement: weight,
+            fitterGoal: fitterGoal,
+            interest: selectedLogos,
+            towardsGoal: values.towardsGoal,
+            achieveGoal: values.achieveGoal
+        };
+
+        const filteredTraineeData = Object.fromEntries(
+            Object.entries(traineeData).filter(([_, value]) =>
+                value !== null && value !== undefined &&
+                !(Array.isArray(value) && value.length === 0)
+            )
+        );
+
         const data = {
             userInfo: {
                 email: info.email,
                 password: info.password,
             },
-            traineeData: {
-                firstName: info.firstName,
-                lastName: info.lastName,
-                address: `${info.city}, ${info.country}`,
-                // gender: "male", // nai 
-                contactNo: info.mobile,
-                title: info.title,
-                userName: info.userName,
-                dob: info.dob,
-                country: info.country,
-                city: info.city,
-                height: Number(values.height),
-                heightMeasurement: height,
-                weight: Number(values.weight),
-                weightMeasurement: weight,
-                fitterGoal: fitterGoal,
-                interest: selectedLogos,
-                towardsGoal: values.towardsGoal,
-                achieveGoal: values.achieveGoal
-            }
+            traineeData: filteredTraineeData
         };
+        console.log(data);
 
-        if (!fitterGoal) {
-            notification.error({
-                message: 'Please select your fitter goal',
-                placement: 'bottomRight',
-            });
-            return
-        }
+        // if (!fitterGoal) {
+        //     notification.error({
+        //         message: 'Please select your fitter goal',
+        //         placement: 'bottomRight',
+        //     });
+        //     return
+        // }
 
-        if (!selectedLogos.length) {
-            notification.error({
-                message: 'Please select your interested area',
-                placement: 'bottomRight',
-            });
-            return
-        }
+        // if (!selectedLogos.length) {
+        //     notification.error({
+        //         message: 'Please select your interested area',
+        //         placement: 'bottomRight',
+        //     });
+        //     return
+        // }
 
         const formData = new FormData();
         formData.append("data", JSON.stringify(data));
@@ -160,7 +169,7 @@ const UserRegister2 = () => {
                                 </div>
                                 <Form.Item
                                     name="height"
-                                    rules={[{ required: true, message: "Please input your height!" }]}
+                                    // rules={[{ required: true, message: "Please input your height!" }]}
                                     className=" w-full"
                                 >
                                     <Input
@@ -178,7 +187,7 @@ const UserRegister2 = () => {
                                 </div>
                                 <Form.Item
                                     name="weight"
-                                    rules={[{ required: true, message: "Please input your weight!" }]}
+                                    // rules={[{ required: true, message: "Please input your weight!" }]}
                                     className=" w-full"
                                 >
                                     <Input
@@ -231,7 +240,7 @@ const UserRegister2 = () => {
                             <div>
                                 <Form.Item
                                     name="towardsGoal"
-                                    rules={[{ required: true, message: "Please input your working goal!" }]}
+                                    // rules={[{ required: true, message: "Please input your working goal!" }]}
                                     className=" w-full"
                                 >
                                     <Input
@@ -244,7 +253,7 @@ const UserRegister2 = () => {
                             <div>
                                 <Form.Item
                                     name="achieveGoal"
-                                    rules={[{ required: true, message: "Please input your goal!" }]}
+                                    // rules={[{ required: true, message: "Please input your goal!" }]}
                                     className=" w-full"
                                 >
                                     <Input

@@ -54,12 +54,11 @@ const UserRegister = () => {
     console.log("Registration Data:", registrationData);
 
     // Validate profilePic
-    if (!profilePic) {
-      message.error("Please upload a profile picture.");
-      return;
+    if (profilePic) {
+      dispatch(setProfile(profilePic))
     }
-    dispatch(setProfile(profilePic))
-    if (profilePic && registrationData) {
+
+    if (registrationData) {
       router.push('/auth/user-register/user-register-2')
     }
 
@@ -105,9 +104,9 @@ const UserRegister = () => {
                 </Form.Item>
                 <Form.Item
                   name="title"
-                  rules={[
-                    { required: true, message: "Please input your title!" },
-                  ]}
+                  // rules={[
+                  //   { required: true, message: "Please input your title!" },
+                  // ]}
                   className=" md:w-[50%]"
                 >
                   <Input
@@ -236,12 +235,12 @@ const UserRegister = () => {
               <Form.Item
                 name="mobile"
                 className=" md:w-1/2"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your mobile number!",
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: "Please input your mobile number!",
+                //   },
+                // ]}
               >
                 <Input
                   placeholder="Mobile Number"
@@ -284,16 +283,16 @@ const UserRegister = () => {
             <div className="grid grid-cols-2 gap-4 ">
               <Form.Item
                 name="country"
-                rules={[
-                  { required: true, message: "Please input your country!" },
-                ]}
+                // rules={[
+                //   { required: true, message: "Please input your country!" },
+                // ]}
               >
                 <Input placeholder="Country" className="w-full" />
               </Form.Item>
 
               <Form.Item
                 name="city"
-                rules={[{ required: true, message: "Please input your city!" }]}
+                // rules={[{ required: true, message: "Please input your city!" }]}
                 hasFeedback
               >
                 <Input placeholder="City" className="w-full" />

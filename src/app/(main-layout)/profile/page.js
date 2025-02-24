@@ -70,7 +70,9 @@ const Profile = () => {
     const uploadImage = () => {
         const formData = new FormData();
 
-        formData.append('data', JSON.stringify({}));
+        formData.append('data', JSON.stringify({
+            trainee:{}
+        }));
         if (profilePic) {
             formData.append('file', profilePic);
         }
