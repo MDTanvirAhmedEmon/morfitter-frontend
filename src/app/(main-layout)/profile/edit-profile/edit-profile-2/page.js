@@ -29,7 +29,7 @@ const EditProfile2 = () => {
     const [selectedLogos, setSelectedLogos] = useState(interest);
 
     const { info, profile } = useSelector((state) => state.register);
-
+    const email = info?.email ? info?.email : role?.email
     const [form] = Form.useForm();
 
     const [updateTraineeProfile, { isLoading }] = useUpdateTraineeProfileMutation();
@@ -75,7 +75,7 @@ const EditProfile2 = () => {
     const onFinish = (values) => {
         const data = {
             user: {
-                email: info?.email,
+                email: email,
             },
             trainee: {
                 firstName: info?.firstName,
