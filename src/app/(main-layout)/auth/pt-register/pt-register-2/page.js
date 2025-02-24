@@ -60,17 +60,17 @@ const PTRegister2 = () => {
       register:
       {
         userInfo: {
-          email: info.email,
-          password: info.password,
+          email: info?.email,
+          password: info?.password,
         },
         trainerData: {
-          firstName: info.firstName,
-          lastName: info.lastName,
-          dob: info.dob,
-          contactNo: info.mobile,
+          firstName: info?.firstName,
+          lastName: info?.lastName,
+          dob: info?.dob,
+          contactNo: info?.mobile,
           userName: info?.userName,
           country: values?.country,
-          zipCode: Number(values?.postcode),
+          zipCode: values?.postcode ? Number(values?.postcode) : null,
           onlineSession: onlineSession,
           faceToFace: faceToFace,
           radius: values?.radius,
@@ -82,35 +82,44 @@ const PTRegister2 = () => {
       specialism: selectedLogos,
     };
     console.log("trainer page er data", data);
+    // Function to remove `null`, `undefined`, and empty arrays `[]`
+    const cleanObject = (obj) => {
+      return Object.fromEntries(
+        Object.entries(obj).filter(([_, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
+      );
+    };
 
-    if (!onlineSession) {
-      notification.error({
-        message: "Please select your online Session",
-        placement: "bottomRight",
-      });
-      return;
-    }
-    if (!faceToFace) {
-      notification.error({
-        message: "Please select your face To Face Session",
-        placement: "bottomRight",
-      });
-      return;
-    }
-    if (!selectedLogos.length) {
-      notification.error({
-        message: "Please select your specialisms.",
-        placement: "bottomRight",
-      });
-      return;
-    }
-    if (!consultation) {
-      notification.error({
-        message: "Please select consultation type.",
-        placement: "bottomRight",
-      });
-      return;
-    }
+    // Clean `trainerData`
+    data.register.trainerData = cleanObject(data.register.trainerData);
+
+    // if (!onlineSession) {
+    //   notification.error({
+    //     message: "Please select your online Session",
+    //     placement: "bottomRight",
+    //   });
+    //   return;
+    // }
+    // if (!faceToFace) {
+    //   notification.error({
+    //     message: "Please select your face To Face Session",
+    //     placement: "bottomRight",
+    //   });
+    //   return;
+    // }
+    // if (!selectedLogos.length) {
+    //   notification.error({
+    //     message: "Please select your specialisms.",
+    //     placement: "bottomRight",
+    //   });
+    //   return;
+    // }
+    // if (!consultation) {
+    //   notification.error({
+    //     message: "Please select consultation type.",
+    //     placement: "bottomRight",
+    //   });
+    //   return;
+    // }
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
@@ -168,18 +177,18 @@ const PTRegister2 = () => {
             <div className="grid md:grid-cols-2 md:gap-4">
               <Form.Item
                 name="country"
-                rules={[
-                  { required: true, message: "Please input your country!" },
-                ]}
+              // rules={[
+              //   { required: true, message: "Please input your country!" },
+              // ]}
               >
                 <Input placeholder="Country" className="w-full" />
               </Form.Item>
 
               <Form.Item
                 name="postcode"
-                rules={[
-                  { required: true, message: "Please input your zip code!" },
-                ]}
+              // rules={[
+              //   { required: true, message: "Please input your zip code!" },
+              // ]}
               >
                 <Input placeholder="Postcode or Zip code" className="w-full" />
               </Form.Item>
@@ -248,9 +257,9 @@ const PTRegister2 = () => {
                 <Form.Item
                   name="radius"
                   className=" md:w-1/2"
-                  rules={[
-                    { required: true, message: "Please select your surname!" },
-                  ]}
+                // rules={[
+                //   { required: true, message: "Please select your surname!" },
+                // ]}
                 >
                   {
                     faceToFace === "yes" && (
@@ -287,9 +296,9 @@ const PTRegister2 = () => {
             <div>
               <Form.Item
                 name="aboutMe"
-                rules={[
-                  { required: true, message: "Please select your surname!" },
-                ]}
+              // rules={[
+              //   { required: true, message: "Please select your surname!" },
+              // ]}
               >
                 <TextArea placeholder="About me"></TextArea>
               </Form.Item>

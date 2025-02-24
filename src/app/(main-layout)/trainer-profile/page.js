@@ -1,5 +1,5 @@
 "use client";
-import { Avatar, message, Popconfirm, Rate, Upload } from "antd";
+import { Avatar, message, Popconfirm, Rate, Tooltip, Upload } from "antd";
 import Image from "next/image";
 import { useState } from "react";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
@@ -22,6 +22,7 @@ import { useGetReviewQuery } from "@/redux/features/invitation/invitationApi";
 import { useGetMySessionQuery } from "@/redux/features/session/sessionApi";
 import defaultProfilePic from '../../../assets/profile/profile_image.webp'
 import { useGetMembersQuery, useGetMyFollowersQuery } from "@/redux/features/trainer/trainerApi";
+import { CiEdit } from "react-icons/ci";
 
 const TrainerProfile = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -81,29 +82,35 @@ const TrainerProfile = () => {
   };
   const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${user?.profileImageUrl}`;
 
-  const[ deleteSpecialism ] = useDeleteSpecialismMutation();
+  const [deleteSpecialism] = useDeleteSpecialismMutation();
 
   const confirmSpecialism = (id) => {
     deleteSpecialism(id).unwrap()
-    .then( () => {
-      message.success('Deleted Successfully')
-    }) 
-    .catch((error) => {
-      message.error(error?.data?.message)
-    })
+      .then(() => {
+        message.success('Deleted Successfully')
+      })
+      .catch((error) => {
+        message.error(error?.data?.message)
+      })
   };
 
-  const[ deleteQualification ] = useDeleteQualificationMutation();
+  const [deleteQualification] = useDeleteQualificationMutation();
 
   const confirmQualification = (id) => {
     deleteQualification(id).unwrap()
-    .then( () => {
-      message.success('Deleted Successfully')
-    }) 
-    .catch((error) => {
-      message.error(error?.data?.message)
-    })
+      .then(() => {
+        message.success('Deleted Successfully')
+      })
+      .catch((error) => {
+        message.error(error?.data?.message)
+      })
   };
+  const text = 
+    <div className=" flex gap-3 py-1">
+      <Link className=" bg-white text-black hover:text-black px-1 rounded " href={`/trainer-profile/edit-profile`}>Edit Profile</Link>
+      <Link className=" bg-white text-black hover:text-black px-1 rounded " href={`/setting/change-user-password`}>Change Password</Link>
+    </div>;
+  
 
   return (
     <section className=" py-10 md:py-20">
@@ -221,7 +228,13 @@ const TrainerProfile = () => {
           </div>
 
           {/* Right Information Section */}
-          <div className="right-information w-full lg:w-[75%] pt-5">
+          <div className="right-information w-full lg:w-[75%] ">
+            <div className=" flex justify-end mb-4">
+              <Tooltip placement="top" title={text}>
+                <CiEdit className=" w-7 h-7 cursor-pointer" />
+              </Tooltip>
+
+            </div>
             <div className="user-details flex flex-col lg:flex-row lg:justify-between gap-5">
               <div className="user">
                 <div className="user-name text-4xl font-semibold capitalize">
@@ -447,6 +460,12 @@ const TrainerProfile = () => {
             <div className="text-white bg-secondary px-4 py-2 text-center text-lg rounded w-full my-4 ">
               Current Training Session
             </div>
+            {
+              !session?.data?.data?.length &&
+              <div className=" flex items-center justify-center py-8">
+                <h3 className=" text-xl">No Sesssion Available</h3>
+              </div>
+            }
             <div className=" grid grid-cols-4 gap-3">
               {
                 session?.data?.data?.map((item) => (
