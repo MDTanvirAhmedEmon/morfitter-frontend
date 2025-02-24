@@ -64,5 +64,8 @@ export const mainTheme = {
       itemSize: 30,
       itemActiveColorDisabled: "rgb(19,194,194)",
     },
+    "Tooltip": {
+      "colorBgSpotlight": "rgba(0,0,0,0.75)"
+    },
   },
 };
