@@ -44,7 +44,7 @@ export const config = {
         '/morfitter-sessions/single-session-of-pt/:path*',
         '/trainer-profile',
         '/trainer-profile/edit-profile',
-        '/trainer-profile/edit-profile/2',
+        '/trainer-profile/edit-profile/edit-profile-2',
         '/profile',
         '/morfitter-sessions',
     ],

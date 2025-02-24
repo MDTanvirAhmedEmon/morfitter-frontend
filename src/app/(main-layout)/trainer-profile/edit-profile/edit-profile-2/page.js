@@ -78,34 +78,34 @@ const PTEditProfile2 = () => {
         };
         console.log("trainer page er data", data);
         fromData.append('data', JSON.stringify(data))
-        if (!onlineSession) {
-            notification.error({
-                message: "Please select your online Session",
-                placement: "bottomRight",
-            });
-            return;
-        }
-        if (!faceToFace) {
-            notification.error({
-                message: "Please select your face To Face Session",
-                placement: "bottomRight",
-            });
-            return;
-        }
-        if (!selectedLogos.length) {
-            notification.error({
-                message: "Please select your specialisms.",
-                placement: "bottomRight",
-            });
-            return;
-        }
-        if (!consultation) {
-            notification.error({
-                message: "Please select consultation type.",
-                placement: "bottomRight",
-            });
-            return;
-        }
+        // if (!onlineSession) {
+        //     notification.error({
+        //         message: "Please select your online Session",
+        //         placement: "bottomRight",
+        //     });
+        //     return;
+        // }
+        // if (!faceToFace) {
+        //     notification.error({
+        //         message: "Please select your face To Face Session",
+        //         placement: "bottomRight",
+        //     });
+        //     return;
+        // }
+        // if (!selectedLogos.length) {
+        //     notification.error({
+        //         message: "Please select your specialisms.",
+        //         placement: "bottomRight",
+        //     });
+        //     return;
+        // }
+        // if (!consultation) {
+        //     notification.error({
+        //         message: "Please select consultation type.",
+        //         placement: "bottomRight",
+        //     });
+        //     return;
+        // }
 
         updateTrainer({data:fromData, id: user?._id})
             .unwrap()
@@ -159,14 +159,14 @@ const PTEditProfile2 = () => {
                         <div className="grid md:grid-cols-2 md:gap-4">
                             <Form.Item
                                 name="country"
-                                rules={[{ required: true, message: "Please input your country!" }]}
+                                // rules={[{ required: true, message: "Please input your country!" }]}
                             >
                                 <Input placeholder="Country" className="w-full" />
                             </Form.Item>
 
                             <Form.Item
                                 name="postcode"
-                                rules={[{ required: true, message: "Please input your zip code!" }]}
+                                // rules={[{ required: true, message: "Please input your zip code!" }]}
                             >
                                 <Input placeholder="Postcode or Zip code" className="w-full" />
                             </Form.Item>
@@ -270,7 +270,7 @@ const PTEditProfile2 = () => {
                         <div>
                             <Form.Item
                                 name="aboutMe"
-                                rules={[{ required: true, message: "Please tell us about yourself!" }]}
+                                // rules={[{ required: true, message: "Please tell us about yourself!" }]}
                             >
                                 <TextArea placeholder="About me" />
                             </Form.Item>

@@ -460,6 +460,12 @@ const TrainerProfile = () => {
             <div className="text-white bg-secondary px-4 py-2 text-center text-lg rounded w-full my-4 ">
               Current Training Session
             </div>
+            {
+              !session?.data?.data?.length &&
+              <div className=" flex items-center justify-center py-8">
+                <h3 className=" text-xl">No Sesssion Available</h3>
+              </div>
+            }
             <div className=" grid grid-cols-4 gap-3">
               {
                 session?.data?.data?.map((item) => (

@@ -47,14 +47,11 @@ const PTRegister = () => {
     dispatch(setInfo(TrainerRegistrationData))
 
     // Validate profilePic
-    if (!profilePic) {
-      message.error("Please upload a profile picture.");
-      return;
-    }
+
     dispatch(setProfile(profilePic))
-    if (profilePic && TrainerRegistrationData) {
+
       router.push('/auth/pt-register/pt-register-2')
-    }
+    
 
   };
 
@@ -215,12 +212,7 @@ const PTRegister = () => {
               <Form.Item
                 name="mobile"
                 className=" md:w-1/2"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your mobile number!",
-                  },
-                ]}
+
               >
                 <Input
                   placeholder="Mobile Number"
