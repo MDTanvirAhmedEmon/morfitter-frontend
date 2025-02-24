@@ -3,15 +3,7 @@ import { baseApi } from "@/redux/api/baseApi";
 const trainerApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
 
-        // createQualification: builder.mutation({
-        //     query: ({ data, id }) => ({
-        //         url: `/qualification/create/${id}`,
-        //         method: "POST",
-        //         body: data,
-        //     }),
-        //     invalidatesTags: ['qualification']
-        // }),
-
+        
         getAllTrainer: builder.query({
             query: (params) => ({
                 url: `/trainer`,
@@ -19,6 +11,16 @@ const trainerApi = baseApi.injectEndpoints({
                 params,
             }),
         }),
+
+        updateTrainer: builder.mutation({
+            query: ({ data, id }) => ({
+                url: `/trainer/${id}`,
+                method: "PATCH",
+                body: data,
+            }),
+            invalidatesTags: ['user']
+        }),
+
         getSingleTrainer: builder.query({
             query: (id) => ({
                 url: `/trainer/${id}`,
@@ -49,6 +51,6 @@ const trainerApi = baseApi.injectEndpoints({
     }),
 });
 
-export const { useGetAllTrainerQuery, useGetSingleTrainerSessionQuery, useGetSingleTrainerQuery, useGetMembersQuery, useGetMyFollowersQuery } = trainerApi;
+export const { useGetAllTrainerQuery, useUpdateTrainerMutation , useGetSingleTrainerSessionQuery, useGetSingleTrainerQuery, useGetMembersQuery, useGetMyFollowersQuery } = trainerApi;
 
 export default trainerApi;

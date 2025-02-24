@@ -34,16 +34,14 @@ const PTEditProfile = () => {
             dob: dob,
             mobile: values.mobile,
             userName: values?.userName,
-            password: values.password,
         };
         console.log("Registration Data of user ", TrainerRegistrationData);
         dispatch(setInfo(TrainerRegistrationData))
 
         // Validate profilePic
-        if (!profilePic) {
-            message.error("Please upload a profile picture.");
-            return;
-        }
+
+        router.push('/trainer-profile/edit-profile/edit-profile-2')
+
     };
 
     return (
@@ -198,14 +196,14 @@ const PTEditProfile = () => {
 
                         {/* Submit Button */}
                         <Form.Item>
-                            <Link href={`/trainer-profile/edit-profile/2`}>
+                            {/* <Link href={`/trainer-profile/edit-profile/2`}> */}
                                 <button
                                     type="submit"
                                     className="bookBtn text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
                                 >
                                     Next
                                 </button>
-                            </Link>
+                            {/* </Link> */}
                         </Form.Item>
                     </Form>
                 </div>
