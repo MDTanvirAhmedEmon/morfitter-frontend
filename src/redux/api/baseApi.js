@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import { decodedToken } from "@/utils/VerifyJwtToken";
 
 const baseQuery = fetchBaseQuery({
-  // baseUrl: `http://10.0.60.166:5000/api/v1`,
+  // baseUrl: `/api/v1`,
   baseUrl: `http://localhost:5000/api/v1`,
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {

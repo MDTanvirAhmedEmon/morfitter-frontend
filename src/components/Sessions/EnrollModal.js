@@ -64,7 +64,7 @@ const EnrollModal = ({ isModalOpen, handleCancel, handleOk, session }) => {
                                         controls
                                         className="w-full rounded-lg transition-transform duration-300 hover:scale-105"
                                     >
-                                        <source src={`http://10.0.60.166:5000${session?.promo_video}`} type="video/mp4" />
+                                        <source src={`${session?.promo_video}`} type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
                                 </div>
@@ -98,7 +98,7 @@ const EnrollModal = ({ isModalOpen, handleCancel, handleOk, session }) => {
                                         controls
                                         className="w-full rounded-lg transition-transform duration-300 hover:scale-105"
                                     >
-                                        <source src={`http://10.0.60.166:5000${session?.promo_video}`} type="video/mp4" />
+                                        <source src={`${session?.promo_video}`} type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
                                 </div>

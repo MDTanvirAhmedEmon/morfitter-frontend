@@ -24,7 +24,7 @@ const MyEnrolledSession = () => {
                                 data?.data?.map((item) => (
                                     <Link key={item?._id} href={`/morfitter-sessions/single-session-of-pt/${item?.sessionDetails?._id}`}>
                                         <div key={item?._id} className=' cursor-pointer'>
-                                            <Image className=' w-full h-[450px] object-cover' src={`http://10.0.60.166:5000${item?.sessionDetails?.promo_image}`} alt='session' width={500} height={500} />
+                                            <Image className=' w-full h-[450px] object-cover' src={`${item?.sessionDetails?.promo_image}`} alt='session' width={500} height={500} />
                                         </div>
                                     </Link>
                                 ))

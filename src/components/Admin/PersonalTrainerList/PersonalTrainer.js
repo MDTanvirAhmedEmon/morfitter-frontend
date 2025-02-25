@@ -31,7 +31,7 @@ const PersonalTrainersTable = ({ searchQuery }) => {
         record?.profileImageUrl ? (
           <Avatar
             size={40}
-            src={`http://10.0.60.166:5000${record?.profileImageUrl}`}
+            src={`${record?.profileImageUrl}`}
           />
         ) : (
           <Avatar size={40} src="https://avatar.iran.liara.run/public/43" />

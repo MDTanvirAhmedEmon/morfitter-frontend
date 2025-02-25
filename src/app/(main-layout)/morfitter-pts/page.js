@@ -55,7 +55,7 @@ const MorfitterPts = () => {
                             <Image
                                 className=" w-32 rounded-full"
                                 src={item?.profileImageUrl
-                                    ? `http://10.0.60.166:5000${item?.profileImageUrl}`
+                                    ? `${item?.profileImageUrl}`
                                     : profileImage}
                                 width={300}
                                 height={300}

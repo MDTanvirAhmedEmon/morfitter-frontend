@@ -223,8 +223,7 @@ const UserRegister = () => {
 
             {/* Date of Birth */}
             <div className=" flex flex-col md:flex-row gap-4">
-
-              <div className="grid grid-cols-3 gap-4">
+              <div className="md:w-1/2 grid grid-cols-3 gap-4">
                 <Form.Item
                   name="day"
                   rules={[

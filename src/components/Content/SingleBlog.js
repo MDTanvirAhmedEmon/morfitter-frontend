@@ -72,7 +72,7 @@ const SingleBlog = ({ content }) => {
             <div className=" flex items-center gap-8">
               <Image
                 src={content?.userInfo?.profileImageUrl
-                  ? `http://10.0.60.166:5000${content?.userInfo?.profileImageUrl}`
+                  ? `${content?.userInfo?.profileImageUrl}`
                   : profileImage}
                 width={200}
                 height={200}
@@ -104,7 +104,7 @@ const SingleBlog = ({ content }) => {
                 <Image
 
                   src={
-                    `http://10.0.60.166:5000${content?.imageUrl}`
+                    `${content?.imageUrl}`
                   }
 
                   alt="Post Content"
@@ -119,7 +119,7 @@ const SingleBlog = ({ content }) => {
                   controls
                   className="w-full rounded-lg "
                 >
-                  <source src={`http://10.0.60.166:5000${content?.videoUrl}`} type="video/mp4" />
+                  <source src={`${content?.videoUrl}`} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               }

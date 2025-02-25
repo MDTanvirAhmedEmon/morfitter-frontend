@@ -26,7 +26,7 @@ function SingleContent({ item }) {
         item?.imageUrl &&
         <Image
           src={item?.imageUrl
-            ? `http://10.0.60.166:5000${item?.imageUrl}`
+            ? `${item?.imageUrl}`
             : profileImage}
 
           alt={item?.title}
@@ -43,7 +43,7 @@ function SingleContent({ item }) {
           controls
           className="w-full rounded-lg "
         >
-          <source src={`http://10.0.60.166:5000${item?.videoUrl}`} type="video/mp4" />
+          <source src={`${item?.videoUrl}`} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       }
