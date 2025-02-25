@@ -15,12 +15,13 @@ import logo6 from "../../../../../assets/logo6.svg";
 import logo7 from "../../../../../assets/logo7.svg";
 import logo8 from "../../../../../assets/logo8.svg";
 import logo9 from "../../../../../assets/logo9.svg";
-import {  setRole, setToken, setUser } from "@/redux/features/auth/authSlice";
+import { setRole, setToken, setUser } from "@/redux/features/auth/authSlice";
 import { clearRegisterInfo } from "@/redux/features/auth/registerSlice";
 import { useRouter } from "next/navigation";
 import { decodedToken } from "@/utils/VerifyJwtToken";
 import Cookies from "js-cookie";
 import { useUpdateTrainerMutation } from "@/redux/features/trainer/trainerApi";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 const PTEditProfile2 = () => {
     const dispatch = useDispatch();
@@ -58,7 +59,61 @@ const PTEditProfile2 = () => {
         );
     };
 
+    const countries = [
+        "United Kingdom",
+        "United States",
+        "Canada",
+        "Australia",
+        "Ireland",
+        "France",
+        "Germany",
+        "Netherlands",
+        "Belgium",
+        "Sweden",
+        "Denmark",
+        "Norway",
+        "Finland",
+        "Iceland",
+        "Switzerland",
+        "Austria",
+        "Luxembourg",
+        "Liechtenstein",
+        "Spain",
+        "Portugal",
+        "Italy",
+        "Greece",
+        "Malta",
+        "Cyprus",
+        "Estonia",
+        "Latvia",
+        "Lithuania",
+        "Poland",
+        "Czech Republic",
+        "Slovakia",
+        "Hungary",
+        "Slovenia",
+        "Croatia",
+        "Romania",
+        "Bulgaria",
+        "Serbia",
+        "Montenegro",
+        "North Macedonia",
+        "Albania",
+        "Bosnia and Herzegovina",
+        "Kosovo",
+        "Ukraine",
+        "Moldova",
+        "New Zealand",
+        "South Africa",
+        "Jamaica",
+        "Trinidad and Tobago",
+        "Barbados",
+        "Singapore",
+        "Hong Kong"
+    ];
+
     const onFinish = (values) => {
+        
         const fromData = new FormData()
         const data = {
             user: {
@@ -171,7 +226,13 @@ const PTEditProfile2 = () => {
                                 name="country"
                             // rules={[{ required: true, message: "Please input your country!" }]}
                             >
-                                <Input placeholder="Country" className="w-full" />
+                                <Select defaultValue={user?.country} placeholder="Country" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                                    {countries.map((country) => (
+                                        <Select.Option key={country} value={country}>
+                                            {country}
+                                        </Select.Option>
+                                    ))}
+                                </Select>
                             </Form.Item>
 
                             <Form.Item
@@ -179,6 +240,16 @@ const PTEditProfile2 = () => {
                             // rules={[{ required: true, message: "Please input your zip code!" }]}
                             >
                                 <Input placeholder="Postcode or Zip code" className="w-full" />
+                            </Form.Item>
+                        </div>
+
+                        {/* About Me */}
+                        <div>
+                            <Form.Item
+                                name="aboutMe"
+                            // rules={[{ required: true, message: "Please tell us about yourself!" }]}
+                            >
+                                <TextArea placeholder="About me" />
                             </Form.Item>
                         </div>
 
@@ -228,64 +299,6 @@ const PTEditProfile2 = () => {
                             </div>
                         </div>
 
-                        {/* Radius Selection for Face to Face Sessions */}
-                        <div>
-                            <ConfigProvider
-                                theme={{
-                                    token: {
-                                        Select: {
-                                            activeBorderColor: "rgb(11,165,147)",
-                                            hoverBorderColor: "rgb(11,165,147)",
-                                            colorPrimary: "rgb(11,165,147)",
-                                            controlHeight: 40,
-                                            fontSize: 16,
-                                            colorBorder: "rgb(11,165,147)",
-                                        },
-                                    },
-                                }}
-                            >
-                                <Form.Item
-                                    name="radius"
-                                    className="md:w-1/2"
-
-                                >
-                                    {faceToFace === "yes" && (
-                                        <Select
-                                            placeholder={
-                                                <p className="text-lg">
-                                                    Radius <span className="text-sm">(If yes face to face sessions)</span>
-                                                </p>
-                                            }
-                                        >
-                                            <Select.Option value="1m">1m</Select.Option>
-                                            <Select.Option value="2m">2m</Select.Option>
-                                            <Select.Option value="3m">3m</Select.Option>
-                                            <Select.Option value="4m">4m</Select.Option>
-                                            <Select.Option value="5m">5m</Select.Option>
-                                            <Select.Option value="6m">6m</Select.Option>
-                                            <Select.Option value="7m">7m</Select.Option>
-                                            <Select.Option value="10m">10m</Select.Option>
-                                            <Select.Option value="11m">11m</Select.Option>
-                                            <Select.Option value="12m">12m</Select.Option>
-                                            <Select.Option value="13m">13m</Select.Option>
-                                            <Select.Option value="14m">14m</Select.Option>
-                                            <Select.Option value="15m">15m</Select.Option>
-                                        </Select>
-                                    )}
-                                </Form.Item>
-                            </ConfigProvider>
-                        </div>
-
-                        {/* About Me */}
-                        <div>
-                            <Form.Item
-                                name="aboutMe"
-                            // rules={[{ required: true, message: "Please tell us about yourself!" }]}
-                            >
-                                <TextArea placeholder="About me" />
-                            </Form.Item>
-                        </div>
-
                         {/* Consultation Type */}
                         <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-12 mb-8">
                             <p className="text-lg md:w-1/2">Consultations I offer are:</p>
@@ -308,6 +321,66 @@ const PTEditProfile2 = () => {
                                 </button>
                             </div>
                         </div>
+                        {/* Radius Selection for Face to Face Sessions */}
+                        <div>
+                            <ConfigProvider
+                                theme={{
+                                    token: {
+                                        Select: {
+                                            activeBorderColor: "rgb(11,165,147)",
+                                            hoverBorderColor: "rgb(11,165,147)",
+                                            colorPrimary: "rgb(11,165,147)",
+                                            controlHeight: 40,
+                                            fontSize: 16,
+                                            colorBorder: "rgb(11,165,147)",
+                                        },
+                                    },
+                                }}
+                            >
+                                {
+                                    faceToFace === "yes" && (
+                                        <Form.Item
+                                            name="radius"
+                                            className=" md:w-1/2"
+                                        // rules={[
+                                        //   { required: true, message: "Please select your surname!" },
+                                        // ]}
+                                        >
+
+                                            <Select
+                                                placeholder={
+                                                    <p className=" text-lg">
+                                                        Radius
+                                                        <span className=" text-sm">
+                                                            (If yes face to face sessions)
+                                                        </span>
+                                                    </p>
+                                                }
+                                                suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />}
+                                            >
+                                                <Select.Option value="1m">1m</Select.Option>
+                                                <Select.Option value="2m">2m</Select.Option>
+                                                <Select.Option value="3m">3m</Select.Option>
+                                                <Select.Option value="4m">4m</Select.Option>
+                                                <Select.Option value="5m">5m</Select.Option>
+                                                <Select.Option value="6m">6m</Select.Option>
+                                                <Select.Option value="7m">7m</Select.Option>
+                                                <Select.Option value="10m">10m</Select.Option>
+                                                <Select.Option value="11m">11m</Select.Option>
+                                                <Select.Option value="12m">12m</Select.Option>
+                                                <Select.Option value="13m">13m</Select.Option>
+                                                <Select.Option value="14m">14m</Select.Option>
+                                                <Select.Option value="15m">15m</Select.Option>
+                                                <Select.Option value="15m+">15m+</Select.Option>
+                                            </Select>
+
+
+                                        </Form.Item>
+                                    )
+                                }
+                            </ConfigProvider>
+                        </div>
+
 
                         {/* Specialism */}
                         <div className="mb-10">

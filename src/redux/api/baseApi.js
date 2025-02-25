@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { message } from "antd";
-import { logout, setToken } from "../features/auth/authSlice";
+import { logout, setRole, setToken } from "../features/auth/authSlice";
 import Cookies from "js-cookie";
+import { decodedToken } from "@/utils/VerifyJwtToken";
 
 const baseQuery = fetchBaseQuery({
   // baseUrl: `http://10.0.60.166:5000/api/v1`,
@@ -41,7 +42,8 @@ const baseQueryWithRefreshToken = async (args, api, extraOptions) => {
     const data = await res.json();
 
     if (data?.data?.accessToken) {
-      console.log(data?.data?.accessToken);
+      const verifiedToken = decodedToken(data?.data?.accessToken);
+      api.dispatch(setRole(verifiedToken));
       api.dispatch(setToken(data.data.accessToken));
       Cookies.set('morfitter-token', data?.data?.accessToken)
       result = await baseQuery(args, api, extraOptions);

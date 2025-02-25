@@ -211,7 +211,7 @@ const Profile = () => {
                         <div className="user-details flex flex-col lg:flex-row lg:justify-between gap-5">
                             <div className="user">
                                 <div className="user-name text-4xl font-semibold capitalize">{user?.firstName} {user?.lastName}</div>
-                                <div className="mt-2 text-2xl">New York</div>
+                                <div className="mt-2 text-2xl">{user?.city}</div>
                             </div>
 
                             <div className="following-follower grid grid-cols-1 md:grid-cols-3 gap-5">

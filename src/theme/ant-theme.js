@@ -23,7 +23,7 @@ export const mainTheme = {
       activeBorderColor: "rgb(11,165,147)",
       hoverBorderColor: "rgb(11,165,147)",
       colorPrimary: "rgb(11,165,147)",
-      controlHeight: 40,
+      controlHeight: 43,
       fontSize: 16,
       colorBorder: "rgb(11,165,147)",
     },

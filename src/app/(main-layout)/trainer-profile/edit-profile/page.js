@@ -1,12 +1,10 @@
 "use client";
-import { Form, Input, InputNumber, message } from "antd";
+import { Form, Input, Select, message } from "antd";
 import { PhoneOutlined } from "@ant-design/icons";
 import { IoMdArrowDropdown } from "react-icons/io";
 import dynamic from "next/dynamic";
 import regiserImg from "../../../../assets/register.png";
-import circle from "../../../../assets/circle.svg";
 import Image from "next/image";
-import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { setInfo } from "@/redux/features/auth/registerSlice";
@@ -19,37 +17,30 @@ const PTEditProfile = () => {
 
     const onFinish = (values) => {
         const { day, month, year } = values;
-        // Validate day, month, and year
         if (!day || !month || !year) {
             message.error("Please provide a valid date of birth.");
             return;
         }
-        // Construct ISO Date
         const dob = new Date(year, month - 1, day).toISOString();
 
-        // Prepare registration data
         const TrainerRegistrationData = {
+            title: values?.title,
             firstName: values.name,
             lastName: values.surname,
             dob: dob,
             email: values.email,
             mobile: values.mobile,
-            userName: values?.userName,
+            // userName: values?.userName,
         };
-        console.log("Registration Data of user ", TrainerRegistrationData);
-        dispatch(setInfo(TrainerRegistrationData))
-
-        // Validate profilePic
-
-        router.push('/trainer-profile/edit-profile/edit-profile-2')
-
+        dispatch(setInfo(TrainerRegistrationData));
+        router.push("/trainer-profile/edit-profile/edit-profile-2");
     };
 
     return (
         <section className="py-8 md:py-16">
             <div className="xl:container mx-auto flex flex-col lg:flex-row gap-4 shadow-[0px_10px_30px_rgba(0,0,0,0.2)] p-4 md:p-8 rounded-2xl">
                 {/* Image Section */}
-                <div className="lg:w-1/2 rounded-lg  overflow-hidden ">
+                <div className="lg:w-1/2 rounded-lg overflow-hidden">
                     <Image
                         height={0}
                         width={0}
@@ -60,8 +51,8 @@ const PTEditProfile = () => {
                 </div>
 
                 {/* Form Section */}
-                <div className="lg:w-1/2 flex flex-col justify-center md:p-8 rounded-lg ">
-                    <h1 className="text-2xl md:text-5xl font-bold  mb-8">
+                <div className="lg:w-1/2 flex flex-col justify-center md:p-8 rounded-lg">
+                    <h1 className="text-2xl md:text-5xl font-bold mb-8">
                         Edit Trainer Info
                     </h1>
 
@@ -69,54 +60,57 @@ const PTEditProfile = () => {
                         name="register"
                         onFinish={onFinish}
                         initialValues={{
+                            title: user?.title,
                             email: role?.email,
                             name: user?.firstName,
                             surname: user?.lastName,
                             mobile: user?.contactNo,
-                            userName: user?.userName,
+                            // userName: user?.userName,
                             day: user?.dob ? new Date(user.dob).getDate() : null,
                             month: user?.dob ? new Date(user.dob).getMonth() + 1 : null,
                             year: user?.dob ? new Date(user.dob).getFullYear() : null,
                         }}
                         form={form}
-                        className=" space-x-0 md:space-y-4"
+                        layout="vertical"
                     >
-                        {/* First Item (Title + Profile Picture) */}
-                        <div className="flex flex-col-reverse md:flex-row justify-between items-center ">
-                            <Form.Item
-                                name="email"
-                                rules={[{ required: true, message: "Please input your email!" }]}
-                                className=" w-full"
+                        {/* Title */}
+                        <Form.Item
+                            name="title"
+                            label="Title"
+                            labelCol={{ span: 24 }}
+                            wrapperCol={{ span: 24 }}
+                            className="w-[180px]"
+                        >
+                            <Select
+                                placeholder="Select Title"
+                                suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />}
+                                className="w-full"
                             >
-                                <Input
-                                    placeholder="Email"
-                                    suffix={<IoMdArrowDropdown className=" w-6 h-6 text-greenColor" />}
-                                    className="w-full"
-                                />
-                            </Form.Item>
+                                <Select.Option value="Mr">Mr</Select.Option>
+                                <Select.Option value="Mrs">Mrs</Select.Option>
+                                <Select.Option value="Ms">Ms</Select.Option>
+                                <Select.Option value="Miss">Miss</Select.Option>
+                                <Select.Option value="Dr">Dr</Select.Option>
+                            </Select>
+                        </Form.Item>
 
-                            <div className="relative mb-8 md:-mt-6">
-                                <Image
-                                    src={circle}
-                                    className=" absolute  w-[300px]"
-                                    alt="circle"
-                                    height={0}
-                                    width={0}
-                                />
-                            </div>
-                        </div>
-
-                        {/* Second Item (Name + Surname) */}
+                        {/* Name & Surname */}
                         <div className="grid grid-cols-2 gap-4">
                             <Form.Item
                                 name="name"
-                                rules={[{ required: true, message: "Please input your name!" }]}
+                                label="Name"
+                                labelCol={{ span: 24 }}
+                                wrapperCol={{ span: 24 }}
+                                rules={[{ required: true, message: "Please input your first name!" }]}
                             >
                                 <Input placeholder="Name" className="w-full" />
                             </Form.Item>
 
                             <Form.Item
                                 name="surname"
+                                label="Surname"
+                                labelCol={{ span: 24 }}
+                                wrapperCol={{ span: 24 }}
                                 rules={[{ required: true, message: "Please input your surname!" }]}
                             >
                                 <Input placeholder="Surname" className="w-full" />
@@ -124,87 +118,93 @@ const PTEditProfile = () => {
                         </div>
 
                         {/* Date of Birth */}
-                        <div className=" flex flex-col md:flex-row gap-4">
-                            <div className="grid grid-cols-3 gap-4">
-                                <Form.Item
-                                    name="day"
-                                    rules={[
-                                        { required: true, message: "Please enter the day!" },
-                                        { type: "number", min: 1, max: 31, message: "Day must be between 1 and 31!" },
-                                    ]}
-                                >
-                                    <InputNumber
-                                        placeholder="Day"
-                                        min={1}
-                                        max={31}
-                                        style={{ width: "100%" }}
-                                        className="border-greenColor py-1.5 px-4 rounded-lg"
-                                    />
-                                </Form.Item>
+                        <div className="grid grid-cols-3 gap-4">
+                            <Form.Item name="day" label="Day" labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
+                                <Select placeholder="Day" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                                    {Array.from({ length: 31 }, (_, i) => (
+                                        <Select.Option key={i + 1} value={i + 1}>
+                                            {i + 1}
+                                        </Select.Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
 
-                                <Form.Item
-                                    name="month"
-                                    rules={[
-                                        { required: true, message: "Please enter the month!" },
-                                        { type: "number", min: 1, max: 12, message: "Month must be between 1 and 12!" },
-                                    ]}
-                                >
-                                    <InputNumber
-                                        placeholder="Month"
-                                        min={1}
-                                        max={12}
-                                        style={{ width: "100%" }}
-                                        className="border-greenColor py-1.5 px-4 rounded-lg"
-                                    />
-                                </Form.Item>
+                            <Form.Item name="month" label="Month" labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
+                                <Select placeholder="Month" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                                    {Array.from({ length: 12 }, (_, i) => (
+                                        <Select.Option key={i + 1} value={i + 1}>
+                                            {i + 1}
+                                        </Select.Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
 
-                                <Form.Item
-                                    name="year"
-                                    rules={[
-                                        { required: true, message: "Please enter the year!" },
-                                        { type: "number", min: 1900, max: new Date().getFullYear(), message: `Year must be between 1900 and ${new Date().getFullYear()}!` },
-                                    ]}
-                                >
-                                    <InputNumber
-                                        placeholder="Year"
-                                        min={1900}
-                                        max={new Date().getFullYear()}
-                                        style={{ width: "100%" }}
-                                        className="border-greenColor py-1.5 px-4 rounded-lg"
-                                    />
-                                </Form.Item>
-                            </div>
+                            <Form.Item name="year" label="Year" labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
+                                <Select placeholder="Year" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                                    {Array.from(
+                                        { length: new Date().getFullYear() - 1925 + 1 },
+                                        (_, i) => {
+                                            const year = new Date().getFullYear() - i;
+                                            return (
+                                                <Select.Option key={year} value={year}>
+                                                    {year}
+                                                </Select.Option>
+                                            );
+                                        }
+                                    )}
+                                </Select>
+                            </Form.Item>
+                        </div>
 
-                            {/* Mobile Number */}
+                        {/* Mobile Number & Email */}
+                        <div className="grid grid-cols-2 gap-4">
                             <Form.Item
                                 name="mobile"
-                                className=" md:w-1/2"
+                                label="Mobile Number"
+                                labelCol={{ span: 24 }}
+                                wrapperCol={{ span: 24 }}
                                 rules={[{ required: true, message: "Please input your mobile number!" }]}
                             >
-                                <Input placeholder="Mobile Number" prefix={<PhoneOutlined />} className="w-full" />
+                                <Input
+                                    placeholder="Mobile Number"
+                                    prefix={<PhoneOutlined />}
+                                    className="w-full"
+                                />
+                            </Form.Item>
+
+                            <Form.Item
+                                name="email"
+                                label="Email"
+                                labelCol={{ span: 24 }}
+                                wrapperCol={{ span: 24 }}
+                                rules={[{ required: true, message: "Please input your email!" }]}
+                            >
+                                <Input
+                                    placeholder="Email"
+                                    className="w-full"
+                                />
                             </Form.Item>
                         </div>
 
-                        {/* Username & Password */}
-                        <div className="">
-                            <Form.Item
-                                name="userName"
-                                rules={[{ required: true, message: "Please input your username!" }]}
-                            >
-                                <Input placeholder="UserName" className="w-full" />
-                            </Form.Item>
-                        </div>
+                        {/* Username */}
+                        {/* <Form.Item
+                            name="userName"
+                            label="Username"
+                            labelCol={{ span: 24 }}
+                            wrapperCol={{ span: 24 }}
+                            rules={[{ required: true, message: "Please input your username!" }]}
+                        >
+                            <Input placeholder="Username" className="w-full" />
+                        </Form.Item> */}
 
                         {/* Submit Button */}
                         <Form.Item>
-                            {/* <Link href={`/trainer-profile/edit-profile/2`}> */}
-                                <button
-                                    type="submit"
-                                    className="bookBtn text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
-                                >
-                                    Next
-                                </button>
-                            {/* </Link> */}
+                            <button
+                                type="submit"
+                                className="bookBtn text-lg leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
+                            >
+                                Next
+                            </button>
                         </Form.Item>
                     </Form>
                 </div>
@@ -213,5 +213,4 @@ const PTEditProfile = () => {
     );
 };
 
-// export default Register;
 export default dynamic(() => Promise.resolve(PTEditProfile), { ssr: false });

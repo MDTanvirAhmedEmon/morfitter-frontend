@@ -1,5 +1,5 @@
 "use client";
-import { Form, Input, Checkbox, Avatar, Upload, InputNumber, message } from "antd";
+import { Form, Input, Checkbox, Avatar, Upload, InputNumber, message, Select } from "antd";
 import { PhoneOutlined } from "@ant-design/icons";
 import { IoMdArrowDropdown } from "react-icons/io";
 import dynamic from "next/dynamic";
@@ -31,10 +31,12 @@ const PTRegister = () => {
       return;
     }
     // Construct ISO Date
-    const dob = new Date(year, month - 1, day).toISOString();
 
+      const dob = new Date(year, month - 1, day).toISOString();
+    
     // Prepare registration data
     const TrainerRegistrationData = {
+      title: values.title,
       email: values.email,
       firstName: values.name,
       lastName: values.surname,
@@ -46,12 +48,10 @@ const PTRegister = () => {
     console.log("Registration Data of user ", TrainerRegistrationData);
     dispatch(setInfo(TrainerRegistrationData))
 
-    // Validate profilePic
-
     dispatch(setProfile(profilePic))
 
-      router.push('/auth/pt-register/pt-register-2')
-    
+    router.push('/auth/pt-register/pt-register-2')
+
 
   };
 
@@ -84,20 +84,25 @@ const PTRegister = () => {
             {/* First Item (Title + Profile Picture) */}
             <div className="flex flex-col-reverse md:flex-row justify-between items-center space-x-4 md:mb-10">
               <Form.Item
-                name="email"
-                rules={[
-                  { required: true, message: "Please input your email!" },
-                ]}
-                className=" w-full"
+                name="title"
+                // rules={[
+                //   { required: true, message: "Please select your title!" },
+                // ]}
+                className="w-[150px]"
               >
-                <Input
-                  placeholder="Email"
-                  suffix={
-                    <IoMdArrowDropdown className=" w-6 h-6 text-greenColor" />
-                  }
-                  className="w-full"
-                />
+                <Select
+                  placeholder="Title"
+                  suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />}
+                  className="w-[150px]"
+                >
+                  <Select.Option value="Mr">Mr</Select.Option>
+                  <Select.Option value="Mrs">Mrs</Select.Option>
+                  <Select.Option value="Ms">Ms</Select.Option>
+                  <Select.Option value="Miss">Miss</Select.Option>
+                  <Select.Option value="Dr">Dr</Select.Option>
+                </Select>
               </Form.Item>
+
 
               <div className="relative mb-8 md:-mt-6">
                 <Image
@@ -140,78 +145,23 @@ const PTRegister = () => {
                 <Input placeholder="Surname" className="w-full" />
               </Form.Item>
             </div>
+            <div className="grid grid-cols-2 gap-4">
+              <Form.Item
+                name="email"
+                rules={[
+                  { required: true, message: "Please input your email!" },
+                ]}
+                className=" w-full"
+              >
+                <Input
+                  placeholder="Email"
+                  className="w-full"
+                />
+              </Form.Item>
 
-            {/* Date of Birth */}
-            <div className=" flex flex-col md:flex-row gap-4">
-              <div className="grid grid-cols-3 gap-4">
-                <Form.Item
-                  name="day"
-                  rules={[
-                    { required: true, message: "Please enter the day!" },
-                    {
-                      type: "number",
-                      min: 1,
-                      max: 31,
-                      message: "Day must be between 1 and 31!",
-                    },
-                  ]}
-                >
-                  <InputNumber
-                    placeholder="Day"
-                    min={1}
-                    max={31}
-                    style={{ width: "100%" }}
-                    className="border-greenColor py-1.5 px-4 rounded-lg"
-                  />
-                </Form.Item>
-
-                <Form.Item
-                  name="month"
-                  rules={[
-                    { required: true, message: "Please enter the month!" },
-                    {
-                      type: "number",
-                      min: 1,
-                      max: 12,
-                      message: "Month must be between 1 and 12!",
-                    },
-                  ]}
-                >
-                  <InputNumber
-                    placeholder="Month"
-                    min={1}
-                    max={12}
-                    style={{ width: "100%" }}
-                    className="border-greenColor py-1.5 px-4 rounded-lg"
-                  />
-                </Form.Item>
-
-                <Form.Item
-                  name="year"
-                  rules={[
-                    { required: true, message: "Please enter the year!" },
-                    {
-                      type: "number",
-                      min: 1900,
-                      max: new Date().getFullYear(),
-                      message: `Year must be between 1900 and ${new Date().getFullYear()}!`,
-                    },
-                  ]}
-                >
-                  <InputNumber
-                    placeholder="Year"
-                    min={1900}
-                    max={new Date().getFullYear()}
-                    style={{ width: "100%" }}
-                    className="border-greenColor py-1.5 px-4 rounded-lg"
-                  />
-                </Form.Item>
-              </div>
-
-              {/* Mobile Number */}
               <Form.Item
                 name="mobile"
-                className=" md:w-1/2"
+                className=""
 
               >
                 <Input
@@ -221,6 +171,67 @@ const PTRegister = () => {
                 />
               </Form.Item>
             </div>
+
+            {/* Date of Birth */}
+            <div className="">
+              <div className="grid grid-cols-3 gap-4">
+                <Form.Item
+                  name="day"
+                rules={[
+                  { required: true, message: "Please enter the day!" },
+
+                ]}
+                >
+                  <Select placeholder="Day" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                    {Array.from({ length: 31 }, (_, i) => (
+                      <Select.Option key={i + 1} value={i + 1}>
+                        {i + 1}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+
+                <Form.Item
+                  name="month"
+                rules={[
+                  { required: true, message: "Please enter the month!" },
+
+                ]}
+                >
+                  <Select placeholder="Month" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                    {Array.from({ length: 12 }, (_, i) => (
+                      <Select.Option key={i + 1} value={i + 1}>
+                        {i + 1}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+
+                <Form.Item
+                  name="year"
+                rules={[
+                  { required: true, message: "Please enter the year!" },
+                ]}
+                >
+                  <Select placeholder="Year" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                    {Array.from(
+                      { length: new Date().getFullYear() - 1925 + 1 },
+                      (_, i) => {
+                        const year = new Date().getFullYear() - i;
+                        return (
+                          <Select.Option key={year} value={year}>
+                            {year}
+                          </Select.Option>
+                        );
+                      }
+                    )}
+                  </Select>
+                </Form.Item>
+              </div>
+
+              {/* Mobile Number */}
+
+            </div>
             {/* Username & Password */}
             <div className="grid grid-cols-2 gap-4 ">
               <Form.Item
@@ -229,7 +240,7 @@ const PTRegister = () => {
                   { required: true, message: "Please input your username!" },
                 ]}
               >
-                <Input placeholder="UserName" className="w-full" />
+                <Input placeholder="User Name" className="w-full" />
               </Form.Item>
 
               <Form.Item
@@ -274,7 +285,7 @@ const PTRegister = () => {
           <p className=" mt-6">
             Already have an account?{" "}
             <Link className=" text-primary font-semibold" href={`/auth/login`}>
-            Log In
+              Log In
             </Link>
           </p>
         </div>

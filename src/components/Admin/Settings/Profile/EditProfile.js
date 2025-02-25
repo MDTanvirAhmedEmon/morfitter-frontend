@@ -23,7 +23,7 @@ function EditProfile() {
         // contact: user?.contactNo || '',
       });
     }
-  }, [user]);
+  }, []);
 
   const [updateAdmin, { isLoading }] = useUpdateAdminMutation();
 

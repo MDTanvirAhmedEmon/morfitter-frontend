@@ -240,7 +240,7 @@ const TrainerProfile = () => {
                 <div className="user-name text-4xl font-semibold capitalize">
                   {user?.firstName} {user?.lastName}
                 </div>
-                <div className="mt-2 text-2xl">New York</div>
+                <div className="mt-2 text-2xl">{user?.country}</div>
               </div>
 
               <div className="following-follower grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -481,7 +481,7 @@ const TrainerProfile = () => {
             <div className=" flex flex-col justify-center items-center mt-6">
               <Link href={`/trainer-profile/creating-session`}>
                 <button className=" text-white bg-secondary px-4 py-2 w-[300px] text-center text-lg rounded-full ">
-                  Create a training Session
+                  Create a Training Session
                 </button>
               </Link>
               <p className="text-center text-secondary font-semibold underline text-lg mt-3">

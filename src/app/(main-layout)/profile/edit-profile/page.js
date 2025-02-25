@@ -1,5 +1,5 @@
 "use client";
-import { Form, Input, Checkbox, Avatar, Upload, InputNumber, message } from "antd";
+import { Form, Input, Checkbox, Avatar, Upload, InputNumber, message, Select } from "antd";
 import { PhoneOutlined } from "@ant-design/icons";
 import { IoMdArrowDropdown } from "react-icons/io";
 import dynamic from "next/dynamic";
@@ -19,27 +19,9 @@ const EditProfile = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  useEffect(() => {
-    if (user) {
-      form.setFieldsValue({
-        email: role?.email,
-        title: user?.title,
-        userName: user?.userName,
-        name: user?.firstName,
-        surname: user?.lastName,
-        day: user?.dob ? new Date(user.dob).getDate() : undefined,
-        month: user?.dob ? new Date(user.dob).getMonth() + 1 : undefined,
-        year: user?.dob ? new Date(user.dob).getFullYear() : undefined,
-        mobile: user?.contactNo,
-        country: user?.country,
-        city: user?.city,
-      });
-    }
-  }, [user, form]);
-
 
   const onFinish = (values) => {
-    const { day, month, year } = values; 
+    const { day, month, year } = values;
 
     const dob = new Date(year, month - 1, day).toISOString();
 
@@ -51,15 +33,69 @@ const EditProfile = () => {
       lastName: values.surname,
       dob: dob,
       mobile: values.mobile,
-      userName: values.userName,
+      // userName: values.userName,
       country: values.country,
       city: values.city,
     };
 
     dispatch(setInfo(registrationData));
-      router.push('/profile/edit-profile/edit-profile-2');
-    
+    router.push('/profile/edit-profile/edit-profile-2');
+
   };
+
+
+  const countries = [
+    "United Kingdom",
+    "United States",
+    "Canada",
+    "Australia",
+    "Ireland",
+    "France",
+    "Germany",
+    "Netherlands",
+    "Belgium",
+    "Sweden",
+    "Denmark",
+    "Norway",
+    "Finland",
+    "Iceland",
+    "Switzerland",
+    "Austria",
+    "Luxembourg",
+    "Liechtenstein",
+    "Spain",
+    "Portugal",
+    "Italy",
+    "Greece",
+    "Malta",
+    "Cyprus",
+    "Estonia",
+    "Latvia",
+    "Lithuania",
+    "Poland",
+    "Czech Republic",
+    "Slovakia",
+    "Hungary",
+    "Slovenia",
+    "Croatia",
+    "Romania",
+    "Bulgaria",
+    "Serbia",
+    "Montenegro",
+    "North Macedonia",
+    "Albania",
+    "Bosnia and Herzegovina",
+    "Kosovo",
+    "Ukraine",
+    "Moldova",
+    "New Zealand",
+    "South Africa",
+    "Jamaica",
+    "Trinidad and Tobago",
+    "Barbados",
+    "Singapore",
+    "Hong Kong"
+  ];
 
   return (
     <section className="py-8 md:py-16">
@@ -79,28 +115,51 @@ const EditProfile = () => {
           <h1 className="text-2xl md:text-5xl font-bold mb-8">Edit Info</h1>
 
           <Form
-            form={form} 
+            form={form}
             name="register"
             onFinish={onFinish}
-            initialValues={{ remember: true }}
+            initialValues={
+              {
+                email: role?.email,
+                title: user?.title,
+                // userName: user?.userName,
+                name: user?.firstName,
+                surname: user?.lastName,
+                day: user?.dob ? new Date(user.dob).getDate() : undefined,
+                month: user?.dob ? new Date(user.dob).getMonth() + 1 : undefined,
+                year: user?.dob ? new Date(user.dob).getFullYear() : undefined,
+                mobile: user?.contactNo,
+                country: user?.country,
+                city: user?.city,
+              }}
           >
             <div className="flex flex-col-reverse md:flex-row justify-between items-center">
               <div className="w-full">
-                <Form.Item
+                {/* <Form.Item
                   name="userName"
                   rules={[{ required: true, message: "Please input your username!" }]}
                 >
                   <Input placeholder="Username" />
-                </Form.Item>
+                </Form.Item> */}
 
                 <Form.Item
                   name="title"
+                  label="Title"
+                  labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}
+                  className=" w-[180px]"
                   rules={[{ required: true, message: "Please input your title!" }]}
                 >
-                  <Input
-                    placeholder="Title"
-                    suffix={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />}
-                  />
+                  <Select
+                    placeholder="Select Title"
+                    suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />}
+                    className="w-full"
+                  >
+                    <Select.Option value="Mr">Mr</Select.Option>
+                    <Select.Option value="Mrs">Mrs</Select.Option>
+                    <Select.Option value="Ms">Ms</Select.Option>
+                    <Select.Option value="Miss">Miss</Select.Option>
+                    <Select.Option value="Dr">Dr</Select.Option>
+                  </Select>
                 </Form.Item>
               </div>
             </div>
@@ -108,6 +167,8 @@ const EditProfile = () => {
             <div className="grid grid-cols-2 gap-4">
               <Form.Item
                 name="name"
+                label="Name"
+                labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}
                 rules={[{ required: true, message: "Please input your name!" }]}
               >
                 <Input placeholder="Name" />
@@ -115,6 +176,8 @@ const EditProfile = () => {
 
               <Form.Item
                 name="surname"
+                label="Surname"
+                labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}
                 rules={[{ required: true, message: "Please input your surname!" }]}
               >
                 <Input placeholder="Surname" />
@@ -122,31 +185,75 @@ const EditProfile = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              <Form.Item name="day">
-                <InputNumber placeholder="Day" min={1} max={31} />
+              <Form.Item name="day" label="Day" labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
+                <Select placeholder="Day" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                  {Array.from({ length: 31 }, (_, i) => (
+                    <Select.Option key={i + 1} value={i + 1}>
+                      {i + 1}
+                    </Select.Option>
+                  ))}
+                </Select>
               </Form.Item>
-              <Form.Item name="month">
-                <InputNumber placeholder="Month" min={1} max={12} />
+
+              <Form.Item name="month" label="Month" labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
+                <Select placeholder="Month" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <Select.Option key={i + 1} value={i + 1}>
+                      {i + 1}
+                    </Select.Option>
+                  ))}
+                </Select>
               </Form.Item>
-              <Form.Item name="year">
-                <InputNumber placeholder="Year" min={1900} max={new Date().getFullYear()} />
+
+              <Form.Item name="year" label="Year" labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
+                <Select placeholder="Year" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                  {Array.from(
+                    { length: new Date().getFullYear() - 1925 + 1 },
+                    (_, i) => {
+                      const year = new Date().getFullYear() - i;
+                      return (
+                        <Select.Option key={year} value={year}>
+                          {year}
+                        </Select.Option>
+                      );
+                    }
+                  )}
+                </Select>
               </Form.Item>
             </div>
 
-            <Form.Item name="mobile" rules={[{ required: true, message: "Please input your mobile number!" }]}>
+            <Form.Item name="mobile"
+            label="Mobile"
+            labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}
+            rules={[{ required: true, message: "Please input your mobile number!" }]}>
               <Input placeholder="Mobile Number" prefix={<PhoneOutlined />} />
             </Form.Item>
 
             {/* Email */}
-            <Form.Item name="email" rules={[{ required: true, message: "Please input your email!" }]}>
+            <Form.Item name="email"
+            label="Email"
+            labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}
+            rules={[{ required: true, message: "Please input your email!" }]}>
               <Input placeholder="Email" />
             </Form.Item>
 
             <div className="grid grid-cols-2 gap-4">
-              <Form.Item name="country">
-                <Input placeholder="Country" />
+              <Form.Item name="country"
+              label="Country"
+              labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}
+              >
+                <Select defaultValue={user?.country} placeholder="Country" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                  {countries.map((country) => (
+                    <Select.Option key={country} value={country}>
+                      {country}
+                    </Select.Option>
+                  ))}
+                </Select>
               </Form.Item>
-              <Form.Item name="city">
+              <Form.Item
+              label="City"
+              labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}
+              name="city">
                 <Input placeholder="City" />
               </Form.Item>
             </div>

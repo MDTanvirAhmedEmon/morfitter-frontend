@@ -4,18 +4,33 @@ import gymbg from "../../../assets/content/gym1.png";
 import gymbg2 from "../../../assets/content/gym2.png";
 import fitnessTeam from "../../../assets/content/fitnessTeam.png";
 import { ConfigProvider, Input, Pagination, Select } from "antd";
-import { useGetAllContentsQuery } from "@/redux/features/content/contentApi";
+import { useGetAllContentsForUserQuery, useGetAllContentsQuery } from "@/redux/features/content/contentApi";
 import SingleBlog from "@/components/Content/SingleBlog";
 import { useState } from "react";
 import ContentSkeleton from "@/components/Skeleton/ContentSkeleton";
 import { CiSearch } from "react-icons/ci";
+import Cookies from "js-cookie";
+import SingleBlogForLogOut from "@/components/Content/SingleBlogForLogOut";
 
 const Content = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchValue, setSearchValue] = useState("");
   const [selectedUserValue, setSelectedUserValue] = useState('');
   const [specialism, setSpecialism] = useState(undefined);
-  const { data, isLoading } = useGetAllContentsQuery({ page: currentPage, role: selectedUserValue, sortOrder: 'desc', searchTerm: searchValue, specialism: specialism });
+  const token = Cookies.get('morfitter-token');
+
+  const { data: authData, isLoading: isLoadingAuth } = useGetAllContentsQuery(
+    { page: currentPage, role: selectedUserValue, sortOrder: 'desc', searchTerm: searchValue, specialism },
+    { skip: !token }
+  );
+
+  const { data: unauthData, isLoading: isLoadingUnauth } = useGetAllContentsForUserQuery(
+    { page: currentPage, role: selectedUserValue, sortOrder: 'desc', searchTerm: searchValue, specialism },
+    { skip: !!token }
+  );
+
+  const data = token ? authData : unauthData;
+  const isLoading = token ? isLoadingAuth : isLoadingUnauth;
 
   const handleSelectedUserValue = (value) => {
     setSelectedUserValue(value);
@@ -116,13 +131,13 @@ const Content = () => {
             <div className=' py-28 flex justify-center items-center'>
               <h3 className="text-xl md:text-3xl text-gray-600">No content here yet. Be the first to add something great!</h3>
             </div> :
-            data?.data?.data?.map((content) => (
-              <SingleBlog key={content._id} content={content} />
-              // <div key={content._id}>
-              //     <h1>{content?.title}</h1>
-              //     <p>{content?.content}</p>
-              // </div>
-            ))}
+            data?.data?.data?.map((content) =>
+              token ? (
+                <SingleBlog key={content?._id} content={content} />
+              ) : (
+                <SingleBlogForLogOut key={content?._id} content={content} />
+              )
+            )}
       </div>
       <div className="">
         {

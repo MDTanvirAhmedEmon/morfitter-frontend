@@ -21,6 +21,7 @@ import { clearRegisterInfo } from "@/redux/features/auth/registerSlice";
 import { useRouter } from "next/navigation";
 import { decodedToken } from "@/utils/VerifyJwtToken";
 import Cookies from "js-cookie";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 const PTRegister2 = () => {
   const dispatch = useDispatch();
@@ -64,6 +65,7 @@ const PTRegister2 = () => {
           password: info?.password,
         },
         trainerData: {
+          title: info?.title,
           firstName: info?.firstName,
           lastName: info?.lastName,
           dob: info?.dob,
@@ -124,7 +126,7 @@ const PTRegister2 = () => {
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
     formData.append("file", profile);
-
+    console.log(data);
     createTrainer(formData).unwrap()
       .then((data) => {
         console.log(data);
@@ -151,6 +153,59 @@ const PTRegister2 = () => {
 
   };
 
+  const countries = [
+    "United Kingdom",
+    "United States",
+    "Canada",
+    "Australia",
+    "Ireland",
+    "France",
+    "Germany",
+    "Netherlands",
+    "Belgium",
+    "Sweden",
+    "Denmark",
+    "Norway",
+    "Finland",
+    "Iceland",
+    "Switzerland",
+    "Austria",
+    "Luxembourg",
+    "Liechtenstein",
+    "Spain",
+    "Portugal",
+    "Italy",
+    "Greece",
+    "Malta",
+    "Cyprus",
+    "Estonia",
+    "Latvia",
+    "Lithuania",
+    "Poland",
+    "Czech Republic",
+    "Slovakia",
+    "Hungary",
+    "Slovenia",
+    "Croatia",
+    "Romania",
+    "Bulgaria",
+    "Serbia",
+    "Montenegro",
+    "North Macedonia",
+    "Albania",
+    "Bosnia and Herzegovina",
+    "Kosovo",
+    "Ukraine",
+    "Moldova",
+    "New Zealand",
+    "South Africa",
+    "Jamaica",
+    "Trinidad and Tobago",
+    "Barbados",
+    "Singapore",
+    "Hong Kong"
+  ];
+
   return (
     <section className="py-8 md:py-16">
       <div className="xl:container mx-auto flex flex-col lg:flex-row gap-4 shadow-[0px_10px_30px_rgba(0,0,0,0.2)] p-4 md:p-8 rounded-2xl">
@@ -170,7 +225,10 @@ const PTRegister2 = () => {
           <Form
             name="register"
             onFinish={onFinish}
-            initialValues={{ remember: true }}
+            initialValues={{
+              country: "United Kingdom",
+              remember: true,
+            }}
             className=" space-x-0 md:space-y-4"
           >
             {/* Second Item (Name + Surname) */}
@@ -181,7 +239,13 @@ const PTRegister2 = () => {
               //   { required: true, message: "Please input your country!" },
               // ]}
               >
-                <Input placeholder="Country" className="w-full" />
+                <Select defaultValue="United Kingdom" placeholder="Country" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                  {countries.map((country) => (
+                    <Select.Option key={country} value={country}>
+                      {country}
+                    </Select.Option>
+                  ))}
+                </Select>
               </Form.Item>
 
               <Form.Item
@@ -194,7 +258,18 @@ const PTRegister2 = () => {
               </Form.Item>
             </div>
 
-            <div className="  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-8">
+            <div>
+              <Form.Item
+                name="aboutMe"
+              // rules={[
+              //   { required: true, message: "Please select your surname!" },
+              // ]}
+              >
+                <TextArea placeholder="About me"></TextArea>
+              </Form.Item>
+            </div>
+
+            <div className="  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-12">
               <p className=" text-lg md:w-1/2">I condact online sessions:</p>
               <div className=" w-1/2 flex gap-5 lg:gap-8 items-center">
                 <button
@@ -216,7 +291,7 @@ const PTRegister2 = () => {
               </div>
             </div>
 
-            <div className="  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12">
+            <div className="  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12  mb-12">
               <p className=" text-lg md:w-1/2">
                 I condact face to face sessions:
               </p>
@@ -239,6 +314,27 @@ const PTRegister2 = () => {
                 </button>
               </div>
             </div>
+            <div className="  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 ">
+              <p className=" text-lg md:w-1/2">Consultations I offer are:</p>
+              <div className=" w-1/2 flex gap-5 lg:gap-8 items-center">
+                <button
+                  type="button"
+                  onClick={() => setConsultation("free")}
+                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${consultation === "free" ? "bg-greenColor" : "bg-secondary"
+                    }`}
+                >
+                  Free
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setConsultation("paid")}
+                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${consultation === "paid" ? "bg-greenColor" : "bg-secondary"
+                    }`}
+                >
+                  Paid
+                </button>
+              </div>
+            </div>
             <div>
               <ConfigProvider
                 theme={{
@@ -254,15 +350,16 @@ const PTRegister2 = () => {
                   },
                 }}
               >
-                <Form.Item
-                  name="radius"
-                  className=" md:w-1/2"
-                // rules={[
-                //   { required: true, message: "Please select your surname!" },
-                // ]}
-                >
-                  {
-                    faceToFace === "yes" && (
+                {
+                  faceToFace === "yes" && (
+                    <Form.Item
+                      name="radius"
+                      className=" md:w-1/2"
+                    // rules={[
+                    //   { required: true, message: "Please select your surname!" },
+                    // ]}
+                    >
+
                       <Select
                         placeholder={
                           <p className=" text-lg">
@@ -286,47 +383,18 @@ const PTRegister2 = () => {
                         <Select.Option value="13m">13m</Select.Option>
                         <Select.Option value="14m">14m</Select.Option>
                         <Select.Option value="15m">15m</Select.Option>
+                        <Select.Option value="15m+">15m+</Select.Option>
                       </Select>
-                    )
-                  }
 
-                </Form.Item>
+
+                    </Form.Item>
+                  )
+                }
               </ConfigProvider>
             </div>
-            <div>
-              <Form.Item
-                name="aboutMe"
-              // rules={[
-              //   { required: true, message: "Please select your surname!" },
-              // ]}
-              >
-                <TextArea placeholder="About me"></TextArea>
-              </Form.Item>
-            </div>
 
-            <div className="  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-8">
-              <p className=" text-lg md:w-1/2">Consultations I offer are:</p>
-              <div className=" w-1/2 flex gap-5 lg:gap-8 items-center">
-                <button
-                  type="button"
-                  onClick={() => setConsultation("free")}
-                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${consultation === "free" ? "bg-greenColor" : "bg-secondary"
-                    }`}
-                >
-                  Free
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setConsultation("paid")}
-                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${consultation === "paid" ? "bg-greenColor" : "bg-secondary"
-                    }`}
-                >
-                  Paid
-                </button>
-              </div>
-            </div>
 
-            <div className=" mb-10">
+            <div className=" mb-10 -mt-20">
               <p className=" text-lg">specialism</p>
               <div className="flex gap-1 overflow-x-auto mt-4">
                 <div className="flex justify-center flex-nowrap xl:flex-wrap">

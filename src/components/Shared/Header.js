@@ -30,8 +30,9 @@ const Header = () => {
     const handleLogOut = () => {
         dispatch(logout());
         Cookies.remove('morfitter-token')
-        window.location.reload();
+        Cookies.remove('refreshToken')
         router.push(`/auth/login`)
+        window.location.reload();
     }
 
     return (
