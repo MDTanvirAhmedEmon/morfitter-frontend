@@ -90,7 +90,7 @@ const SessionsPage = () => {
                     <Link key={item?._id} href={`/sessions/${item?._id}`}>
                       <Image onClick={() => {
                         setSelectedSession(item);
-                      }} className=' w-full h-[450px] object-cover  cursor-pointer' src={`http://10.0.60.166:5000${item?.promo_image}`} alt='session' width={500} height={500} />
+                      }} className=' w-full h-[450px] object-cover  cursor-pointer' src={`${item?.promo_image}`} alt='session' width={500} height={500} />
                     </Link>
                     <div className=" flex items-center  gap-2 mt-3">
                       {

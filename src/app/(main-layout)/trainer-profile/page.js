@@ -51,7 +51,7 @@ const TrainerProfile = () => {
   const uploadImage = () => {
     const formData = new FormData();
 
-    formData.append('data', JSON.stringify({trainer:{}}));
+    formData.append('data', JSON.stringify({ trainer: {} }));
     if (profilePic) {
       formData.append('file', profilePic);
     }
@@ -80,7 +80,7 @@ const TrainerProfile = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${user?.profileImageUrl}`;
+  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `${user?.profileImageUrl}`;
 
   const [deleteSpecialism] = useDeleteSpecialismMutation();
 
@@ -105,12 +105,12 @@ const TrainerProfile = () => {
         message.error(error?.data?.message)
       })
   };
-  const text = 
+  const text =
     <div className=" flex gap-3 py-1">
       <Link className=" bg-white text-black hover:text-black px-1 rounded " href={`/trainer-profile/edit-profile`}>Edit Profile</Link>
       <Link className=" bg-white text-black hover:text-black px-1 rounded " href={`/setting/change-user-password`}>Change Password</Link>
     </div>;
-  
+
 
   return (
     <section className=" py-10 md:py-20">
@@ -373,7 +373,7 @@ const TrainerProfile = () => {
                           <Image
                             className="w-16 h-16 object-cover rounded-full border-2 border-gray-300"
                             src={item?.traineeData?.profileImageUrl
-                              ? `http://10.0.60.166:5000${item?.traineeData?.profileImageUrl}`
+                              ? `${item?.traineeData?.profileImageUrl}`
                               : defaultProfilePic
                             }
                             height={200}
@@ -471,7 +471,7 @@ const TrainerProfile = () => {
                 session?.data?.data?.map((item) => (
                   <Link key={item?._id} href={`/trainer-profile/my-session/${item?._id}`}>
                     <div >
-                      <Image alt="session" src={`http://10.0.60.166:5000${item?.promo_image}`} height={500} width={500} className=" w-[300px] h-[380px] object-cover" />
+                      <Image alt="session" src={`${item?.promo_image}`} height={500} width={500} className=" w-[300px] h-[380px] object-cover" />
                     </div>
                   </Link>
                 ))

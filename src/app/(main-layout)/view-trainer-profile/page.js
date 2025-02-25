@@ -37,7 +37,7 @@ const ViewTrainerProfile = () => {
   // me session
   const { data: session } = useGetMySessionQuery(trainerId);
 
-  const profilePicUrl = trainer?.data?.userInfo?.profileImageUrl ? `http://10.0.60.166:5000${trainer?.data?.userInfo?.profileImageUrl}` : defaultProfileImage;
+  const profilePicUrl = trainer?.data?.userInfo?.profileImageUrl ? `${trainer?.data?.userInfo?.profileImageUrl}` : defaultProfileImage;
 
   const handleFollowUnfollow = () => {
     dofolowUnfollow({
@@ -244,7 +244,7 @@ const ViewTrainerProfile = () => {
                           <Image
                             className="w-16 h-16 object-cover rounded-full border-2 border-gray-300"
                             src={item?.traineeData?.profileImageUrl
-                              ? `http://10.0.60.166:5000${item?.traineeData?.profileImageUrl}`
+                              ? `${item?.traineeData?.profileImageUrl}`
                               : defaultProfilePic
                             }
                             height={200}
@@ -285,7 +285,7 @@ const ViewTrainerProfile = () => {
                 session?.data?.data?.map((item) => (
                   <Link key={item?._id} href={`/morfitter-pts/${trainerId}`}>
                     <div >
-                      <Image alt="session" src={`http://10.0.60.166:5000${item?.promo_image}`} height={500} width={500} className=" w-[300px] h-[380px] object-cover" />
+                      <Image alt="session" src={`${item?.promo_image}`} height={500} width={500} className=" w-[300px] h-[380px] object-cover" />
                     </div>
                   </Link>
                 ))

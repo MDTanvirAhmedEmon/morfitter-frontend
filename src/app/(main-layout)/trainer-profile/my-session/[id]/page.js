@@ -8,7 +8,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import profileImage from "../../../../../assets/profile/profile_image.webp";
 
-const BASE_URL = "http://10.0.60.166:5000";
+const BASE_URL = "";
 
 const SingleSession = () => {
     const { id } = useParams();
@@ -148,7 +148,7 @@ const SingleSession = () => {
                                 <div className="flex items-center space-x-4">
                                     <Image
                                         src={user?.additionalInfo?.profileImageUrl
-                                            ? `http://10.0.60.166:5000${user?.additionalInfo?.profileImageUrl}`
+                                            ? `${user?.additionalInfo?.profileImageUrl}`
                                             : profileImage}
                                         alt="Profile"
                                         width={300}
