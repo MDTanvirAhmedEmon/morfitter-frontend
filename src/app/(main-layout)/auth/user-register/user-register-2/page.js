@@ -8,9 +8,11 @@ import logo1 from '../../../../../assets/logo1.svg';
 import logo2 from '../../../../../assets/logo2.svg';
 import logo3 from '../../../../../assets/logo3.svg';
 import logo4 from '../../../../../assets/logo4.svg';
+import logo5 from '../../../../../assets/logo5.svg';
 import logo6 from '../../../../../assets/logo6.svg';
 import logo7 from '../../../../../assets/logo7.svg';
 import logo8 from '../../../../../assets/logo8.svg';
+import logo9 from '../../../../../assets/logo9.svg';
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useCreateTraineeMutation } from "@/redux/features/auth/authApi";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,11 +43,11 @@ const UserRegister2 = () => {
         { name: "Calisthenics", icon: logo2 },
         { name: "Circuit Training", icon: logo3 },
         { name: "Core Strength", icon: logo4 },
-        { name: "Fat Burners", icon: logo4 },
+        { name: "Fat Burners", icon: logo5 },
         { name: "Flexibility & Mobility", icon: logo6 },
         { name: "Zumba", icon: logo7 },
         { name: "HIIT", icon: logo8 },
-        { name: "Pilates", icon: logo8 }
+        { name: "Pilates", icon: logo9 }
     ];
 
     const handleLogoClick = (index) => {

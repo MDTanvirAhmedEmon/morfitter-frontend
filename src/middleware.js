@@ -38,7 +38,7 @@ export const config = {
         '/settings/privacy-policy',
         '/settings/terms-condition',
         // website
-        // 'find-trainers',
+        '/find-trainers',
         '/find-trainers/consultation-result',
         '/morfitter-pts/:path*',
         '/morfitter-sessions/single-session-of-pt/:path*',

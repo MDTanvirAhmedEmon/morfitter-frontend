@@ -1,5 +1,5 @@
 "use client";
-import { Form, Input, Checkbox, Avatar, Upload, InputNumber, message } from "antd";
+import { Form, Input, Checkbox, Avatar, Upload, InputNumber, message, Select } from "antd";
 import { PhoneOutlined } from "@ant-design/icons";
 import { IoMdArrowDropdown } from "react-icons/io";
 import dynamic from "next/dynamic";
@@ -25,7 +25,7 @@ const UserRegister = () => {
   const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : null;
 
   const onFinish = async (values) => {
-    const { day, month, year } = values; 
+    const { day, month, year } = values;
 
     // Validate day, month, and year
     if (!day || !month || !year) {
@@ -64,6 +64,58 @@ const UserRegister = () => {
 
   };
 
+  const countries = [
+    "United Kingdom",
+    "United States",
+    "Canada",
+    "Australia",
+    "Ireland",
+    "France",
+    "Germany",
+    "Netherlands",
+    "Belgium",
+    "Sweden",
+    "Denmark",
+    "Norway",
+    "Finland",
+    "Iceland",
+    "Switzerland",
+    "Austria",
+    "Luxembourg",
+    "Liechtenstein",
+    "Spain",
+    "Portugal",
+    "Italy",
+    "Greece",
+    "Malta",
+    "Cyprus",
+    "Estonia",
+    "Latvia",
+    "Lithuania",
+    "Poland",
+    "Czech Republic",
+    "Slovakia",
+    "Hungary",
+    "Slovenia",
+    "Croatia",
+    "Romania",
+    "Bulgaria",
+    "Serbia",
+    "Montenegro",
+    "North Macedonia",
+    "Albania",
+    "Bosnia and Herzegovina",
+    "Kosovo",
+    "Ukraine",
+    "Moldova",
+    "New Zealand",
+    "South Africa",
+    "Jamaica",
+    "Trinidad and Tobago",
+    "Barbados",
+    "Singapore",
+    "Hong Kong"
+  ];
 
   return (
     <section className="py-8 md:py-16">
@@ -88,7 +140,10 @@ const UserRegister = () => {
           <Form
             name="register"
             onFinish={onFinish}
-            initialValues={{ remember: true }}
+            initialValues={{
+              country: "United Kingdom",
+              remember: true,
+            }}
             className=" space-x-0 md:space-y-4"
           >
             {/* First Item (Title + Profile Picture) */}
@@ -100,7 +155,7 @@ const UserRegister = () => {
                     { required: true, message: "Please input your username!" },
                   ]}
                 >
-                  <Input  placeholder="Username" className="md:w-[70%]" />
+                  <Input placeholder="Username" className="md:w-[70%]" />
                 </Form.Item>
                 <Form.Item
                   name="title"
@@ -109,13 +164,17 @@ const UserRegister = () => {
                   // ]}
                   className=" md:w-[50%]"
                 >
-                  <Input
+                  <Select
                     placeholder="Title"
-                    suffix={
-                      <IoMdArrowDropdown className=" w-6 h-6 text-greenColor" />
-                    }
-                    className="w-full"
-                  />
+                    suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />}
+                    className="w-[150px]"
+                  >
+                    <Select.Option value="Mr">Mr</Select.Option>
+                    <Select.Option value="Mrs">Mrs</Select.Option>
+                    <Select.Option value="Ms">Ms</Select.Option>
+                    <Select.Option value="Miss">Miss</Select.Option>
+                    <Select.Option value="Dr">Dr</Select.Option>
+                  </Select>
                 </Form.Item>
               </div>
 
@@ -170,63 +229,52 @@ const UserRegister = () => {
                   name="day"
                   rules={[
                     { required: true, message: "Please enter the day!" },
-                    {
-                      type: "number",
-                      min: 1,
-                      max: 31,
-                      message: "Day must be between 1 and 31!",
-                    },
+
                   ]}
                 >
-                  <InputNumber
-                    placeholder="Day"
-                    min={1}
-                    max={31}
-                    style={{ width: "100%" }}
-                    className="border-greenColor py-1.5 px-4 rounded-lg"
-                  />
+                  <Select placeholder="Day" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                    {Array.from({ length: 31 }, (_, i) => (
+                      <Select.Option key={i + 1} value={i + 1}>
+                        {i + 1}
+                      </Select.Option>
+                    ))}
+                  </Select>
                 </Form.Item>
 
                 <Form.Item
                   name="month"
                   rules={[
                     { required: true, message: "Please enter the month!" },
-                    {
-                      type: "number",
-                      min: 1,
-                      max: 12,
-                      message: "Month must be between 1 and 12!",
-                    },
                   ]}
                 >
-                  <InputNumber
-                    placeholder="Month"
-                    min={1}
-                    max={12}
-                    style={{ width: "100%" }}
-                    className="border-greenColor py-1.5 px-4 rounded-lg"
-                  />
+                  <Select placeholder="Month" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                    {Array.from({ length: 12 }, (_, i) => (
+                      <Select.Option key={i + 1} value={i + 1}>
+                        {i + 1}
+                      </Select.Option>
+                    ))}
+                  </Select>
                 </Form.Item>
 
                 <Form.Item
                   name="year"
                   rules={[
                     { required: true, message: "Please enter the year!" },
-                    {
-                      type: "number",
-                      min: 1900,
-                      max: new Date().getFullYear(),
-                      message: `Year must be between 1900 and ${new Date().getFullYear()}!`,
-                    },
                   ]}
                 >
-                  <InputNumber
-                    placeholder="Year"
-                    min={1900}
-                    max={new Date().getFullYear()}
-                    style={{ width: "100%" }}
-                    className="border-greenColor py-1.5 px-4 rounded-lg"
-                  />
+                  <Select placeholder="Year" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                    {Array.from(
+                      { length: new Date().getFullYear() - 1925 + 1 },
+                      (_, i) => {
+                        const year = new Date().getFullYear() - i;
+                        return (
+                          <Select.Option key={year} value={year}>
+                            {year}
+                          </Select.Option>
+                        );
+                      }
+                    )}
+                  </Select>
                 </Form.Item>
               </div>
 
@@ -235,12 +283,12 @@ const UserRegister = () => {
               <Form.Item
                 name="mobile"
                 className=" md:w-1/2"
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: "Please input your mobile number!",
-                //   },
-                // ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "Please input your mobile number!",
+              //   },
+              // ]}
               >
                 <Input
                   placeholder="Mobile Number"
@@ -263,7 +311,7 @@ const UserRegister = () => {
                   suffix={
                     <IoMdArrowDropdown className=" w-6 h-6 text-greenColor" />
                   }
-                  
+
                 />
               </Form.Item>
 
@@ -283,11 +331,17 @@ const UserRegister = () => {
             <div className="grid grid-cols-2 gap-4 ">
               <Form.Item
                 name="country"
-                // rules={[
-                //   { required: true, message: "Please input your country!" },
-                // ]}
+              // rules={[
+              //   { required: true, message: "Please input your country!" },
+              // ]}
               >
-                <Input placeholder="Country" className="w-full" />
+                <Select defaultValue="United Kingdom" placeholder="Country" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                  {countries.map((country) => (
+                    <Select.Option key={country} value={country}>
+                      {country}
+                    </Select.Option>
+                  ))}
+                </Select>
               </Form.Item>
 
               <Form.Item
@@ -329,7 +383,7 @@ const UserRegister = () => {
           <p className=" mt-6">
             Already have an account?{" "}
             <Link className=" text-primary font-semibold" href={`/auth/login`}>
-            Log In
+              Log In
             </Link>
           </p>
         </div>

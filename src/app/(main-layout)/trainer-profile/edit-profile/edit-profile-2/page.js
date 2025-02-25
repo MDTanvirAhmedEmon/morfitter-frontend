@@ -113,6 +113,7 @@ const PTEditProfile2 = () => {
     ];
 
     const onFinish = (values) => {
+        
         const fromData = new FormData()
         const data = {
             user: {

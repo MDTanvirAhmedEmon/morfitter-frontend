@@ -8,9 +8,11 @@ import logo1 from '../../../../../assets/logo1.svg';
 import logo2 from '../../../../../assets/logo2.svg';
 import logo3 from '../../../../../assets/logo3.svg';
 import logo4 from '../../../../../assets/logo4.svg';
+import logo5 from '../../../../../assets/logo5.svg';
 import logo6 from '../../../../../assets/logo6.svg';
 import logo7 from '../../../../../assets/logo7.svg';
 import logo8 from '../../../../../assets/logo8.svg';
+import logo9 from '../../../../../assets/logo9.svg';
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { setRole, setToken } from "@/redux/features/auth/authSlice";
@@ -45,11 +47,11 @@ const EditProfile2 = () => {
         { name: "Calisthenics", icon: logo2 },
         { name: "Circuit Training", icon: logo3 },
         { name: "Core Strength", icon: logo4 },
-        { name: "Fat Burners", icon: logo4 },
+        { name: "Fat Burners", icon: logo5 },
         { name: "Flexibility & Mobility", icon: logo6 },
         { name: "Zumba", icon: logo7 },
         { name: "HIIT", icon: logo8 },
-        { name: "Pilates", icon: logo8 }
+        { name: "Pilates", icon: logo9 }
     ];
 
     const handleLogoClick = (index) => {
@@ -59,20 +61,13 @@ const EditProfile2 = () => {
                 : [...prevSelected, index]
         );
     };
-    useEffect(() => {
-        if (user) {
-            form.setFieldsValue({
-                height: user?.height || "",
-                weight: user?.weight || "",
-                towardsGoal: user?.towardsGoal || "",
-                achieveGoal: user?.achieveGoal || ""
-            });
 
-            setFitterGoal(user?.fitterGoal || null);
-        }
-    }, [user, form]);
 
     const onFinish = (values) => {
+        if (!user) {
+            console.warn("User is null, preventing API call.");
+            return; // Don't execute anything if user is null
+        }
         const data = {
             user: {
                 email: email,
@@ -148,7 +143,12 @@ const EditProfile2 = () => {
                         name="register"
                         form={form}
                         onFinish={onFinish}
-                        initialValues={{ remember: true }}
+                        initialValues={{
+                            height: user?.height || "",
+                            weight: user?.weight || "",
+                            towardsGoal: user?.towardsGoal || "",
+                            achieveGoal: user?.achieveGoal || ""
+                        }}
                         className=" space-x-0 md:space-y-4"
                     >
                         {/* Second Item (Name + Surname) */}
@@ -160,7 +160,9 @@ const EditProfile2 = () => {
                                 </div>
                                 <Form.Item
                                     name="height"
-                                    rules={[{ required: true, message: "Please input your height!" }]}
+                                    label="Height"
+                                    labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}
+                                    // rules={[{ required: true, message: "Please input your height!" }]}
                                     className=" w-full"
                                 >
                                     <Input
@@ -178,7 +180,9 @@ const EditProfile2 = () => {
                                 </div>
                                 <Form.Item
                                     name="weight"
-                                    rules={[{ required: true, message: "Please input your weight!" }]}
+                                    label="Weight"
+                                    labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}
+                                    // rules={[{ required: true, message: "Please input your weight!" }]}
                                     className=" w-full"
                                 >
                                     <Input
@@ -231,7 +235,9 @@ const EditProfile2 = () => {
                             <div>
                                 <Form.Item
                                     name="towardsGoal"
-                                    rules={[{ required: true, message: "Please input your working goal!" }]}
+                                    label="Towards Goal"
+                                    labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}
+                                    // rules={[{ required: true, message: "Please input your working goal!" }]}
                                     className=" w-full"
                                 >
                                     <Input
@@ -244,7 +250,9 @@ const EditProfile2 = () => {
                             <div>
                                 <Form.Item
                                     name="achieveGoal"
-                                    rules={[{ required: true, message: "Please input your goal!" }]}
+                                    label="AChieve Goal"
+                                    labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}
+                                    // rules={[{ required: true, message: "Please input your goal!" }]}
                                     className=" w-full"
                                 >
                                     <Input
