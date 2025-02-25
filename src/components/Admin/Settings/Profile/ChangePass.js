@@ -1,3 +1,4 @@
+"use client";
 import { useChangeAdminPasswordMutation } from "@/redux/features/admin/settings/profileApi";
 import { message, Spin } from "antd";
 import React, { useState } from "react";
@@ -5,33 +6,34 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 function ChangePass() {
   const [isEyeOpen, setIsEyeOpen] = useState(false);
-  const [oldPassword, setOldPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
   const [changeAdminPassword, { isLoading }] = useChangeAdminPasswordMutation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if( newPassword !== confirmNewPassword){
-      message.error(`Confirm password did not match!`)
+    if (newPassword !== confirmNewPassword) {
+      message.error(`Confirm password did not match!`);
       return;
     }
-    const data ={
+    const data = {
       oldPassword,
       newPassword,
-    }
+    };
 
-    changeAdminPassword(data).unwrap()
-    .then(() => {
-      message.success('Password updated successfully')
-      setOldPassword('');
-      setNewPassword('');
-      setConfirmNewPassword('');
-    })
-    .catch((error) => {
-      message.error(error?.data?.message)
-    })
+    changeAdminPassword(data)
+      .unwrap()
+      .then(() => {
+        message.success("Password updated successfully");
+        setOldPassword("");
+        setNewPassword("");
+        setConfirmNewPassword("");
+      })
+      .catch((error) => {
+        message.error(error?.data?.message);
+      });
   };
 
   return (

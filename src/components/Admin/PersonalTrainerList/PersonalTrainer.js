@@ -1,3 +1,4 @@
+"use client";
 import { getBaseUrl } from "@/config/envConfig";
 import { useGetallPersonalTrainerQuery } from "@/redux/features/admin/allPersonalTrainer/allPersonalTrainerApi";
 import { useUpdateUserMutation } from "@/redux/features/admin/userManagement/userManagementApi";
@@ -7,20 +8,23 @@ import { useState } from "react";
 const PersonalTrainersTable = ({ searchQuery }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const { data: getallPersonalTrainerData, isLoading } =
-    useGetallPersonalTrainerQuery({ page: currentPage, searchTerm: searchQuery });
+    useGetallPersonalTrainerQuery({
+      page: currentPage,
+      searchTerm: searchQuery,
+    });
   // console.log(getallPersonalTrainerData?.data);
   const [updateUser] = useUpdateUserMutation();
 
   const confirm = (id) => {
-    updateUser(id).unwrap()
+    updateUser(id)
+      .unwrap()
       .then(() => {
-        message.success('Status Changed Successfully')
+        message.success("Status Changed Successfully");
       })
       .catch((error) => {
-        message.error(error?.data?.message)
-      })
+        message.error(error?.data?.message);
+      });
   };
-
 
   const columns = [
     {
@@ -68,10 +72,11 @@ const PersonalTrainersTable = ({ searchQuery }) => {
       key: "status",
       render: (_, record) => (
         <button
-          className={`cursor-default px-2 py-1 rounded-md ${record?.userData?.status === "in-progress"
-            ? "bg-green-500 text-white"
-            : "bg-yellow-500 text-black"
-            }`}
+          className={`cursor-default px-2 py-1 rounded-md ${
+            record?.userData?.status === "in-progress"
+              ? "bg-green-500 text-white"
+              : "bg-yellow-500 text-black"
+          }`}
         >
           {record?.userData?.status || "N/A"}
         </button>
@@ -82,22 +87,25 @@ const PersonalTrainersTable = ({ searchQuery }) => {
       key: "action",
       render: (_, record) => (
         <Popconfirm
-          title={`${record?.userData?.status === 'blocked' ? 'Unblock' : 'Ban'}  This User`}
-          description={`Are you sure you want to ${record?.userData?.status === 'blocked' ? 'unblock' : 'ban'} this user? `}
+          title={`${
+            record?.userData?.status === "blocked" ? "Unblock" : "Ban"
+          }  This User`}
+          description={`Are you sure you want to ${
+            record?.userData?.status === "blocked" ? "unblock" : "ban"
+          } this user? `}
           onConfirm={() => confirm(record?.userData?._id)}
           okText="Yes"
           cancelText="No"
         >
-          {
-            record?.userData?.status === 'blocked' ?
-              <button className="bg-green-500 text-white px-2 py-1 rounded-md hover:bg-green-600">
-                unblock
-              </button> :
-              <button className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600">
-                Ban
-              </button>
-          }
-
+          {record?.userData?.status === "blocked" ? (
+            <button className="bg-green-500 text-white px-2 py-1 rounded-md hover:bg-green-600">
+              unblock
+            </button>
+          ) : (
+            <button className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600">
+              Ban
+            </button>
+          )}
         </Popconfirm>
       ),
     },
@@ -108,7 +116,11 @@ const PersonalTrainersTable = ({ searchQuery }) => {
   };
 
   if (isLoading) {
-    return <div className=" h-[40vh] flex justify-center items-center"><Spin size="large"></Spin></div>;
+    return (
+      <div className=" h-[40vh] flex justify-center items-center">
+        <Spin size="large"></Spin>
+      </div>
+    );
   }
 
   return (

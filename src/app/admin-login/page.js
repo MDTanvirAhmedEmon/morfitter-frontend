@@ -30,7 +30,7 @@ const AdminLogIn = () => {
         console.log("log in data", data);
 
         const verifiedToken = decodedToken(data?.data?.accessToken);
-        Cookies.set('morfitter-token', data?.data?.accessToken)
+        Cookies.set("morfitter-token", data?.data?.accessToken);
         dispatch(setRole(verifiedToken));
         dispatch(setToken(data?.data?.accessToken));
         notification.success({
@@ -41,11 +41,10 @@ const AdminLogIn = () => {
         router.push("/admin");
       })
       .catch((error) => {
-        console.log('error', error);
+        console.log("error", error);
         notification.error({
           message: "Error",
-          description:
-            error?.data?.message,
+          description: error?.data?.message,
           placement: "topRight",
         });
       });
@@ -56,7 +55,9 @@ const AdminLogIn = () => {
       <div className="container mx-auto flex flex-col lg:flex-row gap-4 shadow-[0px_10px_30px_rgba(0,0,0,0.2)] bg-white px-4 md:px-8 py-16 rounded-2xl w-[700px]">
         {/* Form Section */}
         <div className="flex flex-col justify-center md:p-5 rounded-lg w-full">
-          <h1 className="text-2xl md:text-5xl font-bold mb-8 text-center">Admin Log In</h1>
+          <h1 className="text-2xl md:text-5xl font-bold mb-8 text-center">
+            Admin Log In
+          </h1>
 
           <Form
             name="register"
@@ -68,12 +69,16 @@ const AdminLogIn = () => {
             <div className="flex flex-col-reverse md:flex-row justify-center items-center space-x-4">
               <Form.Item
                 name="email"
-                rules={[{ required: true, message: "Please input your email!" }]}
+                rules={[
+                  { required: true, message: "Please input your email!" },
+                ]}
                 className="w-full"
               >
                 <Input
                   placeholder="Email"
-                  suffix={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />}
+                  suffix={
+                    <IoMdArrowDropdown className="w-6 h-6 text-greenColor" />
+                  }
                   className="w-full"
                 />
               </Form.Item>
@@ -83,12 +88,16 @@ const AdminLogIn = () => {
             <div className="flex flex-col-reverse md:flex-row justify-center items-center space-x-4 mb-5">
               <Form.Item
                 name="password"
-                rules={[{ required: true, message: "Please input your password!" }]}
+                rules={[
+                  { required: true, message: "Please input your password!" },
+                ]}
                 className="w-full"
               >
                 <Input.Password
                   placeholder="Password"
-                  suffix={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />}
+                  suffix={
+                    <IoMdArrowDropdown className="w-6 h-6 text-greenColor" />
+                  }
                   className="w-full"
                 />
               </Form.Item>
@@ -97,7 +106,10 @@ const AdminLogIn = () => {
             {/* Forgot Password */}
             <div className="flex justify-end -mt-6 mb-3">
               <p>
-                <Link className="text-primary font-semibold" href={`/auth/forgot-password`}>
+                <Link
+                  className="text-primary font-semibold"
+                  href={`/auth/forgot-password`}
+                >
                   Forget Password?
                 </Link>
               </p>
@@ -113,11 +125,9 @@ const AdminLogIn = () => {
               </button>
             </Form.Item>
           </Form>
-
         </div>
       </div>
     </section>
-
   );
 };
 

@@ -1,3 +1,4 @@
+"use client";
 import { useCreateSpecialismMutation } from "@/redux/features/specialism/specialismApi";
 import { message } from "antd";
 import { useState } from "react";
@@ -14,7 +15,7 @@ import { useSelector } from "react-redux";
 import Image from "next/image";
 
 function SpecialismsModal({ setSpecialismsVisible }) {
-  const { user } = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth);
   const [createSpecialism, { isLoading }] = useCreateSpecialismMutation();
   const [specialism, setSpecialism] = useState(null);
   const [selectedLogos, setSelectedLogos] = useState([]);
@@ -27,28 +28,29 @@ function SpecialismsModal({ setSpecialismsVisible }) {
     { name: "Flexibility & Mobility", icon: logo6 },
     { name: "Zumba", icon: logo7 },
     { name: "Hitt", icon: logo8 },
-    { name: "Pilates", icon: logo9 }
+    { name: "Pilates", icon: logo9 },
   ];
   const handleSubmit = () => {
     console.log(selectedLogos);
     createSpecialism({
       data: {
-        specialism: selectedLogos
-      }, id: user?._id
-    }).unwrap()
+        specialism: selectedLogos,
+      },
+      id: user?._id,
+    })
+      .unwrap()
       .then(() => {
-        message.success(`Specialism Added`)
+        message.success(`Specialism Added`);
         setSpecialismsVisible(false);
         setSpecialism("");
       })
       .catch((error) => {
-        message.error(error?.data?.message)
-      })
+        message.error(error?.data?.message);
+      });
   };
   const handleLogoClick = (name) => {
     setSelectedLogos(name); // Set only one selected logo
   };
-
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 h-auto flex justify-center items-center">
@@ -71,10 +73,11 @@ function SpecialismsModal({ setSpecialismsVisible }) {
               <div
                 key={index}
                 onClick={() => handleLogoClick(logo?.name)}
-                className={`flex items-center justify-center gap-2 w-[100px] lg:w-[110px] h-[100px] lg:h-[110px] px-7 text-center cursor-pointer ${selectedLogos.includes(logo?.name)
-                  ? "border-4 border-greenColor shadow shadow-greenColor"
-                  : "border-2 border-solid border-transparent"
-                  } rounded transition-all duration-300`}
+                className={`flex items-center justify-center gap-2 w-[100px] lg:w-[110px] h-[100px] lg:h-[110px] px-7 text-center cursor-pointer ${
+                  selectedLogos.includes(logo?.name)
+                    ? "border-4 border-greenColor shadow shadow-greenColor"
+                    : "border-2 border-solid border-transparent"
+                } rounded transition-all duration-300`}
                 style={{
                   borderWidth: "2px",
                   borderStyle: "solid",
@@ -101,13 +104,17 @@ function SpecialismsModal({ setSpecialismsVisible }) {
               Cancel
             </button>
 
-            <button disabled={isLoading} onClick={handleSubmit} className="px-5 py-2 bg-[#0ba593] text-white rounded hover:bg-[#088577] transition">
+            <button
+              disabled={isLoading}
+              onClick={handleSubmit}
+              className="px-5 py-2 bg-[#0ba593] text-white rounded hover:bg-[#088577] transition"
+            >
               Save
             </button>
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 

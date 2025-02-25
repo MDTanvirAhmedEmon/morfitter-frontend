@@ -1,7 +1,4 @@
-import { persistor } from '@/redux/store';
-import { createSlice } from '@reduxjs/toolkit';
-import persistStore from 'redux-persist/es/persistStore';
-
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   token: null,
@@ -10,26 +7,22 @@ const initialState = {
 };
 
 export const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     setToken: (state, action) => {
-      const token = action.payload;
-      state.token = token;
+      state.token = action.payload;
     },
     setUser: (state, action) => {
-      const user = action.payload;
-      state.user = user;
+      state.user = action.payload;
     },
     setRole: (state, action) => {
-      const role = action.payload;
-      state.role = role;
+      state.role = action.payload;
     },
     logout: (state) => {
       state.token = null;
       state.role = null;
       state.user = null;
-      persistStore(persistor).purge(); // Clears persisted state
     },
   },
 });

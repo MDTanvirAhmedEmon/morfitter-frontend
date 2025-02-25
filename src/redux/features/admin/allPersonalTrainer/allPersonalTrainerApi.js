@@ -1,3 +1,4 @@
+"use client";
 import { baseApi } from "@/redux/api/baseApi";
 
 const allPersonalTrainerApi = baseApi.injectEndpoints({
@@ -10,7 +11,6 @@ const allPersonalTrainerApi = baseApi.injectEndpoints({
       }),
       providesTags: ["user-management"],
     }),
-
   }),
 });
 

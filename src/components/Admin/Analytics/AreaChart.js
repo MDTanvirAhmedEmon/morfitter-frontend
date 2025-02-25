@@ -1,3 +1,4 @@
+"use client";
 /* eslint-disable react/prop-types */
 import { useGetAllUsersQuery } from "@/redux/features/admin/analytic/userApi";
 import {
@@ -10,7 +11,6 @@ import {
 } from "recharts";
 
 const AreaCharts = () => {
-
   const { data: getAllUsersData, isLoading } = useGetAllUsersQuery();
 
   const UserData = getAllUsersData?.data || [];

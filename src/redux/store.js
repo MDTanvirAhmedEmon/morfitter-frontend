@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import {
@@ -9,51 +9,42 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import { registerSlice } from "./features/auth/registerSlice";
-import { baseApi } from "./api/baseApi";
-import { authSlice } from "./features/auth/authSlice";
 
-// Handle storage creation for SSR
-const createNoopStorage = () => {
-  return {
-    getItem(_key) {
-      return Promise.resolve(null);
-    },
-    setItem(_key, value) {
-      return Promise.resolve(value);
-    },
-    removeItem(_key) {
-      return Promise.resolve();
-    },
-  };
-};
+import { baseApi } from "@/redux/api/baseApi"; // ✅ Import first to prevent circular dependency
+import authReducer from "@/redux/features/auth/authSlice"; // ✅ Corrected imports
+import registerReducer from "@/redux/features/auth/registerSlice"; // ✅ Corrected imports
+
+// ✅ Fix: Handle storage creation for SSR
+const createNoopStorage = () => ({
+  getItem: async () => null,
+  setItem: async (_key, value) => value,
+  removeItem: async () => {},
+});
 
 const storage =
-  typeof window === "undefined"
-    ? createNoopStorage()
-    : createWebStorage("local");
+  typeof window !== "undefined"
+    ? createWebStorage("local")
+    : createNoopStorage();
 
-// Configuration for persisting only the accessToken from authSlice
+// ✅ Persist Config (Avoid persisting API cache)
 const persistConfig = {
   key: "morfitter-web-app",
   storage,
-//   whitelist: ["accessToken"], // Persist only the accessToken
-  blacklist: ["baseApi"], // Don't persist userInfo
+  whitelist: ["auth"], // ✅ Only persist authentication data
+  blacklist: ["baseApi"], // ✅ Don't persist API cache
 };
 
-const rootReducer = {
+// ✅ Root Reducer - Wrapped with combineReducers first
+const rootReducer = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,
-  auth: authSlice.reducer,
-  register: registerSlice.reducer,
-};
+  auth: authReducer,
+  register: registerReducer,
+});
 
-// Create persisted reducer for the auth slice
-const persistedReducer = persistReducer(
-  persistConfig,
-  combineReducers(rootReducer)
-);
+// ✅ Apply Persist Reducer
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// Configure store with persisted authReducer and baseApi reducer
+// ✅ Configure Store
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
@@ -61,8 +52,8 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(baseApi.middleware), // Add baseApi middleware
+    }).concat(baseApi.middleware), // ✅ Include baseApi middleware
 });
 
-// Create persistor
+// ✅ Create Persistor
 export const persistor = persistStore(store);

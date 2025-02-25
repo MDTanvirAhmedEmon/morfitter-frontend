@@ -1,3 +1,4 @@
+"use client";
 import { baseApi } from "@/redux/api/baseApi";
 
 const newUserApi = baseApi.injectEndpoints({
