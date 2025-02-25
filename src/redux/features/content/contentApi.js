@@ -11,6 +11,15 @@ const contentApi = baseApi.injectEndpoints({
       providesTags: ['content']
     }),
 
+    getAllContentsForUser: builder.query({
+      query: (params) => ({
+        url: "/content/for-loggout-users",
+        method: "GET",
+        params,
+      }),
+      providesTags: ['content']
+    }),
+
     createContent: builder.mutation({
       query: (formData) => ({
         url: "/content/create",
@@ -67,6 +76,6 @@ const contentApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllContentsQuery, useCreateContentMutation, useGetMyContentQuery, useDeleteContentMutation, useLikeAndDislikeMutation, useDoCommentMutation, useGetAllCommentsQuery } = contentApi;
+export const { useGetAllContentsQuery, useGetAllContentsForUserQuery , useCreateContentMutation, useGetMyContentQuery, useDeleteContentMutation, useLikeAndDislikeMutation, useDoCommentMutation, useGetAllCommentsQuery } = contentApi;
 
 export default contentApi;
