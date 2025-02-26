@@ -15,7 +15,7 @@ const MyContent = () => {
         setCurrentPage(page);
     };
     return (
-        <div className=' container mx-auto py-10'>
+        <div className=' container mx-auto py-5 md:py-10'>
             {
                 isLoading && <MyContentSkeleton></MyContentSkeleton>
             }

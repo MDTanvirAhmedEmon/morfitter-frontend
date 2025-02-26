@@ -68,7 +68,7 @@ function SpecialismsModal({ setSpecialismsVisible }) {
             placeholder="Enter Your Specialisms"
             className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#0ba593] focus:border-transparent"
           /> */}
-          <div className="grid grid-cols-2 md:grid-cols-4">
+          <div className="grid grid-cols-3 md:grid-cols-4">
             {interests.map((logo, index) => (
               <div
                 key={index}

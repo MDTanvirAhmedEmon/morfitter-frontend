@@ -38,8 +38,8 @@ function ChangeUserPassword() {
     };
 
     return (
-        <div className=" flex items-center justify-center my-16">
-            <div className="bg-white px-20 w-[715px] pt-10 pb-5 rounded-md">
+        <div className=" flex items-center justify-center my-10 md:my-16">
+            <div className="bg-white px-8 md:px-20 w-[600px] md:w-[715px] pt-10 pb-5 rounded-md">
                 <p className="text-primary text-center font-bold text-xl mb-5">
                     Change Password
                 </p>

@@ -28,7 +28,7 @@ const Footer = () => {
                             <div className="logo">
                                 <Link
                                     href="#"
-                                    className="text-[57.25px] font-extrabold leading-[55.46px] tracking-[-0.02em]"
+                                    className="text-[40px] md:text-[57.25px] font-extrabold leading-[55.46px] tracking-[-0.02em]"
                                 >
                                     Morfitter
                                 </Link>

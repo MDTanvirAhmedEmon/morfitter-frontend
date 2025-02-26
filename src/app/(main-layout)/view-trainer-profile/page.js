@@ -1,5 +1,5 @@
 "use client";
-import { Avatar, message, Rate } from "antd";
+import { Avatar, message, Rate, Spin } from "antd";
 import Image from "next/image";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -24,16 +24,15 @@ const ViewTrainerProfile = () => {
   const userId = searchParams.get("userId");
   const { role } = useSelector((state) => state.auth)
   const { data: trainer } = useGetSingleUserQuery(userId);
-  console.log('trainer info', trainer);
 
   const { data: specialism } = useGetMySpecialismQuery(trainerId);
   const { data: qualification } = useGetMyQualificationQuery(trainerId);
-  const [dofolowUnfollow] = useDofolowUnfollowMutation();
+  const [dofolowUnfollow, { isLoading }] = useDofolowUnfollowMutation();
   const { data: members } = useGetMembersQuery(trainerId);
   const { data: myFollower } = useGetMyFollowersQuery(userId);
   // review 
   const { data: reviews } = useGetReviewQuery(trainerId);
-  console.log(reviews);
+
   // me session
   const { data: session } = useGetMySessionQuery(trainerId);
 
@@ -143,13 +142,14 @@ const ViewTrainerProfile = () => {
           <div className="right-information w-full lg:w-[75%] pt-5">
             <div className="user-details flex flex-col lg:flex-row lg:justify-between gap-5">
               <div className="user">
-                <div className="user-name text-4xl font-semibold capitalize">
+                <div className="user-name text-2xl md:text-4xl font-semibold capitalize">
                   {trainer?.data?.userInfo?.firstName} {trainer?.data?.userInfo?.lastName}
                 </div>
-                <div className="mt-2 text-2xl">New York</div>
+                <div className="mt-2 text-xl md:text-2xl">New York</div>
               </div>
               <button
                 onClick={handleFollowUnfollow}
+                disabled={isLoading}
                 className={`w-[120px] py-1.5 text-lg font-medium rounded-md transition-all duration-300 border 
                ${trainer?.data?.isFollowing
                     ? "bg-primary text-white border-primary hover:bg-primary"
@@ -157,7 +157,7 @@ const ViewTrainerProfile = () => {
                   }
                   `}
               >
-                {trainer?.data?.isFollowing ? "Follow" : "Following"}
+                {trainer?.data?.isFollowing ? "Follow" : "Following"} { isLoading && <Spin ></Spin>}
               </button>
 
 
@@ -259,8 +259,8 @@ const ViewTrainerProfile = () => {
                               <h2 className="text-lg font-semibold text-gray-800 capitalize">
                                 {item?.traineeData?.firstName} {item?.traineeData?.lastName}
                               </h2>
-                              <Rate disabled defaultValue={item?.rating} className="text-yellow-500" />
                             </div>
+                              <Rate disabled defaultValue={item?.rating} className="text-yellow-500" />
 
                             {/* Review Text */}
                             <p className="text-gray-600 mt-1 text-sm leading-relaxed">
@@ -280,12 +280,12 @@ const ViewTrainerProfile = () => {
             <div className="text-white bg-secondary px-4 py-2 text-center text-lg rounded w-full my-4 ">
               Current Training Session
             </div>
-            <div className=" grid grid-cols-4 gap-3">
+            <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
               {
                 session?.data?.data?.map((item) => (
                   <Link key={item?._id} href={`/morfitter-pts/${trainerId}`}>
                     <div >
-                      <Image alt="session" src={`${item?.promo_image}`} height={500} width={500} className=" w-[300px] h-[380px] object-cover" />
+                      <Image alt="session" src={`${item?.promo_image}`} height={500} width={500} className="  h-[380px] object-cover" />
                     </div>
                   </Link>
                 ))

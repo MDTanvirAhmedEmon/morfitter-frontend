@@ -37,8 +37,8 @@ const MorfitterSessions = () => {
     return (
         <div>
             <div className=' px-3 md:container md:mx-auto py-10 md:py-16'>
-                <div className=' flex justify-between items-center'>
-                    <div className=' flex flex-col md:flex-row gap-6'>
+                <div className=' flex flex-col md:flex-row justify-between items-center'>
+                    <div className=' w-full flex flex-col md:flex-row gap-6'>
                         <Select
                             value={sessionType}
                             onChange={setSessionType}
@@ -77,13 +77,13 @@ const MorfitterSessions = () => {
                         <Select.Option value="In-Person">In-Person</Select.Option>
                     </Select> */}
                     </div>
-                    <Input onChange={(e) => setSearchTerm(e.target.value)} placeholder='Search' prefix={<IoSearchOutline />} className=' w-[300px]' />
+                    <Input onChange={(e) => setSearchTerm(e.target.value)} placeholder='Search' prefix={<IoSearchOutline />} className=' md:w-[300px] mt-7 md:mt-0' />
                 </div>
                 {
                     isLoading ? (
                         <SessionSkeleton />
                     ) : data?.data?.data?.length ? (
-                        <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-10">
+                        <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4 gap-10">
                             {data?.data?.data?.map((item) => (
                                 <div key={item?._id} className="cursor-pointer">
                                     <Image

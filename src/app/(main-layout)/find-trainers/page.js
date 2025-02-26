@@ -46,7 +46,7 @@ const FindTrainers = () => {
     };
     
     return (
-        <div className=' py-16'>
+        <div className=' py-10 md:py-16'>
             <div className=' md:container mx-3 md:mx-auto'>
                 <div className=' text-xl md:text-3xl bg-greenColor rounded-lg py-4 px-6 font-semibold text-white' >Find a trainer to help you become MorFitter</div>
                 <div className='shadow-2xl rounded-lg px-5 py-8 mt-8'>

@@ -18,7 +18,7 @@ const MyContent = () => {
     setCurrentPage(page);
   };
   return (
-    <div className=" container mx-auto py-10">
+    <div className=" container mx-auto py-5 md:py-10">
       {isLoading && <MyContentSkeleton></MyContentSkeleton>}
       {data?.data?.data?.length === 0 ? (
         <div className=" py-44 flex justify-center items-center">

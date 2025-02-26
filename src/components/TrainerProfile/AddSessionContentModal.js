@@ -1,6 +1,6 @@
 "use client";
 import { useAddSessionMutation } from "@/redux/features/session/sessionApi";
-import { Form, Input, message, Modal, Upload } from "antd";
+import { Form, Input, message, Modal, Spin, Upload } from "antd";
 import { useState } from "react";
 
 const AddSessionContentModal = ({
@@ -90,7 +90,7 @@ const AddSessionContentModal = ({
             htmlType="submit"
           >
             Submit
-          </button>
+          </button> { isLoading && <Spin size="large"></Spin>}
         </Form.Item>
       </Form>
     </Modal>

@@ -40,7 +40,7 @@ const SingleBlogForLogOut = ({ content }) => {
 
   return (
     <div className="px-3 mx-0 py-5">
-      <div className=" px-2 md:px-5 py-10 border border-gray-300 shadow-[0px_0px_19px_0px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col md:flex-row gap-5 ">
+      <div className=" px-3 md:px-5 py-10 border border-gray-300 shadow-[0px_0px_19px_0px_rgba(0,0,0,0.2)] rounded-2xl flex flex-col md:flex-row gap-5 ">
         {/* Post Details Section */}
         <div className=" w-full">
           <div className=" flex flex-col md:flex-row justify-between gap-4 md:gap-8">
@@ -91,7 +91,7 @@ const SingleBlogForLogOut = ({ content }) => {
                   alt="Post Content"
                   width={500}
                   height={500}
-                  className="w-full h-[450px] object-cover"
+                  className="w-full h-[200px] md:h-[450px] object-cover"
                 />
               )}
 

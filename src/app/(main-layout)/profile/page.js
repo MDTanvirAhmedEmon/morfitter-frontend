@@ -210,8 +210,8 @@ const Profile = () => {
                         </div>
                         <div className="user-details flex flex-col lg:flex-row lg:justify-between gap-5">
                             <div className="user">
-                                <div className="user-name text-4xl font-semibold capitalize">{user?.firstName} {user?.lastName}</div>
-                                <div className="mt-2 text-2xl">{user?.city}</div>
+                                <div className="user-name text-2xl md:text-4xl font-semibold capitalize">{user?.firstName} {user?.lastName}</div>
+                                <div className="mt-2 text-xl md:text-2xl">{user?.city}</div>
                             </div>
 
                             <div className="following-follower grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -270,7 +270,7 @@ const Profile = () => {
                         </div>
 
                         <div className=" mt-5">
-                            <h2 className=" text-4xl font-bold text-center">Following</h2>
+                            <h2 className=" text-2xl md:text-4xl font-bold text-center">Following</h2>
                             <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-4">
                                 {/* when you have data do map here */}
                                 {
