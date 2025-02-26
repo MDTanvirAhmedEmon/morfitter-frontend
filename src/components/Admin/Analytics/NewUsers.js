@@ -1,3 +1,4 @@
+"use client";
 import { getBaseUrl } from "@/config/envConfig";
 import { useGetAllNewUsersQuery } from "@/redux/features/admin/analytic/newUserApi";
 import { Avatar, Spin, Table } from "antd";
@@ -45,18 +46,24 @@ const NewUsers = () => {
       title: "Role",
       dataIndex: "role",
       key: "address",
-      render: (_, record) => (record?.role ? <p className=" capitalize">{record?.role}</p> : "N/A"),
+      render: (_, record) =>
+        record?.role ? <p className=" capitalize">{record?.role}</p> : "N/A",
     },
     {
       title: "Contact No",
       dataIndex: "userInfo",
       key: "contactNo",
-      render: (_, record) => (record?.userInfo?.contactNo ? record.userInfo?.contactNo : "N/A"),
+      render: (_, record) =>
+        record?.userInfo?.contactNo ? record.userInfo?.contactNo : "N/A",
     },
   ];
 
   if (isLoading) {
-    return <div className=" h-[40vh] flex justify-center items-center"><Spin size="large"></Spin></div>;
+    return (
+      <div className=" h-[40vh] flex justify-center items-center">
+        <Spin size="large"></Spin>
+      </div>
+    );
   }
 
   return (

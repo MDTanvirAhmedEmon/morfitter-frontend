@@ -1,3 +1,4 @@
+"use client";
 import { useUpdateAdminMutation } from "@/redux/features/admin/settings/profileApi";
 import { message, Spin } from "antd";
 import React, { useState, useEffect } from "react";
@@ -7,9 +8,9 @@ function EditProfile() {
   const { user } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
+    firstName: "",
+    lastName: "",
+    email: "",
     // contact: '',
   });
 
@@ -17,9 +18,9 @@ function EditProfile() {
   useEffect(() => {
     if (user) {
       setFormData({
-        firstName: user?.firstName || '',
-        lastName: user?.lastName || '',
-        email: user?.email || '',
+        firstName: user?.firstName || "",
+        lastName: user?.lastName || "",
+        email: user?.email || "",
         // contact: user?.contactNo || '',
       });
     }
@@ -43,8 +44,8 @@ function EditProfile() {
       lastName: formData.lastName,
       email: formData.email,
       // contactNo: formData.contact,
-    }
-    formData.append('data', JSON.stringify(data))
+    };
+    formData.append("data", JSON.stringify(data));
 
     updateAdmin(formData)
       .unwrap()
@@ -53,9 +54,9 @@ function EditProfile() {
 
         // Optionally reset form data if needed
         setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
+          firstName: "",
+          lastName: "",
+          email: "",
           // contact: '',
         });
       })

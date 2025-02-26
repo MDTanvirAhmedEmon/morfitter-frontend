@@ -1,3 +1,4 @@
+"use client";
 import { useGetAllTrainersQuery } from "@/redux/features/admin/analytic/trainerApi";
 import {
   Bar,

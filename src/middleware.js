@@ -26,28 +26,43 @@ export function middleware(request) {
     return NextResponse.next();
 }
 
+// export const config = {
+//     matcher: [
+//         // dashboard
+//         '/admin',
+//         '/content-management',
+//         '/sessions',
+//         '/all-personal-trainer',
+//         '/user-management',
+//         '/settings/profile',
+//         '/settings/privacy-policy',
+//         '/settings/terms-condition',
+//         // website
+//         '/find-trainers',
+//         '/find-trainers/consultation-result',
+//         '/morfitter-pts/:path*',
+//         '/morfitter-sessions//:path*',
+//         '/trainer-profile',
+//         '/trainer-profile/edit-profile',
+//         '/trainer-profile/edit-profile/edit-profile-2',
+//         '/profile',
+//         '/profile/edit-profile',
+//         '/profile/edit-profile/edit-profile-2',
+//         '/morfitter-sessions',
+//     ],
+// };
 export const config = {
     matcher: [
-        // dashboard
         '/admin',
         '/content-management',
         '/sessions',
         '/all-personal-trainer',
         '/user-management',
-        '/settings/profile',
-        '/settings/privacy-policy',
-        '/settings/terms-condition',
-        // website
-        '/find-trainers',
-        '/find-trainers/consultation-result',
+        '/settings/:path*', 
+        '/find-trainers/:path*', 
         '/morfitter-pts/:path*',
-        '/morfitter-sessions/single-session-of-pt/:path*',
-        '/trainer-profile',
-        '/trainer-profile/edit-profile',
-        '/trainer-profile/edit-profile/edit-profile-2',
-        '/profile',
-        '/profile/edit-profile',
-        '/profile/edit-profile/edit-profile-2',
-        '/morfitter-sessions',
+        '/morfitter-sessions/:path*',
+        '/trainer-profile/:path*',
+        '/profile/:path*',
     ],
 };

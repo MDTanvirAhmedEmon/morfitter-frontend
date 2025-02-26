@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Layout, Menu } from "antd";
 import { TbPresentationAnalytics } from "react-icons/tb";
 import { HiOutlineVideoCamera } from "react-icons/hi2";
@@ -23,11 +23,11 @@ const Sidebar = ({ collapsed }) => {
 
   const handleLogOut = () => {
     dispatch(logout());
-    Cookies.remove('morfitter-token')
+    Cookies.remove("morfitter-token");
     // dispatch(clearRegisterInfo());
     window.location.reload();
-    router.push(`/admin-login`)
-  }
+    router.push(`/admin-login`);
+  };
 
   return (
     <div className="fixed top-0 left-0 bottom-0 bg-greenColor">
@@ -42,8 +42,9 @@ const Sidebar = ({ collapsed }) => {
         >
           <div className=" w-full flex justify-center items-center py-10">
             <Link
-              className={` ${collapsed ? "text-auto" : "text-[32px]"
-                }  font-extrabold text-white hover:text-white `}
+              className={` ${
+                collapsed ? "text-auto" : "text-[32px]"
+              }  font-extrabold text-white hover:text-white `}
               href={`/`}
             >
               Morfitter
@@ -131,7 +132,10 @@ const Sidebar = ({ collapsed }) => {
           </Link>
         ) : (
           // <Link href={`/auth/login`}>
-          <div onClick={handleLogOut} className=" absolute bottom-12 w-full flex justify-center cursor-pointer gap-3 items-center">
+          <div
+            onClick={handleLogOut}
+            className=" absolute bottom-12 w-full flex justify-center cursor-pointer gap-3 items-center"
+          >
             <CiLogout className=" w-8 h-8 text-white" />
             <p className=" text-white text-lg">Log Out</p>
           </div>

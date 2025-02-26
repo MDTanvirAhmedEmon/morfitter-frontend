@@ -1,3 +1,4 @@
+"use client";
 import { ConfigProvider, Pagination } from "antd";
 import { useState } from "react";
 import SingleContent from "./SingleContent";
@@ -8,12 +9,14 @@ const ContentManagementPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data } = useGetAllContentsForAdminQuery({ page: currentPage, searchTerm: searchTerm });
+  const { data } = useGetAllContentsForAdminQuery({
+    page: currentPage,
+    searchTerm: searchTerm,
+  });
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-
 
   return (
     <div>
@@ -43,13 +46,9 @@ const ContentManagementPage = () => {
         </ConfigProvider>
       </div>
 
-
       <div className="grid grid-cols-2 xl:grid-cols-3 gap-12 mb-6">
         {data?.data?.data?.map((item) => (
-          <SingleContent
-            key={item?._id}
-            item={item}
-          />
+          <SingleContent key={item?._id} item={item} />
         ))}
       </div>
 

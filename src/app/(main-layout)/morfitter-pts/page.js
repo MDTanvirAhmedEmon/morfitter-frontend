@@ -36,9 +36,6 @@ const MorfitterPts = () => {
     ];
 
     const { data } = useGetAllTrainerQuery({ page: currentPage, searchTerm: searchTerm });
-    console.log(data);
-
-
 
     return (
         <>
@@ -47,7 +44,13 @@ const MorfitterPts = () => {
                     <Input onChange={(e) => setSearchTerm(e.target.value)} suffix={<CiSearch className=" w-6 h-6" />} placeholder="Search PT" className="md:w-[320px] mb-8" />
                 </div>
 
-                {/* creating fake array */}
+                {
+                    !data?.data?.data?.length && 
+                    <div className=" flex items-center justify-center py-32">
+                        <h1 className=" text-xl md:text-3xl">Still waiting for the first trainer to register!</h1>
+                    </div>
+                }
+
                 {data?.data?.data?.map((item, index) => (
                     // eslint-disable-next-line react/jsx-key
                     <div key={item?._id} className=" rounded-xl shadow-lg mx-3 px-3 md:px-12 md:mx-0 py-6 flex flex-col md:flex-row items-center gap-6 md:gap-10 mb-6">

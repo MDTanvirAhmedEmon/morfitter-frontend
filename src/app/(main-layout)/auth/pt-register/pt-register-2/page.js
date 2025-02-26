@@ -142,6 +142,10 @@ const PTRegister2 = () => {
           placement: 'topRight',
         });
         router.push('/trainer-profile');
+        // **Force a full page reload to re-run middleware**
+        setTimeout(() => {
+          window.location.href = redirectTo; // Hard reload to trigger middleware
+        }, 500);
       })
       .catch((error) => {
         notification.error({
