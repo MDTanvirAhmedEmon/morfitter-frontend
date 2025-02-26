@@ -70,8 +70,8 @@ const AllUsers = ({ searchQuery }) => {
       render: (_, record) => (
         <button
           className={`cursor-default px-2 py-1 rounded-md ${record?.userData?.status === "in-progress"
-              ? "bg-green-500 text-white"
-              : "bg-yellow-500 text-black"
+            ? "bg-green-500 text-white"
+            : "bg-yellow-500 text-black"
             }`}
         >
           {record?.userData?.status || "N/A"}
