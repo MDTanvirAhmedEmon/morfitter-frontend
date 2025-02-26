@@ -13,6 +13,7 @@ import {
 import { useSelector } from "react-redux";
 import profileImage from "../../assets/profile/profile_image.webp";
 import { useRouter } from "next/navigation";
+import { Spin } from "antd";
 
 const SingleBlog = ({ content }) => {
   const { role } = useSelector((state) => state.auth);
@@ -149,6 +150,7 @@ const SingleBlog = ({ content }) => {
           {/* Button Section */}
           <div className="btn-part flex gap-3 md:gap-12 items-center mt-6">
             <button
+              disabled={isLoading}
               onClick={handleLike}
               className={`btn-item like px-2 flex gap-2 justify-center items-center  w-40 h-11 rounded-lg bg-[#0ba59313] border text-greenColor border-greenColor ${content?.isLiked ? "shadow shadow-greenColor" : ""
                 }  `}
@@ -170,7 +172,7 @@ const SingleBlog = ({ content }) => {
               <span className=" hidden md:block">
                 Like {content?.totalLikes}
               </span>
-              <span className=" block md:hidden">{content?.totalLikes}</span>
+              <span className=" block md:hidden">{content?.totalLikes}</span> {isLoading && <Spin></Spin>}
             </button>
             <button
               onClick={() => setOpenComment(!openComment)}

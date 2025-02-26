@@ -17,6 +17,7 @@ const BlogComments = ({ id }) => {
   const [doComment, { isLoading }] = useDoCommentMutation();
 
   const handleComment = () => {
+    if (!comments.trim()) return; // Prevent empty comments
     const commentData = {
       text: comments,
       content_id: id,
@@ -38,6 +39,7 @@ const BlogComments = ({ id }) => {
             placeholder="Add a comment..."
             suffix={
               <BsSend
+                disabled={isLoading}
                 onClick={handleComment}
                 className=" cursor-pointer w-8 h-8 "
               />
