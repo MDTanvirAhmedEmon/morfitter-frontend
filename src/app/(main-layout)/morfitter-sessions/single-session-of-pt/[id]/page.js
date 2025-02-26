@@ -5,21 +5,21 @@ import { useParams, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-const BASE_URL = "http://10.0.60.166:5000";
+const BASE_URL = "";
 
 const SingleSessionOfPt = () => {
     const { id } = useParams();
     const router = useRouter();
     const { role } = useSelector((state) => state.auth);
 
-    const [checkEnrollment ] = useCheckEnrollmentMutation();
+    const [checkEnrollment] = useCheckEnrollmentMutation();
     useEffect(() => {
         if (id && role?.id) {
             checkEnrollment({ session_id: id, user_id: role.id }).unwrap()
-            .then((data) => {
-                !data?.data?.enrolled && 
-                router.push(`/`)
-            })
+                .then((data) => {
+                    !data?.data?.enrolled &&
+                        router.push(`/`)
+                })
         }
     }, []);
 

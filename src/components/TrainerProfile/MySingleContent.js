@@ -44,7 +44,7 @@ const MySingleContent = ({ content }) => {
         <div className=" w-full">
           <div className=" flex flex-col md:flex-row justify-end gap-4 md:gap-8">
             {/* <div className=" flex items-center gap-8">
-                <Image src={`http://10.0.60.166:5000${content?.userInfo?.profileImageUrl}`} width={200} height={200} alt="Follower" className="w-28 h-24 rounded-lg " />
+                <Image src={`${content?.userInfo?.profileImageUrl}`} width={200} height={200} alt="Follower" className="w-28 h-24 rounded-lg " />
                 <div className="">
                   <div className="text-lg md:text-xl font-semibold">{content?.userInfo?.firstName} {content?.userInfo?.lastName}</div>
                   <div className="flex items-center mt-1 gap-1">
@@ -66,7 +66,7 @@ const MySingleContent = ({ content }) => {
             <div className="rounded-2xl w-full overflow-hidden">
               {content?.imageUrl && (
                 <Image
-                  src={`http://10.0.60.166:5000${content?.imageUrl}`}
+                  src={`${content?.imageUrl}`}
                   alt="Post Content"
                   width={500}
                   height={500}
@@ -80,7 +80,7 @@ const MySingleContent = ({ content }) => {
                   className="w-full rounded-lg transition-transform duration-300 hover:scale-105"
                 >
                   <source
-                    src={`http://10.0.60.166:5000${content?.videoUrl}`}
+                    src={`${content?.videoUrl}`}
                     type="video/mp4"
                   />
                   Your browser does not support the video tag.

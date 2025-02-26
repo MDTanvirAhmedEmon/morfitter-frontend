@@ -74,7 +74,7 @@ const SingleBlog = ({ content }) => {
               <Image
                 src={
                   content?.userInfo?.profileImageUrl
-                    ? `http://10.0.60.166:5000${content?.userInfo?.profileImageUrl}`
+                    ? `${content?.userInfo?.profileImageUrl}`
                     : profileImage
                 }
                 width={200}
@@ -116,7 +116,7 @@ const SingleBlog = ({ content }) => {
             <div className="rounded-2xl w-full overflow-hidden">
               {content?.imageUrl && (
                 <Image
-                  src={`http://10.0.60.166:5000${content?.imageUrl}`}
+                  src={`${content?.imageUrl}`}
                   alt="Post Content"
                   width={500}
                   height={500}
@@ -127,7 +127,7 @@ const SingleBlog = ({ content }) => {
               {content?.videoUrl && (
                 <video controls className="w-full rounded-lg ">
                   <source
-                    src={`http://10.0.60.166:5000${content?.videoUrl}`}
+                    src={`${content?.videoUrl}`}
                     type="video/mp4"
                   />
                   Your browser does not support the video tag.
@@ -150,9 +150,8 @@ const SingleBlog = ({ content }) => {
           <div className="btn-part flex gap-3 md:gap-12 items-center mt-6">
             <button
               onClick={handleLike}
-              className={`btn-item like px-2 flex gap-2 justify-center items-center  w-40 h-11 rounded-lg bg-[#0ba59313] border text-greenColor border-greenColor ${
-                content?.isLiked ? "shadow shadow-greenColor" : ""
-              }  `}
+              className={`btn-item like px-2 flex gap-2 justify-center items-center  w-40 h-11 rounded-lg bg-[#0ba59313] border text-greenColor border-greenColor ${content?.isLiked ? "shadow shadow-greenColor" : ""
+                }  `}
             >
               <svg
                 width="26"

@@ -57,7 +57,7 @@ const BlogComments = ({ id }) => {
                 className="rounded-full border border-gray-300"
                 src={
                   item?.user_image
-                    ? `http://10.0.60.166:5000${item?.user_image}`
+                    ? `${item?.user_image}`
                     : defaultProfilePic
                 }
                 height={50}

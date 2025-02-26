@@ -25,7 +25,7 @@ const MyEnrolledSession = () => {
                 <div key={item?._id} className=" cursor-pointer">
                   <Image
                     className=" w-full h-[450px] object-cover"
-                    src={`http://10.0.60.166:5000${item?.sessionDetails?.promo_image}`}
+                    src={`${item?.sessionDetails?.promo_image}`}
                     alt="session"
                     width={500}
                     height={500}

@@ -71,7 +71,7 @@ const Profile = () => {
         const formData = new FormData();
 
         formData.append('data', JSON.stringify({
-            trainee:{}
+            trainee: {}
         }));
         if (profilePic) {
             formData.append('file', profilePic);
@@ -86,7 +86,7 @@ const Profile = () => {
                 message.error(error?.data?.message)
             })
     }
-    // const profilePicture = user?.profilePicture ? `http://10.0.60.166:5000${user?.profileImageUrl}` : follower1;
+    // const profilePicture = user?.profilePicture ? `${user?.profileImageUrl}` : follower1;
     // const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : profilePicture;
     const text =
         <div className=" flex gap-3 py-1">
@@ -94,7 +94,7 @@ const Profile = () => {
             <Link className=" bg-white text-black hover:text-black px-1 rounded " href={`/setting/change-user-password`}>Change Password</Link>
         </div>;
 
-    const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${user?.profileImageUrl}`;
+    const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `${user?.profileImageUrl}`;
 
     return (
         <section className=" py-10 md:py-20">
@@ -279,7 +279,7 @@ const Profile = () => {
                                             <Image className=" w-14 rounded-2xl object-cover "
 
                                                 src={item?.followingDetails?.profileImageUrl
-                                                    ? `http://10.0.60.166:5000${item?.followingDetails?.profileImageUrl}`
+                                                    ? `${item?.followingDetails?.profileImageUrl}`
                                                     : defaultProfilePic
                                                 }
                                                 height={200} width={200} alt="profile" />

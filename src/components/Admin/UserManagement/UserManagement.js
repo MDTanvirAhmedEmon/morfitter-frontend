@@ -38,7 +38,7 @@ const AllUsers = ({ searchQuery }) => {
         record?.profileImageUrl ? (
           <Avatar
             size={40}
-            src={`http://10.0.60.166:5000${record?.profileImageUrl}`}
+            src={`${record?.profileImageUrl}`}
           />
         ) : (
           <Avatar size={40} src="https://avatar.iran.liara.run/public/43" />
@@ -69,11 +69,10 @@ const AllUsers = ({ searchQuery }) => {
       key: "status",
       render: (_, record) => (
         <button
-          className={`cursor-default px-2 py-1 rounded-md ${
-            record?.userData?.status === "in-progress"
+          className={`cursor-default px-2 py-1 rounded-md ${record?.userData?.status === "in-progress"
               ? "bg-green-500 text-white"
               : "bg-yellow-500 text-black"
-          }`}
+            }`}
         >
           {record?.userData?.status || "N/A"}
         </button>
@@ -84,12 +83,10 @@ const AllUsers = ({ searchQuery }) => {
       key: "action",
       render: (_, record) => (
         <Popconfirm
-          title={`${
-            record?.userData?.status === "blocked" ? "Unblock" : "Ban"
-          }  This User`}
-          description={`Are you sure you want to ${
-            record?.userData?.status === "blocked" ? "unblock" : "ban"
-          } this user? `}
+          title={`${record?.userData?.status === "blocked" ? "Unblock" : "Ban"
+            }  This User`}
+          description={`Are you sure you want to ${record?.userData?.status === "blocked" ? "unblock" : "ban"
+            } this user? `}
           onConfirm={() => confirm(record?.userData?._id)}
           okText="Yes"
           cancelText="No"

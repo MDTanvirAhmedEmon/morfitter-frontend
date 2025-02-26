@@ -32,7 +32,7 @@ const Profile = () => {
         message.error(error?.data?.message || "Error updating profile");
       });
   };
-  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `http://10.0.60.166:5000${user?.profileImageUrl}`;
+  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `${user?.profileImageUrl}`;
   const handleProfilePicUpload = (e) => {
     setProfilePic(e.file);
   };

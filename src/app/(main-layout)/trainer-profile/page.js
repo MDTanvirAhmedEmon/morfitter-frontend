@@ -92,7 +92,7 @@ const TrainerProfile = () => {
   };
   const profilePicUrl = profilePic
     ? URL.createObjectURL(profilePic)
-    : `http://10.0.60.166:5000${user?.profileImageUrl}`;
+    : `${user?.profileImageUrl}`;
 
   const [deleteSpecialism] = useDeleteSpecialismMutation();
 
@@ -404,7 +404,7 @@ const TrainerProfile = () => {
                             className="w-16 h-16 object-cover rounded-full border-2 border-gray-300"
                             src={
                               item?.traineeData?.profileImageUrl
-                                ? `http://10.0.60.166:5000${item?.traineeData?.profileImageUrl}`
+                                ? `${item?.traineeData?.profileImageUrl}`
                                 : defaultProfilePic
                             }
                             height={200}
@@ -505,7 +505,7 @@ const TrainerProfile = () => {
                   <div>
                     <Image
                       alt="session"
-                      src={`http://10.0.60.166:5000${item?.promo_image}`}
+                      src={`${item?.promo_image}`}
                       height={500}
                       width={500}
                       className=" w-[300px] h-[380px] object-cover"

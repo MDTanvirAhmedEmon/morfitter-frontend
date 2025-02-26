@@ -73,7 +73,7 @@ function TestimonialsModal({ setTestimonialsVisible }) {
                 <Image
                   src={
                     user?.profileImageUrl
-                      ? `http://10.0.60.166:5000${user?.profileImageUrl}`
+                      ? `${user?.profileImageUrl}`
                       : defaultProfilePic
                   }
                   width={100}

@@ -95,7 +95,7 @@ const SinglePtSession = () => {
                                         <Image onClick={() => {
                                             setSelectedSession(item);
                                             showModal();
-                                        }} className=' w-full h-[450px] object-cover' src={`http://10.0.60.166:5000${item?.promo_image}`} alt='session' width={500} height={500} />
+                                        }} className=' w-full h-[450px] object-cover' src={`${item?.promo_image}`} alt='session' width={500} height={500} />
                                     </div>
                                     // </Link>
                                 ))

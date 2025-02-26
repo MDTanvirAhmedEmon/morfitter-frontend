@@ -49,7 +49,7 @@ const SingleModalItem = ({ item, handleInvitationOk }) => {
             className=" w-14 rounded-2xl object-cover "
             src={
               item?.traineeData?.profileImageUrl
-                ? `http://10.0.60.166:5000${item?.trainerData?.profileImageUrl}`
+                ? `${item?.trainerData?.profileImageUrl}`
                 : defaultProfilePic
             }
             height={200}

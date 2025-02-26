@@ -56,7 +56,7 @@ const TrainerItem = ({ trainer }) => {
                 <div className=' flex items-center gap-3 shadow-[2px_8px_8px_2px_rgba(0,0,0,0.1)] py-4 px-4 lg:px-10 rounded-xl mb-5 md:mb-0'>
                     <Image
                         src={trainer?.profileImageUrl
-                            ? `http://10.0.60.166:5000${trainer?.profileImageUrl}`
+                            ? `${trainer?.profileImageUrl}`
                             : profileImage}
                         alt='profile' width={300} height={300} className=' w-16 border-4 border-secondary rounded-lg' />
                     <div>

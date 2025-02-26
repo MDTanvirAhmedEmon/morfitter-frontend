@@ -35,7 +35,7 @@ const ViewUserProfile = () => {
                 message.error(err?.data?.message)
             })
     }
-    const profilePicUrl = trainee?.data?.userInfo?.profileImageUrl ? `http://10.0.60.166:5000${trainee?.data?.userInfo?.profileImageUrl}` : defaultProfileImage;
+    const profilePicUrl = trainee?.data?.userInfo?.profileImageUrl ? `${trainee?.data?.userInfo?.profileImageUrl}` : defaultProfileImage;
 
     return (
         <section className=" py-10 md:py-20">
@@ -160,7 +160,7 @@ const ViewUserProfile = () => {
                                         <div key={item?._id} className=" flex items-center gap-3 shadow-lg px-3 py-2 rounded-lg">
                                             <Image className=" w-14 rounded-2xl "
                                                 src={item?.followingDetails?.profileImageUrl
-                                                    ? `http://10.0.60.166:5000${item?.followingDetails?.profileImageUrl}`
+                                                    ? `${item?.followingDetails?.profileImageUrl}`
                                                     : defaultProfileImage
                                                 }
                                                 height={200} width={200} alt="profile" />

@@ -90,7 +90,7 @@ const MorfitterSessions = () => {
                                         <Image onClick={() => {
                                             setSelectedSession(item);
                                             showModal();
-                                        }} className=' w-full h-[450px] object-cover' src={`http://10.0.60.166:5000${item?.promo_image}`} alt='session' width={500} height={500} />
+                                        }} className=' w-full h-[450px] object-cover' src={`${item?.promo_image}`} alt='session' width={500} height={500} />
                                     </div>
                                     // </Link>
                                 ))
@@ -98,6 +98,13 @@ const MorfitterSessions = () => {
 
                         </div>
                 }
+                                {
+                    !data?.data?.data?.length && 
+                    <div className=" flex items-center justify-center py-32">
+                        <h1 className=" text-xl md:text-3xl">Still waiting for the first session to be created!</h1>
+                    </div>
+                }
+
                 <div className=" mt-10">
                     {
                         data?.data?.data?.length !== 0 &&
