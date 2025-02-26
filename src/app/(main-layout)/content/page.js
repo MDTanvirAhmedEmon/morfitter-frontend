@@ -106,15 +106,16 @@ const Content = () => {
             components: {
               Input: {
                 inputFontSize: 16,
-                controlHeight: 37,
+                controlHeight: 39,
               },
             },
           }}
         >
           <Input
             value={searchValue}
+            className="-mt-3 md:-mt-0"
             onChange={(e) => setSearchValue(e.target.value)}
-            prefix={<CiSearch className="w-6 h-6" />}
+            prefix={<CiSearch className="w-6 h-6 " />}
             placeholder="Search Content"
           />
         </ConfigProvider>

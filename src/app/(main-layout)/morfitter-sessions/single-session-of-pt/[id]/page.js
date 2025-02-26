@@ -79,7 +79,7 @@ const SingleSessionOfPt = () => {
                     className="w-full rounded-md shadow-lg mb-4"
                     src={videoTutorials[currentVideoIndex]?.url}
                 />
-                <h2 className="text-2xl font-bold mb-2">{videoTutorials[currentVideoIndex]?.title}</h2>
+                <h2 className="text-xl md:text-2xl font-bold mb-2">{videoTutorials[currentVideoIndex]?.title}</h2>
                 <p className="text-gray-600 mb-4">{videoTutorials[currentVideoIndex]?.description || "No description available."}</p>
                 <div className="flex justify-between">
                     <button
@@ -101,6 +101,7 @@ const SingleSessionOfPt = () => {
                 </div>
             </div>
         </div>
+        
     );
 };
 

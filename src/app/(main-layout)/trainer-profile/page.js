@@ -269,10 +269,10 @@ const TrainerProfile = () => {
             </div>
             <div className="user-details flex flex-col lg:flex-row lg:justify-between gap-5">
               <div className="user">
-                <div className="user-name text-4xl font-semibold capitalize">
+                <div className="user-name text-2xl md:text-4xl font-semibold capitalize">
                   {user?.firstName} {user?.lastName}
                 </div>
-                <div className="mt-2 text-2xl">{user?.country}</div>
+                <div className="mt-2 text-xl md:text-2xl">{user?.country}</div>
               </div>
 
               <div className="following-follower grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -496,7 +496,7 @@ const TrainerProfile = () => {
                 <h3 className=" text-xl">No Sesssion Available</h3>
               </div>
             )}
-            <div className=" grid grid-cols-4 gap-3">
+            <div className=" grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4 gap-3">
               {session?.data?.data?.map((item) => (
                 <Link
                   key={item?._id}
@@ -508,7 +508,7 @@ const TrainerProfile = () => {
                       src={`${item?.promo_image}`}
                       height={500}
                       width={500}
-                      className=" w-[300px] h-[380px] object-cover"
+                      className=" h-[380px] object-cover"
                     />
                   </div>
                 </Link>

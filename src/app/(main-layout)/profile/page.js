@@ -270,7 +270,7 @@ const Profile = () => {
                         </div>
 
                         <div className=" mt-5">
-                            <h2 className=" text-4xl font-bold text-center">Following</h2>
+                            <h2 className=" text-2xl md:text-4xl font-bold text-center">Following</h2>
                             <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-4">
                                 {/* when you have data do map here */}
                                 {

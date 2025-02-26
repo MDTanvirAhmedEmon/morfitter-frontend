@@ -1,5 +1,5 @@
 "use client"
-import { Avatar, message } from "antd";
+import { Avatar, message, Spin } from "antd";
 import Image from "next/image";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -17,7 +17,7 @@ const ViewUserProfile = () => {
     const { role } = useSelector((state) => state.auth)
     const traineeId = searchParams.get("trainee");
     const userId = searchParams.get("userId");
-    const [dofolowUnfollow] = useDofolowUnfollowMutation();
+    const [dofolowUnfollow, { isLoading }] = useDofolowUnfollowMutation();
     const { data: trainee } = useGetSingleUserQuery(userId)
     console.log(trainee);
     const { data: myFollower } = useGetMyFollowersQuery(role?.id);
@@ -119,11 +119,12 @@ const ViewUserProfile = () => {
                     <div className="right-information w-full lg:w-[75%] pt-5">
                         <div className="user-details flex flex-col lg:flex-row lg:justify-between gap-5">
                             <div className="user">
-                                <div className="user-name text-4xl font-semibold capitalize">{trainee?.data?.userInfo?.firstName} {trainee?.data?.userInfo?.lastName}</div>
-                                <div className="mt-2 text-2xl">New York</div>
+                                <div className="user-name text-2xl md:text-4xl font-semibold capitalize">{trainee?.data?.userInfo?.firstName} {trainee?.data?.userInfo?.lastName}</div>
+                                <div className="mt-2 text-xl md:text-2xl">New York</div>
                             </div>
                             <button
                                 onClick={handleFollowUnfollow}
+                                disabled={isLoading}
                                 className={`w-[120px] py-1.5 text-lg font-medium rounded-md transition-all duration-300 border 
                                 ${trainee?.data?.isFollowing
                                         ? "bg-primary text-white border-primary hover:bg-primary"
@@ -131,7 +132,7 @@ const ViewUserProfile = () => {
                                     }
                                 `}
                             >
-                                {trainee?.data?.isFollowing ? "Follow" : "Following"}
+                                {trainee?.data?.isFollowing ? "Follow" : "Following"} { isLoading && <Spin></Spin>}
                             </button>
 
                             <div className="following-follower grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -153,7 +154,7 @@ const ViewUserProfile = () => {
 
 
                         <div className=" mt-5">
-                            <h2 className=" text-4xl font-bold text-center">Following</h2>
+                            <h2 className=" text-2xl md:text-4xl font-bold text-center">Following</h2>
                             <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-4">
                                 {
                                     following?.data?.map((item) => (

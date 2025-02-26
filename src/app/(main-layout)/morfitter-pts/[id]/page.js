@@ -41,12 +41,12 @@ const SinglePtSession = () => {
     return (
         <div>
             <div className=' px-3 md:container md:mx-auto py-10 md:py-16'>
-                <div className=' flex justify-between items-center'>
-                    <div className=' flex flex-col md:flex-row gap-6'>
+                <div className=' flex flex-col md:flex-row justify-between items-center'>
+                    <div className=' w-full flex flex-col md:flex-row gap-6'>
                         <Select
                             value={sessionType}
                             onChange={setSessionType}
-                            className=' md:w-[190px]' placeholder={<p className=" text-lg">Live Or Recorded?</p>}>
+                            className=' w-full md:w-[190px]' placeholder={<p className=" text-lg">Live Or Recorded?</p>}>
                             <Select.Option value="live_group">Live</Select.Option>
                             <Select.Option value="recorded">Recorded</Select.Option>
                             <Select.Option value="">All</Select.Option>
@@ -54,7 +54,7 @@ const SinglePtSession = () => {
                         <Select
                             value={specialism}
                             onChange={setSpecialism}
-                            className="md:w-[190px]" placeholder={<p className="text-lg">specialism</p>}>
+                            className=" w-full md:w-[190px]" placeholder={<p className="text-lg">specialism</p>}>
                             <Select.Option value="Ab Workouts">Ab Workouts</Select.Option>
                             <Select.Option value="Anaerobic exercise">Anaerobic exercise</Select.Option>
                             <Select.Option value="Boxercise">Boxercise</Select.Option>
@@ -81,27 +81,28 @@ const SinglePtSession = () => {
                         <Select.Option value="In-Person">In-Person</Select.Option>
                     </Select> */}
                     </div>
-                    <Input onChange={(e) => setSearchTerm(e.target.value)} placeholder='Search' prefix={<IoSearchOutline />} className=' w-[300px]' />
+                    <Input onChange={(e) => setSearchTerm(e.target.value)} placeholder='Search' prefix={<IoSearchOutline />} className=' md:w-[300px] mt-7 md:mt-0' />
                 </div>
-                {!data?.data?.data.length && <h1 className=' text-center mt-20 text-2xl'>No Sessions Found</h1>}
+
                 {
                     isLoading ? <SessionSkeleton></SessionSkeleton>
-                        :
-                        <div className=' mt-10 grid grid-cols-2 lg:grid-cols-4 gap-10'>
-                            {
-                                data?.data?.data?.map((item) => (
-                                    // <Link key={item?._id} href={`/morfitter-sessions/single-session-of-pt/${item?._id}`}>
-                                    <div key={item?._id} className=' cursor-pointer'>
-                                        <Image onClick={() => {
-                                            setSelectedSession(item);
-                                            showModal();
-                                        }} className=' w-full h-[450px] object-cover' src={`${item?.promo_image}`} alt='session' width={500} height={500} />
-                                    </div>
-                                    // </Link>
-                                ))
-                            }
+                        : data?.data?.data?.length ?
+                            <div className=' mt-10 grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4 gap-10'>
+                                {
+                                    data?.data?.data?.map((item) => (
+                                        // <Link key={item?._id} href={`/morfitter-sessions/single-session-of-pt/${item?._id}`}>
+                                        <div key={item?._id} className=' cursor-pointer'>
+                                            <Image onClick={() => {
+                                                setSelectedSession(item);
+                                                showModal();
+                                            }} className=' w-full h-[380px] md:h-[450px] object-cover' src={`${item?.promo_image}`} alt='session' width={500} height={500} />
+                                        </div>
+                                        // </Link>
+                                    ))
+                                }
 
-                        </div>
+                            </div>
+                            : <h1 className=' text-center mt-20 text-2xl'>No Sessions Found</h1>
                 }
                 <div className=" mt-10">
                     {

@@ -70,7 +70,7 @@ const MySingleContent = ({ content }) => {
                   alt="Post Content"
                   width={500}
                   height={500}
-                  className="w-full h-[450px] object-cover"
+                  className="w-full h-[240px] md:h-[450px] object-cover"
                 />
               )}
 
