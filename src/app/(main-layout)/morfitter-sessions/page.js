@@ -80,30 +80,35 @@ const MorfitterSessions = () => {
                     <Input onChange={(e) => setSearchTerm(e.target.value)} placeholder='Search' prefix={<IoSearchOutline />} className=' w-[300px]' />
                 </div>
                 {
-                    isLoading ? <SessionSkeleton></SessionSkeleton>
-                        :
-                        <div className=' mt-10 grid grid-cols-2 lg:grid-cols-4 gap-10'>
-                            {
-                                data?.data?.data?.map((item) => (
-                                    // <Link key={item?._id} href={`/morfitter-sessions/single-session-of-pt/${item?._id}`}>
-                                    <div key={item?._id} className=' cursor-pointer'>
-                                        <Image onClick={() => {
+                    isLoading ? (
+                        <SessionSkeleton />
+                    ) : data?.data?.data?.length ? (
+                        <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-10">
+                            {data?.data?.data?.map((item) => (
+                                <div key={item?._id} className="cursor-pointer">
+                                    <Image
+                                        onClick={() => {
                                             setSelectedSession(item);
                                             showModal();
-                                        }} className=' w-full h-[450px] object-cover' src={`${item?.promo_image}`} alt='session' width={500} height={500} />
-                                    </div>
-                                    // </Link>
-                                ))
-                            }
-
+                                        }}
+                                        className="w-full h-[450px] object-cover"
+                                        src={item?.promo_image}
+                                        alt="session"
+                                        width={500}
+                                        height={500}
+                                    />
+                                </div>
+                            ))}
                         </div>
+                    ) : (
+                        <div className="flex items-center justify-center py-32">
+                            <h1 className="text-xl md:text-3xl">
+                                Still waiting for the first session to be created!
+                            </h1>
+                        </div>
+                    )
                 }
-                                {
-                    !data?.data?.data?.length && 
-                    <div className=" flex items-center justify-center py-32">
-                        <h1 className=" text-xl md:text-3xl">Still waiting for the first session to be created!</h1>
-                    </div>
-                }
+
 
                 <div className=" mt-10">
                     {

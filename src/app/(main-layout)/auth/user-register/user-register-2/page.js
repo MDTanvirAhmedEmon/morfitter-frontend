@@ -129,6 +129,10 @@ const UserRegister2 = () => {
           description: data?.data?.message,
           placement: "topRight",
         });
+        // **Force a full page reload to re-run middleware**
+        setTimeout(() => {
+          window.location.href = redirectTo; // Hard reload to trigger middleware
+        }, 500);
       })
       .catch((error) => {
         notification.error({
@@ -168,18 +172,16 @@ const UserRegister2 = () => {
                   <button
                     type="button"
                     onClick={() => setHeight("CM")}
-                    className={` text-white rounded-md px-4 py-[2px] hover:bg-greenColor font-semibold ${
-                      height === "CM" ? "bg-greenColor" : "bg-secondary"
-                    }`}
+                    className={` text-white rounded-md px-4 py-[2px] hover:bg-greenColor font-semibold ${height === "CM" ? "bg-greenColor" : "bg-secondary"
+                      }`}
                   >
                     CM
                   </button>
                   <button
                     type="button"
                     onClick={() => setHeight("Ft & In")}
-                    className={` text-white rounded-md px-4 py-[2px] hover:bg-greenColor font-semibold ${
-                      height === "Ft & In" ? "bg-greenColor" : "bg-secondary"
-                    }`}
+                    className={` text-white rounded-md px-4 py-[2px] hover:bg-greenColor font-semibold ${height === "Ft & In" ? "bg-greenColor" : "bg-secondary"
+                      }`}
                   >
                     Ft & In
                   </button>
@@ -203,27 +205,24 @@ const UserRegister2 = () => {
                   <button
                     type="button"
                     onClick={() => setWeight("Stones")}
-                    className={` text-white rounded-md px-4 py-[2px] hover:bg-greenColor font-semibold ${
-                      weight === "Stones" ? "bg-greenColor" : "bg-secondary"
-                    }`}
+                    className={` text-white rounded-md px-4 py-[2px] hover:bg-greenColor font-semibold ${weight === "Stones" ? "bg-greenColor" : "bg-secondary"
+                      }`}
                   >
                     Stones
                   </button>
                   <button
                     type="button"
                     onClick={() => setWeight("KG")}
-                    className={` text-white rounded-md px-4 py-[2px] hover:bg-greenColor font-semibold ${
-                      weight === "KG" ? "bg-greenColor" : "bg-secondary"
-                    }`}
+                    className={` text-white rounded-md px-4 py-[2px] hover:bg-greenColor font-semibold ${weight === "KG" ? "bg-greenColor" : "bg-secondary"
+                      }`}
                   >
                     KG
                   </button>
                   <button
                     type="button"
                     onClick={() => setWeight("Lbs")}
-                    className={` text-white rounded-md px-4 py-[2px] hover:bg-greenColor font-semibold ${
-                      weight === "Lbs" ? "bg-greenColor" : "bg-secondary"
-                    }`}
+                    className={` text-white rounded-md px-4 py-[2px] hover:bg-greenColor font-semibold ${weight === "Lbs" ? "bg-greenColor" : "bg-secondary"
+                      }`}
                   >
                     Lbs
                   </button>
@@ -250,44 +249,40 @@ const UserRegister2 = () => {
                 <button
                   type="button"
                   onClick={() => setFitterGoal("Feel Fitter")}
-                  className={` text-white rounded-full md:px-3 py-[2px] hover:bg-greenColor font-semibold ${
-                    fitterGoal === "Feel Fitter"
+                  className={` text-white rounded-full md:px-3 py-[2px] hover:bg-greenColor font-semibold ${fitterGoal === "Feel Fitter"
                       ? "bg-greenColor"
                       : "bg-secondary"
-                  }`}
+                    }`}
                 >
                   Feel Fitter
                 </button>
                 <button
                   type="button"
                   onClick={() => setFitterGoal("look Fitter")}
-                  className={` text-white rounded-full md:px-3 py-[2px] hover:bg-greenColor font-semibold ${
-                    fitterGoal === "look Fitter"
+                  className={` text-white rounded-full md:px-3 py-[2px] hover:bg-greenColor font-semibold ${fitterGoal === "look Fitter"
                       ? "bg-greenColor"
                       : "bg-secondary"
-                  }`}
+                    }`}
                 >
                   look Fitter
                 </button>
                 <button
                   type="button"
                   onClick={() => setFitterGoal("Fitter Living")}
-                  className={` text-white rounded-full md:px-3 py-[2px] hover:bg-greenColor font-semibold ${
-                    fitterGoal === "Fitter Living"
+                  className={` text-white rounded-full md:px-3 py-[2px] hover:bg-greenColor font-semibold ${fitterGoal === "Fitter Living"
                       ? "bg-greenColor"
                       : "bg-secondary"
-                  }`}
+                    }`}
                 >
                   Fitter Living
                 </button>
                 <button
                   type="button"
                   onClick={() => setFitterGoal("Fitter Weight")}
-                  className={` text-white rounded-full md:px-3 py-[2px] hover:bg-greenColor font-semibold ${
-                    fitterGoal === "Fitter Weight"
+                  className={` text-white rounded-full md:px-3 py-[2px] hover:bg-greenColor font-semibold ${fitterGoal === "Fitter Weight"
                       ? "bg-greenColor"
                       : "bg-secondary"
-                  }`}
+                    }`}
                 >
                   Fitter Weight
                 </button>
@@ -302,11 +297,10 @@ const UserRegister2 = () => {
                     <div
                       key={index}
                       onClick={() => handleLogoClick(logo.name)}
-                      className={`flex items-center justify-center w-[100px] lg:w-[110px] h-[100px] lg:h-[110px] px-7 text-center cursor-pointer ${
-                        selectedLogos.includes(logo.name)
+                      className={`flex items-center justify-center w-[100px] lg:w-[110px] h-[100px] lg:h-[110px] px-7 text-center cursor-pointer ${selectedLogos.includes(logo.name)
                           ? "border-4 border-greenColor shadow shadow-greenColor"
                           : "border-2 border-solid border-transparent"
-                      } rounded transition-all duration-300`}
+                        } rounded transition-all duration-300`}
                       style={{
                         borderWidth: "2px",
                         borderStyle: "solid",

@@ -4,7 +4,6 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import dynamic from "next/dynamic";
 import regiserImg from "../../../../assets/register.png";
 import Image from "next/image";
-
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { useLogInMutation } from "@/redux/features/auth/authApi";
@@ -39,13 +38,13 @@ const LogIn = () => {
           description: data?.data?.message,
           placement: "topRight",
         });
-        console.log(verifiedToken);
-        if (verifiedToken?.role === "trainee") {
-          router.push("/profile");
-          // router.push("/");
-        } else if (verifiedToken?.role === "trainer") {
-          router.push("/trainer-profile");
-        }
+        const redirectTo = verifiedToken?.role === "trainee" ? "/profile" : "/trainer-profile";
+        router.push(redirectTo);
+
+        // **Force a full page reload to re-run middleware**
+        setTimeout(() => {
+          window.location.href = redirectTo; // Hard reload to trigger middleware
+        }, 500);
       })
       .catch((error) => {
         console.log('error', error);
@@ -135,8 +134,8 @@ const LogIn = () => {
                 disabled={isLoading}
                 className="bookBtn text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
               >
-                Log In {isLoading && <Spin></Spin>}
-              </button>
+                Log In
+              </button> {isLoading && <Spin className=" mr-1"></Spin>}
             </Form.Item>
           </Form>
           <p className=" mt-6">

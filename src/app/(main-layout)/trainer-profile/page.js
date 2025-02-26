@@ -420,12 +420,12 @@ const TrainerProfile = () => {
                                 {item?.traineeData?.firstName}{" "}
                                 {item?.traineeData?.lastName}
                               </h2>
+                            </div>
                               <Rate
                                 disabled
                                 defaultValue={item?.rating}
                                 className="text-yellow-500"
                               />
-                            </div>
 
                             {/* Review Text */}
                             <p className="text-gray-600 mt-1 text-sm leading-relaxed">
