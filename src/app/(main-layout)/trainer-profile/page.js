@@ -304,6 +304,13 @@ const TrainerProfile = () => {
                 </div> */}
               </div>
             </div>
+            {
+              user?.about &&
+              <div className=" mt-5">
+                <p>{user?.about}</p>
+              </div>
+            }
+
 
             <div className=" mt-6">
               <div className="border mb-4">
@@ -421,11 +428,11 @@ const TrainerProfile = () => {
                                 {item?.traineeData?.lastName}
                               </h2>
                             </div>
-                              <Rate
-                                disabled
-                                defaultValue={item?.rating}
-                                className="text-yellow-500"
-                              />
+                            <Rate
+                              disabled
+                              defaultValue={item?.rating}
+                              className="text-yellow-500"
+                            />
 
                             {/* Review Text */}
                             <p className="text-gray-600 mt-1 text-sm leading-relaxed">

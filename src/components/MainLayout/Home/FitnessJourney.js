@@ -31,7 +31,7 @@ const FitnessJourney = () => {
                                 Don’t let a busy life keep you from your fitness goals. Join
                                 Morfitter today, and make fitness work for you.
                             </div>
-                            <Link href={`/auth/register`}>
+                            <Link href={`/auth/user-register`}>
                                 <button className="mt-6 px-6 md:px-8 py-2 md:py-3 text-lg font-medium bg-white text-greenColor border-2 border-none rounded-full transition-colors duration-300 hover:bg-[#0ba593] hover:text-white">
                                     Sign up now
                                 </button>

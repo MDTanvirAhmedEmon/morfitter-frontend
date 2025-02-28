@@ -65,7 +65,8 @@ const CreatingSession = () => {
   ];
 
   return (
-    <section className="py-8 md:py-20">
+    <section className="py-8 md:py-14">
+      <div className=" px-4 md:px-0 md:container mx-auto text-xl md:text-3xl font-semibold mb-4">Create A New Session</div>
       <div className="xl:container mx-auto flex flex-col lg:flex-row gap-4 shadow-2xl p-4 md:p-8 rounded-2xl">
         {/* Image Section */}
         <div className="lg:w-1/2 rounded-lg  overflow-hidden ">
@@ -151,14 +152,14 @@ const CreatingSession = () => {
               </Upload>
             </div>
 
-            <div className="  flex flex-col md:flex-row md:items-center gap-4 lg:gap-6 my-20">
+            <div className="  flex flex-col md:flex-row md:items-center gap-4 lg:gap-6 my-6 md:my-20">
               <p className=" text-lg ">Frequency</p>
               <div className=" flex gap-5 lg:gap-8 items-center">
                 <button
                   type="button"
                   onClick={() => setFrequency("weekly")}
-                  className={` text-white rounded-full px-3 md:px-6 md:py-[6px] hover:bg-greenColor font-semibold md:text-lg ${
-                    frequency === "Weekly" ? "bg-greenColor" : "bg-secondary"
+                  className={` text-white rounded-full px-3 md:px-6 py-[3px] md:py-[6px] hover:bg-greenColor font-semibold md:text-lg ${
+                    frequency === "weekly" ? "bg-greenColor" : "bg-secondary"
                   }`}
                 >
                   Weekly
@@ -166,8 +167,8 @@ const CreatingSession = () => {
                 <button
                   type="button"
                   onClick={() => setFrequency("fortnightly")}
-                  className={` text-white rounded-full px-3 md:px-6 md:py-[6px] hover:bg-greenColor font-semibold md:text-lg ${
-                    frequency === "Fortnightly"
+                  className={` text-white rounded-full px-3 md:px-6 py-[3px] md:py-[6px] hover:bg-greenColor font-semibold md:text-lg ${
+                    frequency === "fortnightly"
                       ? "bg-greenColor"
                       : "bg-secondary"
                   }`}
@@ -177,8 +178,8 @@ const CreatingSession = () => {
                 <button
                   type="button"
                   onClick={() => setFrequency("monthly")}
-                  className={` text-white rounded-full px-3 md:px-6 md:py-[6px] hover:bg-greenColor font-semibold md:text-lg ${
-                    frequency === "Monthly" ? "bg-greenColor" : "bg-secondary"
+                  className={` text-white rounded-full px-3 md:px-6 py-[3px] md:py-[6px] hover:bg-greenColor font-semibold md:text-lg ${
+                    frequency === "monthly" ? "bg-greenColor" : "bg-secondary"
                   }`}
                 >
                   Monthly
@@ -204,7 +205,7 @@ const CreatingSession = () => {
               rules={[{ required: true, message: "Please select access!" }]}
             >
               <div className=" flex items-center gap-3">
-                <p className=" text-lg w-[16%]">Access</p>
+
                 <Select
                   onChange={(value) => {
                     setAccessType(value);
@@ -257,7 +258,7 @@ const CreatingSession = () => {
               <button
                 disabled={isLoading}
                 type="submit"
-                className=" md:text-lg leading-8 text-white bg-secondary hover:bg-greenColor md:py-2 md:py-1 px-6 md:px-8 rounded-full capitalize transition-all hover:"
+                className=" mt-8 md:mt-5 md:text-lg leading-8 text-white bg-secondary hover:bg-greenColor md:py-2 px-6 md:px-8 rounded-full capitalize transition-all :"
               >
                 Enter
               </button>{isLoading && <Spin size="large"></Spin>}

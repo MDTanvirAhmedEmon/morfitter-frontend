@@ -72,7 +72,7 @@ const PTRegister = () => {
         {/* Form Section */}
         <div className="lg:w-1/2 flex flex-col justify-center md:p-8 rounded-lg ">
           <h1 className="text-2xl md:text-5xl font-bold  mb-8">
-            Register as a Trainer
+            Register as a PTs
           </h1>
 
           <Form

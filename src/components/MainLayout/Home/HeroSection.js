@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import bgHero from '../../../assets/hero-bg.png'
 import insta from '../../../assets/insta.svg'
@@ -6,8 +7,11 @@ import fb from '../../../assets/fb.svg'
 import linkd from '../../../assets/ln.svg'
 import hero from '../../../assets/hero.png'
 import Image from "next/image";
+import { useSelector } from "react-redux";
 
 const HeroSection = () => {
+
+    const { role } = useSelector((state) => state.auth)
 
     const imageStyle = {
         backgroundImage: `URL(${bgHero.src})`,
@@ -38,18 +42,22 @@ const HeroSection = () => {
                             Achieve your goals with expert trainers and personalized plans,
                             anytime, anywhere.
                         </div>
-                        <div className=" flex items-center gap-4 md:gap-12">
-                            <Link href={`auth/user-register`}>
-                                <button className="bookBtn text-md md:text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-3 px-3 md:px-8 rounded-full capitalize transition-all hover:">
-                                    Members Join Free
-                                </button>
-                            </Link>
-                            <Link href={`/auth/pt-register`}>
-                                <button className="bookBtn text-md md:text-lg font-medium leading-8 text-white bg-primary hover:bg-greenColor py-2 md:py-3 px-3 md:px-8 rounded-full capitalize transition-all hover:">
-                                    PTs Join Free
-                                </button>
-                            </Link>
-                        </div>
+                        {
+                            !role &&
+                            <div className=" flex items-center gap-4 md:gap-12">
+                                <Link href={`auth/user-register`}>
+                                    <button className="bookBtn text-md md:text-lg font-medium leading-8 text-white bg-secondary hover:bg-greenColor py-2 md:py-3 px-3 md:px-8 rounded-full capitalize transition-all hover:">
+                                        Members Join Free
+                                    </button>
+                                </Link>
+                                <Link href={`/auth/pt-register`}>
+                                    <button className="bookBtn text-md md:text-lg font-medium leading-8 text-white bg-primary hover:bg-greenColor py-2 md:py-3 px-3 md:px-8 rounded-full capitalize transition-all hover:">
+                                        PTs Join Free
+                                    </button>
+                                </Link>
+                            </div>
+                        }
+
 
                         <div className="icon flex gap-4 mt-8">
                             <Link href="#" className="item w-10 h-10 flex items-center justify-center bg-white rounded-full shadow-md">

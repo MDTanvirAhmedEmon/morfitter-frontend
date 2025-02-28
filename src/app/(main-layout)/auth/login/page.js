@@ -141,10 +141,10 @@ const LogIn = () => {
           <p className=" mt-6">
             Don&apos;t have an account?{" "}
             <Link className="font-semibold ml-2" href={`/auth/user-register`}>
-              as a <span className="text-primary">member</span>
+              as a <span className="text-primary">Member</span>
             </Link>
             <Link className="font-semibold ml-2" href={`/auth/pt-register`}>
-              as a <span className="text-primary">trainer</span>
+              as a <span className="text-primary">PTs</span>
             </Link>
           </p>
         </div>

@@ -273,13 +273,13 @@ const PTRegister2 = () => {
               </Form.Item>
             </div>
 
-            <div className="  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-12">
+            <div className="  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-4 md:mb-12">
               <p className=" text-lg md:w-1/2">I condact online sessions:</p>
               <div className=" w-1/2 flex gap-5 lg:gap-8 items-center">
                 <button
                   type="button"
                   onClick={() => setOnlineSession("yes")}
-                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${onlineSession === "yes" ? "bg-greenColor" : "bg-secondary"
+                  className={` text-white rounded-full px-5 w-[80px] py-[6px] hover:bg-greenColor font-semibold text-lg ${onlineSession === "yes" ? "bg-greenColor" : "bg-secondary"
                     }`}
                 >
                   Yes
@@ -287,7 +287,7 @@ const PTRegister2 = () => {
                 <button
                   type="button"
                   onClick={() => setOnlineSession("no")}
-                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${onlineSession === "no" ? "bg-greenColor" : "bg-secondary"
+                  className={` text-white rounded-full px-5 w-[80px] py-[6px] hover:bg-greenColor font-semibold text-lg ${onlineSession === "no" ? "bg-greenColor" : "bg-secondary"
                     }`}
                 >
                   No
@@ -295,7 +295,7 @@ const PTRegister2 = () => {
               </div>
             </div>
 
-            <div className="  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12  mb-12">
+            <div className="  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12  mb-4 md:mb-12">
               <p className=" text-lg md:w-1/2">
                 I condact face to face sessions:
               </p>
@@ -303,7 +303,7 @@ const PTRegister2 = () => {
                 <button
                   type="button"
                   onClick={() => setFaceToFace("yes")}
-                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${faceToFace === "yes" ? "bg-greenColor" : "bg-secondary"
+                  className={` text-white rounded-full px-5 w-[80px] py-[6px] hover:bg-greenColor font-semibold text-lg ${faceToFace === "yes" ? "bg-greenColor" : "bg-secondary"
                     }`}
                 >
                   Yes
@@ -311,7 +311,7 @@ const PTRegister2 = () => {
                 <button
                   type="button"
                   onClick={() => setFaceToFace("no")}
-                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${faceToFace === "no" ? "bg-greenColor" : "bg-secondary"
+                  className={` text-white rounded-full px-5 w-[80px] py-[6px] hover:bg-greenColor font-semibold text-lg ${faceToFace === "no" ? "bg-greenColor" : "bg-secondary"
                     }`}
                 >
                   No
@@ -324,7 +324,7 @@ const PTRegister2 = () => {
                 <button
                   type="button"
                   onClick={() => setConsultation("free")}
-                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${consultation === "free" ? "bg-greenColor" : "bg-secondary"
+                  className={` text-white rounded-full px-5 w-[80px] py-[6px] hover:bg-greenColor font-semibold text-lg ${consultation === "free" ? "bg-greenColor" : "bg-secondary"
                     }`}
                 >
                   Free
@@ -332,7 +332,7 @@ const PTRegister2 = () => {
                 <button
                   type="button"
                   onClick={() => setConsultation("paid")}
-                  className={` text-white rounded-full px-6 py-[6px] hover:bg-greenColor font-semibold text-lg ${consultation === "paid" ? "bg-greenColor" : "bg-secondary"
+                  className={` text-white rounded-full px-5 w-[80px] py-[6px] hover:bg-greenColor font-semibold text-lg ${consultation === "paid" ? "bg-greenColor" : "bg-secondary"
                     }`}
                 >
                   Paid
@@ -398,7 +398,7 @@ const PTRegister2 = () => {
             </div>
 
 
-            <div className=" mb-10 -mt-20">
+            <div className=" mb-10 mt-5 md:-mt-20">
               <p className=" text-lg">specialism</p>
               <div className="flex gap-1 overflow-x-auto mt-4">
                 <div className="flex justify-center flex-nowrap xl:flex-wrap">
@@ -406,7 +406,7 @@ const PTRegister2 = () => {
                     <div
                       key={index}
                       onClick={() => handleLogoClick(logo?.name)}
-                      className={`flex items-center justify-center w-[100px] lg:w-[110px] h-[100px] lg:h-[110px] px-7 text-center cursor-pointer ${selectedLogos?.includes(logo?.name)
+                      className={`flex items-center justify-center w-[110px] lg:w-[130px] h-[110px] lg:h-[130px] px-7 text-center cursor-pointer ${selectedLogos?.includes(logo?.name)
                         ? "border-4 border-greenColor shadow shadow-greenColor"
                         : "border-2 border-solid border-transparent"
                         } rounded transition-all duration-300`}
@@ -421,9 +421,9 @@ const PTRegister2 = () => {
                       <Image
                         src={logo.icon}
                         alt={`Logo ${logo.name}`}
-                        height={170}
-                        width={170}
-                        className="w-full h-full object-contain"
+                        height={200}
+                        width={200}
+                        className="w-full h-full object-contain "
                       />
                     </div>
                   ))}

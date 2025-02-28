@@ -2,10 +2,10 @@
 import { useState } from 'react';
 import logo1 from '../../../assets/logo1.svg';
 import logo2 from '../../../assets/logo2.svg';
-// import logo3 from '../../../assets/logo3.svg';
-import logo3 from '../../../assets/session/logo3.svg';
-// import logo4 from '../../../assets/logo4.svg';
-import logo4 from '../../../assets/session/logo4.svg';
+import logo3 from '../../../assets/logo3.svg';
+// import logo3 from '../../../assets/session/logo3.svg';
+import logo4 from '../../../assets/logo4.svg';
+// import logo4 from '../../../assets/session/logo4.svg';
 import logo5 from '../../../assets/logo5.svg';
 import logo6 from '../../../assets/logo6.svg';
 // import logo6 from '../../../assets/session/logo6.svg';
@@ -56,7 +56,7 @@ const FindTrainers = () => {
 
 
                     <div className='  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-6'>
-                        I&apos;m interested in:
+                        <p className=' font-bold'>I&apos;m interested in:</p>
                         <div className=" grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-4 items-center">
                             <button onClick={() => setInterest('Feel Filter')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${interest === 'Feel Filter' ? 'bg-greenColor' : 'bg-secondary'}`}>Feel Filter</button>
                             <button onClick={() => setInterest('Look Filter')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${interest === 'Look Filter' ? 'bg-greenColor' : 'bg-secondary'}`}>Look Filter</button>
@@ -65,7 +65,7 @@ const FindTrainers = () => {
                         </div>
                     </div>
                     <div>
-                        <p>Select specialism (Optional)</p>
+                        <p className=' font-bold'>Select specialism (Optional)</p>
                         <div className="flex gap-1 overflow-x-auto mt-4">
                             <div className="flex gap-3 flex-nowrap xl:flex-wrap">
                                 {interests.map((logo, index) => (
@@ -99,7 +99,7 @@ const FindTrainers = () => {
 
 
                     <div className='  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mt-14 mb-8'>
-                        <p className=' xl:w-[15%]'>Session formats available:</p>
+                        <p className=' xl:w-[16%]  font-bold'>Session formats available:</p>
                         <div className=" grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-4 items-center">
                             <button onClick={() => setFormats('bespoke')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${formats === 'bespoke' ? 'bg-greenColor' : 'bg-secondary'}`}>Bespoke</button>
                             <button onClick={() => setFormats('group')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${formats === 'group' ? 'bg-greenColor' : 'bg-secondary'}`}>Group</button>
@@ -108,7 +108,7 @@ const FindTrainers = () => {
                     </div>
 
                     <div className='  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-8'>
-                        <p className=' xl:w-[15%]'>I condact online sessions:</p>
+                        <p className=' xl:w-[16%]  font-bold'>I condact online sessions:</p>
                         <div className=" flex gap-3 lg:gap-5 items-center">
                             <button onClick={() => setOnline('yes')} className={` text-white rounded-full px-4 py-[6px] w-[65px] hover:bg-greenColor ${online === 'yes' ? 'bg-greenColor' : 'bg-secondary'}`}>Yes</button>
                             <button onClick={() => setOnline('no')} className={` text-white rounded-full px-4 py-[6px] w-[65px] hover:bg-greenColor ${online === 'no' ? 'bg-greenColor' : 'bg-secondary'}`}>No</button>
@@ -116,7 +116,7 @@ const FindTrainers = () => {
                     </div>
 
                     <div className='  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-8'>
-                        <p className=' xl:w-[15%]'>I conduct face to face sessions:</p>
+                        <p className=' xl:w-[16%]  font-bold'>I conduct face to face sessions:</p>
                         <div className=" flex gap-3 lg:gap-5 items-center">
                             <button onClick={() => setFaceToFace('yes')} className={` text-white rounded-full px-4 py-[6px] w-[65px] hover:bg-greenColor ${faceToFace === 'yes' ? 'bg-greenColor' : 'bg-secondary'}`}>Yes</button>
                             <button onClick={() => setFaceToFace('no')} className={` text-white rounded-full px-4 py-[6px] w-[65px] hover:bg-greenColor ${faceToFace === 'no' ? 'bg-greenColor' : 'bg-secondary'}`}>No</button>
@@ -124,7 +124,7 @@ const FindTrainers = () => {
                     </div>
 
                     <div className='  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-8'>
-                        <p className=' xl:w-[15%]'>Consultations I offer are:</p>
+                        <p className=' xl:w-[16%]  font-bold'>Consultations I offer are:</p>
                         <div className=" flex gap-3 lg:gap-5 items-center">
                             <button onClick={() => setType('free')} className={` text-white rounded-full px-4 py-[6px] w-[65px] hover:bg-greenColor ${type === 'free' ? 'bg-greenColor' : 'bg-secondary'}`}>Free</button>
                             <button onClick={() => setType('paid')} className={` text-white rounded-full px-4 py-[6px] w-[65px] hover:bg-greenColor ${type === 'paid' ? 'bg-greenColor' : 'bg-secondary'}`}>Paid</button>
