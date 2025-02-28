@@ -2,10 +2,13 @@
 import { useState } from 'react';
 import logo1 from '../../../assets/logo1.svg';
 import logo2 from '../../../assets/logo2.svg';
-import logo3 from '../../../assets/logo3.svg';
-import logo4 from '../../../assets/logo4.svg';
+// import logo3 from '../../../assets/logo3.svg';
+import logo3 from '../../../assets/session/logo3.svg';
+// import logo4 from '../../../assets/logo4.svg';
+import logo4 from '../../../assets/session/logo4.svg';
 import logo5 from '../../../assets/logo5.svg';
 import logo6 from '../../../assets/logo6.svg';
+// import logo6 from '../../../assets/session/logo6.svg';
 import logo7 from '../../../assets/logo7.svg';
 import logo8 from '../../../assets/logo8.svg';
 import logo9 from '../../../assets/logo9.svg';
@@ -106,25 +109,25 @@ const FindTrainers = () => {
 
                     <div className='  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-8'>
                         <p className=' xl:w-[15%]'>I condact online sessions:</p>
-                        <div className=" grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-4 items-center">
-                            <button onClick={() => setOnline('yes')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${online === 'yes' ? 'bg-greenColor' : 'bg-secondary'}`}>Yes</button>
-                            <button onClick={() => setOnline('no')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${online === 'no' ? 'bg-greenColor' : 'bg-secondary'}`}>No</button>
+                        <div className=" flex gap-3 lg:gap-5 items-center">
+                            <button onClick={() => setOnline('yes')} className={` text-white rounded-full px-4 py-[6px] w-[65px] hover:bg-greenColor ${online === 'yes' ? 'bg-greenColor' : 'bg-secondary'}`}>Yes</button>
+                            <button onClick={() => setOnline('no')} className={` text-white rounded-full px-4 py-[6px] w-[65px] hover:bg-greenColor ${online === 'no' ? 'bg-greenColor' : 'bg-secondary'}`}>No</button>
                         </div>
                     </div>
 
                     <div className='  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-8'>
                         <p className=' xl:w-[15%]'>I conduct face to face sessions:</p>
-                        <div className=" grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-4 items-center">
-                            <button onClick={() => setFaceToFace('yes')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${faceToFace === 'yes' ? 'bg-greenColor' : 'bg-secondary'}`}>Yes</button>
-                            <button onClick={() => setFaceToFace('no')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${faceToFace === 'no' ? 'bg-greenColor' : 'bg-secondary'}`}>No</button>
+                        <div className=" flex gap-3 lg:gap-5 items-center">
+                            <button onClick={() => setFaceToFace('yes')} className={` text-white rounded-full px-4 py-[6px] w-[65px] hover:bg-greenColor ${faceToFace === 'yes' ? 'bg-greenColor' : 'bg-secondary'}`}>Yes</button>
+                            <button onClick={() => setFaceToFace('no')} className={` text-white rounded-full px-4 py-[6px] w-[65px] hover:bg-greenColor ${faceToFace === 'no' ? 'bg-greenColor' : 'bg-secondary'}`}>No</button>
                         </div>
                     </div>
 
                     <div className='  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-8'>
                         <p className=' xl:w-[15%]'>Consultations I offer are:</p>
-                        <div className=" grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-4 items-center">
-                            <button onClick={() => setType('free')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${type === 'free' ? 'bg-greenColor' : 'bg-secondary'}`}>Free</button>
-                            <button onClick={() => setType('paid')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${type === 'paid' ? 'bg-greenColor' : 'bg-secondary'}`}>Paid</button>
+                        <div className=" flex gap-3 lg:gap-5 items-center">
+                            <button onClick={() => setType('free')} className={` text-white rounded-full px-4 py-[6px] w-[65px] hover:bg-greenColor ${type === 'free' ? 'bg-greenColor' : 'bg-secondary'}`}>Free</button>
+                            <button onClick={() => setType('paid')} className={` text-white rounded-full px-4 py-[6px] w-[65px] hover:bg-greenColor ${type === 'paid' ? 'bg-greenColor' : 'bg-secondary'}`}>Paid</button>
                         </div>
                     </div>
                     <div className=' flex justify-center mt-5'>

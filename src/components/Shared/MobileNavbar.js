@@ -1,15 +1,16 @@
 import { logout } from '@/redux/features/auth/authSlice';
-import { ConfigProvider, Drawer } from 'antd';
+import { Avatar, ConfigProvider, Drawer } from 'antd';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from 'react-redux';
+import profileImage from '../../assets/profile/profile_image.webp'
 
 const MobileNavbar = ({ onClose, open }) => {
     const pathname = usePathname();
     const isActive = (path) => pathname === path;
-    const { role } = useSelector((state) => state.auth);
+    const { user, role } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -128,6 +129,21 @@ const MobileNavbar = ({ onClose, open }) => {
                                 </span>
                             </Link>
                         ))}
+                    {
+                        role?.role &&
+                        <div className=" ml-3 flex items-center gap-2">
+                            <Avatar
+                                src={
+                                    user?.profileImageUrl
+                                        ? `${user?.profileImageUrl}`
+                                        : profileImage
+                                }
+                                size={50} className=" " alt="circle" />
+                            <div>
+                                <p className=' text-white text-lg font-semibold'>{user?.userName}</p>
+                            </div>
+                        </div>
+                    }
 
                     {role?.role && (
                         <Link onClick={onClose} href="/auth/login">
@@ -151,6 +167,18 @@ const MobileNavbar = ({ onClose, open }) => {
                             </span>
                         </Link>
                     )}
+                    {!role && (
+                        <Link onClick={onClose} href="/auth/user-register">
+                            <span
+                                className={`${isActive("/auth/user-register")
+                                    ? " rounded-full  bg-primary text-white"
+                                    : ""
+                                    }  text-lg rounded-full py-2 px-4 hover:bg-primary  hover:text-white text-white font-semibold`}
+                            >
+                                Register
+                            </span>
+                        </Link>
+                    )}
                     {/* <Link onClick={onClose} href="/blog">
                         <span
                             className={`${isActive("/blog")
@@ -161,13 +189,13 @@ const MobileNavbar = ({ onClose, open }) => {
                             Blogs
                         </span>
                     </Link> */}
-                    <div>
+                    {/* <div>
                         <Link onClick={onClose} href="/contact-us">
                             <button className="py-2 px-6 text-lg font-thin bg-secondary text-white rounded-full hover:bg-teal-500 transition-all">
                                 Contact Us
                             </button>
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
             </Drawer>
         </ConfigProvider >

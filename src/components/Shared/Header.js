@@ -9,9 +9,11 @@ import MobileNavbar from "./MobileNavbar";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/features/auth/authSlice";
 import Cookies from "js-cookie";
+import { Avatar } from "antd";
+import profileImage from '../../assets/profile/profile_image.webp'
 
 const Header = () => {
-  const { role } = useSelector((state) => state.auth);
+  const { user, role } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const pathname = usePathname();
   const router = useRouter();
@@ -139,36 +141,7 @@ const Header = () => {
                 </Link>
               ))}
 
-            {role?.role === "trainee" && (
-              <span
-                onClick={handleLogOut}
-                className={`  text-lg rounded-full font-light py-2 px-4 hover:bg-red-600 cursor-pointer hover:text-white`}
-              >
-                Log Out
-              </span>
-            )}
 
-            {role?.role === "trainer" && (
-              <span
-                onClick={handleLogOut}
-                className={`  text-lg rounded-full font-light py-2 px-4 hover:bg-red-600 cursor-pointer hover:text-white`}
-              >
-                Log Out
-              </span>
-            )}
-
-            {!role && (
-              <Link href="/auth/login">
-                <span
-                  className={`${isActive("/auth/login")
-                    ? " rounded-full  bg-primary text-white"
-                    : ""
-                    }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
-                >
-                  log In
-                </span>
-              </Link>
-            )}
 
             {/* <Link href="/blog">
                             <span
@@ -182,11 +155,71 @@ const Header = () => {
                 </Link> */}
           </ul>
         </div>
-        <Link href="/contact-us">
+        {/* <Link href="/contact-us">
           <button className=" hidden xl:block py-3 px-8 text-lg font-medium bg-secondary text-white rounded-full hover:bg-teal-500 transition-all">
             Contact Us
           </button>
-        </Link>
+        </Link> */}
+        <div className=" hidden xl:flex items-center">
+          {
+            role?.role &&
+            <div className=" mr-3 flex items-center gap-2">
+              <Avatar
+                src={
+                  user?.profileImageUrl
+                    ? `${user?.profileImageUrl}`
+                    : profileImage
+                }
+                size={50} className=" " alt="circle" />
+              <div>
+                <p>{user?.userName}</p>
+              </div>
+            </div>
+          }
+          {role?.role === "trainee" && (
+            <span
+              onClick={handleLogOut}
+              className={`  text-lg rounded-full font-light py-2 px-4 hover:bg-red-600 cursor-pointer hover:text-white`}
+            >
+              Log Out
+            </span>
+          )}
+
+          {role?.role === "trainer" && (
+            <span
+              onClick={handleLogOut}
+              className={`  text-lg rounded-full font-light py-2 px-4 hover:bg-red-600 cursor-pointer hover:text-white`}
+            >
+              Log Out
+            </span>
+          )}
+
+          {!role && (
+            <Link href="/auth/login">
+              <span
+                className={`${isActive("/auth/login")
+                  ? " rounded-full  bg-primary text-white"
+                  : ""
+                  }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
+              >
+                log In
+              </span>
+            </Link>
+          )}
+
+          {!role && (
+            <Link className=" ml-3" href="/auth/user-register">
+              <span
+                className={`${isActive("/auth/user-register")
+                  ? " rounded-full  bg-primary text-white"
+                  : ""
+                  }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
+              >
+                Register
+              </span>
+            </Link>
+          )}
+        </div>
         <GiHamburgerMenu onClick={showDrawer} className=" w-7 h-7 xl:hidden" />
         <MobileNavbar onClose={onClose} open={open}></MobileNavbar>
       </div>

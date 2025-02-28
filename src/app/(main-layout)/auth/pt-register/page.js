@@ -82,7 +82,7 @@ const PTRegister = () => {
             className=" space-x-0 md:space-y-4"
           >
             {/* First Item (Title + Profile Picture) */}
-            <div className="flex flex-col-reverse md:flex-row justify-between items-center space-x-4 md:mb-10">
+            <div className="flex flex-col-reverse md:flex-row justify-between items-center space-x-4 md:mb-5">
               <Form.Item
                 name="title"
                 // rules={[
