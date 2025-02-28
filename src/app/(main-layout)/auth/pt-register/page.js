@@ -72,7 +72,7 @@ const PTRegister = () => {
         {/* Form Section */}
         <div className="lg:w-1/2 flex flex-col justify-center md:p-8 rounded-lg ">
           <h1 className="text-2xl md:text-5xl font-bold  mb-8">
-            Register as a Trainer
+            Register as a PTs
           </h1>
 
           <Form
@@ -82,7 +82,7 @@ const PTRegister = () => {
             className=" space-x-0 md:space-y-4"
           >
             {/* First Item (Title + Profile Picture) */}
-            <div className="flex flex-col-reverse md:flex-row justify-between items-center space-x-4 md:mb-10">
+            <div className="flex flex-col-reverse md:flex-row justify-between items-center space-x-4 md:mb-5">
               <Form.Item
                 name="title"
                 // rules={[

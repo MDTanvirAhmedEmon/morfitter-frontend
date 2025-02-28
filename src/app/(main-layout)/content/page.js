@@ -62,9 +62,9 @@ const Content = () => {
         <Select
           className=" "
           onChange={handleSelectedUserValue}
-          placeholder={<p className=" text-lg">Trainer Or Member</p>}
+          placeholder={<p className=" text-lg">PTs Or Member</p>}
         >
-          <Select.Option value="trainer">Trainer</Select.Option>
+          <Select.Option value="trainer">PTs</Select.Option>
           <Select.Option value="trainee">Member</Select.Option>
         </Select>
         <Select

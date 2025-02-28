@@ -61,7 +61,7 @@ const TrainerItem = ({ trainer }) => {
                         alt='profile' width={300} height={300} className=' w-16 border-4 border-secondary rounded-lg' />
                     <div>
                         <h2 className=' text-lg mb-1'>{trainer?.firstName} {trainer?.lastName}</h2>
-                        <p className=' text-gray-500'>Trainer</p>
+                        <p className=' text-gray-500'>PTs</p>
                     </div>
                 </div>
                 <div className=" flex gap-1 overflow-x-auto  mb-5 md:mb-0">

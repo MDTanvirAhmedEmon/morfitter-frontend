@@ -40,6 +40,7 @@ const UserRegister = () => {
     // Prepare registration data
     const registrationData = {
       email: values.email,
+      gymMember: values.gymMember,
       title: values.title,
       firstName: values.name,
       lastName: values.surname,
@@ -147,15 +148,15 @@ const UserRegister = () => {
             className=" space-x-0 md:space-y-4"
           >
             {/* First Item (Title + Profile Picture) */}
-            <div className="flex flex-col-reverse md:flex-row justify-between items-center space-x-4 md:mb-10">
+            <div className="flex flex-col-reverse md:flex-row justify-between items-center space-x-4 md:mb-5">
               <div className=" w-full">
                 <Form.Item
-                  name="userName"
-                  rules={[
-                    { required: true, message: "Please input your username!" },
-                  ]}
+                  name="gymMember"
+                  // rules={[
+                  //   { required: true, message: "Please input your gym member!" },
+                  // ]}
                 >
-                  <Input placeholder="Username" className="md:w-[70%]" />
+                  <Input placeholder="Member of a gym" className="md:w-[70%]" />
                 </Form.Item>
                 <Form.Item
                   name="title"
@@ -298,22 +299,15 @@ const UserRegister = () => {
             </div>
             {/* Username & Password */}
             <div className="grid grid-cols-2 gap-4 ">
+
               <Form.Item
-                name="email"
+                name="userName"
                 rules={[
-                  { required: true, message: "Please input your email!" },
+                  { required: true, message: "Please input your username!" },
                 ]}
-                className=" w-full"
               >
-                <Input
-                  placeholder="Email"
-                  suffix={
-                    <IoMdArrowDropdown className=" w-6 h-6 text-greenColor" />
-                  }
-
-                />
+                <Input placeholder="Username" className="" />
               </Form.Item>
-
 
               <Form.Item
                 name="password"
@@ -351,7 +345,21 @@ const UserRegister = () => {
                 <Input placeholder="City" className="w-full" />
               </Form.Item>
             </div>
+            <Form.Item
+                name="email"
+                rules={[
+                  { required: true, message: "Please input your email!" },
+                ]}
+                className=" w-full"
+              >
+                <Input
+                  placeholder="Email"
+                  // suffix={
+                  //   <IoMdArrowDropdown className=" w-6 h-6 text-greenColor" />
+                  // }
 
+                />
+              </Form.Item>
             {/* Terms Checkbox */}
             <Form.Item
               name="terms"
@@ -383,6 +391,12 @@ const UserRegister = () => {
             Already have an account?{" "}
             <Link className=" text-primary font-semibold" href={`/auth/login`}>
               Log In
+            </Link>
+          </p>
+          <p className=" mt-6">
+            Register as a trainer{" "}
+            <Link className="font-semibold ml-2" href={`/auth/pt-register`}>
+             <span className="text-primary">Register</span>
             </Link>
           </p>
         </div>

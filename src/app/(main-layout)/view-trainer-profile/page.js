@@ -24,6 +24,7 @@ const ViewTrainerProfile = () => {
   const userId = searchParams.get("userId");
   const { role } = useSelector((state) => state.auth)
   const { data: trainer } = useGetSingleUserQuery(userId);
+  console.log('trainer sdfasdf sdfjs;ldfj', trainer);
 
   const { data: specialism } = useGetMySpecialismQuery(trainerId);
   const { data: qualification } = useGetMyQualificationQuery(trainerId);
@@ -157,7 +158,7 @@ const ViewTrainerProfile = () => {
                   }
                   `}
               >
-                {trainer?.data?.isFollowing ? "Follow" : "Following"} { isLoading && <Spin ></Spin>}
+                {trainer?.data?.isFollowing ? "Follow" : "Following"} {isLoading && <Spin ></Spin>}
               </button>
 
 
@@ -182,6 +183,12 @@ const ViewTrainerProfile = () => {
 
               </div>
             </div>
+            {
+              trainer?.data?.userInfo?.about &&
+              <div className=" mt-5">
+                <p>{trainer?.data?.userInfo?.about}</p>
+              </div>
+            }
 
             <div className=" mt-6">
               <div className="border mb-4">
@@ -260,7 +267,7 @@ const ViewTrainerProfile = () => {
                                 {item?.traineeData?.firstName} {item?.traineeData?.lastName}
                               </h2>
                             </div>
-                              <Rate disabled defaultValue={item?.rating} className="text-yellow-500" />
+                            <Rate disabled defaultValue={item?.rating} className="text-yellow-500" />
 
                             {/* Review Text */}
                             <p className="text-gray-600 mt-1 text-sm leading-relaxed">
