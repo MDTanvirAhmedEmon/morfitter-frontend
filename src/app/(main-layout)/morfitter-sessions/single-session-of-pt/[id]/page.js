@@ -1,15 +1,18 @@
 "use client";
 import SingleSessionSkeleton from '@/components/Skeleton/SingleSessionSkeleton';
-import { useCheckEnrollmentMutation, useGetSingleSessionQuery } from '@/redux/features/session/sessionApi';
+import { useCheckEnrollmentMutation, useGetSingleSessionQuery, useMarkVideoMutation } from '@/redux/features/session/sessionApi';
 import { useParams, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { BiCheck } from "react-icons/bi";
+import { message, Tooltip } from 'antd';
 
 const BASE_URL = "";
 
 const SingleSessionOfPt = () => {
     const { id } = useParams();
     const router = useRouter();
+    // const [ videoId, setVideoId ] = useState(null)
     const { role } = useSelector((state) => state.auth);
 
     const [checkEnrollment] = useCheckEnrollmentMutation();
@@ -24,7 +27,7 @@ const SingleSessionOfPt = () => {
     }, []);
 
     const { data, isLoading, error } = useGetSingleSessionQuery(id);
-    console.log(data);
+
 
     const videoTutorials = data?.data?.recordedContent?.map(video => ({
         ...video,
@@ -46,6 +49,21 @@ const SingleSessionOfPt = () => {
     const handlePrevious = () => {
         setCurrentVideoIndex((prev) => Math.max(prev - 1, 0));
     };
+    const [markVideo, { isLoading: markLoading }] = useMarkVideoMutation();
+    const handleMarkVideo = (videoId) => {
+        const data = {
+            session_id: id,
+            user_id: role?.id,
+            video_id: videoId
+        }
+        markVideo(data).unwrap()
+        .then(() => {
+            message.success('Mark As Complete')
+        })
+        .catch((error) => {
+            message.success(error?.data?.message)
+        })
+    }
 
     if (isLoading) return <SingleSessionSkeleton></SingleSessionSkeleton>;
     if (error) return <p className="text-center text-red-500">Failed to load session data</p>;
@@ -70,6 +88,9 @@ const SingleSessionOfPt = () => {
                         </li>
                     ))}
                 </ul>
+                {
+                    
+                }
             </div>
 
             <div className="w-full md:flex-1 bg-gray-50 shadow-md rounded-lg p-4">
@@ -79,8 +100,24 @@ const SingleSessionOfPt = () => {
                     className="w-full rounded-md shadow-lg mb-4"
                     src={videoTutorials[currentVideoIndex]?.url}
                 />
-                <h2 className="text-xl md:text-2xl font-bold mb-2">{videoTutorials[currentVideoIndex]?.title}</h2>
-                <p className="text-gray-600 mb-4">{videoTutorials[currentVideoIndex]?.description || "No description available."}</p>
+                <div className='flex justify-between items-center mb-4'>
+                    <div>
+                        <h2 className="text-xl md:text-2xl font-bold mb-2">{videoTutorials[currentVideoIndex]?.title}</h2>
+                        <p className="text-gray-600 mb-4">{videoTutorials[currentVideoIndex]?.description || "No description available."}</p>
+                    </div>
+                    <Tooltip title="Mark As Complete">
+                        <button
+                        disabled={markLoading}
+                            className={`px-[1px] py-[1px] rounded-md  bg-primary text-white`}
+
+                            onClick={() => handleMarkVideo(videoTutorials[currentVideoIndex]?._id)}
+                        >
+                            <BiCheck className=' w-8 h-8' />
+                        </button>
+                    </Tooltip>
+
+                </div>
+
                 <div className="flex justify-between">
                     <button
                         className={`px-4 py-2 rounded-md ${currentVideoIndex > 0 ? "bg-primary text-white" : "bg-gray-300 text-gray-600 cursor-not-allowed"
@@ -90,6 +127,7 @@ const SingleSessionOfPt = () => {
                     >
                         Previous
                     </button>
+
                     <button
                         className={`px-4 py-2 rounded-md ${currentVideoIndex < videoTutorials.length - 1 ? "bg-primary text-white" : "bg-gray-300 text-gray-600 cursor-not-allowed"
                             }`}
@@ -101,7 +139,7 @@ const SingleSessionOfPt = () => {
                 </div>
             </div>
         </div>
-        
+
     );
 };
 

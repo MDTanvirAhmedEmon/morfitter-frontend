@@ -1,5 +1,5 @@
 "use client"
-import { Input, Pagination, Select } from 'antd';
+import { Avatar, Input, Pagination, Select } from 'antd';
 import Image from 'next/image';
 import { useGetAllSessionQuery } from '@/redux/features/session/sessionApi';
 import { useState } from 'react';
@@ -105,13 +105,14 @@ const MorfitterSessions = () => {
                                     />
                                     <div className=' mx-4 py-3'>
                                         <div className=' flex items-center gap-3'>
-                                            <Image
+                                            <Avatar
+                                                size={50}
                                                 src={
                                                     item?.owner?.[0]?.profileImageUrl
                                                         ? `${item?.owner?.[0]?.profileImageUrl}`
-                                                        : profileImage
+                                                        : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                                                 }
-                                                width={300} height={300} alt='profile' className=' w-12 rounded-full' />
+                                            />
                                             <div>
                                                 <h2 className=' text-black font-semibold' >{item?.owner?.[0]?.name}</h2>
                                                 <span className=' text-black bg-gray-100 rounded px-2' >PTs</span>
@@ -148,7 +149,7 @@ const MorfitterSessions = () => {
                                                     </div>
                                                     :
                                                     <div className=' font-semibold absolute bottom-4 right-4'>
-                                                       Free
+                                                        Free
                                                     </div>
                                             }
 

@@ -90,6 +90,14 @@ const sessionApi = baseApi.injectEndpoints({
       }),
     }),
 
+    markVideo: builder.mutation({
+      query: (data) => ({
+        url: `/access/mark-video`,
+        method: "PATCH",
+        body: data,
+      }),
+    }),
+
   }),
 });
 
@@ -105,6 +113,7 @@ export const {
   useCheckEnrollmentMutation,
   useMyEnrolledSessionQuery,
   useGetTotalEntrolledUserSessionQuery,
+  useMarkVideoMutation,
 } = sessionApi;
 
 export default sessionApi;
