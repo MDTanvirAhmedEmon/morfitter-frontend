@@ -7,6 +7,8 @@ import SessionSkeleton from '@/components/Skeleton/SessionSkeleton';
 import EnrollModal from '@/components/Sessions/EnrollModal';
 import { useParams } from 'next/navigation';
 import { useGetSingleTrainerSessionQuery } from '@/redux/features/trainer/trainerApi';
+import { FaStar } from 'react-icons/fa';
+import profileImage from '../../../../assets/profile/profile_image.webp'
 
 const SinglePtSession = () => {
     const { id } = useParams();
@@ -91,11 +93,72 @@ const SinglePtSession = () => {
                                 {
                                     data?.data?.data?.map((item) => (
                                         // <Link key={item?._id} href={`/morfitter-sessions/single-session-of-pt/${item?._id}`}>
-                                        <div key={item?._id} className=' cursor-pointer'>
-                                            <Image onClick={() => {
+                                        <div
+                                            onClick={() => {
                                                 setSelectedSession(item);
                                                 showModal();
-                                            }} className=' w-full h-[380px] md:h-[450px] object-cover' src={`${item?.promo_image}`} alt='session' width={500} height={500} />
+                                            }} key={item?._id} className="cursor-pointer h-[400px] shadow-[0px_10px_30px_rgba(0,0,0,0.1)] rounded-md relative">
+                                            <Image
+
+                                                className="w-full h-[55%] object-cover rounded-t-md"
+                                                src={item?.promo_image}
+                                                alt="session"
+                                                width={500}
+                                                height={500}
+                                            />
+                                            <div className=' mx-4 py-3'>
+                                                <div className=' flex items-center gap-3'>
+                                                    <Image
+                                                        src={
+                                                            item?.owner?.[0]?.profileImageUrl
+                                                                ? `${item?.owner?.[0]?.profileImageUrl}`
+                                                                : profileImage
+                                                        }
+                                                        width={300} height={300} alt='profile' className=' w-12 rounded-full' />
+                                                    <div>
+                                                        <h2 className=' text-black font-semibold' >{item?.owner?.[0]?.name}</h2>
+                                                        <span className=' text-black bg-gray-100 rounded px-2' >PTs</span>
+                                                    </div>
+
+                                                </div>
+                                                <div>
+                                                    <h2 className='mt-4'>
+                                                        {item?.title
+                                                            ? item?.title?.length > 80
+                                                                ? `${item?.title.slice(0, 80)}...`
+                                                                : item?.title
+                                                            : "No Title Available"}
+                                                    </h2>
+                                                    {
+                                                        !item?.averageRating ?
+                                                            <div className=' flex items-center gap-2 absolute bottom-4 left-4'>
+                                                                <FaStar className=' w-6 h-6' />
+
+                                                                (0)
+                                                            </div>
+                                                            :
+
+                                                            <div className=' flex items-center gap-2 absolute bottom-4 left-4'>
+                                                                <FaStar className=' w-6 h-6' />
+                                                                {(Math.round(item.averageRating * 2) / 2).toFixed(1)} {' '}
+                                                                ({item?.totalReviews})
+                                                            </div>
+                                                    }
+                                                    {
+                                                        item?.membership_fee > 0 ?
+                                                            <div className=' font-semibold absolute bottom-4 right-4'>
+                                                                price: ${item?.membership_fee}
+                                                            </div>
+                                                            :
+                                                            <div className=' font-semibold absolute bottom-4 right-4'>
+                                                                Free
+                                                            </div>
+                                                    }
+
+
+
+                                                </div>
+                                            </div>
                                         </div>
                                         // </Link>
                                     ))
