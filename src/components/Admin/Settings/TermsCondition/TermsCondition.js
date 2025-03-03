@@ -96,12 +96,12 @@ const TermsAndCondition = () => {
 
         <Form.Item>
           <button
-            disabled={isLoading}
+            disabled={updataIsloading}
             type="primary"
             htmlType="submit"
             className="mt-4 bg-primary text-white px-6 py-1 rounded-md"
           >
-            Submit {isLoading && <Spin></Spin>}
+            Submit {updataIsloading && <Spin></Spin>}
           </button>
         </Form.Item>
       </Form>

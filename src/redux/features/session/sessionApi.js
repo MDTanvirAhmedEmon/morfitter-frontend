@@ -33,6 +33,13 @@ const sessionApi = baseApi.injectEndpoints({
       }),
       providesTags: ['session']
     }),
+    getSingleSessionForAdmin: builder.query({
+      query: (id) => ({
+        url: `/session/admin/single/${id}`,
+        method: "GET",
+      }),
+      providesTags: ['session']
+    }),
     addSession: builder.mutation({
       query: ({ formData, id }) => ({
         url: `/session/${id}`,
@@ -98,6 +105,14 @@ const sessionApi = baseApi.injectEndpoints({
       }),
     }),
 
+    giveSessionReview: builder.mutation({
+      query: (data) => ({
+        url: `/session-review/give-review`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+
   }),
 });
 
@@ -105,6 +120,7 @@ export const {
   useCreateSessionMutation,
   useGetMySessionQuery,
   useGetAllSessionQuery,
+  useGetSingleSessionForAdminQuery,
   useGetSingleSessionQuery,
   useAddSessionMutation,
   useDeletSessionVideoMutation,
@@ -114,6 +130,7 @@ export const {
   useMyEnrolledSessionQuery,
   useGetTotalEntrolledUserSessionQuery,
   useMarkVideoMutation,
+  useGiveSessionReviewMutation,
 } = sessionApi;
 
 export default sessionApi;

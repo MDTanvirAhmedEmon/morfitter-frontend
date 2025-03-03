@@ -1,11 +1,12 @@
 "use client"
-import { Input, message, Pagination, Select } from 'antd';
+import { Avatar, Input, message, Pagination, Select } from 'antd';
 import Image from 'next/image';
 import { useState } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
 import SessionSkeleton from '@/components/Skeleton/SessionSkeleton';
 import Link from 'next/link';
 import { useBlockUnblockSessionMutation, useGetAllSessionForAdminQuery } from '@/redux/features/admin/session/adminSessionApi';
+import { FaStar } from 'react-icons/fa';
 
 const SessionsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,6 +21,7 @@ const SessionsPage = () => {
     fitnessFocus: specialism || undefined,
     searchTerm: searchTerm || undefined,
   })
+  console.log(data);
   const [blockUnblockSession] = useBlockUnblockSessionMutation();
 
   const handleBlockUnblock = (id) => {
@@ -87,10 +89,74 @@ const SessionsPage = () => {
               {
                 data?.data?.data?.map((item) => (
                   <div key={item?._id} className=''>
-                    <Link key={item?._id} href={`/sessions/${item?._id}`}>
-                      <Image onClick={() => {
-                        setSelectedSession(item);
-                      }} className=' w-full h-[450px] object-cover  cursor-pointer' src={`${item?.promo_image}`} alt='session' width={500} height={500} />
+                    <Link className=' hover:text-black' key={item?._id} href={`/sessions/${item?._id}`}>
+                      <div
+                        onClick={() => {
+                          setSelectedSession(item);
+                        }} key={item?._id} className="cursor-pointer h-[400px] shadow-[0px_10px_30px_rgba(0,0,0,0.1)] rounded-md relative">
+                        <Image
+
+                          className="w-full h-[55%] object-cover rounded-t-md"
+                          src={item?.promo_image}
+                          alt="session"
+                          width={500}
+                          height={500}
+                        />
+                        <div className=' mx-4 py-3'>
+                          <div className=' flex items-center gap-3'>
+                            <Avatar
+                              size={50}
+                              src={
+                                item?.owner?.[0]?.profileImageUrl
+                                  ? `${item?.owner?.[0]?.profileImageUrl}`
+                                  : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                              }
+                            />
+                            <div>
+                              <h2 className=' text-black font-semibold' >{item?.owner?.[0]?.name}</h2>
+                              <span className=' text-black bg-gray-100 rounded px-2' >PTs</span>
+                            </div>
+
+                          </div>
+                          <div>
+                            <h2 className='mt-4'>
+                              {item?.title
+                                ? item?.title?.length > 80
+                                  ? `${item?.title.slice(0, 80)}...`
+                                  : item?.title
+                                : "No Title Available"}
+                            </h2>
+                            {
+                              item?.averageRating < 1 ?
+                                <div className=' flex items-center gap-2 absolute bottom-4 left-4'>
+                                  <FaStar className=' w-6 h-6' />
+
+                                  (0)
+                                </div>
+                                :
+
+                                <div className=' flex items-center gap-2 absolute bottom-4 left-4'>
+                                  <FaStar className=' w-6 h-6' />
+                                  {(Math.round(item.averageRating * 2) / 2).toFixed(1)} {' '}
+                                  ({item?.totalReviews})
+                                </div>
+                            }
+                            {
+                              item?.membership_fee > 0 ?
+                                <div className=' font-semibold absolute bottom-4 right-4'>
+                                  price: ${item?.membership_fee}
+                                </div>
+                                :
+                                <div className=' font-semibold absolute bottom-4 right-4'>
+                                  Free
+                                </div>
+                            }
+
+
+
+                          </div>
+                        </div>
+                      </div>
                     </Link>
                     <div className=" flex items-center  gap-2 mt-3">
                       {

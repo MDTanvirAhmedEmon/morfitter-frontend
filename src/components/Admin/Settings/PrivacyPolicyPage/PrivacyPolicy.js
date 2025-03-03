@@ -14,10 +14,10 @@ const PrivacyPolicy = () => {
   const [content, setContent] = useState("");
 
   const { data } = useGetPrivacyPolicyQuery();
-  console.log(data?.data?.[0]?.policy);
+  console.log(data?.[0]);
 
   useEffect(() => {
-    setContent(data?.data?.[0]?.policy);
+    setContent(data?.[0]?.policy);
   }, [data]);
 
   const [addPrivacyPolicy, { isLoading }] = useAddPrivacyPolicyMutation();
@@ -30,7 +30,7 @@ const PrivacyPolicy = () => {
       policy: content,
     };
 
-    if (!data?.data?.[0]?.policy) {
+    if (!data?.[0]?.policy) {
       addPrivacyPolicy(finalData)
         .unwrap()
         .then(() => {
@@ -40,7 +40,7 @@ const PrivacyPolicy = () => {
           message.error(error?.data?.message || "Something went wrong!");
         });
     } else {
-      updatePrivacyPolicy({ id: data?.data?.[0]?._id, data: finalData })
+      updatePrivacyPolicy({ id: data?.[0]?._id, data: finalData })
         .unwrap()
         .then(() => {
           message.success("Privacy Policy Updated Successfully");
@@ -99,12 +99,12 @@ const PrivacyPolicy = () => {
 
         <Form.Item>
           <button
-            disabled={isLoading}
+            disabled={updataIsloading}
             type="primary"
             htmlType="submit"
             className="mt-4 bg-primary text-white px-6 py-1 rounded-md"
           >
-            Submit {isLoading && <Spin></Spin>}
+            Submit {updataIsloading && <Spin></Spin>}
           </button>
         </Form.Item>
       </Form>

@@ -1,5 +1,5 @@
 "use client";
-import { ConfigProvider, Pagination } from "antd";
+import { ConfigProvider, Pagination, Spin } from "antd";
 import { useState } from "react";
 import SingleContent from "./SingleContent";
 
@@ -9,7 +9,7 @@ const ContentManagementPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data } = useGetAllContentsForAdminQuery({
+  const { data, isLoading } = useGetAllContentsForAdminQuery({
     page: currentPage,
     searchTerm: searchTerm,
   });
@@ -17,7 +17,13 @@ const ContentManagementPage = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-
+  if(isLoading){
+    return (
+      <div className=" flex items-center justify-center h-[400px]">
+        <Spin size="large"></Spin>
+      </div>
+    )
+  }
   return (
     <div>
       <div className="flex justify-between items-center mb-5">

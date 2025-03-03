@@ -1,6 +1,6 @@
 "use client";
 import SingleSessionSkeleton from '@/components/Skeleton/SingleSessionSkeleton';
-import { useGetSingleSessionQuery, useGetTotalEntrolledUserSessionQuery } from '@/redux/features/session/sessionApi';
+import { useGetSingleSessionForAdminQuery, useGetTotalEntrolledUserSessionQuery } from '@/redux/features/session/sessionApi';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -14,7 +14,7 @@ const SingleSession = () => {
     const { data: allEntrolledUser } = useGetTotalEntrolledUserSessionQuery(id);
 
 
-    const { data, isLoading, error } = useGetSingleSessionQuery(id);
+    const { data, isLoading, error } = useGetSingleSessionForAdminQuery(id);
     console.log(data);
 
     const videoTutorials = data?.data?.recordedContent?.map(video => ({

@@ -128,7 +128,7 @@ const MorfitterSessions = () => {
                                                     : "No Title Available"}
                                             </h2>
                                             {
-                                                !item?.averageRating ?
+                                                item?.averageRating < 1 ?
                                                     <div className=' flex items-center gap-2 absolute bottom-4 left-4'>
                                                         <FaStar className=' w-6 h-6' />
 

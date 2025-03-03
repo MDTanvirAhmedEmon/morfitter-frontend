@@ -24,7 +24,7 @@ const privacyPolicyApi = baseApi.injectEndpoints({
     }),
 
     updatePrivacyPolicy: builder.mutation({
-      query: ({ id, ...data }) => ({
+      query: ({ id, data }) => ({
         url: `/policy-term/policy/${id}`,
         method: "PATCH",
         body: data, // ✅ Fixed potential undefined issue
