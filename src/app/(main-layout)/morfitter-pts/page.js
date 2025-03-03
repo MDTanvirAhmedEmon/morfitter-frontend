@@ -38,7 +38,7 @@ const MorfitterPts = () => {
     ];
 
     const { data, isLoading } = useGetAllTrainerQuery({ page: currentPage, searchTerm: searchTerm });
-    
+    console.log('sdfdsafsfds', data);
     return (
         <section className="container mx-auto py-8 md:py-14">
             <div className="flex justify-end mx-3 md:mx-0">
@@ -54,10 +54,10 @@ const MorfitterPts = () => {
                 <MorfitterPtsSkeleton />
             ) : data?.data?.data?.length ? (
                 data.data.data.map((item) => (
-                    <div key={item?._id} className="rounded-xl shadow-lg mx-3 px-3 md:px-12 md:mx-0 py-6 flex flex-col md:flex-row items-center gap-6 md:gap-10 mb-6">
+                    <div key={item?._id} className="rounded-xl shadow-[0px_5px_10px_8px_rgba(0,0,0,0.1)] mx-3 px-3 md:px-12 md:mx-0 py-6 flex flex-col md:flex-row items-center gap-6 md:gap-10 mb-6">
                         <div className="w-full md:w-[50%] xl:w-[40%] 2xl:w-[20%]">
                             <Image
-                                className="w-32 rounded-full"
+                                className="w-32 h-32 rounded-full object-cover border-[6px] border-primary"
                                 src={item?.profileImageUrl ? item.profileImageUrl : profileImage}
                                 width={300}
                                 height={300}
