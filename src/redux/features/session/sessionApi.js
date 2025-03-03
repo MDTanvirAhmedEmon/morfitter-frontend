@@ -33,6 +33,13 @@ const sessionApi = baseApi.injectEndpoints({
       }),
       providesTags: ['session']
     }),
+    getSingleSessionForAdmin: builder.query({
+      query: (id) => ({
+        url: `/session/admin/single/${id}`,
+        method: "GET",
+      }),
+      providesTags: ['session']
+    }),
     addSession: builder.mutation({
       query: ({ formData, id }) => ({
         url: `/session/${id}`,
@@ -105,6 +112,7 @@ export const {
   useCreateSessionMutation,
   useGetMySessionQuery,
   useGetAllSessionQuery,
+  useGetSingleSessionForAdminQuery,
   useGetSingleSessionQuery,
   useAddSessionMutation,
   useDeletSessionVideoMutation,

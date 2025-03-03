@@ -1,5 +1,5 @@
 "use client";
-import { getBaseUrl } from "@/config/envConfig";
+// import { getBaseUrl } from "@/config/envConfig";
 import { useGetAllNewUsersQuery } from "@/redux/features/admin/analytic/newUserApi";
 import { Avatar, Spin, Table } from "antd";
 
@@ -17,7 +17,7 @@ const NewUsers = () => {
         userInfo?.profileImageUrl ? (
           <Avatar
             size={40}
-            src={`${getBaseUrl()}${userInfo?.profileImageUrl}`}
+            src={`${userInfo?.profileImageUrl}`}
           />
         ) : (
           <Avatar size={40} src="https://avatar.iran.liara.run/public/43" />

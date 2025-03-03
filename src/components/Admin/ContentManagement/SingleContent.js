@@ -8,7 +8,7 @@ import { useBlockUnblockContentMutation } from "@/redux/features/admin/contentMa
 import { Button, message } from "antd";
 
 function SingleContent({ item }) {
-  const [blockUnblockContent] = useBlockUnblockContentMutation();
+  const [blockUnblockContent, { isLoading }] = useBlockUnblockContentMutation();
 
   const handleBlockUnblock = (id) => {
     blockUnblockContent(id)

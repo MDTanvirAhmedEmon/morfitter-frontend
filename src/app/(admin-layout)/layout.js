@@ -13,7 +13,8 @@ export default function AdminLayout({ children }) {
     const dispatch = useDispatch();
     const [collapsed, setCollapsed] = useState(false);
     const { data } = useGetAdminInfoQuery();
-    dispatch(setUser(data?.data[0]))
+    console.log(data?.[0]);
+    dispatch(setUser(data?.[0]))
 
     return (
         <ConfigProvider theme={mainTheme}>

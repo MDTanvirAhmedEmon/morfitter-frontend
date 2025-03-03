@@ -14,6 +14,8 @@ function EditProfile() {
     // contact: '',
   });
 
+  console.log('safddsafdsafsdaf', formData);
+
   // Set default form data when user is available
   useEffect(() => {
     if (user) {
@@ -24,7 +26,7 @@ function EditProfile() {
         // contact: user?.contactNo || '',
       });
     }
-  }, []);
+  }, [user]);
 
   const [updateAdmin, { isLoading }] = useUpdateAdminMutation();
 
@@ -38,32 +40,31 @@ function EditProfile() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData();
+    const formDataToSend = new FormData();
     const data = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      email: formData.email,
-      // contactNo: formData.contact,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
     };
-    formData.append("data", JSON.stringify(data));
 
-    updateAdmin(formData)
+    formDataToSend.append("data", JSON.stringify(data));
+
+    updateAdmin(formDataToSend)
       .unwrap()
       .then(() => {
         message.success("Update Successfully");
 
-        // Optionally reset form data if needed
         setFormData({
           firstName: "",
           lastName: "",
           email: "",
-          // contact: '',
         });
       })
       .catch((error) => {
         message.error(error?.data?.message || "Error updating profile");
       });
-  };
+};
+
 
   return (
     <div className="bg-white px-20 w-[715px] py-5 rounded-md">

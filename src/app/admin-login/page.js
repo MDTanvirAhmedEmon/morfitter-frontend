@@ -119,6 +119,7 @@ const AdminLogIn = () => {
             <Form.Item className="text-center">
               <button
                 type="submit"
+                disabled={loading}
                 className="bookBtn text-lg font-medium text-white bg-secondary hover:bg-greenColor py-2 px-8 rounded-full capitalize transition-all"
               >
                 Log In {loading && <Spin />}
