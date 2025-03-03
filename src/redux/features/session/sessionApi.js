@@ -105,6 +105,14 @@ const sessionApi = baseApi.injectEndpoints({
       }),
     }),
 
+    giveSessionReview: builder.mutation({
+      query: (data) => ({
+        url: `/session-review/give-review`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+
   }),
 });
 
@@ -122,6 +130,7 @@ export const {
   useMyEnrolledSessionQuery,
   useGetTotalEntrolledUserSessionQuery,
   useMarkVideoMutation,
+  useGiveSessionReviewMutation,
 } = sessionApi;
 
 export default sessionApi;
