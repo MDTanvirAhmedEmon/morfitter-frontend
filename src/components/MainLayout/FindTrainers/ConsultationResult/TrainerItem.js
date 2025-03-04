@@ -17,6 +17,7 @@ import FindTrainersChats from './FindTrainersChats';
 import profileImage from '../../../../assets/profile/profile_image.webp'
 
 const TrainerItem = ({ trainer }) => {
+
     const [selectedLogos, setSelectedLogos] = useState([]);
     const [open, setOpen] = useState(false);
 
@@ -123,7 +124,7 @@ const TrainerItem = ({ trainer }) => {
                     </div>
                 </div>
             </div>
-            <FindTrainersChats onClose={onClose} open={open}></FindTrainersChats>
+            <FindTrainersChats onClose={onClose} open={open} receiverId={trainer?._id}></FindTrainersChats>
         </div>
     );
 };
