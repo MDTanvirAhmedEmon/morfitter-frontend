@@ -28,8 +28,8 @@ const CreatingSession = () => {
       // sessionMode: values.,
       fitnessFocus: values.focus,
       accessType: values.access,
-      frequency: frequency,
-      membership_fee: values.price || 0,
+      membership_fee: Number(values.price || 0),
+      ...(frequency && { frequency })
     };
     formData.append("image", promoPic);
     formData.append("video", Video1);
