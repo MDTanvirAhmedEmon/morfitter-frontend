@@ -7,7 +7,7 @@ import gymIcon3 from '../../../assets/gym-icon-3.png';
 const WhyJoinMorfitter = () => {
     return (
         <section className="join-section py-16">
-            <div className="container mx-auto text-center">
+            <div className="xxl:w-[1340px] mx-auto text-center">
                 {/* Header Section */}
                 <div className="head-title flex justify-center mb-10 md:mb-20">
                     <div className="title-box w-[620px]">
@@ -35,7 +35,7 @@ const WhyJoinMorfitter = () => {
                 </div>
 
                 {/* Card Section */}
-                <div className="card-section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-5 md:px-0">
+                <div className="card-section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-4 xxl:px-0">
                     {/* Card 1 */}
                     <div className="join-card bg-white rounded-lg shadow-2xl p-5 cursor-pointer transition-all hover:bg-secondary hover:text-white">
                         <div className="card-head flex justify-start mb-4">

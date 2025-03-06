@@ -85,8 +85,8 @@ const CreatingSession = () => {
     };
 
     return (
-        <section className=" py-14 px-3 md:px-0">
-            <div className=" container mx-auto">
+        <section className=" py-14 px-3 xxl:px-0">
+            <div className=" xxl:w-[1340px] mx-auto">
 
                 <div className=" flex gap-2 md:gap-4 items-center">
                     <button onClick={() => setFileType('audio')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${fileType === 'audio' ? 'bg-greenColor' : 'bg-secondary'}`}>Audio</button>
@@ -99,7 +99,7 @@ const CreatingSession = () => {
                             <div
                                 key={index}
                                 onClick={() => handleLogoClick(logo.name)}
-                                className={`flex items-center justify-center w-[120px] lg:w-[150px] h-[120px] lg:h-[150px] px-7 text-center cursor-pointer ${selectedLogos === logo.name
+                                className={`flex items-center justify-center w-[120px] xxl:w-[130px] h-[120px] xxl:h-[130px] px-7 text-center cursor-pointer ${selectedLogos === logo.name
                                     ? "border-4 border-greenColor shadow shadow-greenColor"
                                     : "border-2 border-transparent"
                                     } rounded transition-all duration-300`}

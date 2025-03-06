@@ -47,7 +47,7 @@ const FindTrainers = () => {
     
     return (
         <div className=' py-10 md:py-16'>
-            <div className=' md:container mx-3 md:mx-auto'>
+            <div className=' xxl:w-[1340px] mx-3 xxl:mx-auto'>
                 <div className=' text-xl md:text-3xl bg-greenColor rounded-lg py-4 px-6 font-semibold text-white' >Find a trainer to help you become MorFitter</div>
                 <div className='shadow-2xl rounded-lg px-5 py-8 mt-8'>
 
@@ -69,7 +69,7 @@ const FindTrainers = () => {
                                     <div
                                         key={index}
                                         onClick={() => handleLogoClick(logo?.name)}
-                                        className={`flex items-center justify-center w-[120px] lg:w-[145px] h-[120px] lg:h-[145px] px-7 text-center cursor-pointer ${selectedLogos?.includes(logo?.name)
+                                        className={`flex items-center justify-center w-[120px] xxl:w-[133px] h-[120px] xxl:h-[133px] px-7 text-center cursor-pointer ${selectedLogos?.includes(logo?.name)
                                             ? 'border-4 border-greenColor shadow shadow-greenColor'
                                             : 'border-2 border-solid border-transparent'
                                             } rounded transition-all duration-300`}

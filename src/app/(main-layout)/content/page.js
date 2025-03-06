@@ -44,7 +44,7 @@ const Content = () => {
   };
 
   return (
-    <div className="container mx-auto py-10 md:py-20">
+    <div className="xxl:w-[1340px] mx-auto py-10 md:py-20">
       {/* header image */}
       <div className="relative mx-2 md:mx-0">
         <Image src={gymbg} className="w-full" width={0} height={0} alt="gym" />

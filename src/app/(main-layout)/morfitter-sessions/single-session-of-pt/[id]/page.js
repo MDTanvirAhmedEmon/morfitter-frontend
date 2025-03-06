@@ -78,7 +78,7 @@ const SingleSessionOfPt = () => {
 
     return (
         <div>
-            <div className="container mx-auto py-5 md:py-14 px-3 md:px-2 flex flex-col md:flex-row gap-6">
+            <div className="xxl:w-[1340px] mx-auto py-5 md:py-14 px-3 xxl:px-2 flex flex-col md:flex-row gap-6">
                 {/* Sidebar with Video List */}
                 <div className="w-full md:w-1/4 bg-gray-100 shadow-md rounded-lg p-4">
                     <h3 className="text-lg font-semibold mb-4">Video List</h3>
@@ -161,7 +161,7 @@ const SingleSessionOfPt = () => {
             </div>
             {
                 checkedData?.data?.result?.sessionCompleted &&
-                <div className=' mx-4 md:container md:mx-auto pb-14'>
+                <div className=' mx-4 xxl:w-[1340px] xxl:mx-auto pb-14'>
                     <div className="text-center">
                         <CheckCircleOutlined style={{ fontSize: "50px", color: "#e26972" }} />
                         <Title level={4} style={{ color: "#572c57", marginTop: "10px" }}>

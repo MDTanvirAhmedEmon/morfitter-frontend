@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { useMyEnrolledSessionQuery } from "@/redux/features/session/sessionApi";
@@ -15,18 +14,18 @@ const MyEnrolledSession = () => {
 
   return (
     <div>
-      <div className="px-3 md:container md:mx-auto py-10 md:py-16">
+      <div className="px-3 xxl:w-[1340px] xxl:mx-auto py-10 md:py-12">
         <h1 className=" text-2xl font-semibold pb-6">My Enrolled Sessions</h1>
         {isLoading ? (
           <SessionSkeleton />
         ) : data?.data?.length ? (
-          <div className="grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
             {data?.data?.map((item) => (
               <Link
                 key={item?.session_id}
                 href={`/morfitter-sessions/single-session-of-pt/${item?.sessionDetails?._id}`}
               >
-                <div className="cursor-pointer h-[400px] shadow-[0px_10px_30px_rgba(0,0,0,0.1)] rounded-md relative">
+                <div className="cursor-pointer h-[450px] shadow-[0px_10px_30px_rgba(0,0,0,0.1)] rounded-md relative">
                   <Image
 
                     className="w-full h-[55%] object-cover rounded-t-md"

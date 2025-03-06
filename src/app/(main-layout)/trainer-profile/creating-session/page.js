@@ -65,9 +65,9 @@ const CreatingSession = () => {
   ];
 
   return (
-    <section className="py-8 md:py-14">
-      <div className=" px-4 md:px-0 md:container mx-auto text-xl md:text-3xl font-semibold mb-4">Create A New Session</div>
-      <div className="xl:container mx-auto flex flex-col lg:flex-row gap-4 shadow-2xl p-4 md:p-8 rounded-2xl">
+    <section className="py-8 md:py-12">
+      <div className=" px-4 xxl:px-0 xxl:w-[1340px] mx-auto text-2xl md:text-3xl font-semibold mb-4">Create A New Session</div>
+      <div className="xxl:w-[1340px] mx-auto flex flex-col lg:flex-row gap-4 shadow-2xl p-4 md:p-8 rounded-2xl">
         {/* Image Section */}
         <div className="lg:w-1/2 rounded-lg  overflow-hidden ">
           <Image

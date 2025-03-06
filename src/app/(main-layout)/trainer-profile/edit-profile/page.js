@@ -38,7 +38,7 @@ const PTEditProfile = () => {
 
     return (
         <section className="py-8 md:py-16">
-            <div className="xl:container mx-auto flex flex-col lg:flex-row gap-4 shadow-[0px_10px_30px_rgba(0,0,0,0.2)] p-4 md:p-8 rounded-2xl">
+            <div className="xxl:w-[1340px] mx-auto flex flex-col lg:flex-row gap-4 shadow-[0px_10px_30px_rgba(0,0,0,0.2)] p-4 xxl:p-8 rounded-2xl">
                 {/* Image Section */}
                 <div className="lg:w-1/2 rounded-lg overflow-hidden">
                     <Image

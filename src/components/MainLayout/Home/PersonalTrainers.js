@@ -10,8 +10,8 @@ import Link from 'next/link';
 
 const PersonalTrainers = () => {
     return (
-        <section className="bg-white py-16 px-5 md:px-0">
-            <div className="container mx-auto flex flex-col xl:flex-row justify-between items-center min-h-[520px] gap-12">
+        <section className="bg-white py-16 px-5 xxl:px-0">
+            <div className="xxl:w-[1340px] mx-auto flex flex-col xl:flex-row justify-between items-center min-h-[520px] gap-12">
                 {/* Left Section */}
                 <div className="xl:w-1/2">
                     <div className="img-card relative w-[320px] md:w-[450px] lg:w-[520px] h-[280px] md:h-[440px] rounded-[20px] border-[10px] border-[#0ba59380] overflow-visible">
