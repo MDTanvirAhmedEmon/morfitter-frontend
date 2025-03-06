@@ -40,7 +40,7 @@ const ViewUserProfile = () => {
     return (
         <section className=" py-10 md:py-20">
             <p></p>
-            <div className="container mx-auto flex">
+            <div className="xxl:w-[1340px] mx-auto flex">
                 <div className="details-info flex flex-col lg:flex-row gap-5 p-5 min-h-[660px] w-full rounded-lg shadow-lg">
                     {/* Profile Section */}
                     <div className="profile-details flex flex-col items-center gap-4 w-full lg:w-[25%]">
