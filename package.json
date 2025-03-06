@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@paypal/react-paypal-js": "^8.8.2",
     "@reduxjs/toolkit": "^2.5.0",
     "antd": "^5.22.2",
     "js-cookie": "^3.0.5",
