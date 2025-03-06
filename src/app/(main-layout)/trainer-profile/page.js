@@ -2,7 +2,7 @@
 import { Avatar, message, Popconfirm, Rate, Tooltip, Upload } from "antd";
 import Image from "next/image";
 import { useState } from "react";
-import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
+import { FaFacebookF, FaFacebookMessenger, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { PiCamera } from "react-icons/pi";
 import circle from "../../../assets/circle.svg";
@@ -32,6 +32,7 @@ import {
   useGetMyFollowersQuery,
 } from "@/redux/features/trainer/trainerApi";
 import { CiEdit } from "react-icons/ci";
+import MyChatsDrawer from "@/components/TrainerProfile/MyChatsDrawer";
 
 const TrainerProfile = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -136,9 +137,20 @@ const TrainerProfile = () => {
     </div>
   );
 
+  // chats
+  const [open, setOpen] = useState(false);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <section className=" py-10 md:py-20">
-      <div className="xxl:w-[1340px] mx-auto flex">
+    <section className=" py-10 md:py-20 ">
+      <div className="xxl:w-[1340px] mx-auto flex ">
         <div className="details-info flex flex-col lg:flex-row gap-5 p-5 min-h-[660px] w-full rounded-lg shadow-lg">
           {/* Profile Section */}
           <div className="profile-details flex flex-col items-center gap-4 w-full lg:w-[25%]">
@@ -275,7 +287,7 @@ const TrainerProfile = () => {
                 <div className="mt-2 text-xl md:text-2xl">{user?.country}</div>
               </div>
 
-              <div className={` grid grid-cols-1 ${!user?.earning? 'md:grid-cols-3': 'md:grid-cols-2' } gap-5 `}>
+              <div className={` grid grid-cols-1 ${!user?.earning ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-5 `}>
                 <div className="item text-center px-14 py-1 md:py-4 rounded-xl bg-[#0ba5931a] border border-greenColor shadow-lg">
                   <div className="total text-xl md:text-3xl font-bold text-greenColor">
                     {myFollower?.data?.totalFollower}
@@ -535,6 +547,10 @@ const TrainerProfile = () => {
               </p>
             </div>
           </div>
+          <MyChatsDrawer onClose={onClose} open={open} ></MyChatsDrawer>
+        </div>
+        <div onClick={showDrawer} className=" absolute md:fixed top-24 md:top-auto md:bottom-10 right-3 md:right-12 p-3 flex items-center justify-center cursor-pointer">
+          <FaFacebookMessenger className="w-10 h-10 text-buttonPrimary" />
         </div>
       </div>
       {qualificationVisible && (

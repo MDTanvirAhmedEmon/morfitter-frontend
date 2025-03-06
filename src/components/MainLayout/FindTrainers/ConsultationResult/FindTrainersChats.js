@@ -9,12 +9,13 @@ const FindTrainersChats = ({ onClose, open, receiverId }) => {
     const socket = io('http://localhost:5000/live-chats');
     const { user, role } = useSelector((state) => state.auth)
     const { data: messageFromDB } = useGetMessageWithOthersQuery({ sender: user?._id, receiver: receiverId });
-    const [message, setMessage] = useState(messageFromDB);
+    const [message, setMessage] = useState([]);
+    console.log('form state', message);
     const [messageInput, setMessageInput] = useState('');
 
     useEffect(() => {
         if (messageFromDB) {
-            setMessage(messageFromDB);
+            setMessage(messageFromDB?.data);
         }
     }, [messageFromDB]);
 
@@ -23,9 +24,9 @@ const FindTrainersChats = ({ onClose, open, receiverId }) => {
             console.log('from socket', data);
             setMessage((prevsetMessage) => [...prevsetMessage, data]);
         });
-        return () => {
-            socket.disconnect();
-        }
+        // return () => {
+        //     socket.disconnect();
+        // }
     }, [user?._id, socket]);
 
     const sendMessage = () => {
@@ -48,7 +49,7 @@ const FindTrainersChats = ({ onClose, open, receiverId }) => {
             <div className="flex flex-col h-full relative">
                 {/* Chat messages */}
                 <div className=" flex flex-col bg-transparent md:bg-slate-50 p-3 rounded-md mb-2 absolute top-0 bottom-16 right-0 left-0">
-                    {message?.data?.map((msg, index) => (
+                    {message?.map((msg, index) => (
                         <div key={index} className={`mt-2 flex ${msg?.sender === user?._id ? 'justify-end' : 'justify-start'}`}>
                             <span
                                 className={`mb-2 p-2 max-w-xs ${msg?.sender === user?._id
