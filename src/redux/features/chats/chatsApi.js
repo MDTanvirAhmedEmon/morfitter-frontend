@@ -18,11 +18,19 @@ const chatsApi = baseApi.injectEndpoints({
                 method: "GET",
             }),
         }),
+
+        getUserIChatsWith: builder.query({
+            query: (id) => ({
+                url: `/chats/all-users-with-chats/${id}`,
+                method: "GET",
+            }),
+        }),
     }),
 });
 
 export const {
     useGetMessageWithOthersQuery,
+    useGetUserIChatsWithQuery,
 } = chatsApi;
 
 export default chatsApi;
