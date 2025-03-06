@@ -275,7 +275,7 @@ const TrainerProfile = () => {
                 <div className="mt-2 text-xl md:text-2xl">{user?.country}</div>
               </div>
 
-              <div className="following-follower grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className={` grid grid-cols-1 ${!user?.earning? 'md:grid-cols-3': 'md:grid-cols-2' } gap-5 `}>
                 <div className="item text-center px-14 py-1 md:py-4 rounded-xl bg-[#0ba5931a] border border-greenColor shadow-lg">
                   <div className="total text-xl md:text-3xl font-bold text-greenColor">
                     {myFollower?.data?.totalFollower}
@@ -293,15 +293,17 @@ const TrainerProfile = () => {
                     Members
                   </div>
                 </div>
-                {/* 
-                <div className="item text-center px-14 py-1 md:py-4 border bg-[#e2697121] border-black rounded-xl shadow-lg">
-                  <div className="total text-xl md:text-3xl font-bold text-black">
-                    £46
+
+                {
+                  !user?.earning && <div className="item text-center px-14 py-1 md:py-4 border bg-[#e2697121] border-black rounded-xl shadow-lg cursor-pointer">
+                    <div className="total text-xl md:text-3xl font-bold text-black">
+                      £46
+                    </div>
+                    <div className="title text-lg text-gray-900 capitalize">
+                      Revenue
+                    </div>
                   </div>
-                  <div className="title text-lg text-gray-900 capitalize">
-                    Revenue
-                  </div>
-                </div> */}
+                }
               </div>
             </div>
             {

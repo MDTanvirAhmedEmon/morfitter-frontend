@@ -53,7 +53,7 @@ const TrainerItem = ({ trainer }) => {
     };
     return (
         <div className=" border-2 border-secondary p-2 md:p-3 rounded-lg md:flex items-center justify-between mb-5">
-            <div className=' md:flex items-center gap-4'>
+            <div className=' lg:flex items-center gap-4'>
                 <div className=' flex items-center gap-3 shadow-[2px_8px_8px_2px_rgba(0,0,0,0.1)] py-4 px-4 lg:px-10 rounded-xl mb-5 md:mb-0'>
                     <Image
                         src={trainer?.profileImageUrl
@@ -97,17 +97,27 @@ const TrainerItem = ({ trainer }) => {
 
 
             <div className=' flex items-center justify-between xl:gap-16'>
-                <div className=' flex flex-col gap-2'>
+                <div className=' flex flex-col gap-2 w-[180px]'>
                     <div className=' flex items-center gap-2'>
                         <div className='right-part'>
-                            <p className=' text-white'>5</p>
-                            <MdOutlineStarPurple500 className=' w-5 h-5 text-white' />
+                            <p className=' text-white'>{trainer?.averageRating ? Math.ceil(trainer.averageRating * 2) / 2 : 0}</p>
+                            <MdOutlineStarPurple500 className=' w-4 h-4 text-white' />
                         </div>
-                        <h3>120 reviews</h3>
+                        <h3>{trainer?.totalReviews} reviews</h3>
                     </div>
-                    <div className=' text-lg'>
-                        <span className=' font-semibold mt-2 ml-3'>0.5 </span>miles away
-                    </div>
+                    {
+                        trainer?.radius ?
+                            <div className=' text-lg'>
+
+                                <span className=' font-semibold mt-2 ml-3'>{trainer?.radius} </span>miles away
+                            </div>
+                            :
+                            <div className=' text-lg'>
+
+                                <span className='font-semibold mt-2 ml-3 text-gray-400'>Unavailable</span>
+                            </div>
+                    }
+
                 </div>
 
                 <div className=' flex flex-col justify-center items-center'>

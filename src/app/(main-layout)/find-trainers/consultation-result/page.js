@@ -20,7 +20,7 @@ const ConsultationResult = () => {
 
 
     const { data, isLoading } = useGetAllTrainerQuery(queryParams);
-
+    console.log(data?.data?.data);
     if (!data?.data?.data?.length) {
 
         return (

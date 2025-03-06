@@ -1,5 +1,24 @@
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 const MakePayment = ({ session }) => {
+    const createOrder = async () => {
+        const response = await fetch("/api/paypal/create-payment", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ trainerPaypalEmail, sessionPrice }),
+        });
+        const data = await response.json();
+        return data.approvalUrl; // Return approval URL to redirect user to PayPal
+    };
+
+    const onApprove = async (data) => {
+        // After approval, capture payment and transfer 90% to the trainer
+        await fetch(`/api/paypal/execute-payment?paymentId=${data.paymentID}&PayerID=${data.payerID}&trainerPaypalEmail=${trainerPaypalEmail}&sessionPrice=${sessionPrice}`, {
+            method: "POST",
+        });
+        alert("Payment successful!");
+    };
+
     return (
         <div className="py-6 text-center">
             {session?.promo_video && (
@@ -35,6 +54,10 @@ const MakePayment = ({ session }) => {
             <button className="mt-6 w-full py-3 rounded-lg bg-gradient-to-r from-[#FF7F50] to-[#28A745] text-white font-semibold text-lg shadow-md hover:scale-105 transition-all flex items-center justify-center gap-2">
                 Proceed to Payment 💳
             </button>
+            <PayPalScriptProvider options={{ "client-id": process.env.PAYPAL_CLIENT_ID }}>
+                <PayPalButtons createOrder={createOrder} onApprove={onApprove} />
+            </PayPalScriptProvider>
+
         </div>
     );
 };
