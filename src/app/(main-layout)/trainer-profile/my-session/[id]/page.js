@@ -57,7 +57,7 @@ const SingleSession = () => {
 
     return (
         <div className="bg-white min-h-screen">
-            <div className="container mx-auto px-6 py-12 space-y-10">
+            <div className="xxl:w-[1340px] mx-auto px-3 py-12 space-y-10">
 
                 <div className="flex flex-col md:flex-row gap-6 ">
 
@@ -84,7 +84,7 @@ const SingleSession = () => {
                     )}
                 </div>
 
-                <div className="border p-6 rounded-lg shadow-md bg-gray-100">
+                <div className="border px-3 py-6 rounded-lg shadow-md bg-gray-100">
                     <h1 className="text-3xl font-bold text-gray-900">{session?.title}</h1>
                     <div className="grid md:grid-cols-2 gap-4 mt-4 text-gray-700">
                         <p><strong>Session Type:</strong> {session?.sessionType}</p>
@@ -106,7 +106,7 @@ const SingleSession = () => {
                     {session?.recordedContent.length > 0 && (
                         <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6">
                             {session.recordedContent.map((content, index) => (
-                                <div key={content._id} className="border p-4 rounded-lg shadow-md bg-gray-50">
+                                <div key={content._id} className="border py-4 px-3 rounded-lg shadow-md bg-gray-50">
                                     <div className=" flex justify-between items-center">
                                         <div>
                                             <h3 className="text-lg font-semibold text-teal-600">{index + 1}. {content.title}</h3>
@@ -133,7 +133,7 @@ const SingleSession = () => {
                         </div>
                     )}
                 </div>
-                <div className=" bg-gray-50 py-10 px-4 ">
+                <div className=" bg-gray-50 py-10 ">
                     <h1 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
                         Enrolled Users
                     </h1>
@@ -142,7 +142,7 @@ const SingleSession = () => {
                         {allEntrolledUser?.data?.map((user) => (
                             <div
                                 key={user?._id}
-                                className="bg-white shadow-lg rounded-lg p-5 "
+                                className="bg-white shadow-lg rounded-lg py-5 px-3 "
                             >
 
                                 <div className="flex items-center space-x-4">

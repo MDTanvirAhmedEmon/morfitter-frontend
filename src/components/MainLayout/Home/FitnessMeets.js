@@ -12,7 +12,7 @@ const FitnessMeets = () => {
   return (
     <div className=" bg-greenColor">
       <section style={imageStyle} className="px-6 py-16 text-white relative">
-        <div className="container mx-auto flex items-center justify-center relative z-10">
+        <div className="xxl:w-[1340px] mx-auto flex items-center justify-center relative z-10">
           <div className="flex flex-wrap items-center justify-between w-full">
             {/* Left Column */}
             <div className="w-full lg:w-5/12 mb-8 lg:mb-0">

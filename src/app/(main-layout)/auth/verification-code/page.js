@@ -30,8 +30,8 @@ const VerificationCode = () => {
 
   const handleVerifyCode = () => {
     if (code.length !== 5) {
-      notification.success({
-        message: "OTP Sent",
+      notification.error({
+        message: "Please Input OTP",
         description: "Invalid code. Please enter a valid 5-digit code!",
         placement: "topRight",
       });
@@ -41,7 +41,6 @@ const VerificationCode = () => {
     verifyEmail({ email, tokenCode: Number(code) })
       .unwrap()
       .then((response) => {
-        console.log("verification page er  response", response);
         notification.success({
           message: "OTP Sent",
           description: " verifications were successfully completed!",

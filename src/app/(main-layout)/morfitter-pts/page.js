@@ -40,8 +40,8 @@ const MorfitterPts = () => {
     const { data, isLoading } = useGetAllTrainerQuery({ page: currentPage, searchTerm: searchTerm });
     console.log('sdfdsafsfds', data);
     return (
-        <section className="container mx-auto py-8 md:py-14">
-            <div className="flex justify-end mx-3 md:mx-0">
+        <section className="xxl:w-[1340px] mx-auto py-8 md:py-14">
+            <div className="flex justify-end mx-3 xxl:mx-0">
                 <Input 
                     onChange={(e) => setSearchTerm(e.target.value)} 
                     suffix={<CiSearch className="w-6 h-6" />} 
@@ -54,7 +54,7 @@ const MorfitterPts = () => {
                 <MorfitterPtsSkeleton />
             ) : data?.data?.data?.length ? (
                 data.data.data.map((item) => (
-                    <div key={item?._id} className="rounded-xl shadow-[0px_5px_10px_8px_rgba(0,0,0,0.1)] mx-3 px-3 md:px-12 md:mx-0 py-6 flex flex-col md:flex-row items-center gap-6 md:gap-10 mb-6">
+                    <div key={item?._id} className="rounded-xl shadow-[0px_5px_10px_8px_rgba(0,0,0,0.1)] mx-3 px-3 lg:px-12 xxl:mx-0 py-6 flex flex-col md:flex-row items-center gap-6 md:gap-10 mb-6">
                         <div className="w-full md:w-[50%] xl:w-[40%] 2xl:w-[20%]">
                             <Image
                                 className="w-32 h-32 rounded-full object-cover border-[6px] border-primary"

@@ -15,7 +15,7 @@ const FitnessJourney = () => {
     };
     return (
         <section className="signup-section py-16 md:py-40 px-6">
-            <div className="container mx-auto">
+            <div className="xxl:w-[1340px] mx-auto">
                 <div style={imageStyle2} className="bg-decoration rounded-[20px] flex items-center -rotate-1 justify-center w-full h-[420px] md:h-[360px]">
                     <div style={imageStyle} className="content relative w-full flex justify-between items-center  h-[400px] md:h-[340px] bg-cover  rounded-[20px] md:p-[60px] px-5 lg:px-16">
 

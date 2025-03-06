@@ -52,9 +52,9 @@ const TrainerItem = ({ trainer }) => {
         setOpen(false);
     };
     return (
-        <div className=" border-2 border-secondary p-2 md:p-3 rounded-lg md:flex items-center justify-between mb-5">
-            <div className=' lg:flex items-center gap-4'>
-                <div className=' flex items-center gap-3 shadow-[2px_8px_8px_2px_rgba(0,0,0,0.1)] py-4 px-4 lg:px-10 rounded-xl mb-5 md:mb-0'>
+        <div className=" border-2 border-secondary p-2 md:p-3 rounded-lg xl:flex items-center justify-between mb-5">
+            <div className=' xl:flex items-center gap-4'>
+                <div className=' flex items-center gap-3 shadow-[2px_8px_8px_2px_rgba(0,0,0,0.1)] py-4 px-4 lg:px-10 rounded-xl mb-5 xl:mb-0'>
                     <Image
                         src={trainer?.profileImageUrl
                             ? `${trainer?.profileImageUrl}`
@@ -114,7 +114,7 @@ const TrainerItem = ({ trainer }) => {
                             :
                             <div className=' text-lg'>
 
-                                <span className='font-semibold mt-2 ml-3 text-gray-400'>Unavailable</span>
+                                <span className='font-semibold mt-2 ml-3 text-gray-400'>No Distance</span>
                             </div>
                     }
 

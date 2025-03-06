@@ -42,7 +42,7 @@ const SinglePtSession = () => {
     };
     return (
         <div>
-            <div className=' px-3 md:container md:mx-auto py-10 md:py-16'>
+            <div className=' px-3 xxl:w-[1340px] xxl:mx-auto py-10 md:py-16'>
                 <div className=' flex flex-col md:flex-row justify-between items-center'>
                     <div className=' w-full flex flex-col md:flex-row gap-6'>
                         <Select
@@ -89,7 +89,7 @@ const SinglePtSession = () => {
                 {
                     isLoading ? <SessionSkeleton></SessionSkeleton>
                         : data?.data?.data?.length ?
-                            <div className=' mt-10 grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4 gap-10'>
+                            <div className=' mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6'>
                                 {
                                     data?.data?.data?.map((item) => (
                                         // <Link key={item?._id} href={`/morfitter-sessions/single-session-of-pt/${item?._id}`}>
@@ -97,7 +97,7 @@ const SinglePtSession = () => {
                                             onClick={() => {
                                                 setSelectedSession(item);
                                                 showModal();
-                                            }} key={item?._id} className="cursor-pointer h-[400px] shadow-[0px_10px_30px_rgba(0,0,0,0.1)] rounded-md relative">
+                                            }} key={item?._id} className="cursor-pointer h-[450px] shadow-[0px_10px_30px_rgba(0,0,0,0.1)] rounded-md relative">
                                             <Image
 
                                                 className="w-full h-[55%] object-cover rounded-t-md"

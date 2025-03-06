@@ -21,7 +21,7 @@ const Footer = () => {
         <div className=" bg-[#000000da]">
             <footer style={imageStyle} className="footer-section  text-white">
 
-                <section className="container mx-auto px-4">
+                <section className="xxl:w-[1340px] mx-auto px-4">
                     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8 py-12 ">
                         {/* First Column */}
                         <div>
@@ -160,13 +160,13 @@ const Footer = () => {
                             <p className="text-[15px] leading-[25.3px] mb-4">
                                 Uses the most advanced AI Powered Grading Gym Track.
                             </p>
-                            <div className="flex items-center bg-white rounded-full h-[55px] overflow-hidden px-3 gap-3">
+                            <div className="flex items-center bg-white rounded-full h-[50px] overflow-hidden px-3 gap-3">
                                 <input
                                     type="text"
                                     placeholder="Email Address..."
                                     className="flex-1 text-sm text-gray-700 outline-none border-none placeholder:text-gray-500"
                                 />
-                                <button className="px-6 py-2 rounded-full text-white bg-secondary hover:bg-greenColor transition duration-300">
+                                <button className="px-4 py-2 rounded-full text-white bg-secondary hover:bg-greenColor transition duration-300">
                                     Subscribe
                                 </button>
                             </div>
@@ -174,7 +174,7 @@ const Footer = () => {
                     </div>
                 </section>
 
-                <div className="mt-8 border-t border-gray-700 py-3 md:py-6">
+                <div className="xxl:w-[1340px] mx-auto mt-8 border-t border-gray-700 py-3 md:py-6">
                     <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
                         <p className="text-sm md:text-lg">© 2024 All rights reserved!</p>
                         <div className="space-x-6 mt-2 md:mt-0">

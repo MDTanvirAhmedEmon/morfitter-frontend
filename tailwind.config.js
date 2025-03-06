@@ -13,6 +13,9 @@ module.exports = {
         greenColor: "#0ba593",
         bluish: "#323e4c",
       },
+      screens: {
+        'xxl': '1340px', // or your desired width
+      },
       animation: {
         scroll: "scroll 18s linear infinite",
       },

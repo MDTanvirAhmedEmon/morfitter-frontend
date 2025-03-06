@@ -24,7 +24,7 @@ const ConsultationResult = () => {
     if (!data?.data?.data?.length) {
 
         return (
-            < div className=" py-16 md:container flex items-center justify-center mx-3 md:mx-auto min-h-[50vh]" >
+            < div className=" py-16 xxl:w-[1340px] flex items-center justify-center mx-3 md:mx-auto min-h-[50vh]" >
                 {
                     data?.data?.data?.length === 0 && <div className="text-center text-2xl">No trainers found</div>
                 }
@@ -33,7 +33,7 @@ const ConsultationResult = () => {
     }
 
     return (
-        <div className=" py-16 md:container mx-3 md:mx-auto min-h-[50vh]">
+        <div className=" py-16 xxl:w-[1340px] mx-3 xxl:mx-auto min-h-[50vh]">
             {
                 isLoading &&
                 <>
