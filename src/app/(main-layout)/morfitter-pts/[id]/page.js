@@ -118,7 +118,7 @@ const SinglePtSession = () => {
                                                     />
                                                     <div>
                                                         <h2 className=' text-black font-semibold' >{item?.owner?.[0]?.name}</h2>
-                                                        <span className=' text-black bg-gray-100 rounded px-2' >PTs</span>
+                                                        <span className=' text-black bg-gray-100 rounded px-2' >Trainer</span>
                                                     </div>
 
                                                 </div>

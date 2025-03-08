@@ -65,13 +65,13 @@ const MorfitterPts = () => {
                             />
                             <div className="mt-3">
                                 <h2 className="text-xl font-semibold capitalize">Name: {item?.firstName} {item?.lastName}</h2>
-                                <p className="capitalize">PTs</p>
+                                <p className="capitalize">Trainer</p>
                             </div>
                         </div>
 
                         <div className="w-full md:w-[50%] xl:w-[60%] 2xl:w-[80%]">
                             <div>
-                                <h2 className="text-2xl font-semibold mb-2">PTs Bio</h2>
+                                <h2 className="text-2xl font-semibold mb-2">Trainer Bio</h2>
                                 <p>{item?.about}</p>
                             </div>
 

@@ -15,7 +15,6 @@ const MyChatsDrawer = ({ onClose, open }) => {
     const messageEndRef = useRef(null);
     // const { data: userData } = useGetProfileInfoQuery();
     const { data } = useGetUserIChatsWithQuery(user?._id);
-    console.log(data?.data);
 
     // const { data } = useGetChatActorQuery(profileId)
     // console.log('Raw data', data)
@@ -44,7 +43,7 @@ const MyChatsDrawer = ({ onClose, open }) => {
                             <div className="flex gap-2 w-full">
                                 <Avatar size={40} src={user?.profileImageUrl} />
                                 <div className="flex-1">
-                                    <p className="font-bold">{user?.firstName} {user?.lastName}</p>
+                                    <p className="font-bold capitalize">{user?.firstName} {user?.lastName}</p>
                                     <p className="-mb-0">{user?.lastMessage}</p>
                                 </div>
                             </div>

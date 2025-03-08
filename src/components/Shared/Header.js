@@ -91,7 +91,7 @@ const Header = () => {
                   : ""
                   }  text-lg rounded-full font-light py-2 px-4 hover:bg-primary  hover:text-white`}
               >
-                MORfitter PTs
+                MORfitter Trainer
               </span>
             </Link>
             <Link href="/morfitter-sessions">
