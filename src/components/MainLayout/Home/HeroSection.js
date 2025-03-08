@@ -52,7 +52,7 @@ const HeroSection = () => {
                                 </Link>
                                 <Link href={`/auth/pt-register`}>
                                     <button className="bookBtn text-md md:text-lg font-medium leading-8 text-white bg-primary hover:bg-greenColor py-2 md:py-3 px-3 md:px-8 rounded-full capitalize transition-all hover:">
-                                        PTs Join Free
+                                        Trainer Join Free
                                     </button>
                                 </Link>
                             </div>

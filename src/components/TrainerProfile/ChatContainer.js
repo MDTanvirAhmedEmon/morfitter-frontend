@@ -11,7 +11,7 @@ export default function ChatContainer({ selectedUser, setSelectedUser }) {
     const socket = io(chatsUrl);
     const { user, role } = useSelector((state) => state.auth);
     const { data: messageFromDB, isLoading } = useGetMessageWithOthersQuery({ sender: user?._id, receiver: selectedUser?.traineeTrainerId });
-
+    console.log(messageFromDB);
     const [message, setMessage] = useState([]);
     const [messageInput, setMessageInput] = useState('');
     const chatContainerRef = useRef(null);

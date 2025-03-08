@@ -93,6 +93,7 @@ export const baseApi = createApi({
     "admin",
     "policy",
     "terms",
+    'chats',
     "admin-content",
   ],
   endpoints: () => ({}),

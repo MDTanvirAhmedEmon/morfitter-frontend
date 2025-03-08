@@ -11,6 +11,14 @@ const contentApi = baseApi.injectEndpoints({
       providesTags: ['content']
     }),
 
+    getSingleContent: builder.query({
+      query: (id) => ({
+        url: `/content/${id}`,
+        method: "GET",
+      }),
+      providesTags: ['content']
+    }),
+
     getAllContentsForUser: builder.query({
       query: (params) => ({
         url: "/content/for-loggout-users",
@@ -24,6 +32,15 @@ const contentApi = baseApi.injectEndpoints({
       query: (formData) => ({
         url: "/content/create",
         method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: ['content']
+    }),
+
+    updateContent: builder.mutation({
+      query: ({id,formData}) => ({
+        url: `/content/${id}`,
+        method: "PATCH",
         body: formData,
       }),
       invalidatesTags: ['content']
@@ -76,6 +93,6 @@ const contentApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllContentsQuery, useGetAllContentsForUserQuery , useCreateContentMutation, useGetMyContentQuery, useDeleteContentMutation, useLikeAndDislikeMutation, useDoCommentMutation, useGetAllCommentsQuery } = contentApi;
+export const { useGetAllContentsQuery, useUpdateContentMutation ,useGetSingleContentQuery , useGetAllContentsForUserQuery , useCreateContentMutation, useGetMyContentQuery, useDeleteContentMutation, useLikeAndDislikeMutation, useDoCommentMutation, useGetAllCommentsQuery } = contentApi;
 
 export default contentApi;
