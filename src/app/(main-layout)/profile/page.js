@@ -2,7 +2,7 @@
 import { Avatar, Badge, message, Tooltip, Upload } from "antd";
 import Image from "next/image";
 import { useState } from "react";
-import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
+import { FaFacebookF, FaFacebookMessenger, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { PiCamera } from "react-icons/pi";
 import circle from '../../../assets/circle.svg'
@@ -25,6 +25,7 @@ import InvitationModal from "@/components/Profile/InvitationModal";
 import defaultProfilePic from '../../../assets/profile/profile_image.webp'
 import { useGetMyFollowersQuery } from "@/redux/features/trainer/trainerApi";
 import { CiEdit } from "react-icons/ci";
+import MyChatsDrawer from "@/components/TrainerProfile/MyChatsDrawer";
 
 const Profile = () => {
     const [profilePic, setProfilePic] = useState(null);
@@ -95,6 +96,17 @@ const Profile = () => {
         </div>;
 
     const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : `${user?.profileImageUrl}`;
+
+    // chats
+    const [open, setOpen] = useState(false);
+
+    const showDrawer = () => {
+        setOpen(true);
+    };
+
+    const onClose = () => {
+        setOpen(false);
+    };
 
     return (
         <section className=" py-10 md:py-20">
@@ -326,6 +338,10 @@ const Profile = () => {
                     </div>
                 </div>
                 <InvitationModal isInvitationModalOpen={isInvitationModalOpen} handleInvitationCancel={handleInvitationCancel} handleInvitationOk={handleInvitationOk} data={invitation?.data}></InvitationModal>
+            </div>
+            <MyChatsDrawer onClose={onClose} open={open} ></MyChatsDrawer>
+            <div onClick={showDrawer} className="  fixed  top-auto bottom-4 md:bottom-10 right-3 md:right-12 p-3 flex items-center justify-center cursor-pointer">
+                <FaFacebookMessenger className="w-10 h-10 text-primary" />
             </div>
         </section>
     );

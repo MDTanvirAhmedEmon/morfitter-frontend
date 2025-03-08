@@ -549,8 +549,8 @@ const TrainerProfile = () => {
           </div>
           <MyChatsDrawer onClose={onClose} open={open} ></MyChatsDrawer>
         </div>
-        <div onClick={showDrawer} className=" absolute md:fixed top-24 md:top-auto md:bottom-10 right-3 md:right-12 p-3 flex items-center justify-center cursor-pointer">
-          <FaFacebookMessenger className="w-10 h-10 text-buttonPrimary" />
+        <div onClick={showDrawer} className=" fixed  top-auto bottom-4 md:bottom-10 right-3 md:right-12 p-3 flex items-center justify-center cursor-pointer">
+          <FaFacebookMessenger className="w-10 h-10 text-primary" />
         </div>
       </div>
       {qualificationVisible && (

@@ -10,10 +10,10 @@ const MyContent = () => {
     // const { user } = useSelector((state) => state.auth)
     const [currentPage, setCurrentPage] = useState(1);
     const { data, isLoading } = useGetMyContentQuery({ page: currentPage, sortOrder: 'desc' });
-    console.log(data?.data?.data);
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
+
     return (
         <div className=' xxl:w-[1340px] mx-auto py-5 md:py-10'>
             {

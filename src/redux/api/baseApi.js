@@ -5,8 +5,8 @@ import { decodedToken } from "@/utils/VerifyJwtToken";
 import { logout, setRole, setToken } from "../features/auth/authSlice"; // ✅ Ensure correct import
 
 // API Base URL
-// const BASE_URL = `https://shiloh-morfitter-backend.vercel.app/api/v1`;
-const BASE_URL = `http://localhost:5000/api/v1`;
+const BASE_URL = `https://shiloh-morfitter-backend.vercel.app/api/v1`;
+// const BASE_URL = `http://localhost:5000/api/v1`;
 
 // ✅ Fetch base query with token setup
 const baseQuery = fetchBaseQuery({
@@ -93,6 +93,7 @@ export const baseApi = createApi({
     "admin",
     "policy",
     "terms",
+    'chats',
     "admin-content",
   ],
   endpoints: () => ({}),

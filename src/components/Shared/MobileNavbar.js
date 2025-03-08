@@ -78,7 +78,7 @@ const MobileNavbar = ({ onClose, open }) => {
                                 : ""
                                 }  text-lg rounded-full py-2 px-4 hover:bg-primary  hover:text-white text-white font-semibold`}
                         >
-                            MORfitter PTs
+                            MORfitter Trainer
                         </span>
                     </Link>
                     <Link onClick={onClose} href="/morfitter-sessions">

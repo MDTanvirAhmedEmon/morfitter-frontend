@@ -10,8 +10,6 @@ import { Avatar } from "antd";
 const MyEnrolledSession = () => {
   const { data, isLoading } = useMyEnrolledSessionQuery();
 
-  console.log(data);
-
   return (
     <div>
       <div className="px-3 xxl:w-[1340px] xxl:mx-auto py-10 md:py-12">
@@ -46,7 +44,7 @@ const MyEnrolledSession = () => {
                       />
                       <div>
                         <h2 className=' text-black font-semibold' >{item?.owner?.name}</h2>
-                        <span className=' text-black bg-gray-100 rounded px-2' >PTs</span>
+                        <span className=' text-black bg-gray-100 rounded px-2' >Trainer</span>
                       </div>
 
                     </div>

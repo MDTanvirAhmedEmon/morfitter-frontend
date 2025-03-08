@@ -14,8 +14,10 @@ const MyChatsDrawer = ({ onClose, open }) => {
     const [messages, setMessages] = useState([]);
     const messageEndRef = useRef(null);
     // const { data: userData } = useGetProfileInfoQuery();
-    const { data } = useGetUserIChatsWithQuery(user?._id);
-    console.log(data?.data);
+    const { data } = useGetUserIChatsWithQuery(user?._id, {
+        refetchOnMountOrArgChange: true,
+        refetchOnFocus: true
+    });
 
     // const { data } = useGetChatActorQuery(profileId)
     // console.log('Raw data', data)
@@ -44,17 +46,17 @@ const MyChatsDrawer = ({ onClose, open }) => {
                             <div className="flex gap-2 w-full">
                                 <Avatar size={40} src={user?.profileImageUrl} />
                                 <div className="flex-1">
-                                    <p className="font-bold">{user?.firstName} {user?.lastName}</p>
+                                    <p className="font-bold capitalize">{user?.firstName} {user?.lastName}</p>
                                     <p className="-mb-0">{user?.lastMessage}</p>
                                 </div>
                             </div>
 
                             <div className="w-[70px] flex flex-col items-end justify-between">
-                                {/* {user?.unreadCount > 0 && (
-                                    <span className="bg-buttonPrimary text-white w-6 h-6 font-bold flex justify-center items-center rounded-full mb-1">
+                                {user?.unreadCount > 0 && (
+                                    <span className="bg-primary text-white w-5 h-5 font-bold flex justify-center items-center rounded-full mb-1">
                                         {user?.unreadCount}
                                     </span>
-                                )} */}
+                                )}
                                 <span className="text-gray-500 text-xs">
                                     {new Date(user?.lastMessageDate).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                                 </span>
