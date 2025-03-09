@@ -13,7 +13,7 @@ import {
 import { useSelector } from "react-redux";
 import profileImage from "../../assets/profile/profile_image.webp";
 import { useRouter } from "next/navigation";
-import { Spin } from "antd";
+import { Avatar, Spin, Tooltip } from "antd";
 
 const SingleBlog = ({ content }) => {
   const { role } = useSelector((state) => state.auth);
@@ -64,6 +64,29 @@ const SingleBlog = ({ content }) => {
     day: "2-digit",
     year: "numeric",
   });
+
+  const likedUserList = (
+    <div className="px-1 flex flex-col items-start gap-2">
+      {content?.recentLikers?.map(item => (
+        <div className="flex gap-2 items-center justify-start" key={item?._id}>
+          <Avatar
+            size={20}
+            src={
+              item?.profileImageUrl
+                ? `${item?.profileImageUrl}`
+                : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            }
+          />
+          <p className="capitalize">{item?.firstName} {item?.lastName}</p>
+        </div>
+      ))}
+    </div>
+  );
+  
+  const likedUser = content?.recentLikers?.length > 0 ? likedUserList : (
+    <div className="px-4">No One Liked</div>
+  );
+  
 
   return (
     <div className="px-3 mx-0 py-5">
@@ -149,31 +172,33 @@ const SingleBlog = ({ content }) => {
 
           {/* Button Section */}
           <div className="btn-part flex gap-3 md:gap-12 items-center mt-6">
-            <button
-              disabled={isLoading}
-              onClick={handleLike}
-              className={`btn-item like px-2 flex gap-2 justify-center items-center  w-40 h-11 rounded-lg bg-[#0ba59313] border text-greenColor border-greenColor ${content?.isLiked ? "shadow shadow-greenColor" : ""
-                }  `}
-            >
-              <svg
-                width="26"
-                height="25"
-                viewBox="0 0 26 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+            <Tooltip title={likedUser}>
+              <button
+                disabled={isLoading}
+                onClick={handleLike}
+                className={`btn-item like px-2 flex gap-2 justify-center items-center  w-40 h-11 rounded-lg bg-[#0ba59313] border text-greenColor border-greenColor ${content?.isLiked ? "shadow shadow-greenColor" : ""
+                  }  `}
               >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M0 12.4071V22.3118C0 23.6799 1.1635 24.762 2.6 24.762H5.19997V9.90494H2.6C1.1635 9.90494 0 11.039 0 12.4071ZM25.9076 14.0587L23.6482 22.1496C23.2764 23.6861 21.8399 24.762 20.1837 24.762H7.79997V9.93093L10.0347 2.26096C10.2986 0.630392 12.0769 -0.464088 13.8787 0.194576C14.9564 0.589527 15.5999 1.65798 15.5999 2.75864V8.69284C15.5999 9.37627 16.1823 9.90494 16.8999 9.90494H22.4431C24.7298 9.90494 26.4211 11.9379 25.9076 14.0587Z"
-                  fill="#0BA593"
-                />
-              </svg>
-              <span className=" hidden md:block">
-                Like {content?.totalLikes}
-              </span>
-              <span className=" block md:hidden">{content?.totalLikes}</span> {isLoading && <Spin></Spin>}
-            </button>
+                <svg
+                  width="26"
+                  height="25"
+                  viewBox="0 0 26 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M0 12.4071V22.3118C0 23.6799 1.1635 24.762 2.6 24.762H5.19997V9.90494H2.6C1.1635 9.90494 0 11.039 0 12.4071ZM25.9076 14.0587L23.6482 22.1496C23.2764 23.6861 21.8399 24.762 20.1837 24.762H7.79997V9.93093L10.0347 2.26096C10.2986 0.630392 12.0769 -0.464088 13.8787 0.194576C14.9564 0.589527 15.5999 1.65798 15.5999 2.75864V8.69284C15.5999 9.37627 16.1823 9.90494 16.8999 9.90494H22.4431C24.7298 9.90494 26.4211 11.9379 25.9076 14.0587Z"
+                    fill="#0BA593"
+                  />
+                </svg>
+                <span className=" hidden md:block">
+                  Like {content?.totalLikes}
+                </span>
+                <span className=" block md:hidden">{content?.totalLikes}</span> {isLoading && <Spin></Spin>}
+              </button>
+            </Tooltip>
             <button
               onClick={() => setOpenComment(!openComment)}
               className="btn-item comment px-2 flex gap-2 justify-center items-center shadow-md w-40 h-11 rounded-lg bg-red-50 border border-red-600 text-red-600"
