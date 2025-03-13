@@ -28,9 +28,9 @@ const PersonalTrainers = () => {
 
                         {/* Sub-card */}
                         <div className="sub-card absolute right-2 md:right-[-150px] bottom-3 md:bottom-[20%] w-[180px] px-3 py-2 bg-white rounded-[15px] shadow-2xl text-left">
-                            <div className="years font-gilory text-[22.12px] font-bold leading-[32.61px]">20+</div>
+                            <div className="years font-gilory text-[22.12px] font-bold leading-[32.61px]">Share</div>
                             <div className="ex text-[17.47px]  font-thin leading-[27.95px] capitalize tracking-[0.03em]">
-                                Years experience
+                                your experience
                             </div>
                             <div className="img-sec flex space-x-[0px] mt-2">
                                 {/* Icons */}

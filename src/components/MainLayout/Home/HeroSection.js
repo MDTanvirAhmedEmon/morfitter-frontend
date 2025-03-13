@@ -32,7 +32,7 @@ const HeroSection = () => {
                         </Link>
                         <div className="title font-bold text-4xl md:text-7xl leading-[84px] text-left capitalize mt-6">
                             your Morfitter{" "}
-                            <span className="inline-block text-white bg-gradient-to-r from-transparent via-greenColor to-transparent">
+                            <span className="inline-block text-white bg-gradient-to-r from-transparent via-greenColor px-3 md:px-5 md:pb-3 md:mt-2 to-transparent">
                                 journey
                             </span>{" "}
                             starts here!
