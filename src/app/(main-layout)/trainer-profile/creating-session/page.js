@@ -128,12 +128,12 @@ const CreatingSession = () => {
                   { required: true, message: "Please input content title!" },
                 ]}
               >
-                <Input placeholder="Content title" className="w-full" />
+                <Input placeholder="Content title" className="w-full text-lg" />
               </Form.Item>
             </div>
             <div className=" flex items-center gap-4">
               <div className="border border-greenColor text-[#c0c0c0] rounded-md  px-2 py-2 flex justify-between items-center w-full">
-                {!promoPic && <p>Promo Image</p>}
+                {!promoPic && <p className=" text-lg">Promo Image</p>}
                 <p className="text-sm text-gray-700">
                   {promoPic && promoPic.name}
                 </p>
@@ -236,7 +236,7 @@ const CreatingSession = () => {
             )}
             <div className=" flex items-center gap-4">
               <div className="border border-greenColor text-[#c0c0c0] rounded-md  px-2 py-2 flex justify-between items-center w-full">
-                {!Video1 && <p>Promo video</p>}
+                {!Video1 && <p className=" text-lg">Promo video</p>}
                 <p className="text-sm text-gray-700">{Video1 && Video1.name}</p>
               </div>
               <Upload
@@ -258,7 +258,7 @@ const CreatingSession = () => {
               <button
                 disabled={isLoading}
                 type="submit"
-                className=" mt-8 md:mt-5 md:text-lg leading-8 text-white bg-secondary hover:bg-greenColor md:py-2 px-6 md:px-8 rounded-full capitalize transition-all :"
+                className=" mt-8 md:mt-5 md:text-lg leading-8 text-white font-bold bg-secondary hover:bg-greenColor md:py-2 px-6 md:px-8 rounded-full capitalize transition-all :"
               >
                 Enter
               </button>{isLoading && <Spin size="large"></Spin>}
