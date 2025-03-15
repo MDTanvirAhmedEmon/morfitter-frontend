@@ -64,6 +64,15 @@ const sessionApi = baseApi.injectEndpoints({
       invalidatesTags: ['session']
     }),
 
+    updateSession: builder.mutation({
+      query: ({id,formData}) => ({
+        url: `/session/update/${id}`,
+        method: "PATCH",
+        body: formData,
+      }),
+      invalidatesTags: ['session']
+    }),
+
     // Enroll ======================
     enrollSession: builder.mutation({
       query: (data) => ({
@@ -123,6 +132,7 @@ export const {
   useGetSingleSessionForAdminQuery,
   useGetSingleSessionQuery,
   useAddSessionMutation,
+  useUpdateSessionMutation,
   useDeletSessionVideoMutation,
   useDeletWholeSessionMutation,
   useEnrollSessionMutation,

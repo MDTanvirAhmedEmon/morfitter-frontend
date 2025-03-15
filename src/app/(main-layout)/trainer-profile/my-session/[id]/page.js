@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import profileImage from "../../../../../assets/profile/profile_image.webp";
+import { CiEdit } from "react-icons/ci";
+import EditSessionModal from "@/components/TrainerProfile/EditSessionModal";
 
 const BASE_URL = "";
 
@@ -17,6 +19,7 @@ const SingleSession = () => {
     const { data } = useGetSingleSessionQuery(id);
     const session = data?.data;
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -25,6 +28,16 @@ const SingleSession = () => {
     };
     const handleCancel = () => {
         setIsModalOpen(false);
+    };
+    // Edit Modal
+    const showEditModal = () => {
+        setIsEditModalOpen(true);
+    };
+    const handleEditOk = () => {
+        setIsEditModalOpen(false);
+    };
+    const handleEditCancel = () => {
+        setIsEditModalOpen(false);
     };
     const { data: allEntrolledUser } = useGetTotalEntrolledUserSessionQuery(id);
 
@@ -64,7 +77,7 @@ const SingleSession = () => {
                     {session?.promo_video && (
                         <div className="w-full md:w-[60%]">
                             <h2 className="text-xl font-semibold mb-3">Promo Video</h2>
-                            <video controls className="w-full rounded-lg shadow-md" src={`${BASE_URL}${session.promo_video}`}>
+                            <video controls className="w-full h-[400px] object-cover rounded-lg shadow-md" src={`${BASE_URL}${session.promo_video}`}>
                                 Your browser does not support the video tag.
                             </video>
                         </div>
@@ -78,7 +91,7 @@ const SingleSession = () => {
                                 width={500}
                                 height={300}
                                 alt="Promo Image"
-                                className="w-full h-auto lg:h-[500px] object-cover rounded-lg shadow-md"
+                                className="w-full h-auto lg:h-[400px] object-cover rounded-lg shadow-md"
                             />
                         </div>
                     )}
@@ -94,7 +107,10 @@ const SingleSession = () => {
                         <p><strong>Membership Fee:</strong> ${session?.membership_fee}</p>
                     </div>
                 </div>
-
+                <div>
+                    <CiEdit onClick={showEditModal} className=" w-8 h-8 cursor-pointer" />
+                </div>
+                <EditSessionModal isEditModalOpen={isEditModalOpen} handleEditOk={handleEditOk} handleEditCancel={handleEditCancel} session={session}></EditSessionModal>
                 <AddSessionContentModal isModalOpen={isModalOpen} handleCancel={handleCancel} handleOk={handleOk} id={id}></AddSessionContentModal>
                 <div>
                     <div className=" flex justify-between items-center mb-5">

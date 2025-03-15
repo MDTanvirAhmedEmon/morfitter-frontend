@@ -52,7 +52,7 @@ const AdminLogIn = () => {
 
   return (
     <section className="py-20 px-3 xxl:px-0 bg-greenColor h-screen w-full flex justify-center items-center">
-      <div className="xxl:w-[1340px] mx-auto flex flex-col lg:flex-row gap-4 shadow-[0px_10px_30px_rgba(0,0,0,0.2)] bg-white px-4 md:px-8 py-16 rounded-2xl w-[700px]">
+      <div className="lg:w-[700px] mx-auto flex flex-col lg:flex-row gap-4 shadow-[0px_10px_30px_rgba(0,0,0,0.2)] bg-white px-4 md:px-8 py-16 rounded-2xl w-[700px]">
         {/* Form Section */}
         <div className="flex flex-col justify-center md:p-5 rounded-lg w-full">
           <h1 className="text-2xl md:text-5xl font-bold mb-8 text-center">
