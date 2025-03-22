@@ -309,7 +309,7 @@ const TrainerProfile = () => {
                 {
                   !user?.earning && <div className="item text-center px-14 py-1 md:py-4 border bg-[#e2697121] border-black rounded-xl shadow-lg cursor-pointer">
                     <div className="total text-xl md:text-3xl font-bold text-black">
-                      £46
+                      £0
                     </div>
                     <div className="title text-lg text-gray-900 capitalize">
                       Revenue

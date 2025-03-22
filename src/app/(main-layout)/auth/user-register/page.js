@@ -12,9 +12,10 @@ import { useDispatch } from "react-redux";
 import { setInfo, setProfile } from "@/redux/features/auth/registerSlice";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import addProfilePic from "../../../../assets/profile/add-profile-pic.svg";
 
 const UserRegister = () => {
-  const [profilePic, setProfilePic] = useState();
+  const [profilePic, setProfilePic] = useState(null);
 
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const UserRegister = () => {
   const handleProfilePicUpload = (e) => {
     setProfilePic(e.file.originFileObj);
   };
-  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : null;
+  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : addProfilePic?.src;
 
   const onFinish = async (values) => {
     const { day, month, year } = values;
@@ -152,9 +153,9 @@ const UserRegister = () => {
               <div className=" w-full">
                 <Form.Item
                   name="gymMember"
-                  // rules={[
-                  //   { required: true, message: "Please input your gym member!" },
-                  // ]}
+                // rules={[
+                //   { required: true, message: "Please input your gym member!" },
+                // ]}
                 >
                   <Input placeholder="Member of a gym" className="md:w-[70%]" />
                 </Form.Item>
@@ -188,11 +189,17 @@ const UserRegister = () => {
                   height={0}
                   width={0}
                 />
-                <Avatar
-                  src={profilePicUrl || "/default-avatar.png"}
-                  size={140}
-                  className="border-4 m-[7px]"
-                />
+                <Upload
+                  showUploadList={false}
+                  onChange={handleProfilePicUpload}
+                  className=""
+                >
+                  <Avatar
+                    src={profilePicUrl}
+                    size={140}
+                    className="border-4 m-[7px] cursor-pointer"
+                  />
+                </Upload>
                 <Upload
                   showUploadList={false}
                   onChange={handleProfilePicUpload}
@@ -346,20 +353,20 @@ const UserRegister = () => {
               </Form.Item>
             </div>
             <Form.Item
-                name="email"
-                rules={[
-                  { required: true, message: "Please input your email!" },
-                ]}
-                className=" w-full"
-              >
-                <Input
-                  placeholder="Email"
-                  // suffix={
-                  //   <IoMdArrowDropdown className=" w-6 h-6 text-greenColor" />
-                  // }
+              name="email"
+              rules={[
+                { required: true, message: "Please input your email!" },
+              ]}
+              className=" w-full"
+            >
+              <Input
+                placeholder="Email"
+              // suffix={
+              //   <IoMdArrowDropdown className=" w-6 h-6 text-greenColor" />
+              // }
 
-                />
-              </Form.Item>
+              />
+            </Form.Item>
             {/* Terms Checkbox */}
             <Form.Item
               name="terms"
@@ -396,7 +403,7 @@ const UserRegister = () => {
           <p className=" mt-6">
             Register as a trainer{" "}
             <Link className="font-semibold ml-2" href={`/auth/pt-register`}>
-             <span className="text-primary">Register</span>
+              <span className="text-primary">Register</span>
             </Link>
           </p>
         </div>
