@@ -7,9 +7,25 @@ import { useState } from "react";
 import Link from "next/link";
 import { useCreateSessionMutation } from "@/redux/features/session/sessionApi";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { useGetMySpecialismQuery } from "@/redux/features/specialism/specialismApi";
 // import { LuUpload } from "react-icons/lu";
 
 const CreatingSession = () => {
+  const { user } = useSelector((state) => state.auth);
+  const { data: specialism } = useGetMySpecialismQuery(user?._id);
+
+  const capitalizeWords = (str) =>
+    str?.split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+
+  const fitnessFocus = specialism?.data?.map((item) => ({
+    name: capitalizeWords(item?.specialism || ''),
+  })) || [];
+
+
+
   const [form] = Form.useForm();
   const router = useRouter();
   const [promoPic, setPromoPic] = useState(null);
@@ -51,18 +67,18 @@ const CreatingSession = () => {
   // const onChange = (date, dateString) => {
   //     console.log(date, dateString);
   // };
-  const fitnessFocus = [
-    { name: "Boxercise" },
-    { name: "Calisthenics" },
-    { name: "Circuit Training" },
-    { name: "Core Strength" },
-    { name: "Fat Burners" },
-    { name: "Flexibility & Mobility" },
-    { name: "Zumba" },
-    { name: "HIIT" },
-    { name: "Pilates" },
-    { name: "Others" },
-  ];
+  // const fitnessFocus = [
+  //   { name: "Boxercise" },
+  //   { name: "Calisthenics" },
+  //   { name: "Circuit Training" },
+  //   { name: "Core Strength" },
+  //   { name: "Fat Burners" },
+  //   { name: "Flexibility & Mobility" },
+  //   { name: "Zumba" },
+  //   { name: "HIIT" },
+  //   { name: "Pilates" },
+  //   { name: "Others" },
+  // ];
 
   return (
     <section className="py-8 md:py-12">
@@ -158,29 +174,26 @@ const CreatingSession = () => {
                 <button
                   type="button"
                   onClick={() => setFrequency("weekly")}
-                  className={` text-white rounded-full px-3 md:px-6 py-[3px] md:py-[6px] hover:bg-greenColor font-semibold md:text-lg ${
-                    frequency === "weekly" ? "bg-greenColor" : "bg-secondary"
-                  }`}
+                  className={` text-white rounded-full px-3 md:px-6 py-[3px] md:py-[6px] hover:bg-greenColor font-semibold md:text-lg ${frequency === "weekly" ? "bg-greenColor" : "bg-secondary"
+                    }`}
                 >
                   Weekly
                 </button>
                 <button
                   type="button"
                   onClick={() => setFrequency("fortnightly")}
-                  className={` text-white rounded-full px-3 md:px-6 py-[3px] md:py-[6px] hover:bg-greenColor font-semibold md:text-lg ${
-                    frequency === "fortnightly"
-                      ? "bg-greenColor"
-                      : "bg-secondary"
-                  }`}
+                  className={` text-white rounded-full px-3 md:px-6 py-[3px] md:py-[6px] hover:bg-greenColor font-semibold md:text-lg ${frequency === "fortnightly"
+                    ? "bg-greenColor"
+                    : "bg-secondary"
+                    }`}
                 >
                   Fortnightly
                 </button>
                 <button
                   type="button"
                   onClick={() => setFrequency("monthly")}
-                  className={` text-white rounded-full px-3 md:px-6 py-[3px] md:py-[6px] hover:bg-greenColor font-semibold md:text-lg ${
-                    frequency === "monthly" ? "bg-greenColor" : "bg-secondary"
-                  }`}
+                  className={` text-white rounded-full px-3 md:px-6 py-[3px] md:py-[6px] hover:bg-greenColor font-semibold md:text-lg ${frequency === "monthly" ? "bg-greenColor" : "bg-secondary"
+                    }`}
                 >
                   Monthly
                 </button>
