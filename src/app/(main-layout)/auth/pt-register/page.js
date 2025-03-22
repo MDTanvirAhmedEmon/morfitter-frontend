@@ -182,7 +182,7 @@ const PTRegister = () => {
 
                 ]}
                 >
-                  <Select placeholder="Day" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                  <Select showSearch placeholder="Day" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
                     {Array.from({ length: 31 }, (_, i) => (
                       <Select.Option key={i + 1} value={i + 1}>
                         {i + 1}
@@ -198,7 +198,7 @@ const PTRegister = () => {
 
                 ]}
                 >
-                  <Select placeholder="Month" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                  <Select showSearch placeholder="Month" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
                     {Array.from({ length: 12 }, (_, i) => (
                       <Select.Option key={i + 1} value={i + 1}>
                         {i + 1}
@@ -213,7 +213,7 @@ const PTRegister = () => {
                   { required: true, message: "Please enter the year!" },
                 ]}
                 >
-                  <Select placeholder="Year" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
+                  <Select showSearch placeholder="Year" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
                     {Array.from(
                       { length: new Date().getFullYear() - 1925 + 1 },
                       (_, i) => {
