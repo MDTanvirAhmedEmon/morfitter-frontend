@@ -17,8 +17,9 @@ import Image from "next/image";
 function SpecialismsModal({ setSpecialismsVisible }) {
   const { user } = useSelector((state) => state.auth);
   const [createSpecialism, { isLoading }] = useCreateSpecialismMutation();
-  const [specialism, setSpecialism] = useState(null);
+  // const [specialism, setSpecialism] = useState(null);
   const [selectedLogos, setSelectedLogos] = useState([]);
+  console.log(selectedLogos);
   const interests = [
     { name: "Boxercise", icon: logo1 },
     { name: "Calisthenics", icon: logo2 },
@@ -31,25 +32,36 @@ function SpecialismsModal({ setSpecialismsVisible }) {
     { name: "Pilates", icon: logo9 },
   ];
   const handleSubmit = () => {
-    console.log(selectedLogos);
+    if (!selectedLogos.length) {
+      message.warning("Please select at least one specialism.");
+      return;
+    }
+  
+    const formattedData = selectedLogos.map((name) => ({
+      specialism: name,
+    }));
+  
     createSpecialism({
-      data: {
-        specialism: selectedLogos,
-      },
+      data: formattedData,
       id: user?._id,
     })
       .unwrap()
       .then(() => {
-        message.success(`Specialism Added`);
+        message.success(`Specialisms Added`);
         setSpecialismsVisible(false);
-        setSpecialism("");
+        setSelectedLogos([]);
       })
       .catch((error) => {
-        message.error(error?.data?.message);
+        message.error(error?.data?.message || "Failed to add specialisms");
       });
   };
-  const handleLogoClick = (name) => {
-    setSelectedLogos(name); // Set only one selected logo
+  
+  const handleLogoClick = (index) => {
+    setSelectedLogos((prevSelected) =>
+      prevSelected.includes(index)
+        ? prevSelected.filter((item) => item !== index)
+        : [...prevSelected, index]
+    );
   };
 
   return (
