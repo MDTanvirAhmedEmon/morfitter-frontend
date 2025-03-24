@@ -1,5 +1,4 @@
-import React from 'react';
-import gymPerson from '../../../assets/gym-person.png';
+// import gymPerson from '../../../assets/gym-person.png';
 import line from '../../../assets/line.png';
 import fitness2 from '../../../assets/fitness2.png';
 import Image from 'next/image';
@@ -17,6 +16,7 @@ const FitnessEnthusiasts = () => {
                     <div className="text-gradient text-2xl md:text-[54px] font-bold leading-[50px] md:leading-[74px] mb-8">
                         <p className='bg-gradient-to-r from-transparent via-secondary to-transparent text-white'>
                             <span className="text-black ">For</span> Fitness Enthusiasts
+
                         </p>
                     </div>
                     <div className="text-[18px] font-normal leading-[28.56px] tracking-tight mb-8">
@@ -44,7 +44,6 @@ const FitnessEnthusiasts = () => {
                                 height={0}
                             />
                         </div>
-
 
                         {/* Sub-card */}
                         <div className="sub-card absolute right-2 md:left-[-150px] bottom-3 md:bottom-[20%] w-[180px] px-3 py-1 bg-white rounded-[15px] shadow-2xl text-left">
