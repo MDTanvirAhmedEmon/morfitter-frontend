@@ -533,38 +533,39 @@ const TrainerProfile = () => {
 
             {/* Blogging Section */}
             <div className=" flex flex-col md:flex-row gap-5 w-full mt-5">
-              <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
-                <div className=" text-gray-500 text-lg md:text-xl font-bold">
-                  Blog
-                </div>
-                <Link href={`/trainer-profile/creating-content`}>
-                  <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg ">
-                    <FaPlus className=" text-greenColor" />
-                  </button>
-                </Link>
-              </div>
+              <Link className="w-full cursor-pointer" href={`/trainer-profile/creating-content`}>
+                <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
+                  <div className=" text-gray-500 text-lg md:text-xl font-bold">
+                    Blog
+                  </div>
 
-              <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
-                <div className=" text-gray-500 text-lg md:text-xl font-bold">
-                  Video
-                </div>
-                <Link href={`/trainer-profile/creating-content`}>
                   <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg ">
                     <FaPlus className=" text-greenColor" />
                   </button>
-                </Link>
-              </div>
+                </div>
+              </Link>
 
-              <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
-                <div className=" text-gray-500 text-lg md:text-xl font-bold">
-                  Images
-                </div>
-                <Link href={`/trainer-profile/creating-content`}>
+              <Link className="w-full cursor-pointer" href={`/trainer-profile/creating-content`}>
+                <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
+                  <div className=" text-gray-500 text-lg md:text-xl font-bold">
+                    Video
+                  </div>
                   <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg ">
                     <FaPlus className=" text-greenColor" />
                   </button>
-                </Link>
-              </div>
+                </div>
+              </Link>
+
+              <Link className="w-full cursor-pointer" href={`/trainer-profile/creating-content`}>
+                <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
+                  <div className=" text-gray-500 text-lg md:text-xl font-bold">
+                    Images
+                  </div>
+                  <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg ">
+                    <FaPlus className=" text-greenColor" />
+                  </button>
+                </div>
+              </Link>
             </div>
             <div className="text-white bg-secondary px-4 py-2 text-center text-lg rounded w-full my-4 ">
               Current Training Session
