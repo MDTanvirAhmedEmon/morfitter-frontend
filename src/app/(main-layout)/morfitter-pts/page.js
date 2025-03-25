@@ -20,7 +20,7 @@ import MorfitterPtsSkeleton from "@/components/Skeleton/MorfitterPtsSkeleton";
 const MorfitterPts = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState(undefined);
-    
+
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
@@ -42,11 +42,11 @@ const MorfitterPts = () => {
     return (
         <section className="xxl:w-[1340px] mx-auto py-8 md:py-14">
             <div className="flex justify-end mx-3 xxl:mx-0">
-                <Input 
-                    onChange={(e) => setSearchTerm(e.target.value)} 
-                    suffix={<CiSearch className="w-6 h-6" />} 
-                    placeholder="Search PT" 
-                    className="md:w-[320px] mb-8" 
+                <Input
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    suffix={<CiSearch className="w-6 h-6" />}
+                    placeholder="Search Trainer"
+                    className="md:w-[320px] mb-8"
                 />
             </div>
 

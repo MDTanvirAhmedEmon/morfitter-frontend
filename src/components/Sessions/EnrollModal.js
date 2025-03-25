@@ -11,6 +11,8 @@ import MakePayment from "./MakePayment";
 
 const EnrollModal = ({ isModalOpen, handleCancel, handleOk, session }) => {
 
+  console.log(session);
+
   const { role } = useSelector((state) => state.auth);
   const router = useRouter();
 
@@ -77,6 +79,9 @@ const EnrollModal = ({ isModalOpen, handleCancel, handleOk, session }) => {
                 </div>
               </div>
             )}
+            <p className=" mb-2">
+              {session?.description}
+            </p>
 
             <h1 className="text-2xl font-semibold text-[#572c57]">
               🎉 Free Session Available!
