@@ -1,14 +1,14 @@
 "use client";
-import { DatePicker, Form, Input, message, Select, Spin, Upload } from "antd";
-import regiserImg from "../../../../assets/fitness2.png";
+import { Form, Input, message, Select, Spin, Upload } from "antd";
+import regiserImg from "../../../../assets/session.jpg";
 import Image from "next/image";
 import { useState } from "react";
 // import TextArea from "antd/es/input/TextArea";
-import Link from "next/link";
 import { useCreateSessionMutation } from "@/redux/features/session/sessionApi";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { useGetMySpecialismQuery } from "@/redux/features/specialism/specialismApi";
+import TextArea from "antd/es/input/TextArea";
 // import { LuUpload } from "react-icons/lu";
 
 const CreatingSession = () => {
@@ -25,7 +25,6 @@ const CreatingSession = () => {
   })) || [];
 
 
-
   const [form] = Form.useForm();
   const router = useRouter();
   const [promoPic, setPromoPic] = useState(null);
@@ -35,12 +34,14 @@ const CreatingSession = () => {
   // const [Video3, setVideo3] = useState(null);
   const [frequency, setFrequency] = useState(null);
   const [createSession, { isLoading }] = useCreateSessionMutation();
+
   const onFinish = (values) => {
     const formData = new FormData();
     console.log("Success:", values);
     const sessionData = {
       sessionType: values.trainingType,
       title: values.title,
+      description: values.description,
       // sessionMode: values.,
       fitnessFocus: values.focus,
       accessType: values.access,
@@ -85,13 +86,13 @@ const CreatingSession = () => {
       <div className=" px-4 xxl:px-0 xxl:w-[1340px] mx-auto text-2xl md:text-3xl font-semibold mb-4">Create A New Session</div>
       <div className="xxl:w-[1340px] mx-auto flex flex-col lg:flex-row gap-4 shadow-2xl p-4 md:p-8 rounded-2xl">
         {/* Image Section */}
-        <div className="lg:w-1/2 rounded-lg  overflow-hidden ">
+        <div className="hidden md:block lg:w-1/2 rounded-lg  overflow-hidden ">
           <Image
             height={0}
             width={0}
             src={regiserImg}
             alt="Register"
-            className="w-full h-[80%] object-cover"
+            className="w-full  object-cover"
           />
         </div>
 
@@ -145,6 +146,22 @@ const CreatingSession = () => {
                 ]}
               >
                 <Input placeholder="Content title" className="w-full text-lg" />
+              </Form.Item>
+            </div>
+            <div className="">
+              <Form.Item
+                name="description"
+                rules={[
+                  { required: true, message: "Please input content description!" },
+                ]}
+              >
+                <TextArea
+                  showCount
+                  maxLength={350}
+                  placeholder="Content description"
+                  className="mb-1"
+                  style={{ height: 100, resize: 'none' }}
+                />
               </Form.Item>
             </div>
             <div className=" flex items-center gap-4">
@@ -266,7 +283,7 @@ const CreatingSession = () => {
               </Upload>
             </div>
 
-            <div className=" flex justify-end">
+            <div className=" flex justify-end items-center">
               {/* <Link href={`/trainer-profile`}> */}
               <button
                 disabled={isLoading}
@@ -274,7 +291,7 @@ const CreatingSession = () => {
                 className=" mt-8 md:mt-5 md:text-lg leading-8 text-white font-bold bg-secondary hover:bg-greenColor md:py-2 px-6 md:px-8 rounded-full capitalize transition-all :"
               >
                 Enter
-              </button>{isLoading && <Spin size="large"></Spin>}
+              </button>{isLoading && <Spin className=" mt-5 ml-1"></Spin>}
               {/* </Link> */}
             </div>
           </Form>

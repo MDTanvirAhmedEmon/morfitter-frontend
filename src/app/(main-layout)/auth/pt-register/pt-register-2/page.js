@@ -274,7 +274,7 @@ const PTRegister2 = () => {
             </div>
 
             <div className="  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12 mb-4 md:mb-12">
-              <p className=" text-lg md:w-1/2">I condact online sessions:</p>
+              <p className=" text-lg md:w-1/2">I offer online sessions:</p>
               <div className=" w-1/2 flex gap-5 lg:gap-3 items-center">
                 <button
                   type="button"
@@ -297,7 +297,7 @@ const PTRegister2 = () => {
 
             <div className="  flex flex-col lg:flex-row  lg:items-center gap-3 lg:gap-12  mb-4 md:mb-12">
               <p className=" text-lg md:w-1/2">
-                I condact face to face sessions:
+                I offer face to face sessions:
               </p>
               <div className=" w-1/2 flex gap-5 lg:gap-3 items-center">
                 <button
