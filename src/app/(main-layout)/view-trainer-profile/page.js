@@ -16,6 +16,15 @@ import { useState } from "react";
 import { useDofolowUnfollowMutation, useGetSingleUserQuery } from "@/redux/features/follower/followerApi";
 import { useSelector } from "react-redux";
 import { useGetMembersQuery, useGetMyFollowersQuery } from "@/redux/features/trainer/trainerApi";
+import logo1 from '../../../assets/logo1.svg';
+import logo2 from '../../../assets/logo2.svg';
+import logo3 from '../../../assets/logo3.svg';
+import logo4 from '../../../assets/logo4.svg';
+import logo5 from '../../../assets/logo5.svg';
+import logo6 from '../../../assets/logo6.svg';
+import logo7 from '../../../assets/logo7.svg';
+import logo8 from '../../../assets/logo8.svg';
+import logo9 from '../../../assets/logo9.svg';
 
 const ViewTrainerProfile = () => {
   const searchParams = useSearchParams();
@@ -51,6 +60,17 @@ const ViewTrainerProfile = () => {
         message.error(err?.data?.message)
       })
   }
+  const interests = [
+    { name: "boxercise", icon: logo1 },
+    { name: "calisthenics", icon: logo2 },
+    { name: "circuit training", icon: logo3 },
+    { name: "core strength", icon: logo4 },
+    { name: "fat burners", icon: logo5 },
+    { name: "flexibility & mobility", icon: logo6 },
+    { name: "zumba", icon: logo7 },
+    { name: "hitt", icon: logo8 },
+    { name: "pilates", icon: logo9 }
+  ];
 
   return (
     <section className=" py-10 md:py-20">
@@ -146,24 +166,26 @@ const ViewTrainerProfile = () => {
                 <div className="user-name text-2xl md:text-4xl font-semibold capitalize">
                   {trainer?.data?.userInfo?.firstName} {trainer?.data?.userInfo?.lastName}
                 </div>
-                <div className="mt-2 text-xl md:text-2xl">New York</div>
-              </div>
-              <button
-                onClick={handleFollowUnfollow}
-                disabled={isLoading}
-                className={`w-[120px] py-1.5 text-lg font-medium rounded-md transition-all duration-300 border 
+                <div className="mt-2 text-xl md:text-2xl">{trainer?.data?.userInfo?.country}</div>
+                <button
+                  onClick={handleFollowUnfollow}
+                  disabled={isLoading}
+                  className={`w-[120px] mt-4 py-1.5 text-lg font-medium rounded-md transition-all duration-300 border 
                ${trainer?.data?.isFollowing
-                    ? "bg-primary text-white border-primary hover:bg-primary"
-                    : "bg-transparent text-gray-700 border-gray-400 hover:bg-gray-100"
-                  }
+                      ? "bg-primary text-white border-primary hover:bg-primary"
+                      : "bg-transparent text-gray-700 border-gray-400 hover:bg-gray-100"
+                    }
                   `}
-              >
-                {trainer?.data?.isFollowing ? "Follow" : "Following"} {isLoading && <Spin ></Spin>}
-              </button>
+                >
+                  {trainer?.data?.isFollowing ? "Follow" : "Following"} {isLoading && <Spin ></Spin>}
+                </button>
+              </div>
 
 
-              <div className="following-follower grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div className="item text-center px-14 py-1 md:py-4 rounded-xl bg-[#0ba5931a] border border-greenColor shadow-lg">
+
+              <div className="following-follower grid grid-cols-2 lg:grid-cols-3 gap-5 h-[100px]">
+                <div className=" hidden lg:block"></div>
+                <div className="item text-center py-4 px-5 rounded-xl bg-[#0ba5931a] border border-greenColor shadow-lg">
                   <div className="total text-xl md:text-3xl font-bold text-greenColor">
                     {myFollower?.data?.totalFollower}
                   </div>
@@ -172,7 +194,7 @@ const ViewTrainerProfile = () => {
                   </div>
                 </div>
 
-                <div className="item text-center px-14 py-1 md:py-4 bg-[#e2697121] border border-primary rounded-xl shadow-lg">
+                <div className="item text-center py-4 px-5 bg-[#e2697121] border border-primary rounded-xl shadow-lg">
                   <div className="total text-xl md:text-3xl font-bold text-primary">
                     {members?.data?.[0]?.totalMembers}
                   </div>
@@ -222,11 +244,35 @@ const ViewTrainerProfile = () => {
 
                 </div>
                 <div className=" px-6 pb-4">
-                  {
-                    specialism?.data?.map((item) =>
-                      <p className=" mb-2" key={item?._id}>{item?.specialism}</p>
-                    )
-                  }
+                  <div className="flex gap-2 overflow-x-auto mt-4">
+                    <div className="flex justify-center flex-nowrap xl:flex-wrap gap-2">
+                      {specialism?.data?.map((spec, index) => {
+                        const matchedInterest = interests.find(interest =>
+                          interest.name.toLowerCase() === spec?.specialism.toLowerCase()
+                        );
+                        return matchedInterest ? (
+                          <div
+                            key={index}
+                            className="flex items-center justify-center w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] lg:w-[100px] lg:h-[100px] p-2 text-center rounded border-2 border-solid border-transparent transition-all duration-300"
+                            style={{
+                              borderImage:
+                                'linear-gradient(180deg, rgba(11, 165, 147, 0.05) 0%, #08776a 51%, rgba(11, 165, 147, 0.05) 100%) 1',
+                            }}
+                          >
+
+                            <Image
+                              src={matchedInterest.icon}
+                              alt={spec.specialism}
+                              height={170}
+                              width={170}
+                              className="w-full h-full object-contain"
+                            />
+
+                          </div>
+                        ) : null;
+                      })}
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="border py-4 px-6">

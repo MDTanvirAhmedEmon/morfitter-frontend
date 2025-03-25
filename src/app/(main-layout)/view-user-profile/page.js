@@ -116,27 +116,28 @@ const ViewUserProfile = () => {
                         </div>
                     </div>
 
-                    <div className="right-information w-full lg:w-[75%] pt-5">
-                        <div className="user-details flex flex-col lg:flex-row lg:justify-between gap-5">
+                    <div className="right-information w-full xl:w-[75%] pt-5">
+                        <div className="user-details flex flex-col md:flex-row md:justify-between gap-5">
                             <div className="user">
                                 <div className="user-name text-2xl md:text-4xl font-semibold capitalize">{trainee?.data?.userInfo?.firstName} {trainee?.data?.userInfo?.lastName}</div>
-                                <div className="mt-2 text-xl md:text-2xl">New York</div>
-                            </div>
-                            <button
-                                onClick={handleFollowUnfollow}
-                                disabled={isLoading}
-                                className={`w-[120px] py-1.5 text-lg font-medium rounded-md transition-all duration-300 border 
+                                <div className="mt-2 text-xl md:text-2xl">{trainee?.data?.userInfo?.country}</div>
+                                <button
+                                    onClick={handleFollowUnfollow}
+                                    disabled={isLoading}
+                                    className={`w-[120px] py-1.5 mt-4 text-lg font-medium rounded-md transition-all duration-300 border 
                                 ${trainee?.data?.isFollowing
-                                        ? "bg-primary text-white border-primary hover:bg-primary"
-                                        : "bg-transparent text-gray-700 border-gray-400 hover:bg-gray-100"
-                                    }
+                                            ? "bg-primary text-white border-primary hover:bg-primary"
+                                            : "bg-transparent text-gray-700 border-gray-400 hover:bg-gray-100"
+                                        }
                                 `}
-                            >
-                                {trainee?.data?.isFollowing ? "Follow" : "Following"} { isLoading && <Spin></Spin>}
-                            </button>
+                                >
+                                    {trainee?.data?.isFollowing ? "Follow" : "Following"} {isLoading && <Spin></Spin>}
+                                </button>
+                            </div>
 
-                            <div className="following-follower grid grid-cols-1 md:grid-cols-2 gap-5">
 
+                            <div className="following-follower grid grid-cols-1 md:grid-cols-2 gap-5 h-[100px] -mt-5 md:-mt-0">
+                                <div></div>
                                 <div className="item text-center px-14 py-1 md:py-4 rounded-xl bg-[#0ba5931a] border border-greenColor shadow-lg">
                                     <div className="total text-xl md:text-3xl font-bold text-greenColor">{myFollower?.data?.totalFollower}</div>
                                     <div className="title text-lg  text-greenColor capitalize">Followers</div>
@@ -146,7 +147,7 @@ const ViewUserProfile = () => {
                             </div>
                         </div>
 
-                        <p className=" text-xl mx-4 py-6">
+                        <p className=" text-xl mx-0 py-6">
                             Share thoughts of your journey to become MorFitter. Inspire and encourage others with the positive steps you have taken
                         </p>
 
