@@ -21,9 +21,7 @@ const CreatingSession = () => {
     const [form] = useForm();
     const router = useRouter();
     const [selectedLogos, setSelectedLogos] = useState(null);
-    console.log(selectedLogos);
     const [profilePic, setProfilePic] = useState(null);
-    console.log(profilePic);
     const handleProfilePicUpload = (e) => {
         setProfilePic(e.file.originFileObj);
     };
@@ -93,7 +91,12 @@ const CreatingSession = () => {
                     <button onClick={() => setFileType('video')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${fileType === 'video' ? 'bg-greenColor' : 'bg-secondary'}`}>Video</button>
                     <button onClick={() => setFileType('content')} className={` text-white rounded-full px-4 py-[6px] hover:bg-greenColor ${fileType === 'content' ? 'bg-greenColor' : 'bg-secondary'}`}>Content</button>
                 </div>
-                <div className="flex gap-1 mt-8 overflow-x-auto ">
+                <div className=' mt-8'>
+                    <h2 className=' text-xl md:text-2xl mb-3'>
+                        Select Post Subject
+                    </h2>
+                </div>
+                <div className="flex gap-1  overflow-x-auto ">
                     <div className="flex gap-1 flex-nowrap xl:flex-wrap">
                         {interests.map((logo, index) => (
                             <div

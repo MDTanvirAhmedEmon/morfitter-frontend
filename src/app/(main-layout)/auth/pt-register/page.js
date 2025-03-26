@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { setInfo, setProfile } from "@/redux/features/auth/registerSlice";
+import addProfilePic from "../../../../assets/profile/add-profile-pic.svg";
 
 const PTRegister = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -21,7 +22,7 @@ const PTRegister = () => {
   const handleProfilePicUpload = (e) => {
     setProfilePic(e.file.originFileObj);
   };
-  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : null;
+  const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : addProfilePic?.src;
 
   const onFinish = (values) => {
     const { day, month, year } = values;
@@ -32,8 +33,8 @@ const PTRegister = () => {
     }
     // Construct ISO Date
 
-      const dob = new Date(year, month - 1, day).toISOString();
-    
+    const dob = new Date(year, month - 1, day).toISOString();
+
     // Prepare registration data
     const TrainerRegistrationData = {
       title: values.title,
@@ -71,8 +72,8 @@ const PTRegister = () => {
 
         {/* Form Section */}
         <div className="lg:w-1/2 flex flex-col justify-center md:p-8 rounded-lg ">
-          <h1 className="text-2xl md:text-5xl font-bold  mb-8">
-            Register as a PTs
+          <h1 className="text-2xl md:text-5xl font-bold mb-8 md:mb-14">
+            Register as a trainer
           </h1>
 
           <Form
@@ -112,11 +113,17 @@ const PTRegister = () => {
                   height={0}
                   width={0}
                 />
-                <Avatar
-                  size={140}
-                  src={profilePicUrl || "/default-avatar.png"}
-                  className="border-4 m-[7px]"
-                />
+                <Upload
+                  showUploadList={false}
+                  onChange={handleProfilePicUpload}
+                  className=""
+                >
+                  <Avatar
+                    size={140}
+                    src={profilePicUrl || "/default-avatar.png"}
+                    className="border-4 m-[7px] cursor-pointer"
+                  />
+                </Upload>
                 <Upload
                   showUploadList={false}
                   onChange={handleProfilePicUpload}
@@ -177,10 +184,10 @@ const PTRegister = () => {
               <div className="grid grid-cols-3 gap-4">
                 <Form.Item
                   name="day"
-                rules={[
-                  { required: true, message: "Please enter the day!" },
+                  rules={[
+                    { required: true, message: "Please enter the day!" },
 
-                ]}
+                  ]}
                 >
                   <Select showSearch placeholder="Day" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
                     {Array.from({ length: 31 }, (_, i) => (
@@ -193,10 +200,10 @@ const PTRegister = () => {
 
                 <Form.Item
                   name="month"
-                rules={[
-                  { required: true, message: "Please enter the month!" },
+                  rules={[
+                    { required: true, message: "Please enter the month!" },
 
-                ]}
+                  ]}
                 >
                   <Select showSearch placeholder="Month" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
                     {Array.from({ length: 12 }, (_, i) => (
@@ -209,9 +216,9 @@ const PTRegister = () => {
 
                 <Form.Item
                   name="year"
-                rules={[
-                  { required: true, message: "Please enter the year!" },
-                ]}
+                  rules={[
+                    { required: true, message: "Please enter the year!" },
+                  ]}
                 >
                   <Select showSearch placeholder="Year" suffixIcon={<IoMdArrowDropdown className="w-6 h-6 text-greenColor" />} className="w-full">
                     {Array.from(

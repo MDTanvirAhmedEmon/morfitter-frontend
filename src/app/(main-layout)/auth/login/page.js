@@ -144,7 +144,7 @@ const LogIn = () => {
               as a <span className="text-primary">Member</span>
             </Link>
             <Link className="font-semibold ml-2" href={`/auth/pt-register`}>
-              as a <span className="text-primary">PTs</span>
+              as a <span className="text-primary">Trainer</span>
             </Link>
           </p>
         </div>

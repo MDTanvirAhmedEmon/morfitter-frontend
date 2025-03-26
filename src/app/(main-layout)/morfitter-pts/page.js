@@ -16,11 +16,12 @@ import { useGetAllTrainerQuery } from "@/redux/features/trainer/trainerApi";
 import profileImage from '../../../assets/profile/profile_image.webp';
 import { useState } from "react";
 import MorfitterPtsSkeleton from "@/components/Skeleton/MorfitterPtsSkeleton";
+import { FaStar } from "react-icons/fa";
 
 const MorfitterPts = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState(undefined);
-    
+
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
@@ -42,11 +43,11 @@ const MorfitterPts = () => {
     return (
         <section className="xxl:w-[1340px] mx-auto py-8 md:py-14">
             <div className="flex justify-end mx-3 xxl:mx-0">
-                <Input 
-                    onChange={(e) => setSearchTerm(e.target.value)} 
-                    suffix={<CiSearch className="w-6 h-6" />} 
-                    placeholder="Search PT" 
-                    className="md:w-[320px] mb-8" 
+                <Input
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    suffix={<CiSearch className="w-6 h-6" />}
+                    placeholder="Search Trainer"
+                    className="md:w-[320px] mb-8"
                 />
             </div>
 
@@ -54,6 +55,7 @@ const MorfitterPts = () => {
                 <MorfitterPtsSkeleton />
             ) : data?.data?.data?.length ? (
                 data.data.data.map((item) => (
+
                     <div key={item?._id} className="rounded-xl shadow-[0px_5px_10px_8px_rgba(0,0,0,0.1)] mx-3 px-3 lg:px-12 xxl:mx-0 py-6 flex flex-col md:flex-row items-center gap-6 md:gap-10 mb-6">
                         <div className="w-full md:w-[50%] xl:w-[40%] 2xl:w-[20%]">
                             <Image
@@ -65,7 +67,22 @@ const MorfitterPts = () => {
                             />
                             <div className="mt-3">
                                 <h2 className="text-xl font-semibold capitalize">Name: {item?.firstName} {item?.lastName}</h2>
-                                <p className="capitalize">Trainer</p>
+                                <p className="capitalize mb-2">Trainer</p>
+                                {
+                                    item?.averageRating < 1 ?
+                                        <div className=' flex items-center gap-2  bottom-4 left-4'>
+                                            <FaStar className=' w-6 h-6' />
+
+                                            (0)
+                                        </div>
+                                        :
+
+                                        <div className=' flex items-center gap-2  bottom-4 left-4'>
+                                            <FaStar className=' w-6 h-6' />
+                                            {(Math.round(item.averageRating * 2) / 2).toFixed(1)} {' '}
+                                            ({item?.totalReviews})
+                                        </div>
+                                }
                             </div>
                         </div>
 
@@ -113,6 +130,8 @@ const MorfitterPts = () => {
                             <Link href={`/morfitter-pts/${item?._id}`}>
                                 <button className="bg-primary text-white px-5 py-2 rounded-full">View My Session</button>
                             </Link>
+
+
                         </div>
                     </div>
                 ))

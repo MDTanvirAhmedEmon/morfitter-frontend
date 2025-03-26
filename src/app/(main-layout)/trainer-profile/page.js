@@ -33,6 +33,15 @@ import {
 } from "@/redux/features/trainer/trainerApi";
 import { CiEdit } from "react-icons/ci";
 import MyChatsDrawer from "@/components/TrainerProfile/MyChatsDrawer";
+import logo1 from '../../../assets/logo1.svg';
+import logo2 from '../../../assets/logo2.svg';
+import logo3 from '../../../assets/logo3.svg';
+import logo4 from '../../../assets/logo4.svg';
+import logo5 from '../../../assets/logo5.svg';
+import logo6 from '../../../assets/logo6.svg';
+import logo7 from '../../../assets/logo7.svg';
+import logo8 from '../../../assets/logo8.svg';
+import logo9 from '../../../assets/logo9.svg';
 
 const TrainerProfile = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -96,6 +105,18 @@ const TrainerProfile = () => {
     : `${user?.profileImageUrl}`;
 
   const [deleteSpecialism] = useDeleteSpecialismMutation();
+
+  const interests = [
+    { name: "boxercise", icon: logo1 },
+    { name: "calisthenics", icon: logo2 },
+    { name: "circuit training", icon: logo3 },
+    { name: "core strength", icon: logo4 },
+    { name: "fat burners", icon: logo5 },
+    { name: "flexibility & mobility", icon: logo6 },
+    { name: "zumba", icon: logo7 },
+    { name: "hitt", icon: logo8 },
+    { name: "pilates", icon: logo9 }
+  ];
 
   const confirmSpecialism = (id) => {
     deleteSpecialism(id)
@@ -309,7 +330,7 @@ const TrainerProfile = () => {
                 {
                   !user?.earning && <div className="item text-center px-14 py-1 md:py-4 border bg-[#e2697121] border-black rounded-xl shadow-lg cursor-pointer">
                     <div className="total text-xl md:text-3xl font-bold text-black">
-                      £46
+                      £0
                     </div>
                     <div className="title text-lg text-gray-900 capitalize">
                       Revenue
@@ -380,8 +401,8 @@ const TrainerProfile = () => {
                     Add
                   </button>
                 </div>
-                <div className=" px-6 pb-4 flex flex-col  md:w-[20%]">
-                  {specialism?.data?.map((item) => (
+                <div className=" px-6 pb-4 flex flex-col  ">
+                  {/* {specialism?.data?.map((item) => (
                     <Popconfirm
                       key={item?._id}
                       title="Delete the specialisms"
@@ -394,7 +415,43 @@ const TrainerProfile = () => {
                         {item?.specialism}
                       </p>
                     </Popconfirm>
-                  ))}
+                  ))} */}
+                  <div className="flex gap-2 overflow-x-auto mt-4">
+                    <div className="flex justify-center flex-nowrap xl:flex-wrap gap-2">
+                      {specialism?.data?.map((spec, index) => {
+                        const matchedInterest = interests.find(interest =>
+                          interest.name.toLowerCase() === spec?.specialism.toLowerCase()
+                        );
+                        return matchedInterest ? (
+                          <div
+                            key={index}
+                            className="flex items-center justify-center w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] lg:w-[100px] lg:h-[100px] p-2 text-center rounded border-2 border-solid border-transparent transition-all duration-300"
+                            style={{
+                              borderImage:
+                                'linear-gradient(180deg, rgba(11, 165, 147, 0.05) 0%, #08776a 51%, rgba(11, 165, 147, 0.05) 100%) 1',
+                            }}
+                          >
+                            <Popconfirm
+                              key={spec?._id}
+                              title="Delete the specialisms"
+                              description="Are you sure to delete this specialisms?"
+                              onConfirm={() => confirmSpecialism(spec?._id)}
+                              okText="Yes"
+                              cancelText="No"
+                            >
+                              <Image
+                                src={matchedInterest.icon}
+                                alt={spec.specialism}
+                                height={170}
+                                width={170}
+                                className="w-full h-full object-contain cursor-pointer"
+                              />
+                            </Popconfirm>
+                          </div>
+                        ) : null;
+                      })}
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="border py-4 px-6">
@@ -476,38 +533,39 @@ const TrainerProfile = () => {
 
             {/* Blogging Section */}
             <div className=" flex flex-col md:flex-row gap-5 w-full mt-5">
-              <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
-                <div className=" text-gray-500 text-lg md:text-xl font-bold">
-                  Blog
-                </div>
-                <Link href={`/trainer-profile/creating-content`}>
-                  <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg ">
-                    <FaPlus className=" text-greenColor" />
-                  </button>
-                </Link>
-              </div>
+              <Link className="w-full cursor-pointer" href={`/trainer-profile/creating-content`}>
+                <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
+                  <div className=" text-gray-500 text-lg md:text-xl font-bold">
+                    Blog
+                  </div>
 
-              <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
-                <div className=" text-gray-500 text-lg md:text-xl font-bold">
-                  Video
-                </div>
-                <Link href={`/trainer-profile/creating-content`}>
                   <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg ">
                     <FaPlus className=" text-greenColor" />
                   </button>
-                </Link>
-              </div>
+                </div>
+              </Link>
 
-              <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
-                <div className=" text-gray-500 text-lg md:text-xl font-bold">
-                  Images
-                </div>
-                <Link href={`/trainer-profile/creating-content`}>
+              <Link className="w-full cursor-pointer" href={`/trainer-profile/creating-content`}>
+                <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
+                  <div className=" text-gray-500 text-lg md:text-xl font-bold">
+                    Video
+                  </div>
                   <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg ">
                     <FaPlus className=" text-greenColor" />
                   </button>
-                </Link>
-              </div>
+                </div>
+              </Link>
+
+              <Link className="w-full cursor-pointer" href={`/trainer-profile/creating-content`}>
+                <div className="qualification flex justify-between items-center w-full mb-4 shadow-lg py-4 px-3 rounded-lg">
+                  <div className=" text-gray-500 text-lg md:text-xl font-bold">
+                    Images
+                  </div>
+                  <button className="add-btn text-white bg-[#0ba5931a] border border-greenColor px-2 md:px-4 py-1 md:py-[14px] rounded-lg ">
+                    <FaPlus className=" text-greenColor" />
+                  </button>
+                </div>
+              </Link>
             </div>
             <div className="text-white bg-secondary px-4 py-2 text-center text-lg rounded w-full my-4 ">
               Current Training Session
