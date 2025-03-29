@@ -76,9 +76,25 @@ const authApi = baseApi.injectEndpoints({
       }),
     }),
 
+    verifyAdminEmail: builder.mutation({
+      query: (data) => ({
+        url: "/auth/verify-admin-code",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
     resetPassword: builder.mutation({
       query: (data) => ({
         url: "/auth/reset-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    resetAdminPassword: builder.mutation({
+      query: (data) => ({
+        url: "/auth/reset-admin-password",
         method: "POST",
         body: data,
       }),
@@ -102,8 +118,10 @@ export const {
   useLogInAdminMutation,
   useForgotPasswordMutation,
   useVerifyEmailMutation,
+  useVerifyAdminEmailMutation,
   useForgotAdminPasswordMutation,
   useResetPasswordMutation,
+  useResetAdminPasswordMutation,
   useChangeUserPasswordMutation,
   useChangePasswordMutation,
   useGetMeQuery,

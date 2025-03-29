@@ -18,7 +18,7 @@ const ForgotAdminPassword = () => {
           description: "The OTP has been sent to your email successfully!",
           placement: "topRight",
         });
-        router.push(`/auth/verification-code?email=${values.email}`);
+        router.push(`/auth/verification-admin-code?email=${values.email}`);
       })
       .catch((error) => {
         notification.error({
