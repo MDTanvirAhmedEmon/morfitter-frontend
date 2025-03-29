@@ -2,8 +2,6 @@
 import { Form, Input, notification, Spin } from "antd";
 import { IoMdArrowDropdown } from "react-icons/io";
 import dynamic from "next/dynamic";
-import Image from "next/image";
-
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { useLogInAdminMutation } from "@/redux/features/auth/authApi";
@@ -16,7 +14,7 @@ const AdminLogIn = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const [logIn, { loading }] = useLogInAdminMutation();
+  const [logIn, { isLoading }] = useLogInAdminMutation();
   const onFinish = (values) => {
     const LogInData = {
       email: values?.email,
@@ -108,7 +106,7 @@ const AdminLogIn = () => {
               <p>
                 <Link
                   className="text-primary font-semibold"
-                  href={`/auth/forgot-password`}
+                  href={`/auth/forget-admin-password`}
                 >
                   Forget Password?
                 </Link>
@@ -119,10 +117,10 @@ const AdminLogIn = () => {
             <Form.Item className="text-center">
               <button
                 type="submit"
-                disabled={loading}
+                disabled={isLoading}
                 className="bookBtn text-lg font-medium text-white bg-secondary hover:bg-greenColor py-2 px-8 rounded-full capitalize transition-all"
               >
-                Log In {loading && <Spin />}
+                Log In {isLoading && <Spin />}
               </button>
             </Form.Item>
           </Form>
