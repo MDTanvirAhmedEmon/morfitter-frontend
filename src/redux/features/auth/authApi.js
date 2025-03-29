@@ -60,6 +60,14 @@ const authApi = baseApi.injectEndpoints({
       }),
     }),
 
+    forgotAdminPassword: builder.mutation({
+      query: (data) => ({
+        url: "/auth/forget-admin-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
     verifyEmail: builder.mutation({
       query: (data) => ({
         url: "/auth/verify-code",
@@ -94,6 +102,7 @@ export const {
   useLogInAdminMutation,
   useForgotPasswordMutation,
   useVerifyEmailMutation,
+  useForgotAdminPasswordMutation,
   useResetPasswordMutation,
   useChangeUserPasswordMutation,
   useChangePasswordMutation,
